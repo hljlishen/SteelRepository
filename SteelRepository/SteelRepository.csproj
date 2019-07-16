@@ -216,6 +216,10 @@
       <Project>{8e906888-a84f-4e8f-87ff-9def75f4a0de}</Project>
       <Name>DbInterface</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Tools\Tools.csproj">
+      <Project>{03265640-df59-435b-9370-86e7f34f9dad}</Project>
+      <Name>Tools</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
