@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace Tools
 {
-    class ExpressionBuilder<T>
+    public class ExpressionBuilder<T>
     {
         private Expression<Func<T, bool>> expression = null;
         private readonly ParameterExpression param;
