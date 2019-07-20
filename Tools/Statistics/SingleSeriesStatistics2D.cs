@@ -28,10 +28,10 @@ namespace Tools.Statistics
                  }); // 默认是所有值相加
         }
 
-        public Dictionary<string, TValue> GetValues(IEnumerable<TObject> objects)
+        public Dictionary<string, double> GetValues(IEnumerable<TObject> objects)
         {
             var seriesValues = GetSingleSeriesData(objects, YAxisName);
-            var ret = new Dictionary<string, TValue>();
+            var ret = new Dictionary<string, double>();
             foreach (var item in seriesValues)
             {
                 ret.Add(item.Key, Calculator.Invoke(item.Value));

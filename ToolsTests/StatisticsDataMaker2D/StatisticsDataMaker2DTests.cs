@@ -47,13 +47,31 @@ namespace Tools.StatisticsDataMaker2D.Tests
             #region test string int
             SingleSeriesStatistics2D<User, int> statistics = new SingleSeriesStatistics2D<User, int>("Gender", "Age");
 
-            Dictionary<string, int> result = statistics.GetValues(SetupData());
+            Dictionary<string, double> result = statistics.GetValues(SetupData());
             Assert.AreEqual(result.Count, 2);
             Assert.AreEqual(result["男"], 66);
             Assert.AreEqual(result["女"], 101);
 
             statistics.Calculator = p =>
             {
+
+                double sum = 0;
+                int i = 0;
+                foreach (var item in p)
+                {
+                    sum += item;
+                    i++;
+                }
+                return sum / i;
+            };
+            result = statistics.GetValues(SetupData());
+            Assert.AreEqual(result.Count, 2);
+            Assert.AreEqual(result["男"], 13.2);
+            Assert.AreEqual(result["女"], 20.2);
+
+            statistics.Calculator = p =>
+            {
+
                 int sum = 0;
                 int i = 0;
                 foreach (var item in p)
@@ -92,6 +110,7 @@ namespace Tools.StatisticsDataMaker2D.Tests
         public string Gender { get; set; }
 
         public int? Age { get; set; }
+
         public double Weight { get; set; }
     }
 
