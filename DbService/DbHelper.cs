@@ -68,17 +68,18 @@ namespace DbService
             return Commit(shouldCommit);
         }
 
-        public IQueryable<T> SelectPage<T>(Expression<Func<T, bool>> expression, int pageSize, int pageNum, Expression<Func<T, bool>> orderExp = null, bool isAsc = true) where T : class
+        public IQueryable<T> SelectPage<T, TValue>(Expression<Func<T, bool>> expression, int pageSize, int pageNum, Expression<Func<T, TValue>> orderExp, bool isAsc = true) where T : class
         {
             var list = Select(expression);
 
-            if (orderExp != null)
-            {
-                if (isAsc)
-                    list = list.OrderBy(orderExp);
-                else
-                    list = list.OrderByDescending(orderExp);
-            }
+            if (orderExp == null)
+                throw new Exception("排序表达式为NUll");
+
+            if (isAsc)
+                list = list.OrderBy(orderExp);
+            else
+                list = list.OrderByDescending(orderExp);
+
 
             return list.Skip((pageNum - 1) * pageSize).Take(pageSize);
         }
