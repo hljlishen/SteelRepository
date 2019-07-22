@@ -7,11 +7,11 @@ using System.Web;
 
 namespace SteelRepository.Models
 {
-    public class Outbound
+    public class OutCome
     {
         [Key]
         [DisplayName("Id")]
-        public int Id { get; set; }
+        public int id { get; set; }
 
         [DisplayName("名称")]
         public string name { get; set; }
@@ -19,8 +19,8 @@ namespace SteelRepository.Models
         [DisplayName("规格")]
         public string specifications { get; set; }
 
-        [DisplayName("批号")]
-        public string batchNumber { get; set; }
+        [DisplayName("批号Id")]
+        public string batchId { get; set; }
 
         [DisplayName("数量")]
         public double? number { get; set; }
@@ -33,7 +33,7 @@ namespace SteelRepository.Models
 
         [DisplayName("领用时间")]
         [DisplayFormat(ApplyFormatInEditMode = true, ConvertEmptyStringToNull = true, DataFormatString = "{0:yyyy-MM-dd}", HtmlEncode = false, NullDisplayText = "数据无效")]
-        public DateTime? RecipientsTime { get; set; }
+        public DateTime? recipientsTime { get; set; }
 
         [DisplayName("领用人Id")]
         public int? borrowerId { get; set; }

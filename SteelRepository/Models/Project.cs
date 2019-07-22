@@ -11,7 +11,7 @@ namespace SteelRepository.Models
     {
         [Key]
         [DisplayName("Id")]
-        public int Id { get; set; }
+        public int id { get; set; }
 
         [DisplayName("题目令号")]
         public string projectNumber { get; set; }

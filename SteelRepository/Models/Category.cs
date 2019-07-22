@@ -7,11 +7,13 @@ using System.Web;
 
 namespace SteelRepository.Models
 {
-    public class EnteringWarehouse
+    public class Category
     {
         [Key]
         [DisplayName("Id")]
-        public int Id { get; set; }
+        public int id { get; set; }
 
+        [DisplayName("材料类别")]
+        public string materialCategories { get; set; }
     }
 }

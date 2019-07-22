@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace DbInterface
+namespace SteelRepository.Controllers.DbInterface
 {
-    public interface IDbInterface : IDisposable
+    interface DbInterface: IDisposable
     {
         int Insert<T>(T t, bool commit = true) where T : class;
         int InsertRange<T>(IEnumerable<T> tList, bool commit = true) where T : class;
@@ -21,4 +23,3 @@ namespace DbInterface
         int Commit();
     }
 }
-

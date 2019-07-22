@@ -7,11 +7,11 @@ using System.Web;
 
 namespace SteelRepository.Models
 {
-    public class Employees
+    public class Employee
     {
         [Key]
         [DisplayName("Id")]
-        public int Id { get; set; }
+        public int id { get; set; }
 
         [DisplayName("姓名")]
         public string name { get; set; }

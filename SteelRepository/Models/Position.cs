@@ -7,16 +7,11 @@ using System.Web;
 
 namespace SteelRepository.Models
 {
-    public class Manufacturers
+    public class Position
     {
         [Key]
         [DisplayName("Id")]
         public int id { get; set; }
 
-        [DisplayName("厂家名称")]
-        public string manufacturersName { get; set; }
-
-        [DisplayName("是否存在")]
-        public int? exists { get; set; }
     }
 }
