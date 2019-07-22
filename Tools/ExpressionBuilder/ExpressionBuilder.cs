@@ -14,26 +14,14 @@ namespace Tools
         }
         public void And(Expression<Func<T, bool>> otherExp)
         {
-            if (expression == null)
-            {
-                expression = otherExp.Body;
-                return;
-            }
-            else if (otherExp == null)
-                throw new Exception("表达式不能为null");
+            if (!IsValid(otherExp)) return;
 
             expression = Expression.AndAlso(expression, otherExp.Body);
         }
 
         public void Or(Expression<Func<T, bool>> otherExp)
         {
-            if (expression == null)
-            {
-                expression = otherExp.Body;
-                return;
-            }
-            else if (otherExp == null)
-                throw new Exception("表达式不能为null");
+            if (!IsValid(otherExp)) return;
 
             expression = Expression.Or(expression, otherExp.Body);
         }
@@ -47,6 +35,19 @@ namespace Tools
             expression = null;
 
             return ret;
+        }
+
+        private bool IsValid(Expression<Func<T, bool>> otherExp)
+        {
+            if (expression == null)
+            {
+                expression = otherExp.Body;
+                return false;
+            }
+            else if (otherExp == null)
+                throw new Exception("表达式不能为null");
+
+            return true;
         }
     }
 }
