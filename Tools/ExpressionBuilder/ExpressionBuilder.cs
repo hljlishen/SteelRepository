@@ -15,20 +15,26 @@ namespace Tools
         public void And(Expression<Func<T, bool>> otherExp)
         {
             if (expression == null)
+            {
                 expression = otherExp;
+                return;
+            }
             else if (otherExp == null)
                 return;
 
             expression = Expression.Lambda<Func<T, bool>>(Expression.AndAlso(expression.Body, otherExp.Body), param);
         }
 
-        public void Or(Expression<Func<T, bool>> exp)
+        public void Or(Expression<Func<T, bool>> otherExp)
         {
             if (expression == null)
-                expression = exp;
-            else if (exp == null)
+            {
+                expression = otherExp;
                 return;
-            expression = Expression.Lambda<Func<T, bool>>(Expression.Or(expression.Body, exp.Body), param);
+            }
+            else if (otherExp == null)
+                return;
+            expression = Expression.Lambda<Func<T, bool>>(Expression.Or(expression.Body, otherExp.Body), param);
         }
 
         public Expression<Func<T, bool>> GetExpression()
