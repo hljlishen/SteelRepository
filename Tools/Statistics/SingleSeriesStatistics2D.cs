@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace Tools.Statistics
 {
-    public class SingleSeriesStatistics2D<TObject, TValue> where TObject : class
+    internal class SingleSeriesStatistics2D<TObject, TValue> where TObject : class
     {
         public string XAxisName { get; private set; }
         public string YAxisName { get; private set; }
@@ -51,18 +51,17 @@ namespace Tools.Statistics
             {
                 string xAxisValue = objectType.GetProperty(XAxisName).GetValue(item).ToString();
 
-                PropertyInfo propInfo = objectType.GetProperty(seriesName);
-                object propertyValue = propInfo.GetValue(item);
+                object propertyValue = objectType.GetProperty(seriesName).GetValue(item);
                 TValue seriesValue;
-                if (propertyValue == null)
-                    seriesValue = default(TValue);
-                else
+                if (propertyValue != null)
                 {
                     var converter = TypeDescriptor.GetConverter(typeof(TValue));
                     seriesValue = (TValue)converter.ConvertTo(propertyValue, typeof(TValue));
                 }
+                else
+                    seriesValue = default(TValue);
 
-                    if (!ret.ContainsKey(xAxisValue))
+                if (!ret.ContainsKey(xAxisValue))
                     ret.Add(xAxisValue, new List<TValue>());
                 ret[xAxisValue].Add(seriesValue);
             }

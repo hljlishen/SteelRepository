@@ -5,7 +5,7 @@ namespace Tools
 {
     public class ExpressionBuilder<T>
     {
-        private Expression<Func<T, bool>> expression = null;
+        private Expression expression = null;
         private readonly ParameterExpression param;
 
         public ExpressionBuilder()
@@ -16,33 +16,37 @@ namespace Tools
         {
             if (expression == null)
             {
-                expression = otherExp;
+                expression = otherExp.Body;
                 return;
             }
             else if (otherExp == null)
-                return;
+                throw new Exception("表达式不能为null");
 
-            expression = Expression.Lambda<Func<T, bool>>(Expression.AndAlso(expression.Body, otherExp.Body), param);
+            expression = Expression.AndAlso(expression, otherExp.Body);
         }
 
         public void Or(Expression<Func<T, bool>> otherExp)
         {
             if (expression == null)
             {
-                expression = otherExp;
+                expression = otherExp.Body;
                 return;
             }
             else if (otherExp == null)
-                return;
-            expression = Expression.Lambda<Func<T, bool>>(Expression.Or(expression.Body, otherExp.Body), param);
+                throw new Exception("表达式不能为null");
+
+            expression = Expression.Or(expression, otherExp.Body);
         }
 
         public Expression<Func<T, bool>> GetExpression()
         {
-            ReplaceParamVisitor visitor = new ReplaceParamVisitor(param);
-            expression = Expression.Lambda<Func<T, bool>>(visitor.Visit(expression.Body), param);
+            if (expression == null) return null;
 
-            return expression;
+            ReplaceParamVisitor visitor = new ReplaceParamVisitor(param);
+            var ret = Expression.Lambda<Func<T, bool>>(visitor.Visit(expression), param);
+            expression = null;
+
+            return ret;
         }
     }
 }
