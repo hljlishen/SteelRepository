@@ -7,16 +7,16 @@ using System.Web;
 
 namespace SteelRepository.Models
 {
-    public class InventoryInformation
+    public class Inventory
     {
         [Key]
         [DisplayName("Id")]
-        public int Id { get; set; }
+        public int id { get; set; }
 
-        [DisplayName("批号")]
-        public string batchNumber { get; set; }
+        [DisplayName("批号Id")]
+        public string batchId { get; set; }
 
-        [DisplayName("存置")]
+        [DisplayName("存量")]
         public double? stock { get; set; }
 
         [DisplayName("单位")]
