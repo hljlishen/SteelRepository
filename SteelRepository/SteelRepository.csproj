@@ -160,12 +160,8 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
-    <Compile Include="Controllers\DbInterface\DbHelper.cs" />
-    <Compile Include="Controllers\DbInterface\DbInterface.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\Employee.cs" />
-    <Compile Include="Controllers\ExpressionBuilder\ExpressionBuilder.cs" />
-    <Compile Include="Controllers\ExpressionBuilder\ReplaceParamVisitor.cs" />
     <Compile Include="Models\InCome.cs" />
     <Compile Include="Models\MaterialCode.cs" />
     <Compile Include="Models\Model.cs" />
@@ -176,8 +172,6 @@
     <Compile Include="Models\OutCome.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\RecheckReport.cs" />
-    <Compile Include="Controllers\Statistics\MultipleSeriesStatistics2D.cs" />
-    <Compile Include="Controllers\Statistics\SingleSeriesStatistics2D.cs" />
     <Compile Include="Models\SteelRepositoryDB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -223,6 +217,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Busness\Model\" />
     <Folder Include="Models\InComeExtention\" />
     <Folder Include="Models\OutComeInfoExtention\" />
   </ItemGroup>
@@ -243,6 +238,10 @@
     <ProjectReference Include="..\DbInterface\DbInterface.csproj">
       <Project>{8e906888-a84f-4e8f-87ff-9def75f4a0de}</Project>
       <Name>DbInterface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DbService\DbService.csproj">
+      <Project>{d00339bf-68ac-48dc-abeb-6c4183b9c515}</Project>
+      <Name>DbService</Name>
     </ProjectReference>
     <ProjectReference Include="..\Tools\Tools.csproj">
       <Project>{03265640-df59-435b-9370-86e7f34f9dad}</Project>
