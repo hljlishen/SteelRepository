@@ -48,9 +48,9 @@ namespace DbService
             return Commit(shouldCommit);
         }
 
-        public IQueryable<T> Select<T>(Expression<Func<T, bool>> expression) where T : class
+        public IEnumerable<T> Select<T>(Expression<Func<T, bool>> expression) where T : class
         {
-            return context.Set<T>().Where(expression);
+            return context.Set<T>().Where(expression).ToList();
         }
 
         public int Update<T>(T t, bool shouldCommit = true) where T : class
@@ -68,9 +68,9 @@ namespace DbService
             return Commit(shouldCommit);
         }
 
-        public IQueryable<T> SelectPage<T, TValue>(Expression<Func<T, bool>> expression, int pageSize, int pageNum, Expression<Func<T, TValue>> orderExp, bool isAsc = true) where T : class
+        public IEnumerable<T> SelectPage<T, TValue>(Expression<Func<T, bool>> expression, int pageSize, int pageNum, Expression<Func<T, TValue>> orderExp, bool isAsc = true) where T : class
         {
-            var list = Select(expression);
+            var list = context.Set<T>().Where(expression);
 
             if (orderExp == null)
                 throw new Exception("排序表达式为NUll");
@@ -81,7 +81,7 @@ namespace DbService
                 list = list.OrderByDescending(orderExp);
 
 
-            return list.Skip((pageNum - 1) * pageSize).Take(pageSize);
+            return list.Skip((pageNum - 1) * pageSize).Take(pageSize).ToList();
         }
 
         public void Dispose()
@@ -123,9 +123,9 @@ namespace DbService
                 return 0;
         }
 
-        public IQueryable<T> SelectAll<T>() where T : class
+        public IEnumerable<T> SelectAll<T>() where T : class
         {
-            return context.Set<T>().AsQueryable();
+            return context.Set<T>().ToList();
         }
     }
 }

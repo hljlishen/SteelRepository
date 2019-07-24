@@ -64,7 +64,13 @@ namespace DbService.Tests
         [TestMethod()]
         public void SelectTest()
         {
+            IEnumerable<user> result;
+            using (DbHelper dbHelper = new DbHelper(new userEntities()))
+            {
+                result = dbHelper.Select<user>(p => p.id == 2);
+            }
 
+            user u = result.ElementAt(0);
         }
 
         [TestMethod()]
@@ -100,12 +106,15 @@ namespace DbService.Tests
         [TestMethod()]
         public void SelectPageTest()
         {
+            IEnumerable<user> result;
             using (DbHelper dbHelper = new DbHelper(new userEntities()))
             {
-                var reslut = dbHelper.SelectPage<user, int>(p => p.id > 0, 3, 2, p=>p.id);
-                int count1 = reslut.Count();
+                result = dbHelper.SelectPage<user, int>(p => p.id > 0, 3, 2, p=>p.id);
+                int count1 = result.Count();
                 Assert.AreEqual(count1, 3);
             }
+
+            user u = result.ElementAt(0);
         }
 
         [TestMethod()]
