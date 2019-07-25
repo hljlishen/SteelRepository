@@ -37,10 +37,31 @@ namespace Models
                     throw new Exception("输入错误");
                 else   //对应excel9-12行
                 {
+                    int nameId = -1;
+                    int modelId = -1;
                     //插入没有的数据
-                    Name.Insert(name, helper);
-                    Model.Insert(model, helper);
-                    Insert(code, helper);
+                    if (mName == null)
+                    {
+                        var insertName = new Name() { materialName = name };
+                        helper.Insert(insertName);
+                        nameId = insertName.id;
+                    }
+                    else
+                    {
+                        nameId = mName.id;
+                    }
+                    if (mModel == null)
+                    {
+                        var insertModel = new Model() { modelName = model };
+                        helper.Insert(insertModel);
+                        modelId = insertModel.id;
+                    }
+                    else
+                    {
+                        modelId = mModel.id;
+                    }
+                    //插入MaterialCode
+                    helper.Insert(new MaterialCode() { materialModelId = modelId, materialNameId = nameId, code = code });
                     helper.Commit();
                 }
             }
