@@ -63,7 +63,6 @@
     <Compile Include="Extentions\InCome.cs" />
     <Compile Include="Extentions\MaterialCode.cs" />
     <Compile Include="Extentions\Model.cs" />
-    <Compile Include="Extentions\ModelBase.cs" />
     <Compile Include="Extentions\Name.cs" />
     <Compile Include="InCome.cs">
       <DependentUpon>Model1.tt</DependentUpon>
