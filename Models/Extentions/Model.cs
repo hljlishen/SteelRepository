@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public partial class Name
+    public partial class Model
     {
-        public static Name GetName(string name)
+        public static Model GetModel(string model)
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                return helper.FindFirst<Name, string>("materialName", name);
+                return helper.FindFirst<Model, string>("modelName", model);
             }
         }
     }

@@ -48,7 +48,7 @@ namespace DbService
             return Commit(shouldCommit);
         }
 
-        public IEnumerable<T> Select<T>(Expression<Func<T, bool>> expression) where T : class
+        public List<T> Select<T>(Expression<Func<T, bool>> expression) where T : class
         {
             return context.Set<T>().Where(expression).ToList();
         }
@@ -68,7 +68,7 @@ namespace DbService
             return Commit(shouldCommit);
         }
 
-        public IEnumerable<T> SelectPage<T, TValue>(Expression<Func<T, bool>> expression, int pageSize, int pageNum, Expression<Func<T, TValue>> orderExp, bool isAsc = true) where T : class
+        public List<T> SelectPage<T, TValue>(Expression<Func<T, bool>> expression, int pageSize, int pageNum, Expression<Func<T, TValue>> orderExp, bool isAsc = true) where T : class
         {
             var list = context.Set<T>().Where(expression);
 
@@ -123,7 +123,7 @@ namespace DbService
                 return 0;
         }
 
-        public IEnumerable<T> SelectAll<T>() where T : class
+        public List<T> SelectAll<T>() where T : class
         {
             return context.Set<T>().ToList();
         }
