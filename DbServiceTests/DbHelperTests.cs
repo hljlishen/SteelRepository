@@ -1,4 +1,5 @@
-﻿using DbServiceTests;
+﻿using DbService;
+using DbServiceTests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
@@ -78,7 +79,7 @@ namespace DbService.Tests
         {
             using (DbHelper dbHelper = new DbHelper(new userEntities()))
             {
-                user u = new user() { name = "jjj", sex = "女",id = 2 };
+                user u = new user() { name = "jjj", sex = "女", id = 2 };
                 dbHelper.Update(u);
                 u.name = "yyy";
                 dbHelper.Update(u);
@@ -109,7 +110,7 @@ namespace DbService.Tests
             IEnumerable<user> result;
             using (DbHelper dbHelper = new DbHelper(new userEntities()))
             {
-                result = dbHelper.SelectPage<user, int>(p => p.id > 0, 3, 2, p=>p.id);
+                result = dbHelper.SelectPage<user, int>(p => p.id > 0, 3, 2, p => p.id);
                 int count1 = result.Count();
                 Assert.AreEqual(count1, 3);
             }
@@ -191,6 +192,16 @@ namespace DbService.Tests
             {
                 var result = dbHelper.SelectAll<user>();
                 Assert.IsTrue(result.Count() > 0);
+            }
+        }
+
+        [TestMethod()]
+        public void FindFirstTest()
+        {
+            using (DbHelper dbHelper = new DbHelper(new userEntities()))
+            {
+                var result = dbHelper.FindFirst<user, int>("id", 2);
+                Assert.IsTrue(result != null);
             }
         }
     }

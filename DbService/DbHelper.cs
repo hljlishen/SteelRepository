@@ -127,5 +127,17 @@ namespace DbService
         {
             return context.Set<T>().ToList();
         }
+
+        public T FindFirst<T, TValue>(string fieldName, TValue fieldValue) where T:class
+        {
+            ParameterExpression param = Expression.Parameter(typeof(T));
+            Expression exp = Expression.Property(param, typeof(T).GetProperty(fieldName));
+            exp = Expression.Equal(exp, Expression.Constant(fieldValue));
+            Expression < Func<T, bool> > lambda = Expression.Lambda<Func<T, bool>>(exp, new ParameterExpression[] { param });
+            var result = Select(lambda);
+            if (result.Count() == 0)
+                return null;
+            return result.First();
+        }
     }
 }

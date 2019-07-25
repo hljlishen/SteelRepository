@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using SteelRepository.Models;
 
 namespace SteelRepository.Controllers
 {
@@ -11,7 +10,6 @@ namespace SteelRepository.Controllers
     {
         public ActionResult Index()
         {
-            InCome inc = new InCome();
             return View();
         }
 
