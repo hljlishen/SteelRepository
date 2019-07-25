@@ -1,5 +1,6 @@
 ﻿using DbInterface;
 using DbService;
+using System;
 using System.Collections.Generic;
 
 namespace Models
@@ -19,6 +20,41 @@ namespace Models
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
                 return helper.FindId<Model>(materialModelId);
+            }
+        }
+
+        public static void Insert(string code, string name, string model, IDbInterface helper)
+        {
+            var mCode = GetMaterialCode(code);
+            var mName = Name.GetName(name);
+            var mModel = Model.GetModel(model);
+            var mCodeMatch = GetMaterialCode(name, model);
+            if (mName != null && mModel != null && mCode.id == mCodeMatch.id)   //组合正确，不用写入新数据，对应excel第2行
+                return;
+            else if(mCode == null)
+            {
+                if (mCodeMatch != null)     //对应excel第8行
+                    throw new Exception("输入错误");
+                else   //对应excel9-12行
+                {
+                    //插入没有的数据
+                    Name.Insert(name, helper);
+                    Model.Insert(model, helper);
+                    Insert(code, helper);
+                    helper.Commit();
+                }
+            }
+            else   //对应excel文件3-7行条件
+            {
+                throw new Exception("输入错误");
+            }
+        }
+
+        public static MaterialCode GetMaterialCode(string code)
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return helper.FindFirst<MaterialCode, string>("code", code);
             }
         }
 
@@ -46,6 +82,13 @@ namespace Models
                 else   //组合不存在，返回null
                     return null;
             }
+        }
+
+        public static void Insert(string code, IDbInterface helper)
+        {
+            var record = helper.FindFirst<MaterialCode, string>("code", code);
+            if (record != null) return;
+            helper.Insert(new MaterialCode() { code = code }, false);
         }
     }
 }

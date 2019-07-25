@@ -17,5 +17,12 @@ namespace Models
                 return helper.FindFirst<Name, string>("materialName", name);
             }
         }
+
+        public static void Insert(string name, IDbInterface helper)
+        {
+            var record = helper.FindFirst<Name, string>("materialName", name);
+            if (record != null) return;
+            helper.Insert(new Name() { materialName = name }, false);
+        }
     }
 }
