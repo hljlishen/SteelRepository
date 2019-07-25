@@ -119,6 +119,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
+    <None Include="MaterialCode逻辑.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </None>
@@ -134,6 +137,9 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
+    </Content>
+    <Content Include="script.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
