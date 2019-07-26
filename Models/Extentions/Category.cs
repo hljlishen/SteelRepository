@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Models
 {
-    public partial class Category : ModelBase
+    public partial class Category
     {
         public static Category GetCategory(string categoryName)
         {
