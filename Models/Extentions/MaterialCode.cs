@@ -29,7 +29,7 @@ namespace Models
             var mName = Name.GetName(name);
             var mModel = Model.GetModel(model);
             var mCodeMatch = GetMaterialCode(name, model);
-            if (mName != null && mModel != null && mCode.id == mCodeMatch.id)   //组合正确，不用写入新数据，对应excel第2行
+            if (mName != null && mModel != null && mCodeMatch != null && mCode != null && mCode.id == mCodeMatch.id)   //对应excel第2行,组合正确，不用写入新数据
                 return;
             else if(mCode == null)
             {

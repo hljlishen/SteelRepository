@@ -63,6 +63,8 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Extentions\CategoryTests.cs" />
+    <Compile Include="Extentions\MaterialCodeTests.cs" />
+    <Compile Include="Extentions\NameTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -70,6 +72,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DbInterface\DbInterface.csproj">
+      <Project>{8E906888-A84F-4E8F-87FF-9DEF75F4A0DE}</Project>
+      <Name>DbInterface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DbService\DbService.csproj">
+      <Project>{D00339BF-68AC-48DC-ABEB-6C4183B9C515}</Project>
+      <Name>DbService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Models\Models.csproj">
       <Project>{34996854-836E-4AEE-B03B-145B0E07F605}</Project>
       <Name>Models</Name>
