@@ -60,9 +60,38 @@ namespace Models
             }
         }
 
-        public static void NewInCome(string category, string materialCode, string materialName, string materialModel, string batch, string position, string unit, double amount, int operatorId, double? price = null, string menufacture = null, byte[] qualityCertification = null)
+        public static InCome NewInCome(int categoryId, string materialCode, string materialName, string materialModel, string batch, int positionId, string unit, double amount, int operatorId, double? price = null, int? menufactureId = null, byte[] qualityCertification = null)
         {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                MaterialCode mCode;
+                try
+                {
+                    mCode = MaterialCode.Insert(materialCode, materialName, materialModel, helper);
+                    helper.Commit();
+                }
+                catch(Exception e)
+                {
+                    throw e;
+                }
 
+                if (BatchIdExist(batch, helper)) throw new Exception("批号已存在");
+
+                var income = new InCome() { categoryId = categoryId, batchId = batch, codeId = mCode.id, positionId = positionId, unit = unit, number = amount, operatorId = operatorId, unitPrice = price, menufactureId = menufactureId, qualityCertificate = qualityCertification };
+                helper.Insert(income);
+
+                var inventory = new Inventory() { amount = amount, incomeId = income.id };
+                helper.Insert(inventory);
+
+                return income;
+            }
+        }
+
+        public static bool BatchIdExist(string batchId, IDbInterface helper)
+        {
+            var income = helper.FindFirst<InCome, string>("batchId", batchId);
+
+            return income != null;
         }
     }
 }

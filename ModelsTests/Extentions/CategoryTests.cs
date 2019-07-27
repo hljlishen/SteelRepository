@@ -9,7 +9,7 @@ namespace Models.Tests
         public void GetCategoryTest()
         {
             var ret = Category.GetCategory("123");
-            ret = Category.GetCategory(1);
+            //ret = Category.GetCategory(1);
         }
     }
 }
