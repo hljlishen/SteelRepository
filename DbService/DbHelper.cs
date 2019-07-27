@@ -44,7 +44,7 @@ namespace DbService
         {
             if (t == null) throw new Exception("Insert parameter is null");
 
-            context.Set(typeof(T)).Add(t);
+            context.Set<T>().Add(t);
             return Commit(shouldCommit);
         }
 
@@ -106,7 +106,10 @@ namespace DbService
 
         public int DeleteRange<T>(IEnumerable<T> tList, bool shouldCommit = true) where T : class
         {
-            context.Set<T>().RemoveRange(tList);
+            foreach (var item in tList)
+            {
+                Delete(item);
+            }
             return Commit(shouldCommit);
         }
 

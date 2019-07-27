@@ -23,18 +23,18 @@ namespace Models
             }
         }
 
-        public static void Insert(string code, string name, string model, IDbInterface helper)
+        public static MaterialCode Insert(string code, string name, string model, IDbInterface helper)
         {
             var mCode = GetMaterialCode(code);
             var mName = Name.GetName(name);
             var mModel = Model.GetModel(model);
             var mCodeMatch = GetMaterialCode(name, model);
             if (mName != null && mModel != null && mCodeMatch != null && mCode != null && mCode.id == mCodeMatch.id)   //对应excel第2行,组合正确，不用写入新数据
-                return;
+                return mCode;
             else if(mCode == null)
             {
                 if (mCodeMatch != null)     //对应excel第8行
-                    throw new Exception("输入错误");
+                    throw new Exception("code输入错误");
                 else   //对应excel9-12行
                 {
                     int nameId = -1;
@@ -61,8 +61,10 @@ namespace Models
                         modelId = mModel.id;
                     }
                     //插入MaterialCode
-                    helper.Insert(new MaterialCode() { materialModelId = modelId, materialNameId = nameId, code = code });
+                    var ret = new MaterialCode() { materialModelId = modelId, materialNameId = nameId, code = code };
+                    helper.Insert(ret);
                     helper.Commit();
+                    return ret;
                 }
             }
             else   //对应excel文件3-7行条件
@@ -105,11 +107,11 @@ namespace Models
             }
         }
 
-        public static void Insert(string code, IDbInterface helper)
-        {
-            var record = helper.FindFirst<MaterialCode, string>("code", code);
-            if (record != null) return;
-            helper.Insert(new MaterialCode() { code = code }, false);
-        }
+        //public static void Insert(string code, IDbInterface helper)
+        //{
+        //    var record = helper.FindFirst<MaterialCode, string>("code", code);
+        //    if (record != null) return;
+        //    helper.Insert(new MaterialCode() { code = code }, false);
+        //}
     }
 }
