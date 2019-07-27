@@ -60,7 +60,7 @@ namespace Models
             }
         }
 
-        public static InCome NewInCome(int categoryId, string materialCode, string materialName, string materialModel, string batch, int positionId, string unit, double amount, int operatorId, double? price = null, int? menufactureId = null, byte[] qualityCertification = null)
+        public static InCome NewInCome(int categoryId, string materialCode, string materialName, string materialModel, string batch, int positionId, string measure, double amount, int operatorId, double? price = null, int? menufactureId = null, byte[] qualityCertification = null)
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
@@ -77,10 +77,10 @@ namespace Models
 
                 if (BatchIdExist(batch, helper)) throw new Exception("批号已存在");
 
-                var income = new InCome() { categoryId = categoryId, batch = batch, codeId = mCode.id, positionId = positionId, unit = unit, amount = amount, operatorId = operatorId, unitPrice = price, menufactureId = menufactureId, qualityCertificate = qualityCertification, storageTime = DateTime.Now };
+                var income = new InCome() { categoryId = categoryId, batch = batch, codeId = mCode.id, positionId = positionId, unit = measure, amount = amount, operatorId = operatorId, unitPrice = price, menufactureId = menufactureId, qualityCertificate = qualityCertification, storageTime = DateTime.Now };
                 helper.Insert(income);
 
-                var inventory = new Inventory() { amount = amount, incomeId = income.id };
+                var inventory = new Inventory() { amount = amount, incomeId = income.id , unit = measure};
                 helper.Insert(inventory);
 
                 return income;
