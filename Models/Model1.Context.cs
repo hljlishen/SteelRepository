@@ -16,7 +16,7 @@ namespace Models
     public partial class SteelRepositoryDbEntities : DbContext
     {
         public SteelRepositoryDbEntities()
-            : base("name=SteelRepositoryDbEntities")
+            : base("name=SteelRepositoryDBEntities")
         {
         }
     

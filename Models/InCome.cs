@@ -17,12 +17,12 @@ namespace Models
         public int id { get; set; }
         public int categoryId { get; set; }
         public int codeId { get; set; }
-        public string batchId { get; set; }
+        public string batch { get; set; }
         public Nullable<int> menufactureId { get; set; }
         public int positionId { get; set; }
         public string unit { get; set; }
         public Nullable<double> unitPrice { get; set; }
-        public double number { get; set; }
+        public double amount { get; set; }
         public System.DateTime storageTime { get; set; }
         public byte[] qualityCertificate { get; set; }
         public int operatorId { get; set; }

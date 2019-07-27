@@ -21,7 +21,14 @@ namespace DbService
         public int Delete<T>(T t, bool shouldCommit = true) where T : class
         {
             if (t == null) throw new Exception("delete parameter is null");
-            context.Set<T>().Attach(t);
+            try
+            {
+                context.Set<T>().Attach(t);
+            }
+            catch
+            {
+
+            }
             context.Set<T>().Remove(t);
             return Commit(shouldCommit);
 

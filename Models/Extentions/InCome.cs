@@ -77,7 +77,7 @@ namespace Models
 
                 if (BatchIdExist(batch, helper)) throw new Exception("批号已存在");
 
-                var income = new InCome() { categoryId = categoryId, batchId = batch, codeId = mCode.id, positionId = positionId, unit = unit, number = amount, operatorId = operatorId, unitPrice = price, menufactureId = menufactureId, qualityCertificate = qualityCertification };
+                var income = new InCome() { categoryId = categoryId, batch = batch, codeId = mCode.id, positionId = positionId, unit = unit, amount = amount, operatorId = operatorId, unitPrice = price, menufactureId = menufactureId, qualityCertificate = qualityCertification, storageTime = DateTime.Now };
                 helper.Insert(income);
 
                 var inventory = new Inventory() { amount = amount, incomeId = income.id };
@@ -87,9 +87,9 @@ namespace Models
             }
         }
 
-        public static bool BatchIdExist(string batchId, IDbInterface helper)
+        public static bool BatchIdExist(string batch, IDbInterface helper)
         {
-            var income = helper.FindFirst<InCome, string>("batchId", batchId);
+            var income = helper.FindFirst<InCome, string>("batch", batch);
 
             return income != null;
         }

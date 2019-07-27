@@ -17,7 +17,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="departmentName" Type="nvarchar(max)" />
+          <Property Name="departmentName" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
@@ -38,12 +38,12 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="categoryId" Type="int" Nullable="false" />
           <Property Name="codeId" Type="int" Nullable="false" />
-          <Property Name="batchId" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="batch" Type="nvarchar(max)" Nullable="false" />
           <Property Name="menufactureId" Type="int" />
           <Property Name="positionId" Type="int" Nullable="false" />
           <Property Name="unit" Type="nvarchar(max)" Nullable="false" />
           <Property Name="unitPrice" Type="float" />
-          <Property Name="number" Type="float" Nullable="false" />
+          <Property Name="amount" Type="float" Nullable="false" />
           <Property Name="storageTime" Type="datetime" Nullable="false" />
           <Property Name="qualityCertificate" Type="varbinary(max)" />
           <Property Name="operatorId" Type="int" Nullable="false" />
@@ -55,7 +55,7 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="incomeId" Type="int" Nullable="false" />
           <Property Name="amount" Type="float" Nullable="false" />
-          <Property Name="unit" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="unit" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Manufacturer">
           <Key>
@@ -159,7 +159,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="departmentName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="departmentName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
@@ -180,12 +180,12 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="categoryId" Type="Int32" Nullable="false" />
           <Property Name="codeId" Type="Int32" Nullable="false" />
-          <Property Name="batchId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="batch" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="menufactureId" Type="Int32" />
           <Property Name="positionId" Type="Int32" Nullable="false" />
           <Property Name="unit" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="unitPrice" Type="Double" />
-          <Property Name="number" Type="Double" Nullable="false" />
+          <Property Name="amount" Type="Double" Nullable="false" />
           <Property Name="storageTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="qualityCertificate" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="operatorId" Type="Int32" Nullable="false" />
@@ -197,7 +197,7 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="incomeId" Type="Int32" Nullable="false" />
           <Property Name="amount" Type="Double" Nullable="false" />
-          <Property Name="unit" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="unit" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Manufacturer">
           <Key>
@@ -269,7 +269,7 @@
           <Property Name="incomeId" Type="Int32" Nullable="false" />
           <Property Name="inspectionReport" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
-        <EntityContainer Name="SteelRepositoryDbEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="SteelRepositoryDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Category" EntityType="Self.Category" />
           <EntitySet Name="Department" EntityType="Self.Department" />
           <EntitySet Name="Employee" EntityType="Self.Employee" />
@@ -289,7 +289,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="SteelRepositoryDBModelStoreContainer" CdmEntityContainer="SteelRepositoryDbEntities">
+        <EntityContainerMapping StorageEntityContainer="SteelRepositoryDBModelStoreContainer" CdmEntityContainer="SteelRepositoryDBEntities">
           <EntitySetMapping Name="Category">
             <EntityTypeMapping TypeName="SteelRepositoryDBModel.Category">
               <MappingFragment StoreEntitySet="Category">
@@ -325,12 +325,12 @@
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="categoryId" ColumnName="categoryId" />
                 <ScalarProperty Name="codeId" ColumnName="codeId" />
-                <ScalarProperty Name="batchId" ColumnName="batchId" />
+                <ScalarProperty Name="batch" ColumnName="batch" />
                 <ScalarProperty Name="menufactureId" ColumnName="menufactureId" />
                 <ScalarProperty Name="positionId" ColumnName="positionId" />
                 <ScalarProperty Name="unit" ColumnName="unit" />
                 <ScalarProperty Name="unitPrice" ColumnName="unitPrice" />
-                <ScalarProperty Name="number" ColumnName="number" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
                 <ScalarProperty Name="storageTime" ColumnName="storageTime" />
                 <ScalarProperty Name="qualityCertificate" ColumnName="qualityCertificate" />
                 <ScalarProperty Name="operatorId" ColumnName="operatorId" />
