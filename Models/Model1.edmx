@@ -42,8 +42,9 @@
           <Property Name="menufactureId" Type="int" />
           <Property Name="positionId" Type="int" Nullable="false" />
           <Property Name="unit" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="unitPrice" Type="float" />
           <Property Name="amount" Type="float" Nullable="false" />
+          <Property Name="unitPrice" Type="float" />
+          <Property Name="priceMeasure" Type="nchar" MaxLength="10" />
           <Property Name="storageTime" Type="datetime" Nullable="false" />
           <Property Name="qualityCertificate" Type="varbinary(max)" />
           <Property Name="operatorId" Type="int" Nullable="false" />
@@ -184,8 +185,9 @@
           <Property Name="menufactureId" Type="Int32" />
           <Property Name="positionId" Type="Int32" Nullable="false" />
           <Property Name="unit" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="unitPrice" Type="Double" />
           <Property Name="amount" Type="Double" Nullable="false" />
+          <Property Name="unitPrice" Type="Double" />
+          <Property Name="priceMeasure" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="storageTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="qualityCertificate" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="operatorId" Type="Int32" Nullable="false" />
@@ -269,7 +271,7 @@
           <Property Name="incomeId" Type="Int32" Nullable="false" />
           <Property Name="inspectionReport" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
-        <EntityContainer Name="SteelRepositoryDBEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="SteelRepositoryDBEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Category" EntityType="Self.Category" />
           <EntitySet Name="Department" EntityType="Self.Department" />
           <EntitySet Name="Employee" EntityType="Self.Employee" />
@@ -289,7 +291,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="SteelRepositoryDBModelStoreContainer" CdmEntityContainer="SteelRepositoryDBEntities">
+        <EntityContainerMapping StorageEntityContainer="SteelRepositoryDBModelStoreContainer" CdmEntityContainer="SteelRepositoryDBEntities1">
           <EntitySetMapping Name="Category">
             <EntityTypeMapping TypeName="SteelRepositoryDBModel.Category">
               <MappingFragment StoreEntitySet="Category">
@@ -329,8 +331,9 @@
                 <ScalarProperty Name="menufactureId" ColumnName="menufactureId" />
                 <ScalarProperty Name="positionId" ColumnName="positionId" />
                 <ScalarProperty Name="unit" ColumnName="unit" />
-                <ScalarProperty Name="unitPrice" ColumnName="unitPrice" />
                 <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="unitPrice" ColumnName="unitPrice" />
+                <ScalarProperty Name="priceMeasure" ColumnName="priceMeasure" />
                 <ScalarProperty Name="storageTime" ColumnName="storageTime" />
                 <ScalarProperty Name="qualityCertificate" ColumnName="qualityCertificate" />
                 <ScalarProperty Name="operatorId" ColumnName="operatorId" />

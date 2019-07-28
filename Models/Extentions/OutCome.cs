@@ -14,11 +14,12 @@ namespace Models
                 var incomeList = helper.Select<InCome>(p => p.id == incomeId);
                 if (incomeList.Count == 0) throw new Exception($"入库记录中不存在id：{incomeId}");
                 var income = incomeList[0];
+
                 //查找inventory
                 var inventoryList = helper.Select<Inventory>(p => p.incomeId == incomeId);
                 if (inventoryList.Count == 0) throw new Exception($"库存中不存在incomeId：{incomeId}");
-
                 var inventory = inventoryList[0];
+
                 //判断出库数量是否合法
                 double outcomeAmout = WeightConverter.Convert(measure, amount, inventory.unit);
                 if (outcomeAmout > inventory.amount) throw new Exception($"出库数量:{outcomeAmout},大于库存:{inventory.amount}");
@@ -29,7 +30,7 @@ namespace Models
                     outcomePrice = null;
                 else
                 {
-                    double outAmout = WeightConverter.Convert(measure, amount, income.unit);
+                    double outAmout = WeightConverter.Convert(measure, amount, income.priceMeasure);
                     outcomePrice = outAmout * income.unitPrice;
                 }
 

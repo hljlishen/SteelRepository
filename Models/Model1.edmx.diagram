@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="13ebf29de58549cbb9cde30f3c320cb5" Name="Diagram1">
+      <Diagram DiagramId="6931808de41f4e6094c6b78d7997f557" Name="Diagram1">
         <EntityTypeShape EntityType="SteelRepositoryDBModel.Category" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SteelRepositoryDBModel.Department" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SteelRepositoryDBModel.Employee" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
@@ -15,8 +15,8 @@
         <EntityTypeShape EntityType="SteelRepositoryDBModel.Model" Width="1.5" PointX="6.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SteelRepositoryDBModel.Name" Width="1.5" PointX="4.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SteelRepositoryDBModel.OutCome" Width="1.5" PointX="6.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SteelRepositoryDBModel.Position" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SteelRepositoryDBModel.Project" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SteelRepositoryDBModel.Position" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SteelRepositoryDBModel.Project" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SteelRepositoryDBModel.RecheckReport" Width="1.5" PointX="8.75" PointY="3.75" IsExpanded="true" />
       </Diagram>
     </edmx:Diagrams>
