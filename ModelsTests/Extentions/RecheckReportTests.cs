@@ -40,7 +40,7 @@ namespace Models.Tests
                 Assert.IsTrue(ContainBatch(expireIncomes, "B2"));
                 Assert.IsTrue(ContainBatch(expireIncomes, "B3"));
             }
-            catch(Exception e)
+            catch
             {
                 Assert.Fail();
             }

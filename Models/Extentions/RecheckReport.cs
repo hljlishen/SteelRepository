@@ -7,15 +7,21 @@ namespace Models
 {
     public partial class RecheckReport
     {
-        //public static IEnumerable<RecheckReport> GetExpiredRports(int? expireDays)
-        //{
-        //    using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
-        //    {
-        //        return helper.Select<RecheckReport>(p => System.Data.Entity.DbFunctions.DiffDays(DateTime.Now ,p.recheckTime) < -expireDays);
-        //    }
-        //}
-
-            //public static RecheckReport Insert(int incomeId, )
+        public static RecheckReport Insert(int incomeId, DateTime dateTime, List<byte[]> imgs)
+        {
+            if (imgs == null)
+                throw new Exception("报告图片不能为空，至少上传一张图片");
+            var report = new RecheckReport() { incomeId = incomeId, recheckTime = dateTime };
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                helper.Insert(report);
+                foreach (var item in imgs)
+                {
+                    helper.Insert(new RecheckReportImg() { reportId = report.id, img = item });
+                }
+            }
+            return report;
+        }
 
         public static List<InCome> GetExpiredIncomes(int expireDays)
         {

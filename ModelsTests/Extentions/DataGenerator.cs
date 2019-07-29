@@ -72,11 +72,11 @@ namespace Models.Tests
 
                 for (int i = 0; i < 3; i++)
                 {
-                    var income = InCome.NewInCome(1, $"C{i + 1}", $"N{i + 1}", $"M{i + 1}", $"B{i + 1}", 1, "千克", 50, 1, 10, "KG", 1, null);
+                    var income = InCome.NewInCome(DateTime.Now, 1, $"C{i + 1}", $"N{i + 1}", $"M{i + 1}", $"B{i + 1}", 1, "千克", 50, 1, 10, "KG", 1, null);
                     incomes.Add(income);
                 }
 
-                var inc = InCome.NewInCome(1, $"C2", $"N2", $"M2", $"B4", 1, "千克", 50, 1, 10, "KG", 1, null);
+                var inc = InCome.NewInCome(DateTime.Now, 1, $"C2", $"N2", $"M2", $"B4", 1, "千克", 50, 1, 10, "KG", 1, null);
                 inc.storageTime = DateTime.Now.AddDays(-10);
                 helper.Update(inc);
                 incomes.Add(inc);

@@ -6,7 +6,7 @@ namespace Models
 {
     public partial class OutCome
     {
-        public static OutCome NewOutCome(int incomeId, double amount, string measure, int borrowerId, int? projectId = null, string instructions = "")
+        public static OutCome NewOutCome(DateTime dateTime, int incomeId, double amount, string measure, int borrowerId, int? projectId = null, string instructions = "")
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
@@ -36,7 +36,7 @@ namespace Models
 
                 inventory.amount -= outcomeAmout;
                 helper.Update(inventory, false);
-                var outcome = new OutCome() { borrowerId = borrowerId, number = amount, unit = measure, incomeId = incomeId, projectId = projectId, recipientsTime = DateTime.Now, instructions = instructions, price = outcomePrice };
+                var outcome = new OutCome() { borrowerId = borrowerId, number = amount, unit = measure, incomeId = incomeId, projectId = projectId, recipientsTime = dateTime, instructions = instructions, price = outcomePrice };
                 helper.Insert(outcome, false);
                 helper.Commit();
 

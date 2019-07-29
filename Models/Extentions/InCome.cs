@@ -65,7 +65,7 @@ namespace Models
             }
         }
 
-        public static InCome NewInCome(int categoryId, string materialCode, string materialName, string materialModel, string batch, int positionId, string measure, double amount, int operatorId, double? price = null, string priceMeasure = "千克", int? menufactureId = null, List<byte[]> qualityCertification = null)
+        public static InCome NewInCome(DateTime dateTime, int categoryId, string materialCode, string materialName, string materialModel, string batch, int positionId, string measure, double amount, int operatorId, double? price = null, string priceMeasure = "千克", int? menufactureId = null, List<byte[]> qualityCertification = null)
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
@@ -83,7 +83,7 @@ namespace Models
                 if (BatchIdExist(batch, helper)) throw new Exception("批号已存在");
 
                 //写入入库
-                var income = new InCome() { categoryId = categoryId, batch = batch, codeId = mCode.id, positionId = positionId, unit = measure, amount = amount, operatorId = operatorId, unitPrice = price, menufactureId = menufactureId, storageTime = DateTime.Now, priceMeasure = priceMeasure };
+                var income = new InCome() { categoryId = categoryId, batch = batch, codeId = mCode.id, positionId = positionId, unit = measure, amount = amount, operatorId = operatorId, unitPrice = price, menufactureId = menufactureId, storageTime = dateTime, priceMeasure = priceMeasure };
                 helper.Insert(income);
 
                 //写入质量报告图片

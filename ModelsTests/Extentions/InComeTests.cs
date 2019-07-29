@@ -81,7 +81,7 @@ namespace Models.Tests
                     //测试正常插入
                     try
                     {
-                        income = InCome.NewInCome(1, "C1", "N1", "M1", "123", 1, "千克", 5, 1, 10, "千克", 11);
+                        income = InCome.NewInCome(DateTime.Now, 1, "C1", "N1", "M1", "123", 1, "千克", 5, 1, 10, "千克", 11);
                         var recordIncome = helper.Select<InCome>(p => p.id == income.id);
                         Assert.IsTrue(recordIncome.Count != 0);
                         Assert.AreEqual(recordIncome[0].id, income.id);
@@ -104,8 +104,8 @@ namespace Models.Tests
                         income = new InCome();
                         try
                         {
-                            income = InCome.NewInCome(1, "C1", "N1", "M1", "123", 1, "千克", 5, 1, 10, "千克", 11);
-                            var income1 = InCome.NewInCome(1, "C1", "N1", "M1", "123", 1, "千克", 5, 1, 10, "千克", 11);
+                            income = InCome.NewInCome(DateTime.Now, 1, "C1", "N1", "M1", "123", 1, "千克", 5, 1, 10, "千克", 11);
+                            var income1 = InCome.NewInCome(DateTime.Now, 1, "C1", "N1", "M1", "123", 1, "千克", 5, 1, 10, "千克", 11);
                             Assert.Fail();
                         }
                         catch(Exception e)
@@ -126,7 +126,7 @@ namespace Models.Tests
                         int inventoryCount = helper.SelectAll<Inventory>().Count;
                         try
                         {
-                            income = InCome.NewInCome(1, "C1", "N1", "M2", "123", 1, "千克", 5, 1, 10, "千克", 11);
+                            income = InCome.NewInCome(DateTime.Now, 1, "C1", "N1", "M2", "123", 1, "千克", 5, 1, 10, "千克", 11);
                             Assert.Fail();
                         }
                         catch

@@ -18,12 +18,5 @@ namespace Models
         public int id { get; set; }
         public int incomeId { get; set; }
         public byte[] img { get; set; }
-
-        public static QualityCertificationReportImg Insert(int incomeId, byte[] imgBytes, IDbInterface dbInterface)
-        {
-            QualityCertificationReportImg img = new QualityCertificationReportImg() { incomeId = incomeId, img = imgBytes };
-            dbInterface.Insert(img, false);
-            return img;
-        }
     }
 }

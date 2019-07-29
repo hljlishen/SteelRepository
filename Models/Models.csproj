@@ -60,6 +60,7 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Extentions\Category.cs" />
+    <Compile Include="Extentions\QualityCertificationReportImg.cs" />
     <Compile Include="Extentions\InCome.cs" />
     <Compile Include="Extentions\Inventory.cs" />
     <Compile Include="Extentions\MaterialCode.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="Extentions\Name.cs" />
     <Compile Include="Extentions\OutCome.cs" />
     <Compile Include="Extentions\RecheckReport.cs" />
+    <Compile Include="Extentions\RecheckReportImg.cs" />
     <Compile Include="InCome.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
