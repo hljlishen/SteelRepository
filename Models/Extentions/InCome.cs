@@ -2,9 +2,6 @@
 using DbService;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Models
 {
@@ -49,6 +46,14 @@ namespace Models
                 if (menufactureId == null)
                     return null;
                 return helper.FindId<Manufacturer>(menufactureId.Value);
+            }
+        }
+
+        public IEnumerable<RecheckReport> GetRecheckReports()
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return helper.Select<RecheckReport>(p => p.incomeId == id);
             }
         }
 
