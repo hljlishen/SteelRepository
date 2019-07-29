@@ -16,7 +16,7 @@ namespace Models
     public partial class SteelRepositoryDbEntities : DbContext
     {
         public SteelRepositoryDbEntities()
-            : base("name=SteelRepositoryDBEntities1")
+            : base("name=SteelRepositoryDbEntities")
         {
         }
     
@@ -37,6 +37,8 @@ namespace Models
         public virtual DbSet<OutCome> OutCome { get; set; }
         public virtual DbSet<Position> Position { get; set; }
         public virtual DbSet<Project> Project { get; set; }
+        public virtual DbSet<QualityCertificationReportImg> QualityCertificationReportImg { get; set; }
         public virtual DbSet<RecheckReport> RecheckReport { get; set; }
+        public virtual DbSet<RecheckReportImg> RecheckReportImg { get; set; }
     }
 }

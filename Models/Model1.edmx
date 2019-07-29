@@ -46,7 +46,6 @@
           <Property Name="unitPrice" Type="float" />
           <Property Name="priceMeasure" Type="nchar" MaxLength="10" />
           <Property Name="storageTime" Type="datetime" Nullable="false" />
-          <Property Name="qualityCertificate" Type="varbinary(max)" />
           <Property Name="operatorId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Inventory">
@@ -119,6 +118,14 @@
           <Property Name="projectCode" Type="varchar(max)" Nullable="false" />
           <Property Name="projectName" Type="varchar(max)" Nullable="false" />
         </EntityType>
+        <EntityType Name="QualityCertificationReportImg">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="incomeId" Type="int" Nullable="false" />
+          <Property Name="img" Type="varbinary(max)" Nullable="false" />
+        </EntityType>
         <EntityType Name="RecheckReport">
           <Key>
             <PropertyRef Name="id" />
@@ -126,7 +133,14 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="recheckTime" Type="datetime" Nullable="false" />
           <Property Name="incomeId" Type="int" Nullable="false" />
-          <Property Name="inspectionReport" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="RecheckReportImg">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="reportId" Type="int" Nullable="false" />
+          <Property Name="img" Type="varbinary(max)" Nullable="false" />
         </EntityType>
         <EntityContainer Name="SteelRepositoryDBModelStoreContainer">
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
@@ -141,7 +155,9 @@
           <EntitySet Name="OutCome" EntityType="Self.OutCome" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Position" EntityType="Self.Position" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QualityCertificationReportImg" EntityType="Self.QualityCertificationReportImg" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RecheckReport" EntityType="Self.RecheckReport" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RecheckReportImg" EntityType="Self.RecheckReportImg" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
@@ -189,7 +205,6 @@
           <Property Name="unitPrice" Type="Double" />
           <Property Name="priceMeasure" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="storageTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="qualityCertificate" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="operatorId" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Inventory">
@@ -262,6 +277,14 @@
           <Property Name="projectCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="projectName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
+        <EntityType Name="QualityCertificationReportImg">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="incomeId" Type="Int32" Nullable="false" />
+          <Property Name="img" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+        </EntityType>
         <EntityType Name="RecheckReport">
           <Key>
             <PropertyRef Name="id" />
@@ -269,9 +292,16 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="recheckTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="incomeId" Type="Int32" Nullable="false" />
-          <Property Name="inspectionReport" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
-        <EntityContainer Name="SteelRepositoryDBEntities1" annotation:LazyLoadingEnabled="true">
+        <EntityType Name="RecheckReportImg">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="reportId" Type="Int32" Nullable="false" />
+          <Property Name="img" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="SteelRepositoryDBEntities2" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Category" EntityType="Self.Category" />
           <EntitySet Name="Department" EntityType="Self.Department" />
           <EntitySet Name="Employee" EntityType="Self.Employee" />
@@ -284,14 +314,16 @@
           <EntitySet Name="OutCome" EntityType="Self.OutCome" />
           <EntitySet Name="Position" EntityType="Self.Position" />
           <EntitySet Name="Project" EntityType="Self.Project" />
+          <EntitySet Name="QualityCertificationReportImg" EntityType="Self.QualityCertificationReportImg" />
           <EntitySet Name="RecheckReport" EntityType="Self.RecheckReport" />
+          <EntitySet Name="RecheckReportImg" EntityType="Self.RecheckReportImg" />
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="SteelRepositoryDBModelStoreContainer" CdmEntityContainer="SteelRepositoryDBEntities1">
+        <EntityContainerMapping StorageEntityContainer="SteelRepositoryDBModelStoreContainer" CdmEntityContainer="SteelRepositoryDBEntities2">
           <EntitySetMapping Name="Category">
             <EntityTypeMapping TypeName="SteelRepositoryDBModel.Category">
               <MappingFragment StoreEntitySet="Category">
@@ -335,7 +367,6 @@
                 <ScalarProperty Name="unitPrice" ColumnName="unitPrice" />
                 <ScalarProperty Name="priceMeasure" ColumnName="priceMeasure" />
                 <ScalarProperty Name="storageTime" ColumnName="storageTime" />
-                <ScalarProperty Name="qualityCertificate" ColumnName="qualityCertificate" />
                 <ScalarProperty Name="operatorId" ColumnName="operatorId" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -418,13 +449,30 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="QualityCertificationReportImg">
+            <EntityTypeMapping TypeName="SteelRepositoryDBModel.QualityCertificationReportImg">
+              <MappingFragment StoreEntitySet="QualityCertificationReportImg">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="incomeId" ColumnName="incomeId" />
+                <ScalarProperty Name="img" ColumnName="img" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="RecheckReport">
             <EntityTypeMapping TypeName="SteelRepositoryDBModel.RecheckReport">
               <MappingFragment StoreEntitySet="RecheckReport">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="recheckTime" ColumnName="recheckTime" />
                 <ScalarProperty Name="incomeId" ColumnName="incomeId" />
-                <ScalarProperty Name="inspectionReport" ColumnName="inspectionReport" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RecheckReportImg">
+            <EntityTypeMapping TypeName="SteelRepositoryDBModel.RecheckReportImg">
+              <MappingFragment StoreEntitySet="RecheckReportImg">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="reportId" ColumnName="reportId" />
+                <ScalarProperty Name="img" ColumnName="img" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

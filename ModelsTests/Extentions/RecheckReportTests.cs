@@ -1,65 +1,63 @@
-﻿using DbInterface;
+﻿using Models;
+using DbInterface;
 using DbService;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Models.Tests
 {
     [TestClass()]
     public class RecheckReportTests
     {
-        private List<RecheckReport> reports = new List<RecheckReport>();
-
-        private void SetupData()
-        {
-            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
-            {
-                reports.Add(new RecheckReport() { incomeId = 1, recheckTime = DateTime.Now.AddDays(-3) });
-                reports.Add(new RecheckReport() { incomeId = 1, recheckTime = DateTime.Now.AddDays(-30) });
-                reports.Add(new RecheckReport() { incomeId = 1, recheckTime = DateTime.Now.AddDays(-300) });
-                reports.Add(new RecheckReport() { incomeId = 1, recheckTime = DateTime.Now.AddDays(-3000)});
-                reports.Add(new RecheckReport() { incomeId = 1, recheckTime = DateTime.Now.AddDays(-168) });
-                reports.Add(new RecheckReport() { incomeId = 1, recheckTime = DateTime.Now.AddDays(-278) });
-                helper.InsertRange(reports);
-            }
-        }
-
-        private void DestroyData()
-        {
-            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
-            {
-                helper.DeleteRange(reports);
-            }
-        }
         [TestMethod()]
-        public void GetExpiredRportsTest()
+        public void GetExpiredIncomesTest()
         {
-            SetupData();
-
+            DataGenerator dataGenerator = new DataGenerator();
             try
             {
-                var list1 = RecheckReport.GetExpiredRports(5);
-                Assert.IsTrue(list1.Count() >= 5);
+                dataGenerator.SetupData();
+                var expireIncomes = RecheckReport.GetExpiredIncomes(137);
+                Assert.IsTrue(expireIncomes.Count >= 1);
+                Assert.IsTrue(ContainBatch(expireIncomes, "B2"));
 
-                list1 = RecheckReport.GetExpiredRports(500);
-                Assert.IsTrue(list1.Count() >= 1);
+                expireIncomes = RecheckReport.GetExpiredIncomes(80);
+                Assert.IsTrue(expireIncomes.Count >= 2);
+                Assert.IsTrue(ContainBatch(expireIncomes, "B2"));
+                Assert.IsTrue(ContainBatch(expireIncomes, "B3"));
 
-                list1 = RecheckReport.GetExpiredRports(200);
-                Assert.IsTrue(list1.Count() >= 3);
+                expireIncomes = RecheckReport.GetExpiredIncomes(50);
+                Assert.IsTrue(expireIncomes.Count >= 3);
+                Assert.IsTrue(ContainBatch(expireIncomes, "B1"));
+                Assert.IsTrue(ContainBatch(expireIncomes, "B2"));
+                Assert.IsTrue(ContainBatch(expireIncomes, "B3"));
+
+                expireIncomes = RecheckReport.GetExpiredIncomes(10);
+                Assert.IsTrue(expireIncomes.Count >= 4);
+                Assert.IsTrue(ContainBatch(expireIncomes, "B4")); ;
+                Assert.IsTrue(ContainBatch(expireIncomes, "B1"));
+                Assert.IsTrue(ContainBatch(expireIncomes, "B2"));
+                Assert.IsTrue(ContainBatch(expireIncomes, "B3"));
             }
-            catch
+            catch(Exception e)
             {
                 Assert.Fail();
             }
             finally
             {
-                DestroyData();
+                dataGenerator.DestroyData();
             }
+        }
+
+        private bool ContainBatch(List<InCome> incomes, string batch)
+        {
+            foreach (var item in incomes)
+            {
+                if (item.batch == batch)
+                    return true;
+            }
+            return false;
         }
     }
 }

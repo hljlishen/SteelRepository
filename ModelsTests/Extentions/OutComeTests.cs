@@ -52,7 +52,7 @@ namespace Models.Tests
                     }
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
 
             }
@@ -60,6 +60,12 @@ namespace Models.Tests
             {
                 g.DestroyData();
             }
+        }
+
+        [TestMethod()]
+        public void GetOutComesTest()
+        {
+            var outcomes = OutCome.GetOutComes(DateTime.Now.AddDays(-10), DateTime.Now);
         }
     }
 }

@@ -77,23 +77,31 @@ namespace Models.Tests
             {
                 using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
                 {
+                    var income = new InCome();
                     //测试正常插入
+                    try
                     {
-                        var income = InCome.NewInCome(1, "C1", "N1", "M1", "123", 1, "千克", 5, 1, 10, "千克", 11);
+                        income = InCome.NewInCome(1, "C1", "N1", "M1", "123", 1, "千克", 5, 1, 10, "千克", 11);
                         var recordIncome = helper.Select<InCome>(p => p.id == income.id);
                         Assert.IsTrue(recordIncome.Count != 0);
                         Assert.AreEqual(recordIncome[0].id, income.id);
                         var inventory = helper.Select<Inventory>(p => p.incomeId == income.id);
                         Assert.IsTrue(inventory.Count != 0);
                         Assert.AreEqual(inventory[0].amount, 5);
+                    }
+                    catch
+                    {
 
+                    }
+                    finally
+                    {
                         helper.DeleteWhere<Inventory>(p => p.incomeId == income.id);
                         helper.DeleteWhere<InCome>(p => p.id == income.id);
                     }
 
                     //测试重复插入相同批号
                     {
-                        InCome income = new InCome();
+                        income = new InCome();
                         try
                         {
                             income = InCome.NewInCome(1, "C1", "N1", "M1", "123", 1, "千克", 5, 1, 10, "千克", 11);
@@ -113,7 +121,7 @@ namespace Models.Tests
 
                     //测试编号输入异常
                     {
-                        InCome income = new InCome();
+                        income = new InCome();
                         int incomeCount = helper.SelectAll<InCome>().Count;
                         int inventoryCount = helper.SelectAll<Inventory>().Count;
                         try

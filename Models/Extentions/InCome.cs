@@ -65,7 +65,7 @@ namespace Models
             }
         }
 
-        public static InCome NewInCome(int categoryId, string materialCode, string materialName, string materialModel, string batch, int positionId, string measure, double amount, int operatorId, double? price = null, string priceMeasure = "千克", int? menufactureId = null, byte[] qualityCertification = null)
+        public static InCome NewInCome(int categoryId, string materialCode, string materialName, string materialModel, string batch, int positionId, string measure, double amount, int operatorId, double? price = null, string priceMeasure = "千克", int? menufactureId = null, List<byte[]> qualityCertification = null)
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
@@ -82,12 +82,25 @@ namespace Models
 
                 if (BatchIdExist(batch, helper)) throw new Exception("批号已存在");
 
-                var income = new InCome() { categoryId = categoryId, batch = batch, codeId = mCode.id, positionId = positionId, unit = measure, amount = amount, operatorId = operatorId, unitPrice = price, menufactureId = menufactureId, qualityCertificate = qualityCertification, storageTime = DateTime.Now, priceMeasure = priceMeasure };
+                //写入入库
+                var income = new InCome() { categoryId = categoryId, batch = batch, codeId = mCode.id, positionId = positionId, unit = measure, amount = amount, operatorId = operatorId, unitPrice = price, menufactureId = menufactureId, storageTime = DateTime.Now, priceMeasure = priceMeasure };
                 helper.Insert(income);
 
-                var inventory = new Inventory() { amount = amount, incomeId = income.id , unit = measure};
-                helper.Insert(inventory);
+                //写入质量报告图片
+                if(qualityCertification != null)
+                {
+                    foreach (var item in qualityCertification)
+                    {
+                        QualityCertificationReportImg.Insert(income.id, item, helper);
+                    }
+                }
 
+                //写入库存
+                //var inventory = new Inventory() { amount = amount, incomeId = income.id , unit = measure};
+                //helper.Insert(inventory, false);
+                var inventory = Inventory.Insert(income.id, amount, measure, helper);
+
+                helper.Commit();
                 return income;
             }
         }
