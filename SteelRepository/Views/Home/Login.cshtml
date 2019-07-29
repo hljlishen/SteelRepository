@@ -1,0 +1,75 @@
+﻿@{
+    ViewBag.Title = "Login";
+}
+<div>
+    <form>
+        <div class="LoginMain"style="width:680px;height:500px">
+            <h1 style="margin:20px;font:medium">登录/LOGIN</h1>
+            <div class="login" align="justify">
+                <dl style="margin-top:92px">
+                    <dt class="user">
+                        <label id="lName">用&emsp;户&emsp;名：</label>
+                    </dt>
+                    <dd>
+                        <input id="textUserName" class="text_nor" name="TextUserName" type="text" tabindex="1" autocomplete="off" />
+                    </dd>
+                </dl>
+                <div style="clear:both"></div>
+                <dl>
+                    <dt class="pwd">
+                        <label id="lPwd">密&emsp;&emsp;&emsp;码：</label>
+                    </dt>
+                    <dd>
+                        <input id="TextBox1" class="text_nor" name="TextBox1" type="password" tabindex="2" onfocus="sava(this);" autocomplete="off" />
+                    </dd>
+                </dl>
+                <div style="clear:both"></div>
+                <dl style="position:relative">
+                    <dt class="yanzhengma">
+                        <label id="lYanzhenma">验&emsp;证&emsp;码:</label>
+                    </dt>
+                    <dd>
+                        <input id="textCode" class="text_nor" name="TextCode" type="text" tabindex="3" autocomplete="off" />
+                        <img src="" />
+                        @{ int i = 123;}
+                        @i
+                    </dd>
+                    <dt></dt>
+                </dl>
+                <div style="clear:both"></div>
+                <dl>
+                    <dd>
+                        <table id="RedioButton1" border="0">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <input id="RedioButton1_1" type="radio" name="RedioButton1" value="用户" tabindex="4" />
+                                        <label for="RedioButton1_1">用户</label>
+                                    </td>
+                                    <td>
+                                        <input id="RedioButton1_2" type="radio" name="RedioButton1" value="管理员" tabindex="4" />
+                                        <label for="RedioButton1_2">管理员</label>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </dd>
+                </dl>
+                <div style="clear:both"></div>
+                <dl>
+                    <dt>
+                        <button class="subBtn" type="submit">登录</button>
+                        &emsp;&emsp;&emsp;&emsp;
+                        <button type="reset">重置</button>
+                    </dt>
+
+                </dl>
+            </div>
+        </div>
+        @*@{
+                string greeting = "<strong>Hello World!</strong>";
+            }
+            <p>@Html.Raw(greeting)</p>*@
+    </form>
+
+</div>

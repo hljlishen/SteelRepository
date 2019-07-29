@@ -22,10 +22,30 @@ namespace SteelRepository.Controllers
             return View();
         }
 
-        public ActionResult Contact()
+        public ActionResult Login()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Your Login page.";
 
+            return View();
+        }
+        public ActionResult Searching()
+        {
+            ViewBag.Message = "Your Searching page";
+            return View();
+        }
+        public ActionResult Chart()
+        {
+            ViewBag.Message = "Your Charting page";
+            return View();
+        }
+        public ActionResult In()
+        {
+            ViewBag.Message = "Your 入库 page";
+            return View();
+        }
+        public ActionResult Out()
+        {
+            ViewBag.Message = "Your 出库 page";
             return View();
         }
     }
