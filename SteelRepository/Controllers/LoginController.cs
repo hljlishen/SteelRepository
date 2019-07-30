@@ -12,7 +12,6 @@ namespace SteelRepository.Controllers
         // GET: Login
         public ActionResult UserLogin()
         {
-             
             return View();
         }
     }
