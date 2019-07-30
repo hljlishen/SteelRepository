@@ -9,8 +9,19 @@ namespace SteelRepository.Controllers
 {
     public class LoginController : Controller
     {
-        // GET: Login
+        [ValidateInput(false)]
         public ActionResult UserLogin()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult UserLogin(Employee employee)
+        {
+            return View();
+        }
+
+        public ActionResult AdminIndex()
         {
             return View();
         }
