@@ -168,6 +168,10 @@
       <Project>{d00339bf-68ac-48dc-abeb-6c4183b9c515}</Project>
       <Name>DbService</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Tools\Tools.csproj">
+      <Project>{03265640-df59-435b-9370-86e7f34f9dad}</Project>
+      <Name>Tools</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

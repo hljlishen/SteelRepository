@@ -34,9 +34,17 @@ namespace Models.Tests
             }
         }
 
-        private void SetupOutCome()
+        public void SetupOutCome()
         {
+            outcomes.Add(OutCome.NewOutCome(DateTime.Parse("2017-1-12"), incomes[0].id, 500, "G", 1, 1, ""));
+            outcomes.Add(OutCome.NewOutCome(DateTime.Parse("2017-2-12"), incomes[0].id, 5, "KG", 1, 1, ""));
+            outcomes.Add(OutCome.NewOutCome(DateTime.Parse("2017-5-21"), incomes[0].id, 15, "KG", 1, 1, ""));
+            outcomes.Add(OutCome.NewOutCome(DateTime.Parse("2018-2-17"), incomes[0].id, 3, "KG", 1, 1, ""));
 
+            outcomes.Add(OutCome.NewOutCome(DateTime.Parse("2016-7-12"), incomes[1].id, 5000, "G", 1, 1, ""));
+            outcomes.Add(OutCome.NewOutCome(DateTime.Parse("2017-1-22"), incomes[1].id, 5, "KG", 1, 1, ""));
+            outcomes.Add(OutCome.NewOutCome(DateTime.Parse("2017-5-21"), incomes[1].id, 5, "KG", 1, 1, ""));
+            outcomes.Add(OutCome.NewOutCome(DateTime.Parse("2018-9-17"), incomes[1].id, 10, "KG", 1, 1, ""));
         }
 
         public void SetupMaterialCode()
@@ -79,6 +87,9 @@ namespace Models.Tests
                 var inc = InCome.NewInCome(DateTime.Now, 1, $"C2", $"N2", $"M2", $"B4", 1, "千克", 50, 1, 10, "KG", 1, null);
                 inc.storageTime = DateTime.Now.AddDays(-10);
                 helper.Update(inc);
+
+                incomes[1].unitPrice = null;
+                helper.Update(incomes[1]);
                 incomes.Add(inc);
             }
         }
@@ -88,6 +99,7 @@ namespace Models.Tests
             SetupMaterialCode();
             SetupIncome();
             SetupReports();
+            SetupOutCome();
         }
 
         public void DestroyData()
@@ -103,6 +115,7 @@ namespace Models.Tests
                 }
                 helper.DeleteRange(incomes);
                 helper.DeleteRange(reports);
+                helper.DeleteRange(outcomes);
             }
         }
     }
