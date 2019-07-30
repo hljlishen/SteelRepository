@@ -154,7 +154,6 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -162,19 +161,119 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\AdminIndex\css\app.min.css" />
+    <Content Include="Content\AdminIndex\css\icons.min.css" />
+    <Content Include="Content\AdminIndex\css\vendor\britecharts.min.css" />
+    <Content Include="Content\AdminIndex\css\vendor\buttons.bootstrap4.css" />
+    <Content Include="Content\AdminIndex\css\vendor\dataTables.bootstrap4.css" />
+    <Content Include="Content\AdminIndex\css\vendor\fullcalendar.min.css" />
+    <Content Include="Content\AdminIndex\css\vendor\jquery-jvectormap-1.2.2.css" />
+    <Content Include="Content\AdminIndex\css\vendor\responsive.bootstrap4.css" />
+    <Content Include="Content\AdminIndex\css\vendor\select.bootstrap4.css" />
+    <Content Include="Content\AdminIndex\css\vendor\simplemde.min.css" />
+    <Content Include="Content\AdminIndex\css\vendor\summernote-bs4.css" />
+    <Content Include="Content\AdminIndex\js\app.min.js" />
+    <Content Include="Content\AdminIndex\js\pages\demo.apex-area.js" />
+    <Content Include="Content\AdminIndex\js\pages\demo.apex-bar.js" />
+    <Content Include="Content\AdminIndex\js\pages\demo.apex-bubble.js" />
+    <Content Include="Content\AdminIndex\js\pages\demo.apex-candlestick.js" />
+    <Content Include="Content\AdminIndex\js\pages\demo.apex-column.js" />
+    <Content Include="Content\AdminIndex\js\pages\demo.apex-heatmap.js" />
+    <Content Include="Content\AdminIndex\js\pages\demo.apex-line.js" />
+    <Content Include="Content\AdminIndex\js\pages\demo.apex-mixed.js" />
+    <Content Include="Content\AdminIndex\js\pages\demo.apex-pie.js" />
+    <Content Include="Content\AdminIndex\js\pages\demo.apex-radar.js" />
+    <Content Include="Content\AdminIndex\js\pages\demo.apex-radialbar.js" />
+    <Content Include="Content\AdminIndex\js\pages\demo.apex-scatter.js" />
+    <Content Include="Content\AdminIndex\js\pages\demo.apex-sparklines.js" />
+    <Content Include="Content\AdminIndex\js\pages\demo.britechart.js" />
+    <Content Include="Content\AdminIndex\js\pages\demo.calendar.js" />
+    <Content Include="Content\AdminIndex\js\pages\demo.chartjs.js" />
+    <Content Include="Content\AdminIndex\js\pages\demo.customers.js" />
+    <Content Include="Content\AdminIndex\js\pages\demo.dashboard-crm.js" />
+    <Content Include="Content\AdminIndex\js\pages\demo.dashboard-projects.js" />
+    <Content Include="Content\AdminIndex\js\pages\demo.dashboard.js" />
+    <Content Include="Content\AdminIndex\js\pages\demo.datatable-init.js" />
+    <Content Include="Content\AdminIndex\js\pages\demo.form-wizard.js" />
+    <Content Include="Content\AdminIndex\js\pages\demo.google-maps.js" />
+    <Content Include="Content\AdminIndex\js\pages\demo.products.js" />
+    <Content Include="Content\AdminIndex\js\pages\demo.profile.js" />
+    <Content Include="Content\AdminIndex\js\pages\demo.project-detail.js" />
+    <Content Include="Content\AdminIndex\js\pages\demo.sellers.js" />
+    <Content Include="Content\AdminIndex\js\pages\demo.simplemde.js" />
+    <Content Include="Content\AdminIndex\js\pages\demo.sparkline.js" />
+    <Content Include="Content\AdminIndex\js\pages\demo.summernote.js" />
+    <Content Include="Content\AdminIndex\js\pages\demo.toastr.js" />
+    <Content Include="Content\AdminIndex\js\pages\demo.typehead.js" />
+    <Content Include="Content\AdminIndex\js\pages\demo.vector-maps.js" />
+    <Content Include="Content\AdminIndex\js\pages\demo.widgets.js" />
+    <Content Include="Content\AdminIndex\js\ui\component.chat.js" />
+    <Content Include="Content\AdminIndex\js\ui\component.dragula.js" />
+    <Content Include="Content\AdminIndex\js\ui\component.fileupload.js" />
+    <Content Include="Content\AdminIndex\js\ui\component.todo.js" />
+    <Content Include="Content\AdminIndex\js\vendor\buttons.bootstrap4.min.js" />
+    <Content Include="Content\AdminIndex\js\vendor\buttons.flash.min.js" />
+    <Content Include="Content\AdminIndex\js\vendor\buttons.html5.min.js" />
+    <Content Include="Content\AdminIndex\js\vendor\buttons.print.min.js" />
+    <Content Include="Content\AdminIndex\js\vendor\Chart.bundle.min.js" />
+    <Content Include="Content\AdminIndex\js\vendor\dataTables.bootstrap4.js" />
+    <Content Include="Content\AdminIndex\js\vendor\dataTables.buttons.min.js" />
+    <Content Include="Content\AdminIndex\js\vendor\dataTables.checkboxes.min.js" />
+    <Content Include="Content\AdminIndex\js\vendor\dataTables.keyTable.min.js" />
+    <Content Include="Content\AdminIndex\js\vendor\dataTables.responsive.min.js" />
+    <Content Include="Content\AdminIndex\js\vendor\dataTables.select.min.js" />
+    <Content Include="Content\AdminIndex\js\vendor\dragula.min.js" />
+    <Content Include="Content\AdminIndex\js\vendor\dropzone.min.js" />
+    <Content Include="Content\AdminIndex\js\vendor\gmaps.min.js" />
+    <Content Include="Content\AdminIndex\js\vendor\handlebars.min.js" />
+    <Content Include="Content\AdminIndex\js\vendor\jquery-jvectormap-1.2.2.min.js" />
+    <Content Include="Content\AdminIndex\js\vendor\jquery-jvectormap-au-mill-en.js" />
+    <Content Include="Content\AdminIndex\js\vendor\jquery-jvectormap-in-mill-en.js" />
+    <Content Include="Content\AdminIndex\js\vendor\jquery-jvectormap-us-il-chicago-mill-en.js" />
+    <Content Include="Content\AdminIndex\js\vendor\jquery-jvectormap-us-merc-en.js" />
+    <Content Include="Content\AdminIndex\js\vendor\jquery-jvectormap-world-mill-en.js" />
+    <Content Include="Content\AdminIndex\js\vendor\jquery.dataTables.min.js" />
+    <Content Include="Content\AdminIndex\js\vendor\jquery.sparkline.min.js" />
+    <Content Include="Content\AdminIndex\js\vendor\responsive.bootstrap4.min.js" />
+    <Content Include="Content\AdminIndex\js\vendor\summernote-bs4.min.js" />
+    <Content Include="Content\AdminIndex\js\vendor\typeahead.bundle.min.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Login\css\animate.css" />
+    <Content Include="Content\Login\css\bootsnav.css" />
+    <Content Include="Content\Login\css\bootstrap.min.css" />
+    <Content Include="Content\Login\css\font-awesome.min.css" />
+    <Content Include="Content\Login\css\responsive.css" />
+    <Content Include="Content\Login\css\style.css" />
+    <Content Include="Content\Login\js\bootsnav.js" />
+    <Content Include="Content\Login\js\bootstrap.min.js" />
+    <Content Include="Content\Login\js\custom.js" />
+    <Content Include="Content\Login\js\jquery.easing.min.js" />
+    <Content Include="Content\Login\js\jquery.js" />
+    <Content Include="Content\Login\js\jquery.sticky.js" />
+    <Content Include="Content\Login\js\modernizr.min.js" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\a.jpg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="images\6b0263055f6110e8622111f6d4c7982.png" />
+    <Content Include="images\icon1.ico" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\AdminIndex\fonts\dripicons-v2.woff" />
+    <Content Include="Content\AdminIndex\fonts\materialdesignicons-webfont.woff" />
+    <Content Include="Content\AdminIndex\fonts\materialdesignicons-webfont.woff2" />
+    <Content Include="Content\AdminIndex\fonts\Nunito-Bold.woff" />
+    <Content Include="Content\AdminIndex\fonts\Nunito-Regular.woff" />
+    <Content Include="Content\AdminIndex\fonts\Nunito-SemiBold.woff" />
+    <Content Include="Content\AdminIndex\fonts\summernote.ttf" />
+    <Content Include="Content\AdminIndex\fonts\summernote.woff" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -194,13 +293,8 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
-    <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Login\UserLogin.cshtml" />
+    <Content Include="Views\Login\AdminIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -227,6 +321,10 @@
     <ProjectReference Include="..\DbService\DbService.csproj">
       <Project>{d00339bf-68ac-48dc-abeb-6c4183b9c515}</Project>
       <Name>DbService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Models\Models.csproj">
+      <Project>{34996854-836E-4AEE-B03B-145B0E07F605}</Project>
+      <Name>Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\Tools\Tools.csproj">
       <Project>{03265640-df59-435b-9370-86e7f34f9dad}</Project>
