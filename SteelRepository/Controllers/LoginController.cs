@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,6 +12,7 @@ namespace SteelRepository.Controllers
         // GET: Login
         public ActionResult UserLogin()
         {
+             
             return View();
         }
     }

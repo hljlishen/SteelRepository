@@ -7,7 +7,7 @@
       <Diagram DiagramId="3613471e1e7f4b23be6ec1e4ba4e4bb2" Name="Diagram1">
         <EntityTypeShape EntityType="SteelRepositoryDBModel.Category" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SteelRepositoryDBModel.Department" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SteelRepositoryDBModel.Employee" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SteelRepositoryDBModel.Employee" Width="1.5" PointX="9.375" PointY="9.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SteelRepositoryDBModel.InCome" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SteelRepositoryDBModel.Inventory" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SteelRepositoryDBModel.Manufacturer" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />

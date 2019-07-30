@@ -235,6 +235,10 @@
       <Project>{d00339bf-68ac-48dc-abeb-6c4183b9c515}</Project>
       <Name>DbService</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Models\Models.csproj">
+      <Project>{34996854-836E-4AEE-B03B-145B0E07F605}</Project>
+      <Name>Models</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Tools\Tools.csproj">
       <Project>{03265640-df59-435b-9370-86e7f34f9dad}</Project>
       <Name>Tools</Name>
