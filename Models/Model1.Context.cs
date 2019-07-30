@@ -12,53 +12,37 @@
 
 namespace Models
 {
-
-using System;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-
-
-public partial class SteelRepositoryDBEntities1 : DbContext
-{
-    public SteelRepositoryDBEntities1()
-        : base("name=SteelRepositoryDBEntities1")
+    using System;
+    using System.Data.Entity;
+    using System.Data.Entity.Infrastructure;
+    
+    public partial class SteelRepositoryDbEntities : DbContext
     {
-
+        public SteelRepositoryDbEntities()
+            : base("name=SteelRepositoryDbEntities")
+        {
+        }
+    
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            throw new UnintentionalCodeFirstException();
+        }
+    
+        public virtual DbSet<Category> Category { get; set; }
+        public virtual DbSet<Department> Department { get; set; }
+        public virtual DbSet<Employee> Employee { get; set; }
+        public virtual DbSet<InCome> InCome { get; set; }
+        public virtual DbSet<Inventory> Inventory { get; set; }
+        public virtual DbSet<Manufacturer> Manufacturer { get; set; }
+        public virtual DbSet<MaterialCode> MaterialCode { get; set; }
+        public virtual DbSet<Model> Model { get; set; }
+        public virtual DbSet<Name> Name { get; set; }
+        public virtual DbSet<OutCome> OutCome { get; set; }
+        public virtual DbSet<Position> Position { get; set; }
+        public virtual DbSet<Project> Project { get; set; }
+        public virtual DbSet<QualityCertificationReportImg> QualityCertificationReportImg { get; set; }
+        public virtual DbSet<RecheckReport> RecheckReport { get; set; }
+        public virtual DbSet<RecheckReportImg> RecheckReportImg { get; set; }
     }
-
-    protected override void OnModelCreating(DbModelBuilder modelBuilder)
-    {
-        throw new UnintentionalCodeFirstException();
-    }
-
-
-    public virtual DbSet<Category> Category { get; set; }
-
-    public virtual DbSet<Department> Department { get; set; }
-
-    public virtual DbSet<Employee> Employee { get; set; }
-
-    public virtual DbSet<InCome> InCome { get; set; }
-
-    public virtual DbSet<Inventory> Inventory { get; set; }
-
-    public virtual DbSet<Manufacturer> Manufacturer { get; set; }
-
-    public virtual DbSet<MaterialCode> MaterialCode { get; set; }
-
-    public virtual DbSet<Model> Model { get; set; }
-
-    public virtual DbSet<Name> Name { get; set; }
-
-    public virtual DbSet<OutCome> OutCome { get; set; }
-
-    public virtual DbSet<Position> Position { get; set; }
-
-    public virtual DbSet<Project> Project { get; set; }
-
-    public virtual DbSet<RecheckReport> RecheckReport { get; set; }
-
-}
-
 }
 

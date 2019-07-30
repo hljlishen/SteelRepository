@@ -9,13 +9,14 @@
 
 namespace Models
 {
+    using DbInterface;
     using System;
     using System.Collections.Generic;
     
-    public partial class RecheckReport
+    public partial class QualityCertificationReportImg
     {
         public int id { get; set; }
-        public System.DateTime recheckTime { get; set; }
         public int incomeId { get; set; }
+        public byte[] img { get; set; }
     }
 }

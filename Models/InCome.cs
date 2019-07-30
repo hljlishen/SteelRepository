@@ -25,7 +25,6 @@ namespace Models
         public Nullable<double> unitPrice { get; set; }
         public string priceMeasure { get; set; }
         public System.DateTime storageTime { get; set; }
-        public byte[] qualityCertificate { get; set; }
         public int operatorId { get; set; }
     }
 }

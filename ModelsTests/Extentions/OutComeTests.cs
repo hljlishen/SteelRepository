@@ -25,7 +25,7 @@ namespace Models.Tests
                 {
                     //测试正常
                     {
-                        var outcome = OutCome.NewOutCome(g.incomes[0].id, 500, "G", 1, 1, "");
+                        var outcome = OutCome.NewOutCome(DateTime.Now, g.incomes[0].id, 500, "G", 1, 1, "");
                         int incomeId = g.incomes[0].id;
                         var InventoryList = helper.Select<Inventory>(p => p.incomeId == incomeId);
                         var inventory = InventoryList[0];
@@ -42,7 +42,7 @@ namespace Models.Tests
                     {
                         try
                         {
-                            var outcome = OutCome.NewOutCome(g.incomes[0].id, 50000, "G", 1, 1, "");
+                            var outcome = OutCome.NewOutCome(DateTime.Now, g.incomes[0].id, 50000, "G", 1, 1, "");
                             Assert.Fail();
                         }
                         catch (Exception e)
@@ -52,7 +52,7 @@ namespace Models.Tests
                     }
                 }
             }
-            catch(Exception e)
+            catch
             {
 
             }
@@ -60,6 +60,12 @@ namespace Models.Tests
             {
                 g.DestroyData();
             }
+        }
+
+        [TestMethod()]
+        public void GetOutComesTest()
+        {
+            var outcomes = OutCome.GetOutComes(DateTime.Now.AddDays(-10), DateTime.Now);
         }
     }
 }
