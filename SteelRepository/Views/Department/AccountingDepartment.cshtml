@@ -1,0 +1,84 @@
+﻿@{
+    Layout = "~/Views/Login/AdminIndex.cshtml";
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title></title>
+    <meta content="Coderthemes" name="author" />
+    <link href="~/Content/AdminIndex/css/vendor/fullcalendar.min.css" rel="stylesheet" />
+    <link href="~/Content/AdminIndex/css/icons.min.css" rel="stylesheet" />
+    <link href="~/Content/AdminIndex/css/app.min.css" rel="stylesheet" />
+    <script type="text/javascript">
+        function GotoPartView(actionname, controllerName) {
+            var url = "/" + controllerName + "/" + actionname;
+            $.ajax({
+                type: "post",
+                url: url,
+                success: function (data) {
+
+                  //获取到数据后在右侧Content下显示分部视图
+                    $('#bodycontent').html(data);
+                }
+            });
+        }
+
+    </script>
+</head>
+<body>
+    <div>
+
+        <!-- main content start-->
+        <div id="page-wrapper">
+            <div class="main-page">
+                <div class="side-nav-item">
+                    <div class="panel-body widget-shadow">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>姓名</th>
+                                    <th>职务</th>
+                                    <th>修改</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Mark</td>
+                                    <td>Otto</td>
+                                    <td typeof="button">
+                                        <img src="~/images/修改.png" width="20" height="20">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>Jacob</td>
+                                    <td>Thornton</td>
+                                    <td>
+                                        <div>
+                                            <button><img src="~/images/修改.png" width="20" height="20"/></button>
+                                        </div>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td>Larry</td>
+                                    <td>the Bird</td>
+                                    <td >
+                                        <i></i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>
