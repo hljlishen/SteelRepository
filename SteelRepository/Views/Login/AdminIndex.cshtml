@@ -32,10 +32,24 @@
             var frame = "<iframe width='" + width + "' height='" + height + "' onscroll='true' style='border: 0px;' src='" + url + "'></iframe>";
             $("#myModalBody").html(frame);
             $("#myModal").modal("show");
+            //$("#myModalBody").load("/");
         }
         function closeWin() {
             //关闭模态框
             $("#myModal").modal("hide");
+        }
+
+        //0731修改
+        function GotoPartView(AccountDepartment, LoginController) {
+            $.ajax({
+                type: "post",
+                url: /clint/lookfor.ajax,
+                success: function (data) {
+                    $('#myModalBody').html(data);
+                    //获取到数据后在右侧Content下显示分部视图
+                    
+                }
+            });
         }
     </script>
 </head>
@@ -209,84 +223,24 @@
                         </a>
                         <ul class="side-nav-second-level" aria-expanded="false">
                             <li>
-                                <a href="pages-starter.html">Starter Page</a>
+                                <a href="#">财务部</a>
                             </li>
                             <li>
-                                <a href="pages-profile.html">Profile</a>
+                                <a href="pages-profile.html">人事部</a>
                             </li>
                             <li>
-                                <a href="pages-invoice.html">Invoice</a>
+                                <a href="pages-invoice.html">xx部</a>
                             </li>
                             <li>
-                                <a href="pages-faq.html">FAQ</a>
+                                <a href="pages-faq.html">xx部</a>
                             </li>
                             <li>
-                                <a href="pages-pricing.html">Pricing</a>
+                                <a href="pages-pricing.html">xx部</a>
                             </li>
                             <li>
-                                <a href="pages-maintenance.html">Maintenance</a>
+                                <a href="pages-maintenance.html">xx部</a>
                             </li>
-                            <li class="side-nav-item">
-                                <a href="javascript: void(0);" aria-expanded="false">
-                                    Authentication
-                                    <span class="menu-arrow"></span>
-                                </a>
-                                <ul class="side-nav-third-level" aria-expanded="false">
-                                    <li>
-                                        <a href="pages-login.html">Login</a>
-                                    </li>
-                                    <li>
-                                        <a href="pages-login-2.html">Login 2</a>
-                                    </li>
-                                    <li>
-                                        <a href="pages-register.html">Register</a>
-                                    </li>
-                                    <li>
-                                        <a href="pages-register-2.html">Register 2</a>
-                                    </li>
-                                    <li>
-                                        <a href="pages-logout.html">Logout</a>
-                                    </li>
-                                    <li>
-                                        <a href="pages-logout-2.html">Logout 2</a>
-                                    </li>
-                                    <li>
-                                        <a href="pages-recoverpw.html">Recover Password</a>
-                                    </li>
-                                    <li>
-                                        <a href="pages-recoverpw-2.html">Recover Password 2</a>
-                                    </li>
-                                    <li>
-                                        <a href="pages-lock-screen.html">Lock Screen</a>
-                                    </li>
-                                    <li>
-                                        <a href="pages-lock-screen-2.html">Lock Screen 2</a>
-                                    </li>
-                                    <li>
-                                        <a href="pages-confirm-mail.html">Confirm Mail</a>
-                                    </li>
-                                    <li>
-                                        <a href="pages-confirm-mail-2.html">Confirm Mail 2</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="side-nav-item">
-                                <a href="javascript: void(0);" aria-expanded="false">
-                                    Error
-                                    <span class="menu-arrow"></span>
-                                </a>
-                                <ul class="side-nav-third-level" aria-expanded="false">
-                                    <li>
-                                        <a href="pages-404.html">Error 404</a>
-                                    </li>
-                                    <li>
-                                        <a href="pages-404-alt.html">Error 404-alt</a>
-                                    </li>
-                                    <li>
-                                        <a href="pages-500.html">Error 500</a>
-                                    </li>
-                                </ul>
-                            </li>
+
                         </ul>
                     </li>
 
