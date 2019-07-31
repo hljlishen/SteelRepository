@@ -73,17 +73,6 @@ namespace Models.Tests
                 dataGenerator.SetupData();
 
                 var result = OutCome.StatisticsAmountByMonth(new DateTime(2016, 1, 1), new DateTime(2018, 12, 12));
-                //Assert.AreEqual(result["price"].Count, 6);
-                //Assert.AreEqual(result["price"]["2017年一月"], 55);
-                //Assert.AreEqual(result["price"]["2017年二月"], 50);
-                //Assert.AreEqual(result["price"]["2017年五月"], 200);
-                //Assert.AreEqual(result["price"]["2018年二月"], 30);
-                //Assert.AreEqual(result["price"]["2016年七月"], 50);
-                //Assert.AreEqual(result["price"]["2018年九月"], 30);
-            }
-            catch(Exception e)
-            {
-                throw e;
             }
             finally
             {
@@ -101,17 +90,6 @@ namespace Models.Tests
                 dataGenerator.SetupData();
 
                 var result = OutCome.StatisticsAmountByQuarter(new DateTime(2016, 1, 1), new DateTime(2018, 12, 12));
-                //Assert.AreEqual(result["price"].Count, 6);
-                //Assert.AreEqual(result["price"]["2017年一月"], 55);
-                //Assert.AreEqual(result["price"]["2017年二月"], 50);
-                //Assert.AreEqual(result["price"]["2017年五月"], 200);
-                //Assert.AreEqual(result["price"]["2018年二月"], 30);
-                //Assert.AreEqual(result["price"]["2016年七月"], 50);
-                //Assert.AreEqual(result["price"]["2018年九月"], 30);
-            }
-            catch (Exception e)
-            {
-                throw e;
             }
             finally
             {
@@ -129,17 +107,6 @@ namespace Models.Tests
                 dataGenerator.SetupData();
 
                 var result = OutCome.StatisticsAmountByYear(new DateTime(2016, 1, 1), new DateTime(2018, 12, 12));
-                //Assert.AreEqual(result["price"].Count, 6);
-                //Assert.AreEqual(result["price"]["2017年一月"], 55);
-                //Assert.AreEqual(result["price"]["2017年二月"], 50);
-                //Assert.AreEqual(result["price"]["2017年五月"], 200);
-                //Assert.AreEqual(result["price"]["2018年二月"], 30);
-                //Assert.AreEqual(result["price"]["2016年七月"], 50);
-                //Assert.AreEqual(result["price"]["2018年九月"], 30);
-            }
-            catch (Exception e)
-            {
-                throw e;
             }
             finally
             {
@@ -157,17 +124,6 @@ namespace Models.Tests
                 dataGenerator.SetupData();
 
                 var result = OutCome.StatisticsAmountByCode(new DateTime(2016, 1, 1), new DateTime(2018, 12, 12));
-                //Assert.AreEqual(result["price"].Count, 6);
-                //Assert.AreEqual(result["price"]["2017年一月"], 55);
-                //Assert.AreEqual(result["price"]["2017年二月"], 50);
-                //Assert.AreEqual(result["price"]["2017年五月"], 200);
-                //Assert.AreEqual(result["price"]["2018年二月"], 30);
-                //Assert.AreEqual(result["price"]["2016年七月"], 50);
-                //Assert.AreEqual(result["price"]["2018年九月"], 30);
-            }
-            catch (Exception e)
-            {
-                throw e;
             }
             finally
             {

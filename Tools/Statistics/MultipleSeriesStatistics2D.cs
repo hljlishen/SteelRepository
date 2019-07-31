@@ -5,22 +5,20 @@ namespace Tools.Statistics
 {
     public class MultipleSeriesStatistics2D<TObject> where TObject : class
     {
-        private Dictionary<string, SingleSeriesStatistics2D<TObject, double>> statistics = new Dictionary<string, SingleSeriesStatistics2D<TObject, double>>();
+        private Dictionary<string, SingleSeriesStatistics2D<TObject>> statistics = new Dictionary<string, SingleSeriesStatistics2D<TObject>>();
+        private Func<TObject, string> XAxisMapper;
 
-        public MultipleSeriesStatistics2D(string xAxisName)
+        public MultipleSeriesStatistics2D(Func<TObject, string> xAxisMapper)
         {
-            XAxisName = xAxisName;
+            XAxisMapper = xAxisMapper;
         }
 
         public int SeriesCount { get => statistics.Count; }
 
-        public string XAxisName { get; private set; }
-        public void AddSeries(string yAxisName, Func<IEnumerable<double>, dynamic> calculator = null)
+        public void AddSeries(string seriesName, Func<TObject, double> yAxisMapper, StatisticsType type = StatisticsType.Sum, Func<IEnumerable<double>, double> calculator = null)
         {
-            if (statistics.ContainsKey(yAxisName)) throw new Exception($"已经包含了{yAxisName}属性的统计，不能重复添加");
-
-            SingleSeriesStatistics2D<TObject, double> sta = new SingleSeriesStatistics2D<TObject, double>(XAxisName, yAxisName, calculator);
-            statistics.Add(yAxisName, sta);
+            SingleSeriesStatistics2D<TObject> sta = new SingleSeriesStatistics2D<TObject>(XAxisMapper, yAxisMapper, type, calculator);
+            statistics.Add(seriesName, sta);
         }
 
         public Dictionary<string, Dictionary<string, double>> GetValues(IEnumerable<TObject> objects)
