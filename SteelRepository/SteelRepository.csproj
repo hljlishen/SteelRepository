@@ -154,7 +154,9 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -295,6 +297,9 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\Login\UserLogin.cshtml" />
     <Content Include="Views\Login\AdminIndex.cshtml" />
+    <Content Include="Views\Project\Project_list.cshtml" />
+    <Content Include="Views\Project\Project_add.cshtml" />
+    <Content Include="Views\Employee\Employee_list.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
