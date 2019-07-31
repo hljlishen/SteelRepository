@@ -302,7 +302,7 @@
     <Content Include="Views\Project\Project_add.cshtml" />
     <Content Include="Views\Employee\Employee_list.cshtml" />
     <Content Include="Views\Login\People.cshtml" />
-    <Content Include="Views\Login\AccountingDepartment.cshtml" />
+    <Content Include="Views\Department\AccountingDepartment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
