@@ -1,40 +1,47 @@
-﻿@model Models.Employee
+﻿@model Models.Project
 @{
     Layout = null;
 }
+
 <!DOCTYPE html>
+
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&amp;subset=devanagari,latin-ext" rel="stylesheet">
-    <title>用户登录</title>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
     <link href="~/Content/Login/css/font-awesome.min.css" rel="stylesheet" />
     <link href="~/Content/Login/css/animate.css" rel="stylesheet" />
     <link href="~/Content/Login/css/responsive.css" rel="stylesheet" />
     <link href="~/Content/Login/css/style.css" rel="stylesheet" />
     <link href="~/Content/Login/css/responsive.css" rel="stylesheet" />
     <link href="~/Content/Login/css/bootstrap.min.css" rel="stylesheet" />
+
+    <script src="~/Content/Login/js/jquery.js"></script>
+    <script src="~/Content/Login/js/modernizr.min.js"></script>
+    <script src="~/Content/Login/js/bootstrap.min.js"></script>
+    <script src="~/Content/Login/js/bootsnav.js"></script>
+    <script src="~/Content/Login/js/jquery.sticky.js"></script>
+    <script src="~/Content/Login/js/jquery.easing.min.js"></script>
+    <script src="~/Content/Login/js/custom.js"></script>
 </head>
 <body>
     <section class="signin popup-in">
         <div class="container">
             <div class="sign-content popup-in-content">
                 <div class="popup-in-txt">
-                    <h2>用户登录</h2>
+                    <h2>添加项目</h2>
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="signin-form">
-                                @using (Html.BeginForm("UserLogin", "Login", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @role = "form" }))
+                                @using (Html.BeginForm("Project_add", "Project", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @role = "form" }))
                                 {
                                     <div class="form-group">
-                                        <label for="signin_form">账号：</label>
-                                        @Html.TextBoxFor(m => m.number, new { @class = "form-control", placeholder = "请输入用户名", id = "signin_form", type = "text" })
+                                        <label for="signin_form">项目令号：</label>
+                                        @Html.TextBoxFor(m=>m.projectCode,new { @class = "form-control", type = "text" })
                                     </div>
                                     <div class="form-group">
-                                        <label for="signin_form">密码：</label>
-                                        @Html.TextBoxFor(m => m.password, new { @class = "form-control", placeholder = "请输入密码", id = "signin_form", type = "password" })
+                                        <label for="signin_form">项目名称：</label>
+                                        @Html.TextBoxFor(m => m.projectName, new { @class = "form-control", type = "text" })
                                     </div>
                                 }
                             </div>
@@ -45,7 +52,7 @@
                         <div class="col-sm-12">
                             <div class="signin-footer">
                                 <button type="button" class="btn signin_btn signin_btn_two" data-toggle="modal" data-target=".signin_modal">
-                                    登录
+                                    添加
                                 </button>
                             </div>
                         </div>
@@ -54,13 +61,5 @@
             </div>
         </div>
     </section>
-
-    <script src="~/Content/Login/js/jquery.js"></script>
-    <script src="~/Content/Login/js/modernizr.min.js"></script>
-    <script src="~/Content/Login/js/bootstrap.min.js"></script>
-    <script src="~/Content/Login/js/bootsnav.js"></script>
-    <script src="~/Content/Login/js/jquery.sticky.js"></script>
-    <script src="~/Content/Login/js/jquery.easing.min.js"></script>
-    <script src="~/Content/Login/js/custom.js"></script>
 </body>
 </html>
