@@ -265,6 +265,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="images\6b0263055f6110e8622111f6d4c7982.png" />
     <Content Include="images\icon1.ico" />
+    <Content Include="images\修改.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -302,6 +303,8 @@
     <Content Include="Views\Project\Project_list.cshtml" />
     <Content Include="Views\Project\Project_add.cshtml" />
     <Content Include="Views\Employee\Employee_list.cshtml" />
+    <Content Include="Views\Login\People.cshtml" />
+    <Content Include="Views\Department\AccountingDepartment.cshtml" />
     <Content Include="Views\Employee\Employee_add.cshtml" />
   </ItemGroup>
   <ItemGroup>

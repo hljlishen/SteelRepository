@@ -1,36 +1,80 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Reflection;
 
 namespace Tools.Statistics
 {
-    internal class SingleSeriesStatistics2D<TObject, TValue> where TObject : class
+    public enum StatisticsType
     {
-        public string XAxisName { get; private set; }
-        public string YAxisName { get; private set; }
-
-        public Func<IEnumerable<TValue>, dynamic> Calculator;
-
-        public SingleSeriesStatistics2D(string xAxisName, string yAxisName, Func<IEnumerable<TValue>, dynamic> calculator = null)
+        Sum,
+        Count,
+        Average,
+        UserDefine
+    }
+    internal class SingleSeriesStatistics2D<TObject> where TObject : class
+    {
+        private static Func<IEnumerable<double>, double> SumCalculator = p =>        //计算和值
         {
-            XAxisName = xAxisName;
-            YAxisName = yAxisName;
-            Calculator = calculator ?? (p =>
-                 {
-                     dynamic sum = default(TValue);
-                     foreach (var value in p)
-                     {
-                         sum += value;
-                     }
+            double sum = 0;
+            foreach (var value in p)
+            {
+                sum += value;
+            }
+            return sum;
+        }; 
+        private static Func<IEnumerable<double>, double> CountCalculator = p =>        //计算个数
+        {
+            int count = 0;
+            foreach (var value in p)
+            {
+                count++;
+            }
+            return count;
+        };
+        private static Func<IEnumerable<double>, double> AverageCalculator = p =>        //计算均值
+        {
+            double sum = 0;
+            int i = 0;
+            foreach (var value in p)
+            {
+                sum += value;
+                i++;
+            }
+            return sum / i;
+        };
 
-                     return sum;
-                 }); // 默认是所有值相加
+        private Func<TObject, string> XAxisMapper;
+        private Func<TObject, double> YAxisMapper;
+
+        public Func<IEnumerable<double>, double> Calculator;
+
+        public SingleSeriesStatistics2D(Func<TObject, string> xAxisMapper , Func<TObject, double> yAxisMapper, StatisticsType type = StatisticsType.Sum, Func<IEnumerable<double>, double> calculator = null)
+        {
+            switch (type)
+            {
+                case StatisticsType.Sum:
+                    Calculator = SumCalculator;
+                    break;
+                case StatisticsType.Count:
+                    Calculator = CountCalculator;
+                    break;
+                case StatisticsType.Average:
+                    Calculator = AverageCalculator;
+                    break;
+                case StatisticsType.UserDefine:
+                    if (calculator == null) throw new Exception("传入UserDefine类型时，calculator不能为null");
+                    Calculator = calculator;
+                    break;
+                default:
+                    throw new Exception($"错误的StatisticsType类型{type}");
+            }
+
+            XAxisMapper = xAxisMapper;
+            YAxisMapper = yAxisMapper;
         }
 
         public Dictionary<string, double> GetValues(IEnumerable<TObject> objects)
         {
-            var seriesValues = GetSingleSeriesData(objects, YAxisName);
+            var seriesValues = GetSingleSeriesData(objects);
             var ret = new Dictionary<string, double>();
             foreach (var item in seriesValues)
             {
@@ -40,42 +84,20 @@ namespace Tools.Statistics
             return ret;
         }
 
-        private Dictionary<string, List<TValue>> GetSingleSeriesData(IEnumerable<TObject> objects, string seriesName)
+        private Dictionary<string, List<double>> GetSingleSeriesData(IEnumerable<TObject> objects)
         {
-            Type objectType = typeof(TObject);
-            if (!TypeContainsProperty(objectType, seriesName))
-                throw new Exception($"{objectType.ToString()}类型不包含:\"{seriesName}\"属性");
-
-            Dictionary<string, List<TValue>> ret = new Dictionary<string, List<TValue>>();
+            Dictionary<string, List<double>> ret = new Dictionary<string, List<double>>();
             foreach (var item in objects)
             {
-                string xAxisValue = objectType.GetProperty(XAxisName).GetValue(item).ToString();
-
-                object propertyValue = objectType.GetProperty(seriesName).GetValue(item);
-                TValue seriesValue;
-                if (propertyValue != null)
-                {
-                    var converter = TypeDescriptor.GetConverter(typeof(TValue));
-                    seriesValue = (TValue)converter.ConvertTo(propertyValue, typeof(TValue));
-                }
-                else
-                    seriesValue = default(TValue);
+                string xAxisValue = XAxisMapper.Invoke(item);
+                double seriesValue = YAxisMapper.Invoke(item);
 
                 if (!ret.ContainsKey(xAxisValue))
-                    ret.Add(xAxisValue, new List<TValue>());
+                    ret.Add(xAxisValue, new List<double>());
                 ret[xAxisValue].Add(seriesValue);
             }
 
             return ret;
-        }
-
-        protected bool TypeContainsProperty(Type type, string propertyName)
-        {
-            PropertyInfo prop = type.GetProperty(propertyName);
-
-            if (prop == null)
-                return false;
-            return true;
         }
     }
 }

@@ -32,10 +32,24 @@
             var frame = "<iframe width='" + width + "' height='" + height + "' onscroll='true' style='border: 0px;' src='" + url + "'></iframe>";
             $("#myModalBody").html(frame);
             $("#myModal").modal("show");
+            //$("#myModalBody").load("/");
         }
         function closeWin() {
             //关闭模态框
             $("#myModal").modal("hide");
+        }
+
+        //0731修改
+        function GotoPartView(AccountDepartment, LoginController) {
+            $.ajax({
+                type: "post",
+                url: /clint/lookfor.ajax,
+                success: function (data) {
+                    $('#myModalBody').html(data);
+                    //获取到数据后在右侧Content下显示分部视图
+                    
+                }
+            });
         }
     </script>
 </head>

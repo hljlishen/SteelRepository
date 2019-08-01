@@ -25,5 +25,9 @@ namespace SteelRepository.Controllers
         {
             return View();
         }
+        public ActionResult AccountingDepartment(Employee employee)
+        {
+            return View("AccountingDepartment");
+        }
     }
 }
