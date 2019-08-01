@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="Extentions\CategoryTests.cs" />
     <Compile Include="Extentions\DataGenerator.cs" />
+    <Compile Include="Extentions\DepartmentTests.cs" />
     <Compile Include="Extentions\InComeTests.cs" />
     <Compile Include="Extentions\MaterialCodeTests.cs" />
     <Compile Include="Extentions\NameTests.cs" />
