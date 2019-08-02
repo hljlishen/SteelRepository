@@ -35,8 +35,8 @@
                     data = eval("(" + data + ")");
                     if (data) {
                         alert("添加成功");
-                        window.location = "Position_list";
                         parent.closeWin();
+                        parent.openFrame("Position_list");
                     } else {
                     }
                 }

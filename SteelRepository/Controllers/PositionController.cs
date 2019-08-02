@@ -14,7 +14,7 @@ namespace SteelRepository.Controllers
         // GET: Position
         public ActionResult Position_list()
         {
-            return View();
+            return View(Position.SelectAll());
         }
         public ActionResult Position_add()
         {
@@ -26,14 +26,6 @@ namespace SteelRepository.Controllers
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
                 return Json(helper.Insert(position));
-            }
-        }
-        [HttpPost]
-        public JsonResult Position_list(Position position)
-        {
-            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
-            {
-                return Json(helper.SelectAll<Position>());
             }
         }
 
