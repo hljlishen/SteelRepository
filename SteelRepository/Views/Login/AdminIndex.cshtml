@@ -6,6 +6,28 @@
 
 <html>
 <head>
+    @{
+        var name = "";
+        var permissions = "";
+        bool IsLogin = false;
+        var id = "";
+        if (Session["name"] != null)
+        {
+            name = Session["name"].ToString();
+        }
+        if (Session["permissions"] != null)
+        {
+            permissions = Session["permissions"].ToString();
+        }
+        if (Session["IsLogin"] != null)
+        {
+            IsLogin = (bool)Session["IsLogin"];
+        }
+        if (Session["id"] != null)
+        {
+            id = Session["id"].ToString();
+        }
+    }
     <meta charset="utf-8" />
     <title>主页导航栏</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,6 +45,13 @@
             OpenWin(url, width, height);
         }
 
+        function AdminRegistered() {
+            var url = "../Login/UserRegistered";
+            var width = "100%";
+            var height = "800px";
+            OpenWin(url, width, height);
+        }
+
         function openFrame(url) {
             location.href = url;
         }
@@ -32,29 +61,14 @@
             var frame = "<iframe width='" + width + "' height='" + height + "' onscroll='true' style='border: 0px;' src='" + url + "'></iframe>";
             $("#myModalBody").html(frame);
             $("#myModal").modal("show");
-            //$("#myModalBody").load("/");
         }
         function closeWin() {
             //关闭模态框
             $("#myModal").modal("hide");
         }
-
-        //0731修改
-        function GotoPartView(AccountDepartment, LoginController) {
-            $.ajax({
-                type: "post",
-                url: /clint/lookfor.ajax,
-                success: function (data) {
-                    $('#myModalBody').html(data);
-                    //获取到数据后在右侧Content下显示分部视图
-                    
-                }
-            });
-        }
     </script>
 </head>
 <body>
-
     <div class="navbar-custom topnav-navbar">
         <div class="container-fluid">
             <a href="#" class="topnav-logo">
@@ -74,7 +88,7 @@
                             <h5 class="m-0">
                                 <span class="float-right">
                                     <a href="javascript: void(0);" class="text-dark">
-                                        <small>Clear All</small>
+                                        <small></small>
                                     </a>
                                 </span>Notification
                             </h5>
@@ -86,29 +100,48 @@
                         <i class="dripicons-gear noti-icon"></i>
                     </a>
                 </li>
-                <li class="dropdown notification-list">
-                    <a class="nav-link right-bar-toggle" href="javascript:AdminLogin()">
-                        <i class="noti-icon">登录</i>
-                    </a>
-                </li>
-                <li class="dropdown notification-list">
-                    <a class="nav-link dropdown-toggle nav-user arrow-none mr-0" data-toggle="dropdown" id="topbar-userdrop" href="#" role="button" aria-haspopup="true"
-                       aria-expanded="false">
-                        <span>
-                            <span class="account-user-name">登录用户：</span>
-                            <span class="account-position">Admin</span>
-                        </span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated topbar-dropdown-menu profile-dropdown" aria-labelledby="topbar-userdrop">
-                        <div class=" dropdown-header noti-title">
-                            <h6 class="text-overflow m-0">欢迎!</h6>
-                        </div>
-                        <a href="javascript:void(0);" class="dropdown-item notify-item">
-                            <i class="mdi mdi-account-circle mr-1"></i>
-                            <span>My Account</span>
+                @if (!IsLogin)
+                {
+                    <li class="dropdown notification-list">
+                        <a class="nav-link right-bar-toggle" href="javascript:AdminLogin()">
+                            <i class="noti-icon">登录</i>
                         </a>
-                    </div>
-                </li>
+                    </li>
+                    <li class="dropdown notification-list">
+                        <a class="nav-link right-bar-toggle" href="javascript:AdminRegistered()">
+                            <i class="noti-icon">注册</i>
+                        </a>
+                    </li>
+                }
+                @if (IsLogin)
+                {
+                    <li class="dropdown notification-list">
+                        <a class="nav-link dropdown-toggle nav-user arrow-none mr-0" data-toggle="dropdown" id="topbar-userdrop" href="#" role="button" aria-haspopup="true"
+                           aria-expanded="false">
+                            <span>
+                                <span class="account-user-name">登录用户：</span>
+                                <span class="account-position">
+                                    @name
+                                </span>
+                            </span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated topbar-dropdown-menu profile-dropdown" aria-labelledby="topbar-userdrop">
+                            <div class=" dropdown-header noti-title">
+                                <h6 class="text-overflow m-0">欢迎!</h6>
+                            </div>
+                            <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                <i class="mdi mdi-account-circle mr-1"></i>
+                                <span>My Account</span>
+                            </a>
+                        </div>
+                    </li>
+                    <li class="dropdown notification-list">
+                        <a class="nav-link right-bar-toggle" href="javascript:Logout()">
+                            <i class="noti-icon">注销</i>
+                        </a>
+                    </li>
+
+                }
             </ul>
             <div class="app-search">
                 <form>
@@ -123,35 +156,51 @@
             </div>
         </div>
     </div>
+
     <div class="container-fluid">
         <div class="wrapper">
             <div class="left-side-menu">
 
                 <div class="leftbar-user">
                     <a href="#">
-                        <span class="leftbar-user-name">Admin</span>
+                        <span class="leftbar-user-name"> @name </span>
                     </a>
                 </div>
                 <ul class="metismenu side-nav">
 
                     <li class="side-nav-title side-nav-item">导航</li>
-
                     <li class="side-nav-item">
                         <a href="javascript: void(0);" class="side-nav-link">
-                            <i class="dripicons-view-apps"></i>
-                            <span> 员工信息 </span>
+                            <i class="mdi mdi-clipboard-text-play-outline"></i>
+                            <span> 库存信息 </span>
                             <span class="menu-arrow"></span>
                         </a>
-                        <ul class="side-nav-second-level" aria-expanded="false">
-                            <li>
-                                <a href="../Employee/Employee_list">员工信息管理</a>
-                            </li>
-                            <li>
-                                <a href="#">个人信息</a>
-                            </li>
-                        </ul>
+                        <ul class="side-nav-second-level" aria-expanded="false"></ul>
                     </li>
-
+                    <li class="side-nav-item">
+                        @if (permissions == "1" || permissions == "2")
+                        {
+                            <a href="javascript: void(0);" class="side-nav-link">
+                                <i class="dripicons-view-apps"></i>
+                                <span> 员工信息 </span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <ul class="side-nav-second-level" aria-expanded="false">
+                                @if (permissions == "1")
+                                {
+                                    <li>
+                                        <a href="../Employee/Employee_list">员工信息管理</a>
+                                    </li>
+                                }
+                                @if (permissions == "2")
+                                {
+                                    <li>
+                                        <a href="../Employee/Employee_information?id=@id">个人信息</a>
+                                    </li>
+                                }
+                            </ul>
+                        }
+                    </li>
                     <li class="side-nav-item">
                         <a href="javascript: void(0);" class="side-nav-link">
                             <i class="dripicons-location"></i>
@@ -224,7 +273,6 @@
             @RenderBody()
         </div>
     </div>
-
     <div class="content-page">
         <div class="content">
             <footer class="footer">
