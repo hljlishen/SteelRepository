@@ -60,7 +60,11 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Extentions\Category.cs" />
+    <Compile Include="Extentions\Department.cs" />
     <Compile Include="Extentions\Employee.cs" />
+    <Compile Include="Extentions\Manufacturer.cs" />
+    <Compile Include="Extentions\Position.cs" />
+    <Compile Include="Extentions\Project.cs" />
     <Compile Include="Extentions\QualityCertificationReportImg.cs" />
     <Compile Include="Extentions\InCome.cs" />
     <Compile Include="Extentions\Inventory.cs" />
