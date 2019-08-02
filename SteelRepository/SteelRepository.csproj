@@ -157,6 +157,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
+    <Compile Include="Controllers\InventoryController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\PositionController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
@@ -216,11 +217,13 @@
     <Content Include="Content\AdminIndex\js\ui\component.dragula.js" />
     <Content Include="Content\AdminIndex\js\ui\component.fileupload.js" />
     <Content Include="Content\AdminIndex\js\ui\component.todo.js" />
+    <Content Include="Content\AdminIndex\js\vendor\britecharts.js" />
     <Content Include="Content\AdminIndex\js\vendor\buttons.bootstrap4.min.js" />
     <Content Include="Content\AdminIndex\js\vendor\buttons.flash.min.js" />
     <Content Include="Content\AdminIndex\js\vendor\buttons.html5.min.js" />
     <Content Include="Content\AdminIndex\js\vendor\buttons.print.min.js" />
     <Content Include="Content\AdminIndex\js\vendor\Chart.bundle.min.js" />
+    <Content Include="Content\AdminIndex\js\vendor\d3.js" />
     <Content Include="Content\AdminIndex\js\vendor\dataTables.bootstrap4.js" />
     <Content Include="Content\AdminIndex\js\vendor\dataTables.buttons.min.js" />
     <Content Include="Content\AdminIndex\js\vendor\dataTables.checkboxes.min.js" />
@@ -306,11 +309,15 @@
     <Content Include="Views\Project\Project_list.cshtml" />
     <Content Include="Views\Project\Project_add.cshtml" />
     <Content Include="Views\Employee\Employee_list.cshtml" />
-    <Content Include="Views\Login\People.cshtml" />
     <Content Include="Views\Department\AccountingDepartment.cshtml" />
     <Content Include="Views\Employee\Employee_add.cshtml" />
     <Content Include="Views\Position\Position_add.cshtml" />
     <Content Include="Views\Position\Position_list.cshtml" />
+    <Content Include="Views\Employee\Employee_update.cshtml" />
+    <Content Include="Views\Employee\Employee_select.cshtml" />
+    <Content Include="Views\Login\UserRegistered.cshtml" />
+    <Content Include="Views\Employee\Employee_information.cshtml" />
+    <Content Include="Views\Inventory\Inventory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

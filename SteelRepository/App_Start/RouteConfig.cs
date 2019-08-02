@@ -16,7 +16,7 @@ namespace SteelRepository
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Project", action = "Project_list", id = UrlParameter.Optional }
+                defaults: new { controller = "Inventory", action = "Inventory", id = UrlParameter.Optional }
             );
         }
     }

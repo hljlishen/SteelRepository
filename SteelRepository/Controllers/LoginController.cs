@@ -9,25 +9,35 @@ namespace SteelRepository.Controllers
 {
     public class LoginController : Controller
     {
-        [ValidateInput(false)]
         public ActionResult UserLogin()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult UserLogin(Employee employee)
+        public JsonResult UserLogin(Employee employee)
         {
-            return View();
+            bool IsLogin = false;
+            Employee e = Employee.Login(employee);
+            if (e != null)
+            {
+                IsLogin = true;
+                Session["name"] = e.name;
+                Session["permissions"] = e.permissions;
+                Session["IsLogin"] = true;
+                Session["id"] = e.id;
+            }
+            return Json(IsLogin);
         }
 
         public ActionResult AdminIndex()
         {
             return View();
         }
-        public ActionResult AccountingDepartment(Employee employee)
+
+        public ActionResult UserRegistered()
         {
-            return View("AccountingDepartment");
+            return View();
         }
     }
 }

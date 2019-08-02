@@ -1,4 +1,5 @@
-﻿@{
+﻿@model List<Models.Employee>
+@{
     Layout = "~/Views/Login/AdminIndex.cshtml";
 }
 <head>
@@ -20,18 +21,41 @@
              parent.OpenWin(url, width, height);
         }
 
-        function ProjectUpdate() {
-             var url = "Project_add";
+        function EmployeeUpdate(id) {
+             var url = "Employee_update?id="+id;
              var width = "100%";
-             var height = "700px";
+             var height = "500px";
              parent.OpenWin(url, width, height);
         }
 
-        function ProjectSelect() {
-             var url = "Project_add";
+        function EmployeeSelect(id) {
+             var url = "Employee_select?id="+id;
              var width = "100%";
-             var height = "700px";
+             var height = "400px";
              parent.OpenWin(url, width, height);
+        }
+
+        function EmployeeDelete(id) {
+            var flag = confirm("是否要删除信息？");
+        if (flag) {
+            $.ajax({
+                url: "@Url.Action("Employee_delete")",
+                type: "post",
+                data: {
+                    "id": id
+                },
+                dataType: "json",
+                success: function (data) {
+                    data = eval("(" + data + ")");
+                    if (data) {
+                        alert("删除成功！");
+                        parent.openFrame("Employee_list");
+                    } else {
+                        alert("删除失败！");
+                    }
+                }
+            });
+        }
         }
     </script>
 </head>
@@ -81,6 +105,8 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @{int count = 1; }
+                                    @foreach (var employee in Model) {
                                     <tr>
                                         <td>
                                             <div class="custom-control custom-checkbox">
@@ -88,20 +114,31 @@
                                                 <label class="custom-control-label" for="customCheck2">&nbsp;</label>
                                             </div>
                                         </td>
-                                        <td class="table-user">
-                                            1
-                                        </td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td class="table-user">@count</td>
+                                        <td>@employee.name</td>
+                                        <td>@employee.number</td>
+                                        <td>@employee.departmentId</td>
+                                        @if (employee.permissions.ToString() == "1")
+                                        {
+                                            <td>一级管理员</td>
+                                        }
+                                        else if (employee.permissions.ToString() == "2")
+                                        {
+                                            <td>二级管理员</td>
+                                        }
+                                        else
+                                        {
+                                            <td>三级管理员</td>
+                                        }
+                                        <td>@employee.state</td>
                                         <td>
-                                            <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
-                                            <a href="javascript:ProjectUpdate()" class="action-icon"> <i class="dripicons-pencil"></i></a>
-                                            <a href="javascript:ProjectSelect()" class="action-icon"> <i class="mdi mdi-calendar-text-outline"></i></a>
+                                            <a href="javascript:EmployeeDelete(@employee.id)" class="action-icon"> <i class="mdi mdi-delete"></i></a>
+                                            <a href="javascript:EmployeeUpdate(@employee.id)" class="action-icon"> <i class="dripicons-pencil"></i></a>
+                                            <a href="javascript:EmployeeSelect(@employee.id)" class="action-icon"> <i class="mdi mdi-calendar-text-outline"></i></a>
                                         </td>
                                     </tr>
+                                        count++;
+                                    }
                                 </tbody>
                             </table>
                         </div>

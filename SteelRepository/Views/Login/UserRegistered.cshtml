@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&amp;subset=devanagari,latin-ext" rel="stylesheet">
-    <title>用户登录</title>
+    <title>用户注册</title>
     <link href="~/Content/Login/css/font-awesome.min.css" rel="stylesheet" />
     <link href="~/Content/Login/css/animate.css" rel="stylesheet" />
     <link href="~/Content/Login/css/responsive.css" rel="stylesheet" />
@@ -17,19 +17,20 @@
     <link href="~/Content/Login/css/responsive.css" rel="stylesheet" />
     <link href="~/Content/Login/css/bootstrap.min.css" rel="stylesheet" />
     <script type="text/javascript">
-        function Login() {
+        function Registered() {
              $.ajax({
-                url: "@Url.Action("UserLogin")",
+                url: "@Url.Action("UserRegistered")",
                 type: "post",
                 data: $("form").serialize(),
                 dataType: "json",
                 success: function (data) {
                     data = eval("(" + data + ")");
                     if (data) {
+                        alert("注册成功");
                         parent.closeWin();
                         parent.openFrame("../Inventory/Inventory");
                     } else {
-                        document.getElementById("LoginAuthentication").style.display = "";
+                        
                     }
                 }
             });
@@ -41,22 +42,38 @@
         <div class="container">
             <div class="sign-content popup-in-content">
                 <div class="popup-in-txt">
-                    <h2>用户登录</h2>
+                    <h2>用户注册</h2>
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="signin-form">
-                                @using (Html.BeginForm("UserLogin", "Login", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @role = "form" }))
+                                @using (Html.BeginForm("UserRegistered", "Login", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @role = "form" }))
                                 {
                                     <div class="form-group">
+                                        <label for="signin_form">姓名：</label>
+                                        @Html.TextBoxFor(m => m.number, new { @class = "form-control", placeholder = "请输入姓名", id = "signin_form", type = "text" })
+                                    </div>
+                                    <div class="form-group">
                                         <label for="signin_form">账号：</label>
-                                        @Html.TextBoxFor(m => m.number, new { @class = "form-control", placeholder = "请输入用户名", id = "signin_form", type = "text" })
+                                        @Html.TextBoxFor(m => m.number, new { @class = "form-control", placeholder = "请输入账号", id = "signin_form", type = "text" })
                                     </div>
                                     <div class="form-group">
                                         <label for="signin_form">密码：</label>
                                         @Html.TextBoxFor(m => m.password, new { @class = "form-control", placeholder = "请输入密码", id = "signin_form", type = "password" })
                                     </div>
+                                    <div class="form-group">
+                                        <label for="signin_form">重复密码：</label>
+                                        @Html.TextBoxFor(m => m.password, new { @class = "form-control", placeholder = "请输入密码", id = "signin_form", type = "password" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="signin_form">所属部门：</label>
+                                        <div class="input-group">
+                                            @Html.TextBoxFor(m => m.departmentId, new { @class = "form-control", type = "text", placeholder = "请选择部门" })
+                                            <div class="input-group-append">
+                                                <button class="btn btn-dark" type="button">选择</button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 }
-                            <label id="LoginAuthentication" style="color:#ff0000;display:none;font-size:13px" >*您输入的用户名或密码有误，请重新输入</label>
                             </div>
                         </div>
                     </div>
@@ -64,8 +81,8 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="signin-footer">
-                                <button type="button" class="btn signin_btn signin_btn_two" data-toggle="modal" data-target=".signin_modal" onclick="Login()">
-                                    登录
+                                <button type="button" class="btn signin_btn signin_btn_two" data-toggle="modal" data-target=".signin_modal" onclick="Registered()">
+                                    注册
                                 </button>
                             </div>
                         </div>
