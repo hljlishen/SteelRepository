@@ -61,7 +61,6 @@
     </Compile>
     <Compile Include="Extentions\Category.cs" />
     <Compile Include="Extentions\Department.cs" />
-    <Compile Include="Extentions\Employee.cs" />
     <Compile Include="Extentions\Manufacturer.cs" />
     <Compile Include="Extentions\Position.cs" />
     <Compile Include="Extentions\Project.cs" />

@@ -1,10 +1,9 @@
-﻿@{
+﻿@model List<Models.Position>
+@{
     Layout = "~/Views/Login/AdminIndex.cshtml";
 }
 
 <!DOCTYPE html>
-
-<html>
 <head>
     <meta charset="utf-8" />
     <title></title>
@@ -18,7 +17,7 @@
 
     <script type="text/javascript">
         function PositionAdd() {
-            var url = "Position_add";
+            var url = "~/Position/Position_add";
             var width = "100%";
             var height = "700px";
             parent.OpenWin(url, width, height);
@@ -39,9 +38,73 @@
         }
     </script>
 </head>
-<body>
-    <div>
+<div class="content-page">
+    <div class="content">
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box">
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">仓库位置</a></li>
+                            <li class="breadcrumb-item active">仓库位置管理</li>
+                        </ol>
+                    </div>
+                    <h4 class="page-title">仓库位置管理</h4>
+                </div>
+            </div>
+        </div>
 
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row mb-2">
+                            <div class="col-sm-4">
+                                <a href="~/Position/Position_add" class="btn btn-danger mb-2" target="_blank"><i class="mdi mdi-plus-circle mr-2"></i>添加仓库位置</a>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-centered table-striped dt-responsive nowrap w-100" id="products-datatable">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 20px;">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                                <label class="custom-control-label" for="customCheck1">&nbsp;</label>
+                                            </div>
+                                        </th>
+                                        <th>编号</th>
+                                        <th>位置信息</th>
+                                        <th style="width: 75px;">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var position in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" id="customCheck2">
+                                                    <label class="custom-control-label" for="customCheck2">&nbsp;</label>
+                                                </div>
+                                            </td>
+                                            <td class="table-user">@position.id</td>
+                                            <td>@position.positionName</td>
+                                            <td>
+                                                <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
+                                                <a href="javascript:PositionUpdate()" class="action-icon"> <i class="dripicons-pencil"></i></a>
+                                                <a href="javascript:PositionSelect()" class="action-icon"> <i class="mdi mdi-calendar-text-outline"></i></a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</body>
-</html>
+</div>
+
