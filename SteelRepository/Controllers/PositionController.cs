@@ -1,4 +1,7 @@
-﻿using System;
+﻿using DbInterface;
+using DbService;
+using Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,9 +12,30 @@ namespace SteelRepository.Controllers
     public class PositionController : Controller
     {
         // GET: Position
-        public ActionResult Employee_add()
+        public ActionResult Position_list()
         {
             return View();
         }
+        public ActionResult Position_add()
+        {
+            return View();
+        }
+        [HttpPost]
+        public JsonResult Position_add(Position position)
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return Json(helper.Insert(position));
+            }
+        }
+        [HttpPost]
+        public JsonResult Position_list(Position position)
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return Json(helper.SelectAll<Position>());
+            }
+        }
+
     }
 }

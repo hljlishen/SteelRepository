@@ -9,7 +9,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title></title>
+    <title>添加仓储位置</title>
     <link href="~/Content/Login/css/font-awesome.min.css" rel="stylesheet" />
     <link href="~/Content/Login/css/animate.css" rel="stylesheet" />
     <link href="~/Content/Login/css/responsive.css" rel="stylesheet" />
@@ -35,8 +35,8 @@
                     data = eval("(" + data + ")");
                     if (data) {
                         alert("添加成功");
+                        window.location = "Position_list";
                         parent.closeWin();
-                        parent.openFrame("Position_list");
                     } else {
                     }
                 }
@@ -49,14 +49,14 @@
         <div class="container">
             <div class="sign-content popup-in-content">
                 <div class="popup-in-txt">
-                    <h2>添加厂家位置</h2>
+                    <h2>添加仓库位置</h2>
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="signin-form">
                                 @using (Html.BeginForm("Position_add", "Position", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @role = "form" }))
                                 {
                                     <div class="form-group">
-                                        <label for="signin_form">厂家位置：</label>
+                                        <label for="signin_form">仓库位置：</label>
                                         @Html.TextBoxFor(m => m.positionName, new { @class = "form-control", type = "text" })
                                     </div>
                                 }
@@ -67,7 +67,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="signin-footer">
-                                <button type="button" class="btn signin_btn signin_btn_two" data-toggle="modal" data-target=".signin_modal">
+                                <button type="button" class="btn signin_btn signin_btn_two" data-toggle="modal" data-target=".signin_modal" onclick="add();">
                                     添加
                                 </button>
                             </div>
