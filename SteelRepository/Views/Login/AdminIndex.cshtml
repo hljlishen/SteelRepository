@@ -136,11 +136,10 @@
                         </div>
                     </li>
                     <li class="dropdown notification-list">
-                        <a class="nav-link right-bar-toggle" href="javascript:Logout()">
+                        <a class="nav-link right-bar-toggle" href="../Inventory/Inventory">
                             <i class="noti-icon">注销</i>
                         </a>
                     </li>
-
                 }
             </ul>
             <div class="app-search">
@@ -170,12 +169,10 @@
 
                     <li class="side-nav-title side-nav-item">导航</li>
                     <li class="side-nav-item">
-                        <a href="javascript: void(0);" class="side-nav-link">
+                        <a href="../Inventory/Inventory" class="side-nav-link">
                             <i class="mdi mdi-clipboard-text-play-outline"></i>
                             <span> 库存信息 </span>
-                            <span class="menu-arrow"></span>
                         </a>
-                        <ul class="side-nav-second-level" aria-expanded="false"></ul>
                     </li>
                     <li class="side-nav-item">
                         @if (permissions == "1" || permissions == "2")
@@ -229,16 +226,19 @@
                     </li>
 
                     <li class="side-nav-item">
-                        <a href="javascript: void(0);" class="side-nav-link">
-                            <i class="dripicons-graph-pie"></i>
-                            <span> 项目信息 </span>
-                            <span class="menu-arrow"></span>
-                        </a>
-                        <ul class="side-nav-second-level" aria-expanded="false">
-                            <li>
-                                <a href="../Project/Project_list">项目信息管理</a>
-                            </li>
-                        </ul>
+                        @if (permissions == "1")
+                        {
+                            <a href="javascript: void(0);" class="side-nav-link">
+                                <i class="dripicons-graph-pie"></i>
+                                <span> 项目信息 </span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <ul class="side-nav-second-level" aria-expanded="false">
+                                <li>
+                                    <a href="../Project/Project_list">项目信息管理</a>
+                                </li>
+                            </ul>
+                        }
                     </li>
 
                     <li class="side-nav-item">
@@ -248,9 +248,6 @@
                             <span class="menu-arrow"></span>
                         </a>
                         <ul class="side-nav-second-level" aria-expanded="false">
-                            <li>
-                                <a href="form-elements.html">库存信息</a>
-                            </li>
                             <li>
                                 <a href="form-advanced.html">材料入库信息</a>
                             </li>
@@ -312,5 +309,8 @@
     <script src="~/Content/AdminIndex/js/vendor/responsive.bootstrap4.min.js"></script>
     <script src="~/Content/AdminIndex/js/vendor/dataTables.checkboxes.min.js"></script>
     <script charset="utf-8" src="~/Content/AdminIndex/js/pages/demo.customers.js"></script>
+    <script type="text/javascript">
+
+    </script>
 </body>
 </html>

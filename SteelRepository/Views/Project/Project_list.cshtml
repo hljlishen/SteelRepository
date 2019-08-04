@@ -1,4 +1,5 @@
-﻿@{
+﻿@model List<Models.Project>
+@{
     Layout = "~/Views/Login/AdminIndex.cshtml";
 }
 <head>
@@ -14,24 +15,24 @@
 
     <script type="text/javascript">
         function ProjectAdd() {
-             var url = "Project_add";
-             var width = "100%";
-             var height = "300px";
-             parent.OpenWin(url, width, height);
+            var url = "Project_add";
+            var width = "100%";
+            var height = "300px";
+            parent.OpenWin(url, width, height);
         }
 
         function ProjectUpdate() {
-             var url = "Project_add";
-             var width = "100%";
-             var height = "700px";
-             parent.OpenWin(url, width, height);
+            var url = "Project_add";
+            var width = "100%";
+            var height = "700px";
+            parent.OpenWin(url, width, height);
         }
 
         function ProjectSelect() {
-             var url = "Project_add";
-             var width = "100%";
-             var height = "700px";
-             parent.OpenWin(url, width, height);
+            var url = "Project_add";
+            var width = "100%";
+            var height = "700px";
+            parent.OpenWin(url, width, height);
         }
     </script>
 </head>
@@ -81,37 +82,30 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                                <label class="custom-control-label" for="customCheck2">&nbsp;</label>
-                                            </div>
-                                        </td>
-                                        <td class="table-user">
-                                            1
-                                        </td>
-                                        <td>
-
-                                        </td>
-                                        <td>
-
-                                        </td>
-                                        <td>
-
-                                        </td>
-                                        <td>
-
-                                        </td>
-                                        <td>
-                                        </td>
-                                        <td>
-                                            <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
-                                            <a href="javascript:ProjectUpdate()" class="action-icon"> <i class="dripicons-pencil"></i></a>
-                                            <a href="javascript:ProjectSelect()" class="action-icon"> <i class="mdi mdi-calendar-text-outline"></i></a>
-
-                                        </td>
-                                    </tr>
+                                    @{int count = 1; }
+                                    @foreach (var project in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" id="customCheck2">
+                                                    <label class="custom-control-label" for="customCheck2">&nbsp;</label>
+                                                </div>
+                                            </td>
+                                            <td class="table-user">@count</td>
+                                            <td>@project.projectCode</td>
+                                            <td>@project.projectName</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>
+                                                <a href="javascript:EmployeeDelete(@project.id)" class="action-icon"> <i class="mdi mdi-delete"></i></a>
+                                                <a href="javascript:EmployeeUpdate(@project.id)" class="action-icon"> <i class="dripicons-pencil"></i></a>
+                                                <a href="javascript:EmployeeSelect(@project.id)" class="action-icon"> <i class="mdi mdi-calendar-text-outline"></i></a>
+                                            </td>
+                                        </tr>
+                                        count++;
+                                    }
                                 </tbody>
                             </table>
                         </div>

@@ -24,5 +24,12 @@ namespace Models
                 return helper.Insert(project);
             }
         }
+        public static List<Project> SelectAll()
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return helper.SelectAll<Project>();
+            }
+        }
     }
 }
