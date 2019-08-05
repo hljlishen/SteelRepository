@@ -45,7 +45,7 @@ namespace Models
                 if (month == 7 || month == 8 || month == 9)
                     return year + "3Q";
                 if (month == 10 || month == 11 || month == 12)
-                    return year + "3Q";
+                    return year + "4Q";
 
                 throw new Exception("错误的月份");
             };

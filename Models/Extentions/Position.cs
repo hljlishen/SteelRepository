@@ -34,5 +34,12 @@ namespace Models
                 return helper.SelectAll<Position>();
             }
         }
+        public static int Delete(int id)
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return helper.Delete<Position>(id);
+            }
+        }
     }
 }

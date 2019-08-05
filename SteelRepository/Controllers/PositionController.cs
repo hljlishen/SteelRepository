@@ -11,6 +11,7 @@ namespace SteelRepository.Controllers
 {
     public class PositionController : Controller
     {
+        private static Position po;
         // GET: Position
         public ActionResult Position_list()
         {
@@ -28,6 +29,22 @@ namespace SteelRepository.Controllers
                 return Json(helper.Insert(position));
             }
         }
-
+        public ActionResult Position_Update(int id)
+        {
+            ViewData["position"] = Position.GetPosition(id);
+            po = Position.GetPosition(id);
+            return View();
+        }
+        [HttpPost]
+        public JsonResult Position_Update(Position position, FormCollection collection)
+        {
+            po.positionName = position.positionName;
+            return Json(Position.Update(po));
+        }
+        [HttpPost]
+        public JsonResult Position_Delete(int id)
+        {
+            return Json(Position.Delete(id));
+        }
     }
 }
