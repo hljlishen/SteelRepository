@@ -16,5 +16,6 @@ namespace Models
     {
         public int id { get; set; }
         public string positionName { get; set; }
+        public string note { get; set; }
     }
 }

@@ -17,22 +17,38 @@
         function ProjectAdd() {
             var url = "Project_add";
             var width = "100%";
-            var height = "300px";
+            var height = "450px";
             parent.OpenWin(url, width, height);
         }
 
-        function ProjectUpdate() {
-            var url = "Project_add";
+        function ProjectUpdate(id) {
+            var url = "Project_update?id="+id;
             var width = "100%";
             var height = "700px";
             parent.OpenWin(url, width, height);
         }
 
-        function ProjectSelect() {
-            var url = "Project_add";
-            var width = "100%";
-            var height = "700px";
-            parent.OpenWin(url, width, height);
+        function ProjectDelete(id) {
+             var flag = confirm("是否要删除信息？");
+        if (flag) {
+            $.ajax({
+                url: "@Url.Action("Project_delete")",
+                type: "post",
+                data: {
+                    "id": id
+                },
+                dataType: "json",
+                success: function (data) {
+                    data = eval("(" + data + ")");
+                    if (data) {
+                        alert("删除成功！");
+                        parent.openFrame("Project_list");
+                    } else {
+                        alert("删除失败！");
+                    }
+                }
+            });
+        }
         }
     </script>
 </head>
@@ -76,7 +92,7 @@
                                         <th>项目令号</th>
                                         <th>项目名称</th>
                                         <th>项目负责人</th>
-                                        <th>状态</th>
+                                        <th>统计图</th>
                                         <th>备注</th>
                                         <th style="width: 75px;">操作</th>
                                     </tr>
@@ -85,25 +101,28 @@
                                     @{int count = 1; }
                                     @foreach (var project in Model)
                                     {
-                                        <tr>
-                                            <td>
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                                    <label class="custom-control-label" for="customCheck2">&nbsp;</label>
-                                                </div>
-                                            </td>
-                                            <td class="table-user">@count</td>
-                                            <td>@project.projectCode</td>
-                                            <td>@project.projectName</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td>
-                                                <a href="javascript:EmployeeDelete(@project.id)" class="action-icon"> <i class="mdi mdi-delete"></i></a>
-                                                <a href="javascript:EmployeeUpdate(@project.id)" class="action-icon"> <i class="dripicons-pencil"></i></a>
-                                                <a href="javascript:EmployeeSelect(@project.id)" class="action-icon"> <i class="mdi mdi-calendar-text-outline"></i></a>
-                                            </td>
-                                        </tr>
+                                        if (project.state.ToString() == "1")
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" id="customCheck2">
+                                                        <label class="custom-control-label" for="customCheck2">&nbsp;</label>
+                                                    </div>
+                                                </td>
+                                                <td class="table-user">@count</td>
+                                                <td>@project.projectCode</td>
+                                                <td>@project.projectName</td>
+                                                <td>@project.projectCharge</td>
+                                                <td><a href="javascript:ProjectDelete(@project.id)" class="action-icon"> <i class="mdi mdi-delete"></i></a></td>
+                                                <td>@project.projectNote</td>
+                                                <td>
+                                                    <a href="javascript:ProjectDelete(@project.id)" class="action-icon"> <i class="mdi mdi-delete"></i></a>
+                                                    <a href="javascript:ProjectUpdate(@project.id)" class="action-icon"> <i class="dripicons-pencil"></i></a>
+                                                    @*<a href="javascript:ProjectSelect(@project.id)" class="action-icon"> <i class="mdi mdi-calendar-text-outline"></i></a>*@
+                                                </td>
+                                            </tr>
+                                        }
                                         count++;
                                     }
                                 </tbody>

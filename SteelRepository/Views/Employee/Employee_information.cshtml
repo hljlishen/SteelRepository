@@ -19,6 +19,26 @@
     <script src="~/Content/AdminIndex/js/pages/demo.britechart.js"></script>
     <script src="~/Content/AdminIndex/js/vendor/d3.js"></script>
     <script src="~/Content/AdminIndex/js/vendor/britecharts.js"></script>
+    <script type="text/javascript">
+       
+        function Update() {
+             $.ajax({
+                url: "@Url.Action("Employee_information")",
+                type: "post",
+                data: $("form").serialize(),
+                dataType: "json",
+                success: function (data) {
+                    data = eval("(" + data + ")");
+                    if (data) {
+                        alert("修改成功");
+                        parent.closeWin();
+                        parent.openFrame("Employee_information?id="+@em.id);
+                    } else {
+                    }
+                }
+            });
+        }
+    </script>
 </head>
 <body>
     <div class="content-page">
@@ -36,63 +56,80 @@
                     </div>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-lg-6">
                     <div class="card">
                         <div class="card-body">
-
                             <h4 class="mb-3 header-title">个人信息</h4>
-
-                            <form class="form-horizontal">
+                            @using (Html.BeginForm("Employee_information", "Employee", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @role = "form" }))
+                            {
                                 <div class="form-group row mb-3">
                                     <label class="col-3 col-form-label">姓名：</label>
                                     <div class="col-9">
-                                        <input type="text" class="form-control" id="" placeholder="" value="@em.name">
+                                        <input type="text" class="form-control" value="@em.name" name="name">
                                     </div>
                                 </div>
                                 <div class="form-group row mb-3">
                                     <label class="col-3 col-form-label">账号：</label>
                                     <div class="col-9">
-                                        <input type="text" class="form-control" id="" placeholder="" readonly value="@em.number">
+                                        <input type="text" class="form-control" readonly value="@em.number" name="number">
                                     </div>
                                 </div>
                                 <div class="form-group row mb-3">
                                     <label class="col-3 col-form-label">密码：</label>
                                     <div class="col-9">
-                                        <input type="password" class="form-control" id="" placeholder="" value="@em.password">
+                                        <input type="password" class="form-control" value="@em.password" id="password" name="password">
                                     </div>
                                 </div>
                                 <div class="form-group row mb-3">
                                     <label class="col-3 col-form-label">重复密码：</label>
                                     <div class="col-9">
-                                        <input type="password" class="form-control" id="" placeholder="">
+                                        <input type="password" class="form-control" id="repeatPassword">
+                                        <span class="badge badge-danger" style="display:none" id="sp_password">密码不一致</span>
                                     </div>
                                 </div>
                                 <div class="form-group row mb-3">
                                     <label class="col-3 col-form-label">所属部门：</label>
                                     <div class="col-9">
-                                        <input type="text" class="form-control" id="" placeholder="" readonly value="@em.departmentId">
+                                        <input type="text" class="form-control" readonly value="@em.departmentId" name="departmentId">
                                     </div>
                                 </div>
                                 <div class="form-group row mb-3">
                                     <label class="col-3 col-form-label">权限：</label>
                                     <div class="col-9">
-                                        <input type="text" class="form-control" id="" placeholder="" readonly value="@em.permissions">
+                                        @if (em.permissions.ToString() == "1")
+                                        {
+                                            <input type="text" class="form-control" readonly value="一级管理员" name="permissions">
+                                        }
+                                        else if (em.permissions.ToString() == "2")
+                                        {
+                                            <input type="text" class="form-control" readonly value="二级管理员" name="permissions">
+                                        }
+                                        else
+                                        {
+                                            <input type="text" class="form-control" readonly value="三级管理员" name="permissions">
+                                        }
                                     </div>
                                 </div>
                                 <div class="form-group row mb-3">
                                     <label class="col-3 col-form-label">状态：</label>
                                     <div class="col-9">
-                                        <input type="text" class="form-control" id="" placeholder="" readonly value="@em.state">
+                                        @if (em.state.ToString() == "1")
+                                        {
+                                            <input type="text" class="form-control" readonly value="在职" name="state">
+                                        }
+                                        else
+                                        {
+                                            <input type="text" class="form-control" readonly value="离职" name="state">
+                                        }
                                     </div>
                                 </div>
-                                <div class="form-group mb-0 justify-content-end row">
-                                    <div class="col-9">
-                                        <button type="submit" class="btn btn-info  ">修改</button>
-                                    </div>
+                            }
+                            <div class="form-group mb-0 justify-content-end row">
+                                <div class="col-9">
+                                    <button type="button" class="btn btn-info" onclick="Update()">修改</button>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -108,9 +145,7 @@
                                 <button type="submit" class="btn btn-info  ">切换</button>
                             </div>
                         </div>
-                        <!-- end card body-->
                     </div>
-                    <!-- end card -->
                 </div>
              </div>
         </div>

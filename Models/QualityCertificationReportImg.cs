@@ -9,7 +9,6 @@
 
 namespace Models
 {
-    using DbInterface;
     using System;
     using System.Collections.Generic;
     

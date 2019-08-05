@@ -129,9 +129,9 @@
                             <div class=" dropdown-header noti-title">
                                 <h6 class="text-overflow m-0">欢迎!</h6>
                             </div>
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
+                            <a href="javascript:AdminLogin()" class="dropdown-item notify-item">
                                 <i class="mdi mdi-account-circle mr-1"></i>
-                                <span>My Account</span>
+                                <span>登录</span>
                             </a>
                         </div>
                     </li>
@@ -199,30 +199,37 @@
                         }
                     </li>
                     <li class="side-nav-item">
-                        <a href="javascript: void(0);" class="side-nav-link">
-                            <i class="dripicons-location"></i>
-                            <span> 仓库位置 </span>
-                            <span class="menu-arrow"></span>
-                        </a>
-                        <ul class="side-nav-second-level" aria-expanded="false"></ul>
+                        @if (permissions == "1")
+                        {
+                            <a href="javascript: void(0);" class="side-nav-link">
+                                <i class="dripicons-location"></i>
+                                <span> 仓库位置 </span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <ul class="side-nav-second-level" aria-expanded="false"></ul>
+                        }
                     </li>
 
                     <li class="side-nav-item">
-                        <a href="javascript: void(0);" class="side-nav-link">
-                            <i class="dripicons-copy"></i>
-                            <span> 部门信息 </span>
-                            <span class="menu-arrow"></span>
-                        </a>
-                        <ul class="side-nav-second-level" aria-expanded="false"></ul>
+                        @if (permissions == "1")
+                        {
+                            <a href="javascript: void(0);" class="side-nav-link">
+                                <i class="dripicons-copy"></i>
+                                <span> 部门信息 </span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <ul class="side-nav-second-level" aria-expanded="false"></ul>
+                        }
                     </li>
 
                     <li class="side-nav-item">
-                        <a href="javascript: void(0);" class="side-nav-link">
-                            <i class="dripicons-briefcase"></i>
-                            <span> 厂家信息 </span>
-                            <span class="menu-arrow"></span>
-                        </a>
-                        <ul class="side-nav-second-level" aria-expanded="false"></ul>
+                        @if (permissions == "1")
+                        {
+                            <a href="../Position/Position_list" class="side-nav-link">
+                                <i class="dripicons-briefcase"></i>
+                                <span> 厂家信息 </span>
+                            </a>
+                        }
                     </li>
 
                     <li class="side-nav-item">
@@ -242,28 +249,22 @@
                     </li>
 
                     <li class="side-nav-item">
-                        <a href="javascript: void(0);" class="side-nav-link">
-                            <i class="dripicons-document"></i>
-                            <span> 材料信息 </span>
-                            <span class="menu-arrow"></span>
-                        </a>
-                        <ul class="side-nav-second-level" aria-expanded="false">
-                            <li>
-                                <a href="form-advanced.html">材料入库信息</a>
-                            </li>
-                            <li>
-                                <a href="form-validation.html">材料入库信息</a>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li class="side-nav-item">
-                        <a href="javascript: void(0);" class="side-nav-link">
-                            <i class="dripicons-meter"></i>
-                            <span> 复检信息 </span>
-                            <span class="menu-arrow"></span>
-                        </a>
-                        <ul class="side-nav-second-level" aria-expanded="false"></ul>
+                        @if (permissions == "1")
+                        {
+                            <a href="javascript: void(0);" class="side-nav-link">
+                                <i class="dripicons-document"></i>
+                                <span> 材料出入库信息 </span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <ul class="side-nav-second-level" aria-expanded="false">
+                                <li>
+                                    <a href="form-advanced.html">材料入库信息</a>
+                                </li>
+                                <li>
+                                    <a href="form-validation.html">材料出库信息</a>
+                                </li>
+                            </ul>
+                        }
                     </li>
                 </ul>
             </div>

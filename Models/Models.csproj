@@ -61,6 +61,7 @@
     </Compile>
     <Compile Include="Extentions\Category.cs" />
     <Compile Include="Extentions\Department.cs" />
+    <Compile Include="Extentions\Employee.cs" />
     <Compile Include="Extentions\Manufacturer.cs" />
     <Compile Include="Extentions\Position.cs" />
     <Compile Include="Extentions\Project.cs" />
@@ -153,9 +154,7 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
-    <Content Include="script.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="script.sql" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

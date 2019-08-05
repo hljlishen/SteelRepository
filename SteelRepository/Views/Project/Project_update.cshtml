@@ -13,16 +13,16 @@
     <link href="~/Content/AdminIndex/css/icons.min.css" rel="stylesheet" />
     <script src="~/Content/AdminIndex/js/app.min.js"></script>
     <script type="text/javascript">
-        function add() {
+        function update() {
             $.ajax({
-                url: "@Url.Action("Project_add")",
+                url: "@Url.Action("Project_update")",
                 type: "post",
                 data: $("form").serialize(),
                 dataType: "json",
                 success: function (data) {
                     data = eval("(" + data + ")");
                     if (data) {
-                        alert("添加成功");
+                        alert("修改成功");
                         parent.closeWin();
                         parent.openFrame("Project_list");
                     } else {
@@ -37,11 +37,11 @@
         <div class="container">
             <div class="sign-content popup-in-content">
                 <div class="popup-in-txt">
-                    <h2>添加项目</h2>
+                    <h2>修改项目</h2>
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="signin-form">
-                                @using (Html.BeginForm("Project_add", "Project", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @role = "form" }))
+                                @using (Html.BeginForm("Project_update", "Project", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @role = "form" }))
                                 {
                                     <div class="form-group">
                                         <label for="signin_form">项目令号：</label>
@@ -66,8 +66,8 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="signin-footer">
-                                <button type="button" class="btn btn-primary" onclick="add()">
-                                    添加
+                                <button type="button" class="btn btn-primary" onclick="update()">
+                                    修改
                                 </button>
                             </div>
                         </div>

@@ -57,6 +57,29 @@
             });
         }
         }
+
+        function EmployeeThrough(id) {
+             var flag = confirm("是否通过？");
+        if (flag) {
+            $.ajax({
+                url: "@Url.Action("Employee_through")",
+                type: "post",
+                data: {
+                    "id": id
+                },
+                dataType: "json",
+                success: function (data) {
+                    data = eval("(" + data + ")");
+                    if (data) {
+                        alert("成功！");
+                        parent.openFrame("Employee_list");
+                    } else {
+                        alert("失败！");
+                    }
+                }
+            });
+        }
+        }
     </script>
 </head>
 <div class="content-page">
@@ -130,12 +153,35 @@
                                         {
                                             <td>三级管理员</td>
                                         }
-                                        <td>@employee.state</td>
-                                        <td>
+                                        @if (employee.state.ToString() == "1")
+                                        {
+                                            <td>在职</td>
+                                        }
+                                        else if (employee.state.ToString() == "2")
+                                        {
+                                            <td>离职</td>
+                                        }
+                                        else
+                                        {
+                                            <td>未通过</td>
+                                        }
+                                        @if (employee.state.ToString() == "1" || employee.state.ToString() == "2")
+                                        {
+                                    <td>
+                                        @if (employee.permissions.ToString() != "1")
+                                        {
                                             <a href="javascript:EmployeeDelete(@employee.id)" class="action-icon"> <i class="mdi mdi-delete"></i></a>
-                                            <a href="javascript:EmployeeUpdate(@employee.id)" class="action-icon"> <i class="dripicons-pencil"></i></a>
-                                            <a href="javascript:EmployeeSelect(@employee.id)" class="action-icon"> <i class="mdi mdi-calendar-text-outline"></i></a>
-                                        </td>
+                                        }
+                                        <a href="javascript:EmployeeUpdate(@employee.id)" class="action-icon"> <i class="dripicons-pencil"></i></a>
+                                        @*<a href="javascript:EmployeeSelect(@employee.id)" class="action-icon"> <i class="mdi mdi-calendar-text-outline"></i></a>*@
+                                    </td>
+                                        }
+                                        else
+                                        {
+                                            <td>
+                                                <a href="javascript:EmployeeThrough(@employee.id)" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle mr-2"></i>通过</a>
+                                            </td>
+                                        }
                                     </tr>
                                         count++;
                                     }

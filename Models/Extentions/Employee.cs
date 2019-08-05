@@ -66,5 +66,15 @@ namespace Models
                 return null;
             }
         }
+
+        public static int DeleteState(int id)
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                Employee employee = FindId(id);
+                employee.state = 1;
+                return helper.Update(employee);
+            }
+        }
     }
 }

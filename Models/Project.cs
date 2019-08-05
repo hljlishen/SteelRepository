@@ -17,5 +17,8 @@ namespace Models
         public int id { get; set; }
         public string projectCode { get; set; }
         public string projectName { get; set; }
+        public string projectCharge { get; set; }
+        public string projectNote { get; set; }
+        public Nullable<int> state { get; set; }
     }
 }

@@ -21,7 +21,9 @@ namespace SteelRepository.Controllers
         public ActionResult Employee_add()
         {
             SelectList select = new SelectList(GetPermissionsList(), "Value", "Text");
+            SelectList selectState = new SelectList(GetStateList(), "Value", "Text");
             ViewBag.select = select;
+            ViewBag.selectState = selectState;
             return View();
         }
 
@@ -55,6 +57,24 @@ namespace SteelRepository.Controllers
             return itemList;
         }
 
+        private List<SelectListItem> GetStateList()
+        {
+            List<SelectListItem> itemList = new List<SelectListItem>();
+            SelectListItem item0 = new SelectListItem()
+            {
+                Value = "1",
+                Text = "在职"
+            };
+            SelectListItem item1 = new SelectListItem()
+            {
+                Value = "2",
+                Text = "离职"
+            };
+            itemList.Add(item0);
+            itemList.Add(item1);
+            return itemList;
+        }
+
         public ActionResult Employee_update(int id)
         {
             ViewData["Employee"] = Employee.FindId(id);
@@ -63,7 +83,7 @@ namespace SteelRepository.Controllers
         }
 
         [HttpPost]
-        public JsonResult Employee_update(Employee employee, FormCollection collection)
+        public JsonResult Employee_update(Employee employee)
         {
             employee.id = em.id;
             employee.number = em.number;
@@ -84,8 +104,25 @@ namespace SteelRepository.Controllers
 
         public ActionResult Employee_information(int id)
         {
-            ViewData["Employee"] = Employee.FindId(id);
+            Employee employee = Employee.FindId(id);
+            ViewData["Employee"] = employee;
+            em = employee;
             return View();
+        }
+
+        [HttpPost]
+        public JsonResult Employee_information(Employee employee)
+        {
+            
+            employee.id = em.id;
+            employee.permissions = em.permissions;
+            employee.state = em.state;
+            return Json(Employee.Update(employee));
+        }
+
+        public JsonResult Employee_through(int id)
+        {
+            return Json(Employee.DeleteState(id));
         }
     }
 }

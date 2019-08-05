@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="SteelRepositoryDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="SteelRepositoryDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Category">
           <Key>
             <PropertyRef Name="id" />
@@ -109,14 +109,18 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="positionName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="note" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Project">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="projectCode" Type="varchar(max)" Nullable="false" />
           <Property Name="projectName" Type="varchar(max)" Nullable="false" />
+          <Property Name="projectCharge" Type="nvarchar(max)" />
+          <Property Name="projectNote" Type="nvarchar(max)" />
+          <Property Name="state" Type="int" />
         </EntityType>
         <EntityType Name="QualityCertificationReportImg">
           <Key>
@@ -268,14 +272,18 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="positionName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Project">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="projectCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="projectName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="projectCharge" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="projectNote" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="state" Type="Int32" />
         </EntityType>
         <EntityType Name="QualityCertificationReportImg">
           <Key>
@@ -301,7 +309,7 @@
           <Property Name="reportId" Type="Int32" Nullable="false" />
           <Property Name="img" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
         </EntityType>
-        <EntityContainer Name="SteelRepositoryDBEntities2" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="SteelRepositoryDBEntities4" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Category" EntityType="Self.Category" />
           <EntitySet Name="Department" EntityType="Self.Department" />
           <EntitySet Name="Employee" EntityType="Self.Employee" />
@@ -323,7 +331,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="SteelRepositoryDBModelStoreContainer" CdmEntityContainer="SteelRepositoryDBEntities2">
+        <EntityContainerMapping StorageEntityContainer="SteelRepositoryDBModelStoreContainer" CdmEntityContainer="SteelRepositoryDBEntities4">
           <EntitySetMapping Name="Category">
             <EntityTypeMapping TypeName="SteelRepositoryDBModel.Category">
               <MappingFragment StoreEntitySet="Category">
@@ -437,6 +445,7 @@
               <MappingFragment StoreEntitySet="Position">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="positionName" ColumnName="positionName" />
+                <ScalarProperty Name="note" ColumnName="note" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -446,6 +455,9 @@
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="projectCode" ColumnName="projectCode" />
                 <ScalarProperty Name="projectName" ColumnName="projectName" />
+                <ScalarProperty Name="projectCharge" ColumnName="projectCharge" />
+                <ScalarProperty Name="projectNote" ColumnName="projectNote" />
+                <ScalarProperty Name="state" ColumnName="state" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
