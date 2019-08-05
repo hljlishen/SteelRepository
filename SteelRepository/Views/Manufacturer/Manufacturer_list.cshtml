@@ -1,7 +1,9 @@
-﻿@model List<Models.Project>
-@{
+﻿@{
     Layout = "~/Views/Login/AdminIndex.cshtml";
 }
+
+<!DOCTYPE html>
+
 <head>
     <meta charset="utf-8" />
     <title></title>
@@ -14,22 +16,22 @@
     <link href="~/Content/AdminIndex/css/icons.min.css" rel="stylesheet" />
 
     <script type="text/javascript">
-        function ProjectAdd() {
-            var url = "Project_add";
-            var width = "100%";
-            var height = "300px";
-            parent.OpenWin(url, width, height);
-        }
-
-        function ProjectUpdate() {
-            var url = "Project_add";
+        function ManufacturerAdd() {
+            var url = "Manufacturer_add";
             var width = "100%";
             var height = "700px";
             parent.OpenWin(url, width, height);
         }
 
-        function ProjectSelect() {
-            var url = "Project_add";
+        function ManufacturerUpdate() {
+            var url = "Manufacturer_add";
+            var width = "100%";
+            var height = "700px";
+            parent.OpenWin(url, width, height);
+        }
+
+        function ManufacturerSelect() {
+            var url = "Manufacturer_add";
             var width = "100%";
             var height = "700px";
             parent.OpenWin(url, width, height);
@@ -43,11 +45,11 @@
                 <div class="page-title-box">
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">项目信息</a></li>
-                            <li class="breadcrumb-item active">项目信息管理</li>
+                            <li class="breadcrumb-item"><a href="javascript: void(0);"></a>厂商信息</li>
+                            <li class="breadcrumb-item active">钢材库管理</li>
                         </ol>
                     </div>
-                    <h4 class="page-title">项目信息管理</h4>
+                    <h4 class="page-title">厂商信息管理</h4>
                 </div>
             </div>
         </div>
@@ -58,7 +60,7 @@
                     <div class="card-body">
                         <div class="row mb-2">
                             <div class="col-sm-4">
-                                <a href="javascript:ProjectAdd()" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle mr-2"></i>添加项目信息</a>
+                                <a href="javascript:ManufacturerAdd()" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle mr-2"></i>添加仓库位置信息</a>
                             </div>
                         </div>
 
@@ -73,39 +75,35 @@
                                             </div>
                                         </th>
                                         <th>编号</th>
-                                        <th>项目令号</th>
-                                        <th>项目名称</th>
-                                        <th>项目负责人</th>
-                                        <th>状态</th>
-                                        <th>备注</th>
+                                        <th>厂家名称</th>
+                                        <th>联系方式</th>
+                                        <th>地址</th>
+
                                         <th style="width: 75px;">操作</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @{int count = 1; }
-                                    @foreach (var project in Model)
-                                    {
-                                        <tr>
-                                            <td>
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                                    <label class="custom-control-label" for="customCheck2">&nbsp;</label>
-                                                </div>
-                                            </td>
-                                            <td class="table-user">@count</td>
-                                            <td>@project.projectCode</td>
-                                            <td>@project.projectName</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td>
-                                                <a href="javascript:EmployeeDelete(@project.id)" class="action-icon"> <i class="mdi mdi-delete"></i></a>
-                                                <a href="javascript:EmployeeUpdate(@project.id)" class="action-icon"> <i class="dripicons-pencil"></i></a>
-                                                <a href="javascript:EmployeeSelect(@project.id)" class="action-icon"> <i class="mdi mdi-calendar-text-outline"></i></a>
-                                            </td>
-                                        </tr>
-                                        count++;
-                                    }
+                                    <tr>
+                                        <td>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck2">
+                                                <label class="custom-control-label" for="customCheck2">&nbsp;</label>
+                                            </div>
+                                        </td>
+                                        <td class="table-user">
+                                            1
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>
+                                            <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
+                                            <a href="javascript:ProjectUpdate()" class="action-icon"> <i class="dripicons-pencil"></i></a>
+                                            <a href="javascript:ProjectSelect()" class="action-icon"> <i class="mdi mdi-calendar-text-outline"></i></a>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>

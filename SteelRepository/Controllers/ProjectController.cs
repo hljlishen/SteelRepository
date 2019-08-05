@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,12 +12,18 @@ namespace SteelRepository.Controllers
         // GET: Project
         public ActionResult Project_list()
         {
-            return View();
+            return View(Project.SelectAll());
         }
 
         public ActionResult Project_add()
         {
             return View();
+        }
+
+        [HttpPost]
+        public JsonResult Project_add(Project project)
+        {
+            return Json(Project.Insert(project));
         }
     }
 }

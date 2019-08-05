@@ -39,5 +39,13 @@ namespace SteelRepository.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public JsonResult UserRegistered(Employee employee)
+        {
+            employee.permissions = 3;
+            employee.state = 3;
+            return Json(Employee.Inster(employee));
+        }
     }
 }
