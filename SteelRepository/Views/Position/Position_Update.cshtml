@@ -1,6 +1,5 @@
-﻿@model Models.Position
-@{
-        Layout = null; 
+﻿@{
+    Layout = null;
 }
 
 
@@ -9,7 +8,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>添加仓储位置</title>
+    <title>修改仓储位置</title>
     <link href="~/Content/Login/css/font-awesome.min.css" rel="stylesheet" />
     <link href="~/Content/Login/css/animate.css" rel="stylesheet" />
     <link href="~/Content/Login/css/responsive.css" rel="stylesheet" />
@@ -25,16 +24,16 @@
     <script src="~/Content/Login/js/jquery.easing.min.js"></script>
     <script src="~/Content/Login/js/custom.js"></script>
     <script type="text/javascript">
-        function add() {
+        function Update() {
             $.ajax({
-                url: "@Url.Action("Position_add")",
+                url: "@Url.Action("Position_Update")",
                 type: "post",
                 data: $("form").serialize(),
                 dataType: "json",
                 success: function (data) {
                     data = eval("(" + data + ")");
                     if (data) {
-                        alert("添加成功");
+                        alert("修改成功");
                         parent.closeWin();
                         parent.openFrame("Position_list");
                     } else {
@@ -45,20 +44,23 @@
     </script>
 </head>
 <body>
+    @{ 
+        Models.Position position = (Models.Position)ViewData["position"];
+    }
     <section class="signin popup-in">
         <div class="container">
             <div class="sign-content popup-in-content">
                 <div class="popup-in-txt">
-                    <h2>添加仓库位置</h2>
+                    <h2>修改仓库位置</h2>
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="signin-form">
-                                @using (Html.BeginForm("Position_add", "Position", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @role = "form" }))
+                                @using (Html.BeginForm("Position_Update", "Position", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @role = "form" }))
                                 {
-                                    <div class="form-group">
-                                        <label for="signin_form">仓库位置：</label>
-                                        @Html.TextBoxFor(m => m.positionName, new { @class = "form-control", type = "text" })
-                                    </div>
+                                <div class="form-group">
+                                    <label for="signin_form">仓库位置：</label>
+                                    @Html.TextBox("positionName", position.positionName, new { @class = "form-control", type = "text" })
+                                </div>
                                 }
                             </div>
                         </div>
@@ -67,8 +69,8 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="signin-footer">
-                                <button type="button" class="btn signin_btn signin_btn_two" data-toggle="modal" data-target=".signin_modal" onclick="add();">
-                                    添加
+                                <button type="button" class="btn signin_btn signin_btn_two" data-toggle="modal" data-target=".signin_modal" onclick="Update();">
+                                    修改
                                 </button>
                             </div>
                         </div>

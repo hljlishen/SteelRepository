@@ -11,10 +11,11 @@ namespace SteelRepository.Controllers
 {
     public class PositionController : Controller
     {
+        private static Position po;
         // GET: Position
         public ActionResult Position_list()
         {
-            return View();
+            return View(Position.SelectAll());
         }
         public ActionResult Position_add()
         {
@@ -28,14 +29,22 @@ namespace SteelRepository.Controllers
                 return Json(helper.Insert(position));
             }
         }
-        [HttpPost]
-        public JsonResult Position_list(Position position)
+        public ActionResult Position_Update(int id)
         {
-            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
-            {
-                return Json(helper.SelectAll<Position>());
-            }
+            ViewData["position"] = Position.GetPosition(id);
+            po = Position.GetPosition(id);
+            return View();
         }
-
+        [HttpPost]
+        public JsonResult Position_Update(Position position, FormCollection collection)
+        {
+            po.positionName = position.positionName;
+            return Json(Position.Update(po));
+        }
+        [HttpPost]
+        public JsonResult Position_Delete(int id)
+        {
+            return Json(Position.Delete(id));
+        }
     }
 }

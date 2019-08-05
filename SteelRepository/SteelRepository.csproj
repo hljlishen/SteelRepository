@@ -159,6 +159,7 @@
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\InventoryController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\ManufacturerController.cs" />
     <Compile Include="Controllers\PositionController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Global.asax.cs">
@@ -250,6 +251,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Login\css\animate.css" />
+    <Content Include="Content\Position\css\app.min.css" />
     <Content Include="Content\Login\css\bootsnav.css" />
     <Content Include="Content\Login\css\bootstrap.min.css" />
     <Content Include="Content\Login\css\font-awesome.min.css" />
@@ -262,6 +264,7 @@
     <Content Include="Content\Login\js\jquery.js" />
     <Content Include="Content\Login\js\jquery.sticky.js" />
     <Content Include="Content\Login\js\modernizr.min.js" />
+    <Content Include="Content\Position\js\demo.customers.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\a.jpg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -319,6 +322,10 @@
     <Content Include="Views\Employee\Employee_information.cshtml" />
     <Content Include="Views\Inventory\Inventory.cshtml" />
     <Content Include="Views\Project\Project_update.cshtml" />
+    <Content Include="Views\Manufacturer\Manufacturer_add.cshtml" />
+    <Content Include="Views\Manufacturer\Manufacturer_list.cshtml" />
+    <Content Include="Views\Position\Position_Update.cshtml" />
+    <Content Include="Views\Position\Position_Select.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

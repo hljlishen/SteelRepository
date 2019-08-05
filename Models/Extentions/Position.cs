@@ -1,5 +1,6 @@
 ﻿using DbInterface;
 using DbService;
+using System.Collections.Generic;
 
 namespace Models
 {
@@ -24,6 +25,20 @@ namespace Models
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
                 return helper.Update(position);
+            }
+        }
+        public static List<Position> SelectAll()
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return helper.SelectAll<Position>();
+            }
+        }
+        public static int Delete(int id)
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return helper.Delete<Position>(id);
             }
         }
     }
