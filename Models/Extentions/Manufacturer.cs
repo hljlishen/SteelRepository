@@ -24,11 +24,7 @@ namespace Models
                 return helper.Insert(manufacturer);
             }
         }
-
-        public static object Inster(Manufacturer manufacturer)
-        {
-            throw new NotImplementedException();
-        }
+        
 
         public static int Delete(int id)
         {

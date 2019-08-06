@@ -1,0 +1,54 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+    <link href="~/Content/AdminIndex/css/app.min.css" rel="stylesheet" />
+    <link href="~/Content/AdminIndex/css/icons.min.css" rel="stylesheet" />
+    <script src="~/Content/AdminIndex/js/app.min.js"></script>
+    <script type="text/javascript">
+    </script>
+</head>
+<body>
+    @{
+        Models.Manufacturer manufacturer = (Models.Manufacturer)ViewData["Manufacturer"];
+    }
+    <section class="signin popup-in">
+        <div class="container">
+            <div class="sign-content popup-in-content">
+                <div class="popup-in-txt">
+                    <h2>厂商信息</h2>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="signin-form">
+                                <div class="form-group">
+                                    <label for="signin_form">编号：</label>
+                                    <input type="text" id="example-readonly" class="form-control" readonly="" value="@manufacturer.id">
+                                </div>
+                                <div class="form-group">
+                                    <label for="signin_form">厂商名称：</label>
+                                    <input type="text" id="example-readonly" class="form-control" readonly="" value="@manufacturer.manufacturersName">
+                                </div>
+                                <div class="form-group">
+                                    <label for="signin_form">联系方式：</label>
+                                    <input type="text" id="example-readonly" class="form-control" readonly="" value="@manufacturer.contact">
+                                </div>
+                                <div class="form-group">
+                                    <label for="signin_form">地址：</label>
+                                    <input type="text" id="example-readonly" class="form-control" readonly="" value="@manufacturer.address">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

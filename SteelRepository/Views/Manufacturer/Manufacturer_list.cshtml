@@ -1,4 +1,5 @@
-﻿@{
+﻿@model List<Models.Manufacturer>
+@{
     Layout = "~/Views/Login/AdminIndex.cshtml";
 }
 
@@ -19,7 +20,7 @@
         function ManufacturerAdd() {
             var url = "Manufacturer_add";
             var width = "100%";
-            var height = "700px";
+            var height = "400px";
             parent.OpenWin(url, width, height);
         }
 
@@ -35,6 +36,29 @@
             var width = "100%";
             var height = "700px";
             parent.OpenWin(url, width, height);
+        }
+        
+        function ManufacturerDelete(id) {
+            var flag = confirm("是否要删除信息？");
+        if (flag) {
+            $.ajax({
+                url: "@Url.Action("Manufacturer_delete")",
+                type: "post",
+                data: {
+                    "id": id
+                },
+                dataType: "json",
+                success: function (data) {
+                    data = eval("(" + data + ")");
+                    if (data) {
+                        alert("删除成功！");
+                        parent.openFrame("Manufacturer_list");
+                    } else {
+                        alert("删除失败！");
+                    }
+                }
+            });
+        }
         }
     </script>
 </head>
@@ -60,7 +84,7 @@
                     <div class="card-body">
                         <div class="row mb-2">
                             <div class="col-sm-4">
-                                <a href="javascript:ManufacturerAdd()" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle mr-2"></i>添加仓库位置信息</a>
+                                <a href="javascript:ManufacturerAdd()" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle mr-2"></i>添加厂商信息</a>
                             </div>
                         </div>
 
@@ -78,33 +102,35 @@
                                         <th>厂家名称</th>
                                         <th>联系方式</th>
                                         <th>地址</th>
-
                                         <th style="width: 75px;">操作</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                                <label class="custom-control-label" for="customCheck2">&nbsp;</label>
-                                            </div>
-                                        </td>
-                                        <td class="table-user">
-                                            1
-                                        </td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>
-                                            <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
-                                            <a href="javascript:ProjectUpdate()" class="action-icon"> <i class="dripicons-pencil"></i></a>
-                                            <a href="javascript:ProjectSelect()" class="action-icon"> <i class="mdi mdi-calendar-text-outline"></i></a>
-                                        </td>
-                                    </tr>
-                                </tbody>
+                                    @{int count = 1; }
+                                    @foreach (var manufacturer in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" id="customCheck2">
+                                                    <label class="custom-control-label" for="customCheck2">&nbsp;</label>
+                                                </div>
+                                            </td>
+                                            <td class="table-user">
+                                                @count
+                                            </td>
+                                            <td>@manufacturer.manufacturersName</td>
+                                            <td>@manufacturer.contact</td>
+                                            <td>@manufacturer.address</td>
+                                            <td>
+                                                <a href="javascript:ManufacturerDelete(@manufacturer.id);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
+                                                <a href="javascript:ManufacturerUpdate(@manufacturer.id)" class="action-icon"> <i class="dripicons-pencil"></i></a>
+                                                
+                                            </td>
+                                        </tr>
+                                        count++;
+                                    }
+                                    </tbody>
                             </table>
                         </div>
                     </div>

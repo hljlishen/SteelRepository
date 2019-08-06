@@ -266,6 +266,12 @@
     <Content Include="Content\Login\js\jquery.js" />
     <Content Include="Content\Login\js\jquery.sticky.js" />
     <Content Include="Content\Login\js\modernizr.min.js" />
+    <Content Include="Content\Position\css\britecharts.min.css" />
+    <Content Include="Content\Position\css\icons.min.css" />
+    <Content Include="Content\Position\js\app.min.js" />
+    <Content Include="Content\Position\js\britecharts.min.js" />
+    <Content Include="Content\Position\js\d3.min.js" />
+    <Content Include="Content\Position\js\demo.britechart1.js" />
     <Content Include="Content\Position\js\demo.customers.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\a.jpg" />
@@ -328,6 +334,9 @@
     <Content Include="Views\Manufacturer\Manufacturer_list.cshtml" />
     <Content Include="Views\Position\Position_Update.cshtml" />
     <Content Include="Views\Position\Position_Select.cshtml" />
+    <Content Include="Views\Manufacturer\Manufacturer_information.cshtml" />
+    <Content Include="Views\Manufacturer\Manufacturer_select.cshtml" />
+    <Content Include="Views\Manufacturer\Manufacturer_update.cshtml" />
     <Content Include="Views\Project\Project_StatisticalChart.cshtml" />
     <Content Include="Views\Material\InCome_list.cshtml" />
     <Content Include="Views\Material\OutCome_list.cshtml" />

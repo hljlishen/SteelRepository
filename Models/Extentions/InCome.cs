@@ -22,6 +22,13 @@ namespace Models
                 return helper.FindId<Model>(helper.FindId<MaterialCode>(codeId).materialModelId);
             }
         }
+        public Category GetCategory()
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return helper.FindId<Category>(categoryId);
+            }
+        }
 
         public MaterialCode GetMaterialCode()
         {
