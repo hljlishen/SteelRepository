@@ -326,6 +326,9 @@
     <Content Include="Views\Manufacturer\Manufacturer_list.cshtml" />
     <Content Include="Views\Position\Position_Update.cshtml" />
     <Content Include="Views\Position\Position_Select.cshtml" />
+    <Content Include="Views\Manufacturer\Manufacturer_information.cshtml" />
+    <Content Include="Views\Manufacturer\Manufacturer_select.cshtml" />
+    <Content Include="Views\Manufacturer\Manufacturer_update.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
