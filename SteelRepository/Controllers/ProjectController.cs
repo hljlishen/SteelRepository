@@ -47,5 +47,10 @@ namespace SteelRepository.Controllers
             project.state = 2;
             return Json(Project.Update(project));
         }
+
+        public ActionResult Project_StatisticalChart()
+        {
+            return View();
+        }
     }
 }

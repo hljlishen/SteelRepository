@@ -160,6 +160,7 @@
     <Compile Include="Controllers\InventoryController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ManufacturerController.cs" />
+    <Compile Include="Controllers\MaterialController.cs" />
     <Compile Include="Controllers\PositionController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Global.asax.cs">
@@ -180,6 +181,7 @@
     <Content Include="Content\AdminIndex\css\vendor\simplemde.min.css" />
     <Content Include="Content\AdminIndex\css\vendor\summernote-bs4.css" />
     <Content Include="Content\AdminIndex\js\app.min.js" />
+    <Content Include="Content\AdminIndex\js\pages\customers2.js" />
     <Content Include="Content\AdminIndex\js\pages\demo.apex-area.js" />
     <Content Include="Content\AdminIndex\js\pages\demo.apex-bar.js" />
     <Content Include="Content\AdminIndex\js\pages\demo.apex-bubble.js" />
@@ -326,6 +328,10 @@
     <Content Include="Views\Manufacturer\Manufacturer_list.cshtml" />
     <Content Include="Views\Position\Position_Update.cshtml" />
     <Content Include="Views\Position\Position_Select.cshtml" />
+    <Content Include="Views\Project\Project_StatisticalChart.cshtml" />
+    <Content Include="Views\Material\InCome_list.cshtml" />
+    <Content Include="Views\Material\OutCome_list.cshtml" />
+    <Content Include="Views\Material\InCome_add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

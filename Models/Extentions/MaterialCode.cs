@@ -31,7 +31,7 @@ namespace Models
             var mCodeMatch = GetMaterialCode(name, model);
             if (mName != null && mModel != null && mCodeMatch != null && mCode != null && mCode.id == mCodeMatch.id)   //对应excel第2行,组合正确，不用写入新数据
                 return mCode;
-            else if(mCode == null)
+            else if (mCode == null)
             {
                 if (mCodeMatch != null)     //对应excel第8行
                     throw new Exception("code输入错误");

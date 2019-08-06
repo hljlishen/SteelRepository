@@ -62,6 +62,18 @@
             $("#myModalBody").html(frame);
             $("#myModal").modal("show");
         }
+
+        function OpenWin2(url, width, height) {
+            var frame = "<iframe width='" + width + "' height='" + height + "' onscroll='true' style='border: 0px;' src='" + url + "'></iframe>";
+            $("#myModalBody2").html(frame);
+            $("#myModal2").modal("show");
+        }
+
+         function closeWin2() {
+            //关闭模态框
+            $("#myModal2").modal("hide");
+        }
+
         function closeWin() {
             //关闭模态框
             $("#myModal").modal("hide");
@@ -188,13 +200,11 @@
                                     <li>
                                         <a href="../Employee/Employee_list">员工信息管理</a>
                                     </li>
+
                                 }
-                                @if (permissions == "2")
-                                {
-                                    <li>
-                                        <a href="../Employee/Employee_information?id=@id">个人信息</a>
-                                    </li>
-                                }
+                                <li>
+                                    <a href="../Employee/Employee_information?id=@id">个人信息</a>
+                                </li>
                             </ul>
                         }
                     </li>
@@ -206,7 +216,11 @@
                                 <span> 仓库位置 </span>
                                 <span class="menu-arrow"></span>
                             </a>
-                            <ul class="side-nav-second-level" aria-expanded="false"></ul>
+                            <ul class="side-nav-second-level" aria-expanded="false">
+                                <li>
+                                    <a href="../Position/Position_list">仓库位置管理</a>
+                                </li>
+                            </ul>
                         }
                     </li>
 
@@ -225,7 +239,7 @@
                     <li class="side-nav-item">
                         @if (permissions == "1")
                         {
-                            <a href="../Position/Position_list" class="side-nav-link">
+                            <a href="../Manufacturer/Manufacturer_list" class="side-nav-link">
                                 <i class="dripicons-briefcase"></i>
                                 <span> 厂家信息 </span>
                             </a>
@@ -233,7 +247,7 @@
                     </li>
 
                     <li class="side-nav-item">
-                        @if (permissions == "1")
+                        @if (permissions == "1" || permissions == "2")
                         {
                             <a href="javascript: void(0);" class="side-nav-link">
                                 <i class="dripicons-graph-pie"></i>
@@ -241,9 +255,18 @@
                                 <span class="menu-arrow"></span>
                             </a>
                             <ul class="side-nav-second-level" aria-expanded="false">
-                                <li>
-                                    <a href="../Project/Project_list">项目信息管理</a>
-                                </li>
+                                @if (permissions == "1")
+                                {
+                                    <li>
+                                        <a href="../Project/Project_list">项目信息管理</a>
+                                    </li>
+                                }
+                                @if (permissions == "2")
+                                {
+                                    <li>
+                                        <a href="../Project/Project_StatisticalChart">项目信息统计</a>
+                                    </li>
+                                }
                             </ul>
                         }
                     </li>
@@ -258,10 +281,10 @@
                             </a>
                             <ul class="side-nav-second-level" aria-expanded="false">
                                 <li>
-                                    <a href="form-advanced.html">材料入库信息</a>
+                                    <a href="../Material/InCome_list">材料入库信息管理</a>
                                 </li>
                                 <li>
-                                    <a href="form-validation.html">材料出库信息</a>
+                                    <a href="../Material/OutCome_list">材料出库信息管理</a>
                                 </li>
                             </ul>
                         }
@@ -302,6 +325,19 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="background:#FFFFFF; color:#FFF;width:200%;right:50%">
+                <div class="modal-header" style="padding: 10px;">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                </div>
+                <div class="modal-body" id="myModalBody2"></div>
+            </div>
+        </div>
+    </div>
     <script src="~/Content/AdminIndex/js/app.min.js"></script>
     <script src="~/Content/AdminIndex/js/pages/demo.calendar.js"></script>
     <script src="~/Content/AdminIndex/js/vendor/jquery.dataTables.min.js"></script>
@@ -311,6 +347,7 @@
     <script src="~/Content/AdminIndex/js/vendor/dataTables.checkboxes.min.js"></script>
     <script charset="utf-8" src="~/Content/AdminIndex/js/pages/demo.customers.js"></script>
     <script src="~/Content/Position/js/demo.customers.js"></script>
+    <script src="~/Content/AdminIndex/js/pages/customers2.js"></script>
     <script type="text/javascript">
 
     </script>

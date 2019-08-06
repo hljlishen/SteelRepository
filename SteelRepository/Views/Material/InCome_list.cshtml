@@ -1,0 +1,141 @@
+﻿@model List<Models.InCome>
+@{
+    Layout = "~/Views/Login/AdminIndex.cshtml";
+}
+    <head>
+        <meta charset="utf-8" />
+        <title></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+        <meta content="Coderthemes" name="author" />
+        <link href="~/Content/AdminIndex/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" />
+        <link href="~/Content/AdminIndex/css/vendor/responsive.bootstrap4.css" rel="stylesheet" />
+        <link href="~/Content/AdminIndex/css/app.min.css" rel="stylesheet" />
+        <link href="~/Content/AdminIndex/css/icons.min.css" rel="stylesheet" />
+
+        <script type="text/javascript">
+        function InComeAdd() {
+            var url = "InCome_add";
+            var width = "100%";
+            var height = "750px";
+            parent.OpenWin2(url, width, height);
+        }
+
+        function ProjectUpdate(id) {
+            var url = "Project_update?id="+id;
+            var width = "100%";
+            var height = "700px";
+            parent.OpenWin(url, width, height);
+        }
+
+        function ProjectDelete(id) {
+             var flag = confirm("是否要删除信息？");
+        if (flag) {
+            $.ajax({
+                url: "@Url.Action("Project_delete")",
+                type: "post",
+                data: {
+                    "id": id
+                },
+                dataType: "json",
+                success: function (data) {
+                    data = eval("(" + data + ")");
+                    if (data) {
+                        alert("删除成功！");
+                        parent.openFrame("Project_list");
+                    } else {
+                        alert("删除失败！");
+                    }
+                }
+            });
+        }
+        }
+        </script>
+    </head>
+<div class="content-page">
+    <div class="content">
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box">
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">材料出入库信息</a></li>
+                            <li class="breadcrumb-item active">材料入库信息管理</li>
+                        </ol>
+                    </div>
+                    <h4 class="page-title">材料入库信息管理</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row mb-2">
+                            <div class="col-sm-4">
+                                <a href="javascript:InComeAdd()" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle mr-2"></i>添加材料信息</a>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-centered table-striped dt-responsive nowrap w-100" id="products-datatable10">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 10px;">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                                <label class="custom-control-label" for="customCheck1">&nbsp;</label>
+                                            </div>
+                                        </th>
+                                        <th></th>
+                                        <th>名称</th>
+                                        <th>规格</th>
+                                        <th>类别</th>
+                                        <th>编号</th>
+                                        <th>批号</th>
+                                        <th>厂家</th>
+                                        <th>放置位置</th>
+                                        <th>入库时间</th>
+                                        <th>复检</th>
+                                        <th style="width: 75px;">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{ int count = 1;}
+                                   @foreach (var income in Model)
+                                   {
+                                    <tr>
+                                        <td>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck2">
+                                                <label class="custom-control-label" for="customCheck2">&nbsp;</label>
+                                            </div>
+                                        </td>
+                                        <td>@count</td>
+                                        <td>@income.GetName().materialName</td>
+                                        <td>@income.GetModel().modelName</td>
+                                        <td>@income.GetCategory().categoryName</td>
+                                        <td>@income.GetMaterialCode().code</td>
+                                        <td>@income.batch</td>
+                                        <td>@income.GetManufacture().manufacturersName</td>
+                                        <td>@income.GetPosition().positionName</td>
+                                        <td>@income.storageTime</td>
+                                        <td></td>
+                                        <td>
+                                            <a href="javascript:ProjectDelete(@income.id)" class="action-icon"> <i class="mdi mdi-delete"></i></a>
+                                            <a href="javascript:ProjectUpdate(@income.id)" class="action-icon"> <i class="dripicons-pencil"></i></a>
+                                            <a href="javascript:ProjectSelect(@income.id)" class="action-icon"> <i class="mdi mdi-calendar-text-outline"></i></a>
+                                        </td>
+                                    </tr>
+                                       count++;
+                                   }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

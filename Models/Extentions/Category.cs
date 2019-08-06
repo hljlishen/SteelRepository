@@ -29,5 +29,17 @@ namespace Models
                 return helper.Insert(category);
             }
         }
+
+        public static Category Insert(string category)
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                var record = helper.FindFirst<Category, string>("categoryName", category);
+                if (record != null) return record;
+                var ret = new Category() { categoryName = category };
+                helper.Insert(ret);
+                return ret;
+            }
+        }
     }
 }

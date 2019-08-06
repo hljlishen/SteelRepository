@@ -13,11 +13,16 @@ namespace Models
             }
         }
 
-        public static void Insert(string model, IDbInterface helper)
+        public static Model Insert(string model)
         {
-            var record = helper.FindFirst<Model, string>("modelName", model);
-            if (record != null) return;
-            helper.Insert(new Model() { modelName = model }, false);
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                var record = helper.FindFirst<Model, string>("modelName", model);
+                if (record != null) return record;
+                var ret = new Model() { modelName = model };
+                helper.Insert(ret);
+                return ret;
+            }
         }
     }
 }
