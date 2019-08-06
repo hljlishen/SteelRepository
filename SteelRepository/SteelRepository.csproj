@@ -264,6 +264,12 @@
     <Content Include="Content\Login\js\jquery.js" />
     <Content Include="Content\Login\js\jquery.sticky.js" />
     <Content Include="Content\Login\js\modernizr.min.js" />
+    <Content Include="Content\Position\css\britecharts.min.css" />
+    <Content Include="Content\Position\css\icons.min.css" />
+    <Content Include="Content\Position\js\app.min.js" />
+    <Content Include="Content\Position\js\britecharts.min.js" />
+    <Content Include="Content\Position\js\d3.min.js" />
+    <Content Include="Content\Position\js\demo.britechart1.js" />
     <Content Include="Content\Position\js\demo.customers.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\a.jpg" />
