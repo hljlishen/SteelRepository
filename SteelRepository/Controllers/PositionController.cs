@@ -46,5 +46,10 @@ namespace SteelRepository.Controllers
         {
             return Json(Position.Delete(id));
         }
+        public ActionResult Position_Select(int id)
+        {
+            //ViewData["PositionSelect"] = Position.StatisticAmount(id);
+            return View();
+        }
     }
 }
