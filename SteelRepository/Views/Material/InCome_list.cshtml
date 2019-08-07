@@ -21,34 +21,18 @@
             parent.OpenWin2(url, width, height);
         }
 
-        function ProjectUpdate(id) {
-            var url = "Project_update?id="+id;
+        function InComeUpdate(id) {
+            var url = "InCome_update?id="+id;
             var width = "100%";
-            var height = "700px";
-            parent.OpenWin(url, width, height);
+            var height = "750px";
+            parent.OpenWin2(url, width, height);
         }
 
-        function ProjectDelete(id) {
-             var flag = confirm("是否要删除信息？");
-        if (flag) {
-            $.ajax({
-                url: "@Url.Action("Project_delete")",
-                type: "post",
-                data: {
-                    "id": id
-                },
-                dataType: "json",
-                success: function (data) {
-                    data = eval("(" + data + ")");
-                    if (data) {
-                        alert("删除成功！");
-                        parent.openFrame("Project_list");
-                    } else {
-                        alert("删除失败！");
-                    }
-                }
-            });
-        }
+        function InComeSelect(id) {
+            var url = "InCome_select?id="+id;
+            var width = "100%";
+            var height = "750px";
+            parent.OpenWin2(url, width, height);
         }
         </script>
     </head>
@@ -94,10 +78,10 @@
                                         <th>类别</th>
                                         <th>编号</th>
                                         <th>批号</th>
-                                        <th>厂家</th>
                                         <th>放置位置</th>
                                         <th>入库时间</th>
-                                        <th>复检</th>
+                                        <th>复检数据</th>
+                                        <th>操作人</th>
                                         <th style="width: 75px;">操作</th>
                                     </tr>
                                 </thead>
@@ -118,14 +102,13 @@
                                         <td>@income.GetCategory().categoryName</td>
                                         <td>@income.GetMaterialCode().code</td>
                                         <td>@income.batch</td>
-                                        <td>@income.GetManufacture().manufacturersName</td>
                                         <td>@income.GetPosition().positionName</td>
-                                        <td>@income.storageTime</td>
-                                        <td></td>
+                                        <td>@income.storageTime.ToString("d")</td>
+                                        <td><a href="#" class="text-body font-weight-bold">复检数据</a></td>
+                                        <td>@income.GetOperator().name</td>
                                         <td>
-                                            <a href="javascript:ProjectDelete(@income.id)" class="action-icon"> <i class="mdi mdi-delete"></i></a>
-                                            <a href="javascript:ProjectUpdate(@income.id)" class="action-icon"> <i class="dripicons-pencil"></i></a>
-                                            <a href="javascript:ProjectSelect(@income.id)" class="action-icon"> <i class="mdi mdi-calendar-text-outline"></i></a>
+                                            <a href="javascript:InComeUpdate(@income.id)" class="action-icon"> <i class="dripicons-pencil"></i></a>
+                                            <a href="javascript:InComeSelect(@income.id)" class="action-icon"> <i class="mdi mdi-calendar-text-outline"></i></a>
                                         </td>
                                     </tr>
                                        count++;
