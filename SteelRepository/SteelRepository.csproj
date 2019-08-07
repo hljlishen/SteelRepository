@@ -341,6 +341,7 @@
     <Content Include="Views\Material\InCome_list.cshtml" />
     <Content Include="Views\Material\OutCome_list.cshtml" />
     <Content Include="Views\Material\InCome_add.cshtml" />
+    <Content Include="Views\Material\InCome_update.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -24,19 +24,12 @@ namespace SteelRepository.Controllers
 
         public ActionResult InCome_add()
         {
-            SelectList select = new SelectList(GetUnitList(), "Value", "Text");
-            ViewBag.select = select;
-            SelectList select2 = new SelectList(GetMenufacturerList(), "Value", "Text");
-            ViewBag.selectMenu = select2;
-            SelectList select3 = new SelectList(GetPositionList(), "Value", "Text");
-            ViewBag.selectPosition = select3;
-            SelectList select4 = new SelectList(GetOperatorList(), "Value", "Text");
-            ViewBag.selectOperator = select4;
+            SelectList();
             return View();
         }
 
         [HttpPost]
-        public JsonResult InCome_add(InCome inCome,FormCollection collection)
+        public JsonResult InCome_add(InCome inCome, FormCollection collection)
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
@@ -48,7 +41,32 @@ namespace SteelRepository.Controllers
                 inCome.storageTime = DateTime.Parse(collection["InComeTime"]);
                 InCome.NewInCome(inCome, collection["materialCode"], collection["name1"], collection["model"]);
                 return Json(true);
-            } 
+            }
+        }
+
+        public ActionResult InCome_update(int id)
+        {
+            SelectList();
+            ViewData["InCome"] = InCome.Update(id);
+            return View();
+        }
+
+        //[HttpPost]
+        //public JsonResult InCome_update(InCome inCome,FormCollection collection)
+        //{
+        //    return Json();
+        //}
+
+        private void SelectList()
+        {
+            SelectList select = new SelectList(GetUnitList(), "Value", "Text");
+            ViewBag.select = select;
+            SelectList select2 = new SelectList(GetMenufacturerList(), "Value", "Text");
+            ViewBag.selectMenu = select2;
+            SelectList select3 = new SelectList(GetPositionList(), "Value", "Text");
+            ViewBag.selectPosition = select3;
+            SelectList select4 = new SelectList(GetOperatorList(), "Value", "Text");
+            ViewBag.selectOperator = select4;
         }
 
         private List<SelectListItem> GetUnitList()

@@ -72,15 +72,7 @@ namespace Models
             }
         }
 
-        public Category GetCategory()
-        {
-            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
-            {
-                return helper.FindId<Category>(categoryId);
-            }
-        }
-
-        public static InCome NewInCome(InCome inCome, string materialCode, string materialName, string materialModel, string priceMeasure = "千克", List<byte[]> qualityCertification = null)
+        public static InCome NewInCome(InCome inCome, string materialCode, string materialName, string materialModel, List<byte[]> qualityCertification = null,List<byte[]> recheckReport = null)
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
@@ -98,7 +90,7 @@ namespace Models
                 if (BatchIdExist(inCome.batch, helper)) throw new Exception("批号已存在");
 
                 //写入入库
-                var income = new InCome() { categoryId = inCome.categoryId, batch = inCome.batch, codeId = mCode.id, positionId = inCome.positionId, unit = inCome.unit, amount = inCome.amount, operatorId = inCome.operatorId, unitPrice =inCome.unitPrice, menufactureId = inCome.menufactureId, storageTime = inCome.storageTime, priceMeasure = priceMeasure };
+                var income = new InCome() { categoryId = inCome.categoryId, batch = inCome.batch, codeId = mCode.id, positionId = inCome.positionId, unit = inCome.unit, amount = inCome.amount, operatorId = inCome.operatorId, unitPrice =inCome.unitPrice, menufactureId = inCome.menufactureId, storageTime = inCome.storageTime, priceMeasure = inCome.priceMeasure };
                 helper.Insert(income);
 
                 //写入质量报告图片
@@ -107,6 +99,15 @@ namespace Models
                     foreach (var item in qualityCertification)
                     {
                         QualityCertificationReportImg.Insert(income.id, item, helper);
+                    }
+                }
+
+                //写入复检报告图片
+                if (recheckReport != null)
+                {
+                    foreach (var item in recheckReport)
+                    {
+                        RecheckReportImg.Insert(income.id,item,helper);
                     }
                 }
 
@@ -132,6 +133,14 @@ namespace Models
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
                 return helper.SelectAll<InCome>();
+            }
+        }
+
+        public static InCome Update(int id)
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return helper.FindId<InCome>(id);
             }
         }
     }
