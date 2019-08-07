@@ -7,7 +7,7 @@ namespace Models
 {
     public partial class Position
     {
-        private static List<InCome> ins = null;
+        
         public static Position GetPosition(int id)
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
@@ -48,6 +48,7 @@ namespace Models
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
                 var incomes = helper.Select<InCome>(p => p.positionId == id);
+                List<InCome> ins = new List<InCome>();
                 foreach (var income in incomes)
                 {
                     income.amount = WeightConverter.Convert(income.unit, income.amount, "kg");
@@ -56,12 +57,12 @@ namespace Models
                 return ins;
             }
         }
-        public static Dictionary<string, Dictionary<string, double>> StatisticAmount(int id)
+        public static Dictionary<string, double> StatisticAmount(int id)
         {
             MultipleSeriesStatistics2D<InCome> statistics2D = new MultipleSeriesStatistics2D<InCome>(p=> p.GetMaterialCode().code);
             statistics2D.AddSeries("amount",p=>p.amount);
             var Sum = statistics2D.GetValues(GetInComes(id));
-            return Sum;
+            return Sum["amount"];
         }
     }
 }
