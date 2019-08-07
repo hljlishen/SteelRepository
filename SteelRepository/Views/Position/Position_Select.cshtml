@@ -2,88 +2,106 @@
     Layout = null;
 }
 <!DOCTYPE html>
-<html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <link href="~/Content/Position/css/britecharts.min.css" rel="stylesheet" />
-    <script src="~/Content/Position/js/demo.customers2.js"></script>
-    <link href="~/Content/AdminIndex/css/app.min.css" rel="stylesheet" />
-    <link href="~/Content/AdminIndex/css/icons.min.css" rel="stylesheet" />
-    <script src="~/Content/AdminIndex/js/app.min.js"></script>
-    <script type="text/javascript">
-    </script>
-</head>
-<body>
-    @{ 
-        List<string> s = (List<string>)ViewData["PositionSelectstr"];
-        List<double> d = (List<double>)ViewData["PositionSelectdou"];
+    @{
+        int id = (int)ViewData["positionId"];
     }
-    <div class="content-page">
-        <div class="content">
-            <div class="row">
-                <div class="col-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row mb-2">
-                                <div class="col-sm-4">
-                                    <a href="javascript:PositionAdd()" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle mr-2"></i>详细信息</a>
-                                </div>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table table-centered table-striped dt-responsive nowrap w-100" id="products-datatable3">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 20px;">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                    <label class="custom-control-label" for="customCheck1">&nbsp;</label>
-                                                </div>
-                                            </th>
-                                            <th>编号</th>
-                                            <th>重量统计</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                                    <label class="custom-control-label" for="customCheck2">&nbsp;</label>
-                                                </div>
-                                            </td>
-                                            @foreach (var positionstr in s)
-                                            {
-                                                <td class="table-user">@positionstr</td>
-                                            }
-                                            @foreach (var posotiondou in d)
-                                            {
-                                                <td>@posotiondou</td>
-                                            }
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="header-title mb-4">详细信息</h4>
-                            <div class="bar-container" style="width: 100%;height: 500px;"></div>
-                        </div>
-                    </div>
+    <meta charset="utf-8" />
+    <script src="~/Content/Position/js/echarts.min.js"></script>
+    <link href="~/Content/AdminIndex/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" />
+    <link href="~/Content/AdminIndex/css/vendor/responsive.bootstrap4.css" rel="stylesheet" />
+    <link href="~/Content/AdminIndex/css/icons.min.css" rel="stylesheet" />
+    <link href="~/Content/AdminIndex/css/app.min.css" rel="stylesheet" />
+    <script type="text/javascript">
+        function PositionSelectKey(Key) {
+            var url = "Position_SelectKey?Key=" + Key;
+            var width = "100%";
+            var height = "780px";
+            parent.OpenWin(url, width, height);
+        }
+
+    function OpenWin(url, width, height) {
+            var frame = "<iframe width='" + width + "' height='" + height + "' onscroll='true' style='border: 0px;' src='" + url + "'></iframe>";
+            $("#myModalBody").html(frame);
+            $("#myModal").modal("show");
+    }
+    </script>
+
+</head>
+<div class="content-page">
+    <div class="content">
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box">
+                    <h4 class="page-title">仓储储量详细信息表</h4>
                 </div>
             </div>
         </div>
-    </div>
-    <script src="~/Content/Position/js/app.min.js"></script>
-    <script src="~/Content/Position/js/d3.min.js"></script>
-    <script src="~/Content/Position/js/britecharts.min.js"></script>
-    <script charset="utf-8" src="~/Content/Position/js/demo.britechart1.js"></script>
-</body>
+        <div class="row">
+             <div class="col-12">
+               <div class="card">
+                    <div class="card-body">
 
-</html>
+                        <div class="table-responsive">
+                            <table class="table table-centered table-striped dt-responsive nowrap w-100" id="products-datatable2">
+                                <thead>
+                                    <tr>
+                                        <th>编号</th>
+                                        <th>重量</th>
+                                        <th style="width: 125px;">获取材料名称</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var position in Models.Position.StatisticAmount(id))
+                                    {
+                                        <tr>
+                                            <td>@position.Key</td>
+                                            <td>@position.Value</td>
+                                            <td> <a href="javascript:PositionSelectKey(@position.Key)" class="action-icon"> <i class="mdi mdi-calendar-text-outline"></i></a></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                      <div id="main" style="width: 600px;height:400px;">
+
+                                    </div>
+                       <script type="text/javascript">
+                            @{
+                                var sData = Models.Position.StatisticAmount(id);
+                            }
+                            var codes = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(sData.Keys.ToArray()))
+                            var values = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(sData.Values.ToArray()))
+                            var myChart = echarts.init(document.getElementById('main'));
+                            var option = {
+                                title: {
+                                    text: '仓储储量详细信息图'
+                                },
+                                tooltip: {},
+                                legend: {
+                                    data: ['编号']
+                                },
+                                xAxis: {
+                                    name: '编号',
+                                    data: codes
+                                },
+                                yAxis: {
+                                    name: '重量',
+                                },
+                                series: [{
+                                    name: '重量',
+                                    type: 'bar',
+                                    data: values
+                                }]
+                            };
+                            myChart.setOption(option);
+                       </script> 
+                    </div>
+               </div>
+             </div>
+       </div>
+    </div>
+</div>
