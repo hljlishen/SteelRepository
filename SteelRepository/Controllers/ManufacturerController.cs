@@ -2,7 +2,6 @@
 using DbService;
 using Models;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -30,28 +29,26 @@ namespace SteelRepository.Controllers
             return Json(Manufacturer.Insert(manufacturer));
         }
 
+
         public ActionResult Manufacturer_update(int id)
         {
             ViewData["Manufacturer"] = Manufacturer.GetManufacturer(id);
             mf = Manufacturer.GetManufacturer(id);
             return View();
         }
-        
+
         [HttpPost]
         public JsonResult Manufacturer_update(Manufacturer manufacturer)
         {
             manufacturer.id = mf.id;
-            manufacturer.manufacturersName = mf.manufacturersName;
-            manufacturer.contact = mf.contact;
-            manufacturer.address = mf.address;
             return Json(Manufacturer.Update(manufacturer));
         }
 
-        public ActionResult Manufacturer_select(int id)
-        {
-            ViewData["Manufacturer"] = Manufacturer.GetManufacturer(id);
-            return View();
-        }
+        //public ActionResult Manufacturer_select(int id)
+        //{
+        //    ViewData["Manufacturer"] = Manufacturer.GetManufacturer(id);
+        //    return View();
+        //}
 
         public JsonResult Manufacturer_delete(int id)
         {
@@ -69,10 +66,8 @@ namespace SteelRepository.Controllers
         [HttpPost]
         public JsonResult Manufacturer_information(Manufacturer manufacturer)
         {
+
             manufacturer.id = mf.id;
-            manufacturer.manufacturersName = mf.manufacturersName;
-            manufacturer.contact = mf.contact;
-            manufacturer.address = mf.address;
             return Json(Manufacturer.Update(manufacturer));
         }
     }

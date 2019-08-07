@@ -3,7 +3,6 @@
     Layout = "~/Views/Login/AdminIndex.cshtml";
 }
 
-<!DOCTYPE html>
 
 <head>
     <meta charset="utf-8" />
@@ -24,11 +23,11 @@
             parent.OpenWin(url, width, height);
         }
 
-        function ManufacturerUpdate() {
-            var url = "Manufacturer_add";
-            var width = "100%";
-            var height = "700px";
-            parent.OpenWin(url, width, height);
+        function ManufacturerUpdate(id) {
+             var url = "Manufacturer_update?id="+id;
+             var width = "100%";
+             var height = "500px";
+             parent.OpenWin(url, width, height);
         }
 
         function ManufacturerSelect() {
@@ -37,7 +36,7 @@
             var height = "700px";
             parent.OpenWin(url, width, height);
         }
-        
+
         function ManufacturerDelete(id) {
             var flag = confirm("是否要删除信息？");
         if (flag) {
@@ -99,7 +98,7 @@
                                             </div>
                                         </th>
                                         <th>编号</th>
-                                        <th>厂家名称</th>
+                                        <th>厂商名称</th>
                                         <th>联系方式</th>
                                         <th>地址</th>
                                         <th style="width: 75px;">操作</th>
@@ -125,12 +124,12 @@
                                             <td>
                                                 <a href="javascript:ManufacturerDelete(@manufacturer.id);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
                                                 <a href="javascript:ManufacturerUpdate(@manufacturer.id)" class="action-icon"> <i class="dripicons-pencil"></i></a>
-                                                
+
                                             </td>
                                         </tr>
                                         count++;
                                     }
-                                    </tbody>
+                                </tbody>
                             </table>
                         </div>
                     </div>
