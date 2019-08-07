@@ -31,9 +31,9 @@
 
         function PositionSelect(id) {
             var url = "Position_Select?id=" + id;
-            var width = "80%";
-            var height = "800px";
-            parent.OpenWin(url, width, height);
+            var width = "100%";
+            var height = "400px";
+            parent.OpenWin2(url, width, height);
         }
         function PositionDelete(id) {
             var flag = confirm("是否要删除信息？");
@@ -96,6 +96,7 @@
                                             </th>
                                             <th>编号</th>
                                             <th>位置信息</th>
+                                            <th>备注</th>
                                             <th style="width: 125px;">操作</th>
                                         </tr>
                                     </thead>
@@ -112,6 +113,7 @@
                                             </td>
                                             <td class="table-user">@count</td>
                                             <td>@position.positionName</td>
+                                            <td>@position.note</td>
                                             <td>
                                                 <a href="javascript:PositionDelete(@position.id);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
                                                 <a href="javascript:PositionUpdate(@position.id)" class="action-icon"> <i class="dripicons-pencil"></i></a>

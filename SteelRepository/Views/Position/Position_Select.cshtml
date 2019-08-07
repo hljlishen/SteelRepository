@@ -7,13 +7,69 @@
 <head>
     <meta charset="utf-8" />
     <link href="~/Content/Position/css/britecharts.min.css" rel="stylesheet" />
+    <script src="~/Content/Position/js/demo.customers2.js"></script>
+    <link href="~/Content/AdminIndex/css/app.min.css" rel="stylesheet" />
+    <link href="~/Content/AdminIndex/css/icons.min.css" rel="stylesheet" />
+    <script src="~/Content/AdminIndex/js/app.min.js"></script>
+    <script type="text/javascript">
+    </script>
 </head>
 <body>
-
+    @{ 
+        List<string> s = (List<string>)ViewData["PositionSelectstr"];
+        List<double> d = (List<double>)ViewData["PositionSelectdou"];
+    }
     <div class="content-page">
         <div class="content">
             <div class="row">
-                <div class="col-12">
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row mb-2">
+                                <div class="col-sm-4">
+                                    <a href="javascript:PositionAdd()" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle mr-2"></i>详细信息</a>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-centered table-striped dt-responsive nowrap w-100" id="products-datatable3">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 20px;">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                                    <label class="custom-control-label" for="customCheck1">&nbsp;</label>
+                                                </div>
+                                            </th>
+                                            <th>编号</th>
+                                            <th>重量统计</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" id="customCheck2">
+                                                    <label class="custom-control-label" for="customCheck2">&nbsp;</label>
+                                                </div>
+                                            </td>
+                                            @foreach (var positionstr in s)
+                                            {
+                                                <td class="table-user">@positionstr</td>
+                                            }
+                                            @foreach (var posotiondou in d)
+                                            {
+                                                <td>@posotiondou</td>
+                                            }
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
                     <div class="card">
                         <div class="card-body">
                             <h4 class="header-title mb-4">详细信息</h4>

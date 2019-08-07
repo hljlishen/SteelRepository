@@ -57,10 +57,14 @@
                             <div class="signin-form">
                                 @using (Html.BeginForm("Position_Update", "Position", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @role = "form" }))
                                 {
-                                <div class="form-group">
-                                    <label for="signin_form">仓库位置：</label>
-                                    @Html.TextBox("positionName", position.positionName, new { @class = "form-control", type = "text" })
-                                </div>
+                                    <div class="form-group">
+                                        <label for="signin_form">仓库位置：</label>
+                                        @Html.TextBox("positionName", position.positionName, new { @class = "form-control", type = "text" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="signin_form">备注：</label>
+                                        @Html.TextBox("note", position.note, new { @class = "form-control", type = "text" })
+                                    </div>
                                 }
                             </div>
                         </div>

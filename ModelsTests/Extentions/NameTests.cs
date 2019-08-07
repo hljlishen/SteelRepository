@@ -19,11 +19,11 @@ namespace Models.Tests
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
                 int count = helper.SelectAll<Name>().Count();
-                Name.Insert("*&^%$", helper);
+                Name.Insert("*&^%$");
                 helper.Commit();
                 int count1 = helper.SelectAll<Name>().Count();
                 Assert.AreEqual(count1 - 1, count);
-                Name.Insert("*&^%$", helper);
+                Name.Insert("*&^%$");
                 helper.Commit();
                 Assert.AreEqual(count1 - 1, count);
                 helper.DeleteWhere<Name>(p => p.materialName == "*&^%$");

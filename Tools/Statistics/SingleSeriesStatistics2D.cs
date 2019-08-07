@@ -74,6 +74,8 @@ namespace Tools.Statistics
 
         public Dictionary<string, double> GetValues(IEnumerable<TObject> objects)
         {
+            if (objects == null) return new Dictionary<string, double>();
+
             var seriesValues = GetSingleSeriesData(objects);
             var ret = new Dictionary<string, double>();
             foreach (var item in seriesValues)

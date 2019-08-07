@@ -43,15 +43,15 @@ namespace Models
                 return helper.Delete<Position>(id);
             }
         }
-        public static List<InCome> GetInCome(int id)
+        public static List<InCome> GetInComes(int id)
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                var Come = helper.Select<InCome>(p => p.positionId == id);
-                foreach (var Comes in Come)
+                var incomes = helper.Select<InCome>(p => p.positionId == id);
+                foreach (var income in incomes)
                 {
-                    Comes.amount = WeightConverter.Convert(Comes.unit, Comes.amount, "kg");
-                    ins.Add(Comes);
+                    income.amount = WeightConverter.Convert(income.unit, income.amount, "kg");
+                    ins.Add(income);
                 }
                 return ins;
             }
@@ -60,7 +60,7 @@ namespace Models
         {
             MultipleSeriesStatistics2D<InCome> statistics2D = new MultipleSeriesStatistics2D<InCome>(p=> p.GetMaterialCode().code);
             statistics2D.AddSeries("amount",p=>p.amount);
-            var Sum = statistics2D.GetValues(GetInCome(id));
+            var Sum = statistics2D.GetValues(GetInComes(id));
             return Sum;
         }
     }
