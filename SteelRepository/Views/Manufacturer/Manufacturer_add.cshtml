@@ -12,7 +12,7 @@
     <link href="~/Content/AdminIndex/css/app.min.css" rel="stylesheet" />
     <link href="~/Content/AdminIndex/css/icons.min.css" rel="stylesheet" />
     <script src="~/Content/AdminIndex/js/app.min.js"></script>
-    <script>
+    <script type="text/javascript">
         function add() {
             checkTel();
             $.ajax({
@@ -31,14 +31,23 @@
                 }
             });
         }
-        
         function checkTel() {
             var tel = document.getElementById('tel').value;
-            if (!/^(\(\d{3,4}\)|\d{3,4}-|\s)?\d{7,14}$/.test(tel)) {
-                alert('电话有误，请重填');
-                return false;
-            }
-        };
+            if (!(/^1[3456789]\d{9}$/.test(tel))) {
+                alert("号码有误，请重填");
+                update();
+            } 
+        }
+
+        //function checkTel() {
+        //    var tel = document.getElementById('tel').value;
+        //    if (!/^(\(\d{3,4}\)|\d{3,4}-|\s)?\d{7,14}$/.test(tel)) {
+
+        //    } else {
+        //        alert('电话有误，请重填');
+        //        update();
+        //    }
+        //};
     </script>
 
 </head>
@@ -54,13 +63,12 @@
                                 @using (Html.BeginForm("Manufacturer_add", "Manufacturer", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @role = "form" }))
                                 {
                                     <div class="form-group">
-                                        <label for="signin_form">厂家名称：</label>
+                                        <label for="signin_form">厂商名称：</label>
                                         @Html.TextBoxFor(m => m.manufacturersName, new { @class = "form-control", type = "text" })
                                     </div>
                                     <div class="form-group">
                                         <label for="signin_form">联系方式：</label>
-                                        @Html.TextBoxFor(m => m.contact, new { @class = "form-control", type = "text" ,id="tel",maxlength="11"})
-
+                                        @Html.TextBoxFor(m => m.contact, new { @class = "form-control", type = "text", id = "tel", maxlength = "11" })
                                     </div>
                                     <div class="form-group">
                                         <label for="signin_form">地址：</label>
@@ -74,7 +82,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="signin-footer">
-                                <button type="button" class="btn btn-primary" onclick="add()">
+                                <button type="button" class="btn btn-primary" onclick="add();">
                                     添加
                                 </button>
                             </div>
