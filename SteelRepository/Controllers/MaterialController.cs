@@ -24,7 +24,14 @@ namespace SteelRepository.Controllers
 
         public ActionResult InCome_add()
         {
-            SelectList();
+            SelectList select = new SelectList(GetUnitList(), "Value", "Text");
+            ViewBag.select = select;
+            SelectList select2 = new SelectList(GetMenufacturerList(), "Value", "Text");
+            ViewBag.selectMenu = select2;
+            SelectList select3 = new SelectList(GetPositionList(), "Value", "Text");
+            ViewBag.selectPosition = select3;
+            SelectList select4 = new SelectList(GetOperatorList(), "Value", "Text");
+            ViewBag.selectOperator = select4;
             return View();
         }
 
@@ -46,8 +53,21 @@ namespace SteelRepository.Controllers
 
         public ActionResult InCome_update(int id)
         {
-            SelectList();
-            ViewData["InCome"] = InCome.Update(id);
+            SelectList select = new SelectList(GetUnitList(id), "Value", "Text");
+            ViewBag.select = select;
+            SelectList select2 = new SelectList(GetMenufacturerList(id), "Value", "Text");
+            ViewBag.selectMenu = select2;
+            SelectList select3 = new SelectList(GetPositionList(id), "Value", "Text");
+            ViewBag.selectPosition = select3;
+            SelectList select4 = new SelectList(GetOperatorList(id), "Value", "Text");
+            ViewBag.selectOperator = select4;
+            ViewData["InCome"] = InCome.Selete(id);
+            return View();
+        }
+
+        public ActionResult InCome_selete(int id)
+        {
+            ViewData["InCome"] = InCome.Selete(id);
             return View();
         }
 
@@ -57,33 +77,47 @@ namespace SteelRepository.Controllers
         //    return Json();
         //}
 
-        private void SelectList()
-        {
-            SelectList select = new SelectList(GetUnitList(), "Value", "Text");
-            ViewBag.select = select;
-            SelectList select2 = new SelectList(GetMenufacturerList(), "Value", "Text");
-            ViewBag.selectMenu = select2;
-            SelectList select3 = new SelectList(GetPositionList(), "Value", "Text");
-            ViewBag.selectPosition = select3;
-            SelectList select4 = new SelectList(GetOperatorList(), "Value", "Text");
-            ViewBag.selectOperator = select4;
-        }
-
         private List<SelectListItem> GetUnitList()
         {
             List<SelectListItem> itemList = new List<SelectListItem>();
-            SelectListItem item0 = new SelectListItem()
+            SelectListItem item1 = new SelectListItem()
             {
                 Value = "g",
                 Text = "g"
             };
+            SelectListItem item2 = new SelectListItem()
+            {
+                Value = "kg",
+                Text = "kg"
+            };
+            itemList.Add(item1);
+            itemList.Add(item2);
+            return itemList;
+        }
+
+        private List<SelectListItem> GetUnitList(int inComeId)
+        {
+            List<SelectListItem> itemList = new List<SelectListItem>();
+            string unit = InCome.Selete(inComeId).unit;
+            SelectListItem item0 = new SelectListItem()
+            {
+                
+                Value = unit,
+                Text = unit
+            };
             SelectListItem item1 = new SelectListItem()
+            {
+                Value = "g",
+                Text = "g"
+            };
+            SelectListItem item2 = new SelectListItem()
             {
                 Value = "kg",
                 Text = "kg"
             };
             itemList.Add(item0);
             itemList.Add(item1);
+            itemList.Add(item2);
             return itemList;
         }
 
@@ -98,6 +132,28 @@ namespace SteelRepository.Controllers
                     Text = meun.manufacturersName
                 };
                 itemList.Add(item0);
+            }
+            return itemList;
+        }
+
+        private List<SelectListItem> GetMenufacturerList(int inComeId)
+        {
+            List<SelectListItem> itemList = new List<SelectListItem>();
+            Manufacturer menufacture = Manufacturer.GetManufacturer(int.Parse(InCome.Selete(inComeId).menufactureId.ToString()));
+            SelectListItem item0 = new SelectListItem()
+            {
+                Value = menufacture.id.ToString(),
+                Text = menufacture.manufacturersName
+            };
+            itemList.Add(item0);
+            foreach (var meun in Manufacturer.SelectAll())
+            {
+                SelectListItem item1 = new SelectListItem()
+                {
+                    Value = meun.id.ToString(),
+                    Text = meun.manufacturersName
+                };
+                itemList.Add(item1);
             }
             return itemList;
         }
@@ -117,6 +173,28 @@ namespace SteelRepository.Controllers
             return itemList;
         }
 
+        private List<SelectListItem> GetPositionList(int inComeId)
+        {
+            List<SelectListItem> itemList = new List<SelectListItem>();
+            Position position = Position.GetPosition(int.Parse(InCome.Selete(inComeId).positionId.ToString()));
+            SelectListItem item0 = new SelectListItem()
+            {
+                Value = position.id.ToString(),
+                Text = position.positionName
+            };
+            itemList.Add(item0);
+            foreach (var pos in Position.SelectAll())
+            {
+                SelectListItem item1 = new SelectListItem()
+                {
+                    Value = pos.id.ToString(),
+                    Text = pos.positionName
+                };
+                itemList.Add(item1);
+            }
+            return itemList;
+        }
+
         private List<SelectListItem> GetOperatorList()
         {
             List<SelectListItem> itemList = new List<SelectListItem>();
@@ -131,5 +209,28 @@ namespace SteelRepository.Controllers
             }
             return itemList;
         }
+
+        private List<SelectListItem> GetOperatorList(int inComeId)
+        {
+            List<SelectListItem> itemList = new List<SelectListItem>();
+            Employee employee = Employee.FindId(int.Parse(InCome.Selete(inComeId).operatorId.ToString()));
+            SelectListItem item0 = new SelectListItem()
+            {
+                Value = employee.id.ToString(),
+                Text = employee.name
+            };
+            itemList.Add(item0);
+            foreach (var em in Employee.SelectAll())
+            {
+                SelectListItem item1 = new SelectListItem()
+                {
+                    Value = em.id.ToString(),
+                    Text = em.name
+                };
+                itemList.Add(item1);
+            }
+            return itemList;
+        }
+
     }
 }

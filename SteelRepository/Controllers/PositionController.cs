@@ -48,22 +48,19 @@ namespace SteelRepository.Controllers
         }
         public ActionResult Position_Select(int id)
         {
-            ViewData["PositionSelect"] = Position.StatisticAmount(id);
-            List<string> ls1 = new List<string>();
-            List<double> ls2 = new List<double>();
-            Dictionary<string, double> valuePairs = new Dictionary<string, double>();
-            foreach (KeyValuePair<string, Dictionary<string, double>> kandv in Position.StatisticAmount(id))
-            {
-                valuePairs.Add(kandv.Value.Keys.ToString(), double.Parse(kandv.Value.Values.ToString()));
-                foreach (var ll in valuePairs)
-                {
-                    ls1.Add(ll.Key);
-                    ls2.Add(ll.Value);
-                }
-            }
-            ViewData["PositionSelectstr"] = ls1;
-            ViewData["PositionSelectdou"] = ls2;
+            ViewData["positionId"] = id;
             return View();
         }
+        //public ActionResult Position_SelectKey(string Key)
+        //{
+        //    ViewData["position"] = Position.GetPosition(Key);
+        //    po = Position.GetPosition(id);
+        //    return View();
+        //}
+        //[HttpPost]
+        //public JsonResult Position_SelectKey(string Key)
+        //{
+        //    return Json(Position.Delete(id));
+        //}
     }
 }

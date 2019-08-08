@@ -12,28 +12,30 @@
         <link href="~/Content/AdminIndex/css/vendor/responsive.bootstrap4.css" rel="stylesheet" />
         <link href="~/Content/AdminIndex/css/app.min.css" rel="stylesheet" />
         <link href="~/Content/AdminIndex/css/icons.min.css" rel="stylesheet" />
-
+        <link href="~/Content/layui/css/layui.css" rel="stylesheet" />
+        <script src="~/Content/layui/layui.js"></script>
         <script type="text/javascript">
-        function InComeAdd() {
-            var url = "InCome_add";
-            var width = "100%";
-            var height = "750px";
-            parent.OpenWin2(url, width, height);
-        }
+         
+            function InComeAdd() {
+                var url = "InCome_add";
+                var width = "100%";
+                var height = "750px";
+                parent.OpenWin2(url, width, height);
+            }
 
-        function InComeUpdate(id) {
-            var url = "InCome_update?id="+id;
-            var width = "100%";
-            var height = "750px";
-            parent.OpenWin2(url, width, height);
-        }
+            function InComeUpdate(id) {
+                var url = "InCome_update?id=" + id;
+                var width = "100%";
+                var height = "750px";
+                parent.OpenWin2(url, width, height);
+            }
 
-        function InComeSelect(id) {
-            var url = "InCome_select?id="+id;
-            var width = "100%";
-            var height = "750px";
-            parent.OpenWin2(url, width, height);
-        }
+            function InComeSelete(id) {
+                var url = "InCome_selete?id=" + id;
+                var width = "100%";
+                var height = "750px";
+                parent.OpenWin2(url, width, height);
+            }
         </script>
     </head>
 <div class="content-page">
@@ -87,32 +89,32 @@
                                 </thead>
                                 <tbody>
                                     @{ int count = 1;}
-                                   @foreach (var income in Model)
-                                   {
-                                    <tr>
-                                        <td>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                                <label class="custom-control-label" for="customCheck2">&nbsp;</label>
-                                            </div>
-                                        </td>
-                                        <td>@count</td>
-                                        <td>@income.GetName().materialName</td>
-                                        <td>@income.GetModel().modelName</td>
-                                        <td>@income.GetCategory().categoryName</td>
-                                        <td>@income.GetMaterialCode().code</td>
-                                        <td>@income.batch</td>
-                                        <td>@income.GetPosition().positionName</td>
-                                        <td>@income.storageTime.ToString("d")</td>
-                                        <td><a href="#" class="text-body font-weight-bold">复检数据</a></td>
-                                        <td>@income.GetOperator().name</td>
-                                        <td>
-                                            <a href="javascript:InComeUpdate(@income.id)" class="action-icon"> <i class="dripicons-pencil"></i></a>
-                                            <a href="javascript:InComeSelect(@income.id)" class="action-icon"> <i class="mdi mdi-calendar-text-outline"></i></a>
-                                        </td>
-                                    </tr>
-                                       count++;
-                                   }
+                                    @foreach (var income in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" id="customCheck2">
+                                                    <label class="custom-control-label" for="customCheck2">&nbsp;</label>
+                                                </div>
+                                            </td>
+                                            <td>@count</td>
+                                            <td>@income.GetName().materialName</td>
+                                            <td>@income.GetModel().modelName</td>
+                                            <td>@income.GetCategory().categoryName</td>
+                                            <td>@income.GetMaterialCode().code</td>
+                                            <td>@income.batch</td>
+                                            <td>@income.GetPosition().positionName</td>
+                                            <td>@income.storageTime.ToString("d")</td>
+                                            <td><a href="#" class="text-body font-weight-bold">复检数据</a></td>
+                                            <td>@income.GetOperator().name</td>
+                                            <td>
+                                                <a href="javascript:InComeUpdate(@income.id)" class="action-icon"> <i class="dripicons-pencil"></i></a>
+                                                <a href="javascript:InComeSelete(@income.id)" class="action-icon"> <i class="mdi mdi-calendar-text-outline"></i></a>
+                                            </td>
+                                        </tr>
+                                        count++;
+                                    }
                                 </tbody>
                             </table>
                         </div>

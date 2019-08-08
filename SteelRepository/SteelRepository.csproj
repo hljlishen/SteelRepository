@@ -53,6 +53,9 @@
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -108,9 +111,6 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
@@ -157,8 +157,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\DataGenerator.cs" />
+    <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
-    <Compile Include="Controllers\IndexController.cs" />
     <Compile Include="Controllers\InventoryController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ManufacturerController.cs" />
@@ -381,6 +381,7 @@
     <Content Include="Content\Position\js\demo.britechart1.js" />
     <Content Include="Content\Position\js\demo.customers.js" />
     <Content Include="Content\Position\js\demo.customers2.js" />
+    <Content Include="Content\Position\js\echarts.min.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\a.jpg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -454,7 +455,7 @@
     <Content Include="Views\Material\OutCome_list.cshtml" />
     <Content Include="Views\Material\InCome_add.cshtml" />
     <Content Include="Views\Material\InCome_update.cshtml" />
-    <Content Include="Views\Index\Index.cshtml" />
+    <Content Include="Views\Material\InCome_selete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

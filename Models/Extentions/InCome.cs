@@ -14,6 +14,14 @@ namespace Models
                 return helper.FindId<Name>(helper.FindId<MaterialCode>(codeId).materialNameId);
             }
         }
+        public Name GetName(int codeId)
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return helper.FindId<Name>(helper.FindId<MaterialCode>(codeId).materialNameId);
+
+            }
+        }
 
         public Model GetModel()
         {
@@ -22,7 +30,24 @@ namespace Models
                 return helper.FindId<Model>(helper.FindId<MaterialCode>(codeId).materialModelId);
             }
         }
+
+        public Model GetModel(int codeId)
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return helper.FindId<Model>(helper.FindId<MaterialCode>(codeId).materialModelId);
+            }
+        }
+
         public Category GetCategory()
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return helper.FindId<Category>(categoryId);
+            }
+        }
+
+        public Category GetCategory(int categoryId)
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
@@ -38,7 +63,31 @@ namespace Models
             }
         }
 
+        public static MaterialCode GetMaterialCode(int incomeid)
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return helper.FindId<MaterialCode>(incomeid);
+            }
+        }
+
+        public MaterialCode GetMaterialCode(int codeId)
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return helper.FindId<MaterialCode>(codeId);
+            }
+        }
+
         public Employee GetOperator()
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return helper.FindId<Employee>(operatorId);
+            }
+        }
+
+        public Employee GetOperator(int operatorId)
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
@@ -56,6 +105,14 @@ namespace Models
             }
         }
 
+        public Manufacturer GetManufacture(int? menufactureId)
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return helper.FindId<Manufacturer>((int)menufactureId);
+            }
+        }
+
         public IEnumerable<RecheckReport> GetRecheckReports()
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
@@ -65,6 +122,14 @@ namespace Models
         }
 
         public Position GetPosition()
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return helper.FindId<Position>(positionId);
+            }
+        }
+
+        public Position GetPosition(int positionId)
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
@@ -140,7 +205,7 @@ namespace Models
             }
         }
 
-        public static InCome Update(int id)
+        public static InCome Selete(int id)
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
