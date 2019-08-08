@@ -80,6 +80,27 @@ namespace Models
                 return helper.FindFirst<MaterialCode, string>("code", code);
             }
         }
+        public static List<MaterialCode> GetMaterialCodes(string code)
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return helper.Select<MaterialCode>(p => p.code == code);
+            }
+        }
+        //public static List<Name> GetNames(string code)
+        //{
+        //    foreach (var materialCode in GetMaterialCodes(code))
+        //    {
+
+        //    }
+
+
+        //    var MaterialCodes = GetMaterialCodes(code);
+        //    using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+        //    {
+        //        helper.Select<Name>(p => p.id == MaterialCodes);
+        //    }
+        //}
 
         public static MaterialCode GetMaterialCode(string name, string model)
         {
