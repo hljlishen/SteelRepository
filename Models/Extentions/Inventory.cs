@@ -32,5 +32,13 @@ namespace Models
                 return helper.FindId<MaterialCode>(helper.FindId<InCome>(id).codeId);
             }
         }
+
+        public static Inventory GetInventories(int incomeId)
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return helper.FindId<Inventory>(incomeId);
+            }
+        }
     }
 }

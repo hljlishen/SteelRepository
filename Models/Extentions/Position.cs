@@ -55,17 +55,20 @@ namespace Models
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                List<Inventory> ins = new List<Inventory>();
-                foreach (var income in GetInComes(id))
-                {
-                    var inventorys = helper.Select<Inventory>(p => p.incomeId == income.id);
-                    foreach (var inventory in inventorys)
-                    {
-                        inventory.amount = WeightConverter.Convert(inventory.unit, inventory.amount, "kg");
-                        ins.Add(inventory);
-                    }
-                }
-                return ins;
+                //List<Inventory> ins = new List<Inventory>();
+                //foreach (var income in GetInComes(id))
+                //{
+                //    var inventorys = helper.Select<Inventory>(p => p.incomeId == income.id);
+                //    foreach (var inventory in inventorys)
+                //    {
+                //        inventory.amount = WeightConverter.Convert(inventory.unit, inventory.amount, "kg");
+                //        ins.Add(inventory);
+                //    }
+                //}
+                //return ins;
+
+                List<InCome> inComes = InCome.GetMaterialCode
+                
             }
         }
         public static List<InCome> GetInCome(int id)

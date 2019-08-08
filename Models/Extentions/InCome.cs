@@ -38,11 +38,11 @@ namespace Models
             }
         }
 
-        public static MaterialCode GetMaterialCode(int id)
+        public static MaterialCode GetMaterialCode(int incomeid)
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                return helper.FindId<MaterialCode>(helper.FindId<InCome>(id).codeId);
+                return helper.FindId<MaterialCode>(incomeid);
             }
         }
 
@@ -79,6 +79,7 @@ namespace Models
                 return helper.FindId<Position>(positionId);
             }
         }
+
         public static InCome NewInCome(InCome inCome, string materialCode, string materialName, string materialModel, List<byte[]> qualityCertification = null, List<byte[]> recheckReport = null)
         {
             return NewInCome(inCome.storageTime, inCome.categoryId, materialCode, materialName, materialModel, inCome.batch, inCome.positionId, inCome.unit, inCome.amount, inCome.operatorId, inCome.unitPrice, inCome.priceMeasure, inCome.menufactureId, qualityCertification, recheckReport);
