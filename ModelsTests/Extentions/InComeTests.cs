@@ -50,7 +50,7 @@ namespace Models.Tests
         [TestMethod()]
         public void BatchIdExistTest()
         {
-            var income = new InCome() { batch = "123", categoryId = 1, codeId = 1, positionId = 1, menufactureId = 1, amount = 5, operatorId = 1, unit = "千克", storageTime = DateTime.Now };
+            var income = new InCome() { batch = "123", categoryId = 1, codeId = 1, menufactureId = 1, amount = 5, operatorId = 1, unit = "千克", storageTime = DateTime.Now };
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
                 try

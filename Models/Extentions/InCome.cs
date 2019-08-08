@@ -97,7 +97,7 @@ namespace Models
             }
         }
 
-        public Manufacturer GetManufacture(int? menufactureId)
+        public Manufacturer GetManufacture(int menufactureId)
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
@@ -113,25 +113,25 @@ namespace Models
             }
         }
 
-        public Position GetPosition()
-        {
-            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
-            {
-                return helper.FindId<Position>(positionId);
-            }
-        }
+        //public Position GetPosition()
+        //{
+        //    using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+        //    {
+        //        return helper.FindId<Position>(positionId);
+        //    }
+        //}
 
-        public Position GetPosition(int positionId)
-        {
-            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
-            {
-                return helper.FindId<Position>(positionId);
-            }
-        }
+        //public Position GetPosition(int positionId)
+        //{
+        //    using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+        //    {
+        //        return helper.FindId<Position>(positionId);
+        //    }
+        //}
 
-        public static InCome NewInCome(InCome inCome, string materialCode, string materialName, string materialModel, List<byte[]> qualityCertification = null, List<byte[]> recheckReport = null)
+        public static InCome NewInCome(InCome inCome, int positionId, string materialCode, string materialName, string materialModel, List<byte[]> qualityCertification = null, List<byte[]> recheckReport = null)
         {
-            return NewInCome(inCome.storageTime, inCome.categoryId, materialCode, materialName, materialModel, inCome.batch, inCome.positionId, inCome.unit, inCome.amount, inCome.operatorId, inCome.unitPrice, inCome.priceMeasure, inCome.menufactureId, qualityCertification, recheckReport);
+            return NewInCome(inCome.storageTime, inCome.categoryId, materialCode, materialName, materialModel, inCome.batch, positionId, inCome.unit, inCome.amount, inCome.operatorId, inCome.unitPrice, inCome.priceMeasure, inCome.menufactureId, qualityCertification, recheckReport);
         }
             
 
@@ -154,7 +154,7 @@ namespace Models
                 if (BatchIdExist(batch, helper)) throw new Exception("批号已存在");
 
                 //写入入库
-                var income = new InCome() { categoryId = categoryId, batch = batch, codeId = mCode.id, positionId = positionId, unit = measure, amount = amount, operatorId = operatorId, unitPrice = price, menufactureId = menufactureId, storageTime = dateTime, priceMeasure = priceMeasure };
+                var income = new InCome() { categoryId = categoryId, batch = batch, codeId = mCode.id, unit = measure, amount = amount, operatorId = operatorId, unitPrice = price, menufactureId = menufactureId, storageTime = dateTime, priceMeasure = priceMeasure };
                 helper.Insert(income);
 
                 //写入质量报告图片
@@ -174,10 +174,8 @@ namespace Models
                         RecheckReportImg.Insert(income.id,item,helper);
                     }
                 }
-                //写入库存
-                //var inventory = new Inventory() { amount = amount, incomeId = income.id , unit = measure};
-                //helper.Insert(inventory, false);
-                var inventory = Inventory.Insert(income.id, amount, measure, helper);
+                //写入库存;
+                var inventory = Inventory.Insert(income.id, amount, measure, positionId, helper);
                 helper.Commit();
                 return income;
             }

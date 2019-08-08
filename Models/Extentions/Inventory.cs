@@ -10,41 +10,26 @@ namespace Models
 {
     public partial class Inventory
     {
-        public static Inventory Insert(int incomeId, double amount, string unit, IDbInterface dbInterface)
+        public static Inventory Insert(int incomeId, double amount, string unit, int positionId, IDbInterface dbInterface)
         {
-            var inven = new Inventory() { amount = amount, incomeId = incomeId, unit = unit };
+            var inven = new Inventory() { amount = amount, incomeId = incomeId, unit = unit, positionId = positionId };
             dbInterface.Insert(inven, false);
             return inven;
         }
 
-        public static MaterialCode GetMaterialCodeCode(int Pid)
+        public string GetMaterialCode(IDbInterface db)
         {
-            //foreach (var inCome in Position.GetInventories(Pid))
-            //{
-            //    listCode.Add(InCome.GetMaterialCode(InCome.GetInCome(inCome.incomeId).codeId).code);
-            //}
-            MaterialCode materialCode = new MaterialCode();
-            foreach (var inc in Position.GetInComes(Pid))
-            {
-                materialCode = MaterialCode.GetMaterialCode(inc.codeId);
-            }
-            return materialCode;
+            var income = db.FindId<InCome>(incomeId);
+            var materialCode = db.FindId<MaterialCode>(income.codeId);
+            return materialCode.code;
         }
 
-        public  MaterialCode GetMaterialCode(int incomeid)
-        {
-            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
-            {
-                return helper.FindId<MaterialCode>(helper.FindId<InCome>(incomeid).codeId);
-            }
-        }
-
-        public static Inventory GetInventories(int invenid)
-        {
-            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
-            {
-                return helper.FindId<Inventory>(invenid);
-            }
-        }
+        //public static Inventory GetInventories(int invenid)
+        //{
+        //    using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+        //    {
+        //        return helper.FindId<Inventory>(invenid);
+        //    }
+        //}
     }
 }
