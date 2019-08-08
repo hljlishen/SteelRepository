@@ -63,15 +63,7 @@ namespace Models
             }
         }
 
-        public static MaterialCode GetMaterialCode(int incomeid)
-        {
-            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
-            {
-                return helper.FindId<MaterialCode>(incomeid);
-            }
-        }
-
-        public MaterialCode GetMaterialCode(int codeId)
+        public static MaterialCode GetMaterialCode(int codeId)
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
@@ -136,6 +128,7 @@ namespace Models
                 return helper.FindId<Position>(positionId);
             }
         }
+
         public static InCome NewInCome(InCome inCome, string materialCode, string materialName, string materialModel, List<byte[]> qualityCertification = null, List<byte[]> recheckReport = null)
         {
             return NewInCome(inCome.storageTime, inCome.categoryId, materialCode, materialName, materialModel, inCome.batch, inCome.positionId, inCome.unit, inCome.amount, inCome.operatorId, inCome.unitPrice, inCome.priceMeasure, inCome.menufactureId, qualityCertification, recheckReport);
@@ -204,7 +197,13 @@ namespace Models
                 return helper.SelectAll<InCome>();
             }
         }
-
+        public static InCome GetInCome(int incomeid)
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return helper.FindId<InCome>(incomeid);
+            }
+        }
         public static InCome Selete(int id)
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))

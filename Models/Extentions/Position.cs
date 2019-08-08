@@ -65,10 +65,15 @@ namespace Models
                 //        ins.Add(inventory);
                 //    }
                 //}
-                //return ins;
+                //return ins;   
 
-                List<InCome> inComes = InCome.GetMaterialCode
-                
+                List<InCome> inComes = GetInComes(id);
+                List<Inventory> inventories = new List<Inventory>();
+                foreach (var income in inComes)
+                {
+                    inventories.Add(Inventory.GetInventories(income.id));
+                }
+                return inventories;
             }
         }
         public static List<InCome> GetInCome(int id)
@@ -88,17 +93,14 @@ namespace Models
         public static Dictionary<string, double> StatisticAmount(int id)
         {
             //Dictionary<string, Dictionary<string, double>> Sum = new Dictionary<string, Dictionary<string, double>>();
-            //foreach (var i in Inventory.GetMaterialCodeCode(id))
-            //{
-            //    MultipleSeriesStatistics2D<Inventory> statistics2D = new MultipleSeriesStatistics2D<Inventory>(p => p.GetMaterialCode().code);
-            //    statistics2D.AddSeries("amount", p => p.amount);
-            //    Sum = statistics2D.GetValues(GetInventories(id));
-            //}
-            //return Sum["amount"];
-            MultipleSeriesStatistics2D<InCome> statistics2D = new MultipleSeriesStatistics2D<InCome>(p => p.GetMaterialCode().code);
+            MultipleSeriesStatistics2D<Inventory> statistics2D = new MultipleSeriesStatistics2D<Inventory>(p => Inventory.GetMaterialCodeCode(id).code);
             statistics2D.AddSeries("amount", p => p.amount);
-            var Sum = statistics2D.GetValues(GetInCome(id));
+            var Sum = statistics2D.GetValues(GetInventories(id));
             return Sum["amount"];
+            //MultipleSeriesStatistics2D<InCome> statistics2D = new MultipleSeriesStatistics2D<InCome>(p => p.GetMaterialCode().code);
+            //statistics2D.AddSeries("amount", p => p.amount);
+            //var Sum = statistics2D.GetValues(GetInCome(id));
+            //return Sum["amount"];
 
             //MultipleSeriesStatistics2D<Inventory> statistics2D = new MultipleSeriesStatistics2D<Inventory>(p => p.GetMaterialCode(id).code);
             //statistics2D.AddSeries("amount", p => p.amount);

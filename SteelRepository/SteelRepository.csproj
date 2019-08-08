@@ -456,6 +456,7 @@
     <Content Include="Views\Material\InCome_add.cshtml" />
     <Content Include="Views\Material\InCome_update.cshtml" />
     <Content Include="Views\Material\InCome_selete.cshtml" />
+    <Content Include="Views\Department\Department_list.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

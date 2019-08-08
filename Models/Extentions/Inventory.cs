@@ -16,28 +16,34 @@ namespace Models
             dbInterface.Insert(inven, false);
             return inven;
         }
-        public static List<string> GetMaterialCodeCode(int id)
+
+        public static MaterialCode GetMaterialCodeCode(int Pid)
         {
-            List<string> listCode = new List<string>();
-            foreach (var inCome in Position.GetInventories(id))
+            //foreach (var inCome in Position.GetInventories(Pid))
+            //{
+            //    listCode.Add(InCome.GetMaterialCode(InCome.GetInCome(inCome.incomeId).codeId).code);
+            //}
+            MaterialCode materialCode = new MaterialCode();
+            foreach (var inc in Position.GetInComes(Pid))
             {
-                listCode.Add(InCome.GetMaterialCode(inCome.incomeId).code);
+                materialCode = MaterialCode.GetMaterialCode(inc.codeId);
             }
-            return listCode;
+            return materialCode;
         }
-        public  MaterialCode GetMaterialCode(int id)
+
+        public  MaterialCode GetMaterialCode(int incomeid)
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                return helper.FindId<MaterialCode>(helper.FindId<InCome>(id).codeId);
+                return helper.FindId<MaterialCode>(helper.FindId<InCome>(incomeid).codeId);
             }
         }
 
-        public static Inventory GetInventories(int incomeId)
+        public static Inventory GetInventories(int invenid)
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                return helper.FindId<Inventory>(incomeId);
+                return helper.FindId<Inventory>(invenid);
             }
         }
     }

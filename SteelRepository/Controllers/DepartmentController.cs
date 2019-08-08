@@ -9,7 +9,7 @@ namespace SteelRepository.Controllers
     public class DepartmentController : Controller
     {
         // GET: Department
-        public ActionResult Index()
+        public ActionResult Department_list()
         {
             return View();
         }
