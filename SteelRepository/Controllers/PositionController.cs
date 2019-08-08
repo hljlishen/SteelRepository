@@ -51,12 +51,12 @@ namespace SteelRepository.Controllers
             ViewData["positionId"] = id;
             return View();
         }
-        public ActionResult Position_SelectKey(string Key)
-        {
-            ViewData["position"] = Position.GetPosition(Key);
-            po = Position.GetPosition(id);
-            return View();
-        }
+        //public ActionResult Position_SelectKey(string Key)
+        //{
+        //    ViewData["position"] = Position.GetPosition(Key);
+        //    po = Position.GetPosition(id);
+        //    return View();
+        //}
         //[HttpPost]
         //public JsonResult Position_SelectKey(string Key)
         //{

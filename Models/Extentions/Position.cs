@@ -47,9 +47,33 @@ namespace Models
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                var incomes = helper.Select<InCome>(p => p.positionId == id);
+                return helper.Select<InCome>(p => p.positionId == id);
+            }
+        }
+
+        public static List<Inventory> GetInventories(int id)
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                List<Inventory> ins = new List<Inventory>();
+                foreach (var income in GetInComes(id))
+                {
+                    var inventorys = helper.Select<Inventory>(p => p.incomeId == income.id);
+                    foreach (var inventory in inventorys)
+                    {
+                        inventory.amount = WeightConverter.Convert(inventory.unit, inventory.amount, "kg");
+                        ins.Add(inventory);
+                    }
+                }
+                return ins;
+            }
+        }
+        public static List<InCome> GetInCome(int id)
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
                 List<InCome> ins = new List<InCome>();
-                foreach (var income in incomes)
+                foreach (var income in GetInComes(id))
                 {
                     income.amount = WeightConverter.Convert(income.unit, income.amount, "kg");
                     ins.Add(income);
@@ -57,12 +81,26 @@ namespace Models
                 return ins;
             }
         }
+
         public static Dictionary<string, double> StatisticAmount(int id)
         {
-            MultipleSeriesStatistics2D<InCome> statistics2D = new MultipleSeriesStatistics2D<InCome>(p=> p.GetMaterialCode().code);
-            statistics2D.AddSeries("amount",p=>p.amount);
-            var Sum = statistics2D.GetValues(GetInComes(id));
+            //Dictionary<string, Dictionary<string, double>> Sum = new Dictionary<string, Dictionary<string, double>>();
+            //foreach (var i in Inventory.GetMaterialCodeCode(id))
+            //{
+            //    MultipleSeriesStatistics2D<Inventory> statistics2D = new MultipleSeriesStatistics2D<Inventory>(p => p.GetMaterialCode().code);
+            //    statistics2D.AddSeries("amount", p => p.amount);
+            //    Sum = statistics2D.GetValues(GetInventories(id));
+            //}
+            //return Sum["amount"];
+            MultipleSeriesStatistics2D<InCome> statistics2D = new MultipleSeriesStatistics2D<InCome>(p => p.GetMaterialCode().code);
+            statistics2D.AddSeries("amount", p => p.amount);
+            var Sum = statistics2D.GetValues(GetInCome(id));
             return Sum["amount"];
+
+            //MultipleSeriesStatistics2D<Inventory> statistics2D = new MultipleSeriesStatistics2D<Inventory>(p => p.GetMaterialCode(id).code);
+            //statistics2D.AddSeries("amount", p => p.amount);
+            //var Sum = statistics2D.GetValues(GetInventories(id));
+            //return Sum["amount"];
         }
     }
 }
