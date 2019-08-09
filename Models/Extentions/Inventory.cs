@@ -31,5 +31,13 @@ namespace Models
         //        return helper.FindId<Inventory>(invenid);
         //    }
         //}
+
+        public static List<Inventory> InComeIdGetInventory(int incomeId)
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return helper.Select<Inventory>(p => p.incomeId == incomeId);
+            }
+        }
     }
 }

@@ -97,7 +97,7 @@ namespace Models
             }
         }
 
-        public Manufacturer GetManufacture(int menufactureId)
+        public Manufacturer GetManufacture(int? menufactureId)
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
@@ -121,13 +121,18 @@ namespace Models
         //    }
         //}
 
-        //public Position GetPosition(int positionId)
-        //{
-        //    using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
-        //    {
-        //        return helper.FindId<Position>(positionId);
-        //    }
-        //}
+        public Position GetPosition(int incomeId)
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                Position position = new Position();
+                foreach (var inv in Inventory.InComeIdGetInventory(incomeId))
+                {
+                    position = Position.GetPosition(inv.positionId);
+                }
+                return position;
+            }
+        }
 
         public static InCome NewInCome(InCome inCome, int positionId, string materialCode, string materialName, string materialModel, List<byte[]> qualityCertification = null, List<byte[]> recheckReport = null)
         {
