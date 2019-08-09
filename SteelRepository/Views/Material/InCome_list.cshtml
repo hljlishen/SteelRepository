@@ -104,7 +104,7 @@
                                             <td>@income.GetCategory().categoryName</td>
                                             <td>@income.GetMaterialCode().code</td>
                                             <td>@income.batch</td>
-                                            <td>@income.GetPosition().positionName</td>
+                                            <td>@income.GetPosition(income.id).positionName</td>
                                             <td>@income.storageTime.ToString("d")</td>
                                             <td><a href="#" class="text-body font-weight-bold">复检数据</a></td>
                                             <td>@income.GetOperator().name</td>
