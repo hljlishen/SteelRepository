@@ -46,6 +46,8 @@ namespace SteelRepository.Controllers
                 inCome.unitPrice = double.Parse(collection["unitPrice"]);
                 inCome.amount = double.Parse(collection["amount"]);
                 inCome.storageTime = DateTime.Parse(collection["InComeTime"]);
+                string s = collection["quality1"];
+
                 InCome.NewInCome(inCome, collection["materialCode"], collection["name1"], collection["model"]);
                 return Json(true);
             }

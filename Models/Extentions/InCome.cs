@@ -63,14 +63,6 @@ namespace Models
             }
         }
 
-        public static MaterialCode GetMaterialCode(int id)
-        {
-            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
-            {
-                return helper.FindId<MaterialCode>(helper.FindId<InCome>(id).codeId);
-            }
-        }
-
         public MaterialCode GetMaterialCode(int codeId)
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
@@ -139,9 +131,7 @@ namespace Models
         public static InCome NewInCome(InCome inCome, string materialCode, string materialName, string materialModel, List<byte[]> qualityCertification = null, List<byte[]> recheckReport = null)
         {
             return NewInCome(inCome.storageTime, inCome.categoryId, materialCode, materialName, materialModel, inCome.batch, inCome.positionId, inCome.unit, inCome.amount, inCome.operatorId, inCome.unitPrice, inCome.priceMeasure, inCome.menufactureId, qualityCertification, recheckReport);
-        }
-            
-
+        }  
         
         public static InCome NewInCome(DateTime dateTime, int categoryId, string materialCode, string materialName, string materialModel, string batch, int positionId, string measure, double amount, int operatorId, double? price = null, string priceMeasure = "kg", int? menufactureId = null, List<byte[]> qualityCertification = null,List<byte[]> recheckReport = null)
         {

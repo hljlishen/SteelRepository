@@ -21,7 +21,7 @@ namespace Models
             List<string> listCode = new List<string>();
             foreach (var inCome in Position.GetInventories(id))
             {
-                listCode.Add(InCome.GetMaterialCode(inCome.incomeId).code);
+                //listCode.Add(InCome.GetMaterialCode(inCome.incomeId).code);
             }
             return listCode;
         }
