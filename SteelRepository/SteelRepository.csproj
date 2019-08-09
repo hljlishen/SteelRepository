@@ -159,6 +159,7 @@
     <Compile Include="Controllers\DataGenerator.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
+    <Compile Include="Controllers\IndexController.cs" />
     <Compile Include="Controllers\InventoryController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ManufacturerController.cs" />
@@ -457,6 +458,7 @@
     <Content Include="Views\Material\InCome_update.cshtml" />
     <Content Include="Views\Material\InCome_selete.cshtml" />
     <Content Include="Views\Department\Department_list.cshtml" />
+    <Content Include="Views\Index\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
