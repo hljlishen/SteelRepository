@@ -18,5 +18,6 @@ namespace Models
         public int incomeId { get; set; }
         public double amount { get; set; }
         public string unit { get; set; }
+        public int positionId { get; set; }
     }
 }

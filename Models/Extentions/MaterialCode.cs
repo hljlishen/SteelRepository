@@ -134,5 +134,13 @@ namespace Models
         //    if (record != null) return;
         //    helper.Insert(new MaterialCode() { code = code }, false);
         //}
+
+        public static MaterialCode GetMaterialCode(int codeId)
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return helper.FindId<MaterialCode>(codeId);
+            }
+        }
     }
 }

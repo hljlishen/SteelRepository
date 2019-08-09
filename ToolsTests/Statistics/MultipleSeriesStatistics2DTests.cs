@@ -69,7 +69,7 @@ namespace Tools.Statistics.Tests
             #endregion
 
             #region 统计User中不存在的字段
-            //统计不用月份注册人数
+            //统计不同月份注册人数
             {
                 Func<User, string> xAxisMapper = p =>
                 {

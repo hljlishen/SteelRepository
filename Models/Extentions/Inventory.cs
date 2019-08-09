@@ -10,27 +10,26 @@ namespace Models
 {
     public partial class Inventory
     {
-        public static Inventory Insert(int incomeId, double amount, string unit, IDbInterface dbInterface)
+        public static Inventory Insert(int incomeId, double amount, string unit, int positionId, IDbInterface dbInterface)
         {
-            var inven = new Inventory() { amount = amount, incomeId = incomeId, unit = unit };
+            var inven = new Inventory() { amount = amount, incomeId = incomeId, unit = unit, positionId = positionId };
             dbInterface.Insert(inven, false);
             return inven;
         }
-        public static List<string> GetMaterialCodeCode(int id)
+
+        public string GetMaterialCode(IDbInterface db)
         {
-            List<string> listCode = new List<string>();
-            foreach (var inCome in Position.GetInventories(id))
-            {
-                //listCode.Add(InCome.GetMaterialCode(inCome.incomeId).code);
-            }
-            return listCode;
+            var income = db.FindId<InCome>(incomeId);
+            var materialCode = db.FindId<MaterialCode>(income.codeId);
+            return materialCode.code;
         }
-        public  MaterialCode GetMaterialCode(int id)
-        {
-            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
-            {
-                return helper.FindId<MaterialCode>(helper.FindId<InCome>(id).codeId);
-            }
-        }
+
+        //public static Inventory GetInventories(int invenid)
+        //{
+        //    using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+        //    {
+        //        return helper.FindId<Inventory>(invenid);
+        //    }
+        //}
     }
 }
