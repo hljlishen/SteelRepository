@@ -40,13 +40,13 @@
           <Property Name="codeId" Type="int" Nullable="false" />
           <Property Name="batch" Type="nvarchar(max)" Nullable="false" />
           <Property Name="menufactureId" Type="int" />
-          <Property Name="positionId" Type="int" Nullable="false" />
           <Property Name="unit" Type="nvarchar(max)" Nullable="false" />
           <Property Name="amount" Type="float" Nullable="false" />
           <Property Name="unitPrice" Type="float" />
           <Property Name="priceMeasure" Type="nchar" MaxLength="10" />
           <Property Name="storageTime" Type="datetime" Nullable="false" />
           <Property Name="operatorId" Type="int" Nullable="false" />
+          <Property Name="reviewCycle" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="Inventory">
           <Key>
@@ -56,6 +56,7 @@
           <Property Name="incomeId" Type="int" Nullable="false" />
           <Property Name="amount" Type="float" Nullable="false" />
           <Property Name="unit" Type="nvarchar(max)" />
+          <Property Name="positionId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Manufacturer">
           <Key>
@@ -203,13 +204,13 @@
           <Property Name="codeId" Type="Int32" Nullable="false" />
           <Property Name="batch" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="menufactureId" Type="Int32" />
-          <Property Name="positionId" Type="Int32" Nullable="false" />
           <Property Name="unit" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="amount" Type="Double" Nullable="false" />
           <Property Name="unitPrice" Type="Double" />
           <Property Name="priceMeasure" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="storageTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="operatorId" Type="Int32" Nullable="false" />
+          <Property Name="reviewCycle" Type="Double" Nullable="false" />
         </EntityType>
         <EntityType Name="Inventory">
           <Key>
@@ -219,6 +220,7 @@
           <Property Name="incomeId" Type="Int32" Nullable="false" />
           <Property Name="amount" Type="Double" Nullable="false" />
           <Property Name="unit" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="positionId" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Manufacturer">
           <Key>
@@ -309,7 +311,7 @@
           <Property Name="reportId" Type="Int32" Nullable="false" />
           <Property Name="img" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
         </EntityType>
-        <EntityContainer Name="SteelRepositoryDBEntities4" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="SteelRepositoryDBEntities5" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Category" EntityType="Self.Category" />
           <EntitySet Name="Department" EntityType="Self.Department" />
           <EntitySet Name="Employee" EntityType="Self.Employee" />
@@ -331,7 +333,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="SteelRepositoryDBModelStoreContainer" CdmEntityContainer="SteelRepositoryDBEntities4">
+        <EntityContainerMapping StorageEntityContainer="SteelRepositoryDBModelStoreContainer" CdmEntityContainer="SteelRepositoryDBEntities5">
           <EntitySetMapping Name="Category">
             <EntityTypeMapping TypeName="SteelRepositoryDBModel.Category">
               <MappingFragment StoreEntitySet="Category">
@@ -369,13 +371,13 @@
                 <ScalarProperty Name="codeId" ColumnName="codeId" />
                 <ScalarProperty Name="batch" ColumnName="batch" />
                 <ScalarProperty Name="menufactureId" ColumnName="menufactureId" />
-                <ScalarProperty Name="positionId" ColumnName="positionId" />
                 <ScalarProperty Name="unit" ColumnName="unit" />
                 <ScalarProperty Name="amount" ColumnName="amount" />
                 <ScalarProperty Name="unitPrice" ColumnName="unitPrice" />
                 <ScalarProperty Name="priceMeasure" ColumnName="priceMeasure" />
                 <ScalarProperty Name="storageTime" ColumnName="storageTime" />
                 <ScalarProperty Name="operatorId" ColumnName="operatorId" />
+                <ScalarProperty Name="reviewCycle" ColumnName="reviewCycle" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -386,6 +388,7 @@
                 <ScalarProperty Name="incomeId" ColumnName="incomeId" />
                 <ScalarProperty Name="amount" ColumnName="amount" />
                 <ScalarProperty Name="unit" ColumnName="unit" />
+                <ScalarProperty Name="positionId" ColumnName="positionId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

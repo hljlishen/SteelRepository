@@ -19,12 +19,12 @@ namespace Models
         public int codeId { get; set; }
         public string batch { get; set; }
         public Nullable<int> menufactureId { get; set; }
-        //public int positionId { get; set; }
         public string unit { get; set; }
         public double amount { get; set; }
         public Nullable<double> unitPrice { get; set; }
         public string priceMeasure { get; set; }
         public System.DateTime storageTime { get; set; }
         public int operatorId { get; set; }
+        public double reviewCycle { get; set; }
     }
 }

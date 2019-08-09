@@ -43,7 +43,7 @@
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="signin_form">编号：</label>
-                                        <input class="form-control" name="materialCode" type="text" value="@inCome.GetMaterialCode(inCome.codeId).code" readonly=""/>
+                                         <input class="form-control" name="materialCode" type="text" value="@Models.InCome.GetMaterialCode(inCome.codeId).code" readonly=""/>
                                     </div>
                                 </div>
                                 <div class="form-row">
@@ -83,7 +83,7 @@
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="signin_form">放置位置：</label>
-                                        <input class="form-control" name="position" type="text" value="@inCome.GetPosition(inCome.positionId).positionName" readonly="" />
+                                        <input class="form-control" name="position" type="text" value="@inCome.GetPosition(inCome.id).positionName" readonly="" />
                                     </div>
                                 </div>
                                 <div class="form-row">
