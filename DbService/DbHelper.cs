@@ -57,15 +57,16 @@ namespace DbService
 
         public List<T> Select<T>(Expression<Func<T, bool>> expression) where T : class
         {
-            return context.Set<T>().Where(expression).ToList();
+            return context.Set<T>().Where(expression).AsNoTracking().ToList();
         }
 
         public int Update<T>(T t, bool shouldCommit = true) where T : class
-        {
+         {
             if (t == null) throw new Exception("update parameter is null");
 
             context.Set(typeof(T)).Attach(t);
             context.Entry(t).State = EntityState.Modified;
+
             return Commit(shouldCommit);
         }
 
@@ -77,7 +78,7 @@ namespace DbService
 
         public List<T> SelectPage<T, TValue>(Expression<Func<T, bool>> expression, int pageSize, int pageNum, Expression<Func<T, TValue>> orderExp, bool isAsc = true) where T : class
         {
-            var list = context.Set<T>().Where(expression);
+            var list = context.Set<T>().Where(expression).AsNoTracking();
 
             if (orderExp == null)
                 throw new Exception("排序表达式为NUll");
@@ -135,7 +136,7 @@ namespace DbService
 
         public List<T> SelectAll<T>() where T : class
         {
-            return context.Set<T>().ToList();
+            return context.Set<T>().AsNoTracking().ToList();
         }
 
         public T FindFirst<T, TValue>(string fieldName, TValue fieldValue) where T:class

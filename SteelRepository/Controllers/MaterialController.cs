@@ -287,20 +287,23 @@ namespace SteelRepository.Controllers
                 positionId = inventory.positionId;
             }
             Position position = Position.GetPosition(positionId);
-            SelectListItem item0 = new SelectListItem()
+            if (position != null)
             {
-                Value = position.id.ToString(),
-                Text = position.positionName
-            };
-            itemList.Add(item0);
-            foreach (var pos in Position.SelectAll())
-            {
-                SelectListItem item1 = new SelectListItem()
+                SelectListItem item0 = new SelectListItem()
                 {
-                    Value = pos.id.ToString(),
-                    Text = pos.positionName
+                    Value = position.id.ToString(),
+                    Text = position.positionName
                 };
-                itemList.Add(item1);
+                itemList.Add(item0);
+                foreach (var pos in Position.SelectAll())
+                {
+                    SelectListItem item1 = new SelectListItem()
+                    {
+                        Value = pos.id.ToString(),
+                        Text = pos.positionName
+                    };
+                    itemList.Add(item1);
+                }
             }
             return itemList;
         }

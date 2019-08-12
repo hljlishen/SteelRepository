@@ -15,7 +15,7 @@ namespace Models
     public partial class OutCome
     {
         public int id { get; set; }
-        public int incomeId { get; set; }
+        public int inventoryId { get; set; }
         public double number { get; set; }
         public string unit { get; set; }
         public System.DateTime recipientsTime { get; set; }
@@ -23,5 +23,6 @@ namespace Models
         public Nullable<double> price { get; set; }
         public string instructions { get; set; }
         public Nullable<int> projectId { get; set; }
+        public Nullable<int> state { get; set; }
     }
 }

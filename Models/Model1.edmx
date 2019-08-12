@@ -60,7 +60,7 @@
           <Property Name="amount" Type="float" Nullable="false" />
           <Property Name="unit" Type="nvarchar(max)" />
           <Property Name="positionId" Type="int" Nullable="false" />
-          <Property Name="consumptionNumber" Type="float" />
+          <Property Name="consumptionAmount" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="Manufacturer">
           <Key>
@@ -99,7 +99,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="incomeId" Type="int" Nullable="false" />
+          <Property Name="inventoryId" Type="int" Nullable="false" />
           <Property Name="number" Type="float" Nullable="false" />
           <Property Name="unit" Type="nvarchar(max)" Nullable="false" />
           <Property Name="recipientsTime" Type="datetime" Nullable="false" />
@@ -107,6 +107,7 @@
           <Property Name="price" Type="float" />
           <Property Name="instructions" Type="nvarchar(max)" />
           <Property Name="projectId" Type="int" />
+          <Property Name="state" Type="int" />
         </EntityType>
         <EntityType Name="Position">
           <Key>
@@ -228,7 +229,7 @@
           <Property Name="amount" Type="Double" Nullable="false" />
           <Property Name="unit" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="positionId" Type="Int32" Nullable="false" />
-          <Property Name="consumptionNumber" Type="Double" />
+          <Property Name="consumptionAmount" Type="Double" Nullable="false" />
         </EntityType>
         <EntityType Name="Manufacturer">
           <Key>
@@ -267,7 +268,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="incomeId" Type="Int32" Nullable="false" />
+          <Property Name="inventoryId" Type="Int32" Nullable="false" />
           <Property Name="number" Type="Double" Nullable="false" />
           <Property Name="unit" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="recipientsTime" Type="DateTime" Nullable="false" Precision="3" />
@@ -275,6 +276,7 @@
           <Property Name="price" Type="Double" />
           <Property Name="instructions" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="projectId" Type="Int32" />
+          <Property Name="state" Type="Int32" />
         </EntityType>
         <EntityType Name="Position">
           <Key>
@@ -319,7 +321,7 @@
           <Property Name="reportId" Type="Int32" Nullable="false" />
           <Property Name="img" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
         </EntityType>
-        <EntityContainer Name="SteelRepositoryDBEntities7" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="SteelRepositoryDBEntities8" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Category" EntityType="Self.Category" />
           <EntitySet Name="Department" EntityType="Self.Department" />
           <EntitySet Name="Employee" EntityType="Self.Employee" />
@@ -341,7 +343,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="SteelRepositoryDBModelStoreContainer" CdmEntityContainer="SteelRepositoryDBEntities7">
+        <EntityContainerMapping StorageEntityContainer="SteelRepositoryDBModelStoreContainer" CdmEntityContainer="SteelRepositoryDBEntities8">
           <EntitySetMapping Name="Category">
             <EntityTypeMapping TypeName="SteelRepositoryDBModel.Category">
               <MappingFragment StoreEntitySet="Category">
@@ -400,7 +402,7 @@
                 <ScalarProperty Name="amount" ColumnName="amount" />
                 <ScalarProperty Name="unit" ColumnName="unit" />
                 <ScalarProperty Name="positionId" ColumnName="positionId" />
-                <ScalarProperty Name="consumptionNumber" ColumnName="consumptionNumber" />
+                <ScalarProperty Name="consumptionAmount" ColumnName="consumptionAmount" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -444,7 +446,7 @@
             <EntityTypeMapping TypeName="SteelRepositoryDBModel.OutCome">
               <MappingFragment StoreEntitySet="OutCome">
                 <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="incomeId" ColumnName="incomeId" />
+                <ScalarProperty Name="inventoryId" ColumnName="inventoryId" />
                 <ScalarProperty Name="number" ColumnName="number" />
                 <ScalarProperty Name="unit" ColumnName="unit" />
                 <ScalarProperty Name="recipientsTime" ColumnName="recipientsTime" />
@@ -452,6 +454,7 @@
                 <ScalarProperty Name="price" ColumnName="price" />
                 <ScalarProperty Name="instructions" ColumnName="instructions" />
                 <ScalarProperty Name="projectId" ColumnName="projectId" />
+                <ScalarProperty Name="state" ColumnName="state" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

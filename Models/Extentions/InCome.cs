@@ -231,7 +231,22 @@ namespace Models
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
+                double? kgPrice = 0;
+                double weight = 0;
                 if (BatchIdExist(inCome.batch,inCome.id ,helper)) throw new Exception("批号已存在");
+                foreach (var outcome in OutCome.InComeIdSelect(inCome.id, helper))
+                {
+                    if (inCome.priceMeasure == "g         ")
+                        kgPrice = inCome.unitPrice * 1000;
+                    else
+                        kgPrice = inCome.unitPrice;
+                    if (outcome.unit == "g")
+                        weight = outcome.number * 1000;
+                    else
+                        weight = outcome.number;
+                    outcome.price = kgPrice * weight;
+                    helper.Update(outcome); 
+                }
                 return helper.Update(inCome);
             }
         }

@@ -75,7 +75,8 @@ namespace Models
         {
             Func<OutCome, string> codeMapper = p =>
             {
-                var income = dbInterface.FindFirst<InCome, int>("id", p.incomeId);
+                var inventory = dbInterface.FindFirst<Inventory, int>("id", p.inventoryId);
+                var income = dbInterface.FindFirst<InCome, int>("id", inventory.incomeId);
                 var mCode = dbInterface.FindFirst<MaterialCode, int>("id", income.codeId);
                 return mCode.code;
             };

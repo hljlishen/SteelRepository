@@ -19,6 +19,6 @@ namespace Models
         public double amount { get; set; }
         public string unit { get; set; }
         public int positionId { get; set; }
-        public Nullable<double> consumptionNumber { get; set; }
+        public double consumptionAmount { get; set; }
     }
 }
