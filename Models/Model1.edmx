@@ -18,6 +18,9 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="departmentName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="root" Type="int" />
+          <Property Name="secondaryCotyledon" Type="int" Nullable="false" />
+          <Property Name="tailCotyledon" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
@@ -57,6 +60,7 @@
           <Property Name="amount" Type="float" Nullable="false" />
           <Property Name="unit" Type="nvarchar(max)" />
           <Property Name="positionId" Type="int" Nullable="false" />
+          <Property Name="consumptionNumber" Type="float" />
         </EntityType>
         <EntityType Name="Manufacturer">
           <Key>
@@ -182,6 +186,9 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="departmentName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="root" Type="Int32" />
+          <Property Name="secondaryCotyledon" Type="Int32" Nullable="false" />
+          <Property Name="tailCotyledon" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
@@ -221,6 +228,7 @@
           <Property Name="amount" Type="Double" Nullable="false" />
           <Property Name="unit" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="positionId" Type="Int32" Nullable="false" />
+          <Property Name="consumptionNumber" Type="Double" />
         </EntityType>
         <EntityType Name="Manufacturer">
           <Key>
@@ -311,7 +319,7 @@
           <Property Name="reportId" Type="Int32" Nullable="false" />
           <Property Name="img" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
         </EntityType>
-        <EntityContainer Name="SteelRepositoryDBEntities5" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="SteelRepositoryDBEntities7" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Category" EntityType="Self.Category" />
           <EntitySet Name="Department" EntityType="Self.Department" />
           <EntitySet Name="Employee" EntityType="Self.Employee" />
@@ -333,7 +341,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="SteelRepositoryDBModelStoreContainer" CdmEntityContainer="SteelRepositoryDBEntities5">
+        <EntityContainerMapping StorageEntityContainer="SteelRepositoryDBModelStoreContainer" CdmEntityContainer="SteelRepositoryDBEntities7">
           <EntitySetMapping Name="Category">
             <EntityTypeMapping TypeName="SteelRepositoryDBModel.Category">
               <MappingFragment StoreEntitySet="Category">
@@ -347,6 +355,9 @@
               <MappingFragment StoreEntitySet="Department">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="departmentName" ColumnName="departmentName" />
+                <ScalarProperty Name="root" ColumnName="root" />
+                <ScalarProperty Name="secondaryCotyledon" ColumnName="secondaryCotyledon" />
+                <ScalarProperty Name="tailCotyledon" ColumnName="tailCotyledon" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -389,6 +400,7 @@
                 <ScalarProperty Name="amount" ColumnName="amount" />
                 <ScalarProperty Name="unit" ColumnName="unit" />
                 <ScalarProperty Name="positionId" ColumnName="positionId" />
+                <ScalarProperty Name="consumptionNumber" ColumnName="consumptionNumber" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

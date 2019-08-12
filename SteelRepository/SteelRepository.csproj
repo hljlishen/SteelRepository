@@ -165,6 +165,7 @@
     <Compile Include="Controllers\MaterialController.cs" />
     <Compile Include="Controllers\PositionController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -457,6 +458,7 @@
     <Content Include="Views\Material\InCome_update.cshtml" />
     <Content Include="Views\Material\InCome_selete.cshtml" />
     <Content Include="Views\Department\Department_list.cshtml" />
+    <Content Include="Views\Report\QualityReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

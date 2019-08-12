@@ -71,6 +71,14 @@ namespace Models
                 return expireIncome;
             }
         }
+
+        public static List<RecheckReport> GetRecheckReports(int inComeId)
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return helper.Select<RecheckReport>(p => p.incomeId == inComeId);
+            }
+        }
     }
 
     internal class RecheckReportComparer : IComparer<RecheckReport>

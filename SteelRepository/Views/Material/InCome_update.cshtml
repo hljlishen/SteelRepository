@@ -32,89 +32,6 @@
               });
         });
 
-        layui.use('upload', function(){
-                var $ = layui.jquery
-                , upload = layui.upload;
-
-            var demoListView = $('#demoList')
-            ,uploadListIns = upload.render({
-            elem: '#testList'
-            ,url: '/upload/'
-            ,accept: 'image/*'
-            ,multiple: true
-            ,auto: false
-            ,choose: function(obj){   
-              var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
-              //读取本地文件
-              obj.preview(function(index, file, result){
-                  var tr = $(['<tr id="upload-' + index + '">'
-                  ,'<td>'+ file.name +'</td>'
-                  , '<td>'
-                      ,'<img src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img" width="200px" heigth="200px">'
-                  ,'</td>'
-                  ,'<td>'+ (file.size/1014).toFixed(1) +'kb</td>'
-                  ,'<td>'
-                    ,'<button class="layui-btn layui-btn-xs layui-btn-danger demo-delete">删除</button>'
-                  ,'</td>'
-                ,'</tr>'].join(''));
-        
-                //单个重传
-                tr.find('.demo-reload').on('click', function(){
-                  obj.upload(index, file);
-                });
-        
-                //删除
-                tr.find('.demo-delete').on('click', function(){
-                  delete files[index]; //删除对应的文件
-                  tr.remove();
-                  uploadListIns.config.elem.next()[0].value = ''; //清空 input file 值，以免删除后出现同名文件不可选
-                });
-        
-                demoListView.append(tr);
-              });
-            }
-          });
-             
-            var demoListView2 = $('#demoList2')
-            ,uploadListIns = upload.render({
-            elem: '#testList2'
-            ,url: '/upload/'
-            ,accept: 'image/*'
-            ,multiple: true
-            ,auto: false
-            ,choose: function(obj){   
-              var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
-              //读取本地文件
-              obj.preview(function(index, file, result){
-                  var tr = $(['<tr id="upload-' + index + '">'
-                  ,'<td>'+ file.name +'</td>'
-                  , '<td>'
-                      ,'<img src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img" width="200px" heigth="200px">'
-                  ,'</td>'
-                  ,'<td>'+ (file.size/1014).toFixed(1) +'kb</td>'
-                  ,'<td>'
-                    ,'<button class="layui-btn layui-btn-xs layui-btn-danger demo-delete">删除</button>'
-                  ,'</td>'
-                ,'</tr>'].join(''));
-        
-                //单个重传
-                tr.find('.demo-reload').on('click', function(){
-                  obj.upload(index, file);
-                });
-        
-                //删除
-                tr.find('.demo-delete').on('click', function(){
-                  delete files[index]; //删除对应的文件
-                  tr.remove();
-                  uploadListIns.config.elem.next()[0].value = ''; //清空 input file 值，以免删除后出现同名文件不可选
-                });
-        
-                demoListView2.append(tr);
-              });
-            }
-          });
-        });
-
         function update() {
             $.ajax({
                 url: "@Url.Action("InCome_update")",
@@ -148,11 +65,11 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">名称：</label>
-                                            <input class="form-control" name="name1" type="text" value="@inCome.GetName(inCome.codeId).materialName" />
+                                            <input class="form-control" name="name1" type="text" value="@inCome.GetName(inCome.codeId).materialName" readonly=""/>
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">规格：</label>
-                                            <input class="form-control" name="model" type="text" value="@inCome.GetModel(inCome.codeId).modelName" />
+                                            <input class="form-control" name="model" type="text" value="@inCome.GetModel(inCome.codeId).modelName" readonly=""/>
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -162,7 +79,7 @@
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">编号：</label>
-                                            <input class="form-control" name="materialCode" type="text" value="@Models.InCome.GetMaterialCode(inCome.codeId).code" />
+                                            <input class="form-control" name="materialCode" type="text" value="@Models.InCome.GetMaterialCode(inCome.codeId).code" readonly=""/>
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -182,13 +99,13 @@
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">单价的单位：</label>
-                                            @Html.DropDownList("unitPrice", ViewBag.select as SelectList, new { @class = "form-control", id = "example-select" })
+                                            @Html.DropDownList("priceMeasure", ViewBag.selectUnitPrice as SelectList, new { @class = "form-control", id = "example-select" })
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">操作人：</label>
-                                            @Html.DropDownList("operator", ViewBag.selectOperator as SelectList, new { @class = "form-control", id = "example-select" })
+                                            @Html.DropDownList("operator", ViewBag.selectOperator as SelectList, new { @class = "form-control", id = "example-select"})
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">数量：</label>
@@ -208,49 +125,11 @@
                                     <div class="form-row">
                                         <div class="layui-inline col-md-6 form-group">
                                             <label for="signin_form">入库时间:</label>
-                                            <input type="text" class="layui-input form-control" id="IncomeText">
+                                            <input type="text" class="layui-input form-control" id="IncomeText" name="IncomeText">
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label for="signin_form">复检时间：</label>
-                                            <input type="text" class="layui-input form-control" id="ReckeckText">
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-md-12">
-                                        <label for="signin_form">产品质量证明：</label>
-                                        <div class="layui-upload">
-                                            <button type="button" class="layui-btn layui-btn-normal" id="testList">选择</button>
-                                            <div class="layui-upload-list">
-                                                <table class="layui-table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>文件名</th>
-                                                            <th>预览图</th>
-                                                            <th>大小</th>
-                                                            <th>操作</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody id="demoList"></tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-md-12">
-                                        <label for="signin_form">复验结果报告：</label>
-                                        <div class="layui-upload">
-                                            <button type="button" class="layui-btn layui-btn-normal" id="testList2">选择</button>
-                                            <div class="layui-upload-list">
-                                                <table class="layui-table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>文件名</th>
-                                                            <th>预览图</th>
-                                                            <th>大小</th>
-                                                            <th>操作</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody id="demoList2"></tbody>
-                                                </table>
-                                            </div>
+                                            <label for="signin_form">复检周期：</label>
+                                            <input type="text" class="form-control" name="reviewCycle" value="@inCome.reviewCycle">
                                         </div>
                                     </div>
                                 }

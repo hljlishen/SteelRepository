@@ -80,9 +80,10 @@
                                         <th>类别</th>
                                         <th>编号</th>
                                         <th>批号</th>
-                                        <th>放置位置</th>
+                                        <th>厂商</th>
                                         <th>入库时间</th>
-                                        <th>复检数据</th>
+                                        <th>质量报告</th>
+                                        <th>复检报告</th>
                                         <th>操作人</th>
                                         <th style="width: 75px;">操作</th>
                                     </tr>
@@ -91,28 +92,33 @@
                                     @{ int count = 1;}
                                     @foreach (var income in Model)
                                     {
-                                        <tr>
-                                            <td>
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                                    <label class="custom-control-label" for="customCheck2">&nbsp;</label>
-                                                </div>
-                                            </td>
-                                            <td>@count</td>
-                                            <td>@income.GetName().materialName</td>
-                                            <td>@income.GetModel().modelName</td>
-                                            <td>@income.GetCategory().categoryName</td>
-                                            <td>@income.GetMaterialCode().code</td>
-                                            <td>@income.batch</td>
-                                            <td>@income.GetPosition(income.id).positionName</td>
-                                            <td>@income.storageTime.ToString("d")</td>
-                                            <td><a href="#" class="text-body font-weight-bold">复检数据</a></td>
-                                            <td>@income.GetOperator().name</td>
-                                            <td>
-                                                <a href="javascript:InComeUpdate(@income.id)" class="action-icon"> <i class="dripicons-pencil"></i></a>
-                                                <a href="javascript:InComeSelete(@income.id)" class="action-icon"> <i class="mdi mdi-calendar-text-outline"></i></a>
-                                            </td>
-                                        </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck2">
+                                                <label class="custom-control-label" for="customCheck2">&nbsp;</label>
+                                            </div>
+                                        </td>
+                                        <td>@count</td>
+                                        <td>@income.GetName().materialName</td>
+                                        <td>@income.GetModel().modelName</td>
+                                        <td>@income.GetCategory().categoryName</td>
+                                        <td>@income.GetMaterialCode().code</td>
+                                        <td>@income.batch</td>
+                                        <td>@income.GetManufacture().manufacturersName</td>
+                                        <td>@income.storageTime.ToString("d")</td>
+                                        <td>
+                                            <a href="#" class="text-body font-weight-bold">查看</a>
+                                        </td>
+                                        <td>
+                                            <a href="#" class="text-body font-weight-bold">查看</a>
+                                        </td>
+                                        <td>@income.GetOperator().name</td>
+                                        <td>
+                                            <a href="javascript:InComeUpdate(@income.id)" class="action-icon"> <i class="dripicons-pencil"></i></a>
+                                            <a href="javascript:InComeSelete(@income.id)" class="action-icon"> <i class="mdi mdi-calendar-text-outline"></i></a>
+                                        </td>
+                                    </tr>
                                         count++;
                                     }
                                 </tbody>

@@ -12,7 +12,7 @@ namespace Models
     {
         public static Inventory Insert(int incomeId, double amount, string unit, int positionId, IDbInterface dbInterface)
         {
-            var inven = new Inventory() { amount = amount, incomeId = incomeId, unit = unit, positionId = positionId };
+            var inven = new Inventory() { amount = amount, incomeId = incomeId, unit = unit, positionId = positionId ,consumptionNumber = amount};
             dbInterface.Insert(inven, false);
             return inven;
         }

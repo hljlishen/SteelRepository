@@ -3,7 +3,6 @@
     Layout = null;
 }
 
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,7 +32,9 @@
         layui.use('upload', function(){
                 var $ = layui.jquery
                 , upload = layui.upload;
-            var id = 1;
+            var id = 0;
+            var id2 = 0;
+
             var demoListView = $('#demoList')
             var qualityView = $('#qualityId')
             ,uploadListIns = upload.render({
@@ -62,17 +63,21 @@
                   delete files[index]; //删除对应的文件
                     tr.remove();
                     div.remove();
-                  uploadListIns.config.elem.next()[0].value = ''; //清空 input file 值，以免删除后出现同名文件不可选
+                    uploadListIns.config.elem.next()[0].value = ''; //清空 input file 值，以免删除后出现同名文件不可选
+
                 });
+
                   qualityView.append(div);
                   $("#quality"+id+"").val(result);
                   demoListView.append(tr);
                   id++;
+                  $("#qualityCount").val(id);
               });
             }
           });
              
             var demoListView2 = $('#demoList2')
+            var recheckView = $('#recheckId')
             ,uploadListIns = upload.render({
             elem: '#testList2'
             ,url: '/upload/'
@@ -94,19 +99,20 @@
                   ,'</td>'
                       , '</tr>'].join(''));
 
-                //单个重传
-                tr.find('.demo-reload').on('click', function(){
-                  obj.upload(index, file);
-                });
+                   var div = $(['<input class="form-control" hidden id="recheck'+id2+'" type="text" name="recheck'+id2+'">'].join(''));
         
                 //删除
                 tr.find('.demo-delete').on('click', function(){
                   delete files[index]; //删除对应的文件
-                  tr.remove();
+                    tr.remove();
+                    div.remove();
                   uploadListIns.config.elem.next()[0].value = ''; //清空 input file 值，以免删除后出现同名文件不可选
                 });
-        
-                demoListView2.append(tr);
+                  recheckView.append(div);
+                  $("#recheck"+id2+"").val(result);
+                  demoListView2.append(tr);
+                  id2++;
+                  $("#recheckCount").val(id2);
               });
             }
           });
@@ -179,7 +185,7 @@
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">单价的单位：</label>
-                                            @Html.DropDownListFor(m => m.priceMeasure, ViewBag.select as SelectList, new { @class = "form-control", id = "example-select" })
+                                            @Html.DropDownListFor(m => m.priceMeasure, ViewBag.selectUnitPrice as SelectList, new { @class = "form-control", id = "example-select" })
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -218,6 +224,7 @@
                                             <input class="form-control" name="RecheckCycle" type="text" />
                                         </div>
                                     </div>
+
                                     <div class="form-group col-md-12">
                                         <label for="signin_form">产品质量证明：</label>
                                         <div class="layui-upload">
@@ -238,7 +245,9 @@
                                             <div class="form-group" id="qualityId">
                                             </div>
                                         </div>
+                                        <input class="form-control" id="qualityCount" name="qualityCount" type="text" hidden>
                                     </div>
+
                                     <div class="form-group col-md-12">
                                         <label for="signin_form">复验结果报告：</label>
                                         <div class="layui-upload">
@@ -256,7 +265,10 @@
                                                     <tbody id="demoList2"></tbody>
                                                 </table>
                                             </div>
+                                            <div class="form-group" id="recheckId">
+                                            </div>
                                         </div>
+                                        <input class="form-control" id="recheckCount" name="recheckCount" type="text" hidden>
                                     </div>
                                 }
                             </div>

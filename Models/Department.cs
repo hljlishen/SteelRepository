@@ -16,5 +16,8 @@ namespace Models
     {
         public int id { get; set; }
         public string departmentName { get; set; }
+        public Nullable<int> root { get; set; }
+        public int secondaryCotyledon { get; set; }
+        public int tailCotyledon { get; set; }
     }
 }
