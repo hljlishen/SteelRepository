@@ -16,6 +16,17 @@ namespace SteelRepository.Controllers
         }
         public ActionResult OutCome_Select()
         {
+            List<OutCome> Outcome = new List<OutCome>();
+            return View(Outcome);
+        }
+        [HttpPost]
+        public ActionResult OutCome_SelectChcek(FormCollection collection)
+        {
+            DateTime begin = DateTime.ParseExact(collection["data"],"YYYYMMDD",null);
+            DateTime end = DateTime.ParseExact(collection["data1"], "YYYYMMDD", null);
+            List<OutCome> outCome = OutCome.GetOutComes(begin, end);
+            if (outCome != null)
+                return View(outCome);
             return View();
         }
     }
