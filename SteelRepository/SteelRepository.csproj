@@ -164,6 +164,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ManufacturerController.cs" />
     <Compile Include="Controllers\MaterialController.cs" />
+    <Compile Include="Controllers\OutComeController.cs" />
     <Compile Include="Controllers\PositionController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Global.asax.cs">
@@ -291,6 +292,7 @@
     <Content Include="Content\layui\lay\modules\util.js" />
     <Content Include="Content\layui\vintage.js" />
     <Content Include="Content\Login\css\animate.css" />
+    <Content Include="Content\OutCome\js\demo.customers.js" />
     <Content Include="Content\Position\css\app.min.css" />
     <Content Include="Content\Login\css\bootsnav.css" />
     <Content Include="Content\Login\css\bootstrap.min.css" />
@@ -311,7 +313,6 @@
     <Content Include="Content\Position\js\d3.min.js" />
     <Content Include="Content\Position\js\demo.britechart1.js" />
     <Content Include="Content\Position\js\demo.customers.js" />
-    <Content Include="Content\Position\js\demo.customers2.js" />
     <Content Include="Content\Position\js\echarts.min.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\a.jpg" />
@@ -376,7 +377,6 @@
     <Content Include="Views\Project\Project_update.cshtml" />
     <Content Include="Views\Manufacturer\Manufacturer_add.cshtml" />
     <Content Include="Views\Manufacturer\Manufacturer_list.cshtml" />
-    <Content Include="Views\Position\Position_Update.cshtml" />
     <Content Include="Views\Position\Position_Select.cshtml" />
     <Content Include="Views\Manufacturer\Manufacturer_information.cshtml" />
     <Content Include="Views\Manufacturer\Manufacturer_select.cshtml" />
@@ -392,6 +392,9 @@
     <Content Include="Views\Index\Pie.cshtml" />
     <Content Include="Views\Department\Department_add.cshtml" />
     <Content Include="Views\Department\Department_Update.cshtml" />
+    <Content Include="Views\OutCome\OutCome_list.cshtml" />
+    <Content Include="Views\OutCome\OutCome_Select.cshtml" />
+    <Content Include="Views\Position\Position_Update.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

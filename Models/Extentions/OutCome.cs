@@ -1,6 +1,7 @@
 ﻿using DbInterface;
 using DbService;
 using System;
+using System.Collections.Generic;
 
 namespace Models
 {
@@ -41,6 +42,13 @@ namespace Models
                 helper.Commit();
 
                 return outcome;
+            }
+        }
+        public static List<OutCome> SelectAll()
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return helper.SelectAll<OutCome>();
             }
         }
     }
