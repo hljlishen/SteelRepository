@@ -22,6 +22,7 @@
     <script src="~/Content/OutCome/js/demo.customers.js"></script>
 </head>
 <body>
+    <div style="overflow-x:auto;width:inherit;height:inherit">
     <div class="container-fluid">
         <div class="wrapper">
             <div class="content-page">
@@ -66,7 +67,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box">
-                                <h4 class="page-title">请输入想要查询ID编号</h4>
+                                <h4 class="page-title">其它查询索引</h4>
                             </div>
                         </div>
                     </div>
@@ -78,8 +79,96 @@
                                         <div class="col-lg-6">
                                             <form method="post" action="/OutCome/OutCome_SelectCheck">
                                                 <div class="form-group mb-3">
-                                                    <label for="example-date">请输入ID编号</label>
+                                                    <label>按仓位查询</label>
+                                                    <label for="example-date">请输入你要查询的仓位</label>
+                                                    <input class="form-control" id="positionName" type="text" name="positionName">
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="signin-footer">
+                                                            <button type="submit" style="width:60px;height:60px; float:right" class="btn signin_btn signin_btn_two"
+                                                                    data-toggle="modal" data-target=".signin_modal">
+                                                                查询
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <form method="post" action="/OutCome/OutCome_SelectCheck">
+                                                <div class="form-group mb-3">
+                                                    <label>按出库数量查询</label>
+                                                    <label for="example-date">请输入你要查询的数量</label>
                                                     <input class="form-control" id="number" type="number" name="number">
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="signin-footer">
+                                                            <button type="submit" style="width:60px;height:60px; float:right" class="btn signin_btn signin_btn_two"
+                                                                    data-toggle="modal" data-target=".signin_modal">
+                                                                查询
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <form method="post" action="/OutCome/OutCome_SelectCheck">
+                                                <div class="form-group mb-3">
+                                                    <label>按借用人查询</label>
+                                                    <label for="example-date">请输入你要查询的借用人名</label>
+                                                    <input class="form-control" id="employeeName" type="text" name="employeeName">
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="signin-footer">
+                                                            <button type="submit" style="width:60px;height:60px; float:right" class="btn signin_btn signin_btn_two"
+                                                                    data-toggle="modal" data-target=".signin_modal">
+                                                                查询
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <form method="post" action="/OutCome/OutCome_SelectCheck">
+                                                <div class="form-group mb-3">
+                                                    <label>按项目查询</label>
+                                                    <label for="example-date">请输入你要查询的项目名</label>
+                                                    <input class="form-control" id="projectName" type="text" name="projectName">
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-sm-12">
@@ -101,6 +190,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
     <script src="http://localhost:8376/Content/OutCome/js/app.min.js"></script>
 </body>

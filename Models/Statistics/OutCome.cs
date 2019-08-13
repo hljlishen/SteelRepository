@@ -27,8 +27,8 @@ namespace Models
                 }
                 else
                 {
-                    var muloutcomes = helper.Select<OutCome>(p => (p.recipientsTime > begin & p.recipientsTime < end)
-                    & (p.incomeId == alwaysid || p.borrowerId == alwaysid || p.projectId == alwaysid));
+                    var muloutcomes = helper.Select<OutCome>(p => (p.recipientsTime > begin && p.recipientsTime < end)
+                    & (p.inventoryId == alwaysid || p.borrowerId == alwaysid || p.projectId == alwaysid));
                     return muloutcomes;
                 }
             }

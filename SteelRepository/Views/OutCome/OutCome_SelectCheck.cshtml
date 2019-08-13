@@ -45,37 +45,37 @@
                                                         </div>
                                                     </th>
                                                     <th>编号</th>
-                                                    <th>货品入库ID</th>
+                                                    <th>货品出库时仓位</th>
                                                     <th>货品出库数量</th>
-                                                    <th>货品单位</th>
+                                                    <th>单位</th>
                                                     <th>货品出库时间</th>
-                                                    <th>货品借用人ID</th>
+                                                    <th>货品借用人</th>
                                                     <th>货品价格</th>
-                                                    <th>项目ID</th>
+                                                    <th>项目名称</th>
                                                     <th>备注</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @{int count = 1; }
-                                                @foreach (var outCome in Model)
+                                                @foreach (var outComes in Model)
                                                 {
-                                                    <tr>
-                                                        <td>
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                                                <label class="custom-control-label" for="customCheck2">&nbsp;</label>
-                                                            </div>
-                                                        </td>
-                                                        <td class="table-user">@count</td>
-                                                        <td>@outCome.incomeId</td>
-                                                        <td>@outCome.number</td>
-                                                        <td>@outCome.unit</td>
-                                                        <td>@outCome.recipientsTime</td>
-                                                        <td>@outCome.borrowerId</td>
-                                                        <td>@outCome.price</td>
-                                                        <td>@outCome.projectId</td>
-                                                        <td>@outCome.instructions</td>
-                                                    </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input" id="customCheck2">
+                                                            <label class="custom-control-label" for="customCheck2">&nbsp;</label>
+                                                        </div>
+                                                    </td>
+                                                    <td class="table-user">@count</td>
+                                                    <td>@Models.OutCome.GetPositionName(outComes.inventoryId)</td>
+                                                    <td>@outComes.number</td>
+                                                    <td>@outComes.unit</td>
+                                                    <td>@outComes.recipientsTime</td>
+                                                    <td>@Models.OutCome.GetEmployeeName(outComes.borrowerId)</td>
+                                                    <td>@outComes.price</td>
+                                                    <td>@Models.OutCome.GetProjectName(outComes.projectId.Value)</td>
+                                                    <td>@outComes.instructions</td>
+                                                </tr>
                                                     count++;
                                                 }
                                             </tbody>
