@@ -397,6 +397,7 @@
     <Content Include="Views\OutCome\OutCome_list.cshtml" />
     <Content Include="Views\OutCome\OutCome_Select.cshtml" />
     <Content Include="Views\Position\Position_Update.cshtml" />
+    <Content Include="Views\OutCome\OutCome_SelectCheck.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
