@@ -50,5 +50,12 @@ namespace Models
             var inventory = helper.FindFirst<Inventory, int>("incomId", inComeId);
             return helper.Select<OutCome>(p => p.inventoryId == inventory.id);
         }
+        public static List<OutCome> SelectAll()
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return helper.SelectAll<OutCome>();
+            }
+        }
     }
 }
