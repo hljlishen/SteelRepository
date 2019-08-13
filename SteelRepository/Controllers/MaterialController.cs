@@ -12,6 +12,7 @@ namespace SteelRepository.Controllers
     public class MaterialController : Controller
     {
         private static InCome In;
+        private static int incomeid;
         // GET: Material
         public ActionResult InCome_list()
         {
@@ -136,6 +137,46 @@ namespace SteelRepository.Controllers
             inCome.operatorId = int.Parse(collection["operator"]);
             inCome.reviewCycle = double.Parse(collection["reviewCycle"]);
             return Json(InCome.Update(inCome));
+        }
+
+        public ActionResult QualityReport(int id)
+        {
+            incomeid = id;
+            List<QualityCertificationReportImg> quality = QualityCertificationReportImg.GetQualityCertificationReportImg(id);
+            if (quality != null)
+            {
+                return View(quality);
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult QualityReport(FormCollection collection)
+        {
+            DelectQualityReportImg(collection["quality"]);
+            List<byte[]> byteList = qualityCertification(collection);
+            if (byteList != null)
+            {
+                foreach (var item in byteList)
+                {
+                    QualityCertificationReportImg.Insert(incomeid, item);
+                }
+            }
+            return Json(true);
+        }
+
+        private void DelectQualityReportImg(string imgIds)
+        {
+            if (imgIds != null)
+            {
+                string[] array = imgIds.Split(',');
+                foreach (var imgId in array)
+                {
+                    if (imgId == "")
+                        return;
+                    QualityCertificationReportImg.Delect(int.Parse(imgId));
+                }
+            }
         }
 
         private List<SelectListItem> GetUnitList()

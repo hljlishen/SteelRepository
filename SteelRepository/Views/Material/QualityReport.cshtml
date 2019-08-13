@@ -1,0 +1,170 @@
+﻿@model List<Models.QualityCertificationReportImg>
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title></title>
+    <link href="~/Content/AdminIndex/css/app.min.css" rel="stylesheet" />
+    <link href="~/Content/AdminIndex/css/icons.min.css" rel="stylesheet" />
+    <script src="~/Content/AdminIndex/js/app.min.js"></script>
+    <link href="~/Content/layui/css/layui.css" rel="stylesheet" media="all" />
+    <script src="~/Content/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript">
+        layui.use('upload', function(){
+                var $ = layui.jquery
+                , upload = layui.upload;
+            var id = 0;
+
+            var demoListView = $('#demoList')
+            var qualityView = $('#qualityId')
+            ,uploadListIns = upload.render({
+            elem: '#testList'
+            ,url: '/upload/'
+            ,accept: 'image/*'
+            ,multiple: true
+            ,auto: false
+            ,choose: function(obj){
+              var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
+              //读取本地文件
+              obj.preview(function(index, file, result){
+                  var tr = $(['<tr id="upload-' + index + '">'
+                  ,'<td>'+ file.name +'</td>'
+                  , '<td>'
+                      ,'<img src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img" width="200px" heigth="200px">'
+                  ,'</td>'
+                  ,'<td>'+ (file.size/1014).toFixed(1) +'kb</td>'
+                  ,'<td>'
+                    ,'<button class="layui-btn layui-btn-xs layui-btn-danger demo-delete">删除</button>'
+                  ,'</td>'
+                      , '</tr>'].join(''));
+                  var div = $(['<input class="form-control" hidden id="quality'+id+'" type="text" name="quality'+id+'">'].join(''));
+                //删除
+                tr.find('.demo-delete').on('click', function(){
+                  delete files[index]; //删除对应的文件
+                    tr.remove();
+                    div.remove();
+                    uploadListIns.config.elem.next()[0].value = ''; //清空 input file 值，以免删除后出现同名文件不可选
+
+                });
+                  qualityView.append(div);
+                  $("#quality"+id+"").val(result);
+                  demoListView.append(tr);
+                  id++;
+                  $("#qualityCount").val(id);
+              });
+            }
+            });
+        });
+
+        function delect(obj,id) {
+            var tr=obj.parentNode.parentNode;
+	    	var tbody=tr.parentNode;
+            tbody.removeChild(tr);
+            $("#quality").val($("#quality").val()+id+",")
+        }
+
+        function update() {
+            $.ajax({
+                url: "@Url.Action("QualityReport")",
+                type: "post",
+                data: $("form").serialize(),
+                dataType: "json",
+                success: function (data) {
+                    data = eval("(" + data + ")");
+                    if (data) {
+                        alert("修改成功");
+                        parent.closeWin2();
+                        parent.openFrame("InCome_list");
+                    } else {
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <section class="signin popup-in">
+        <div class="container">
+            <div class="sign-content popup-in-content">
+                <div class="popup-in-txt">
+                    <h2>修改质量报告</h2>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="signin-form">
+                                @using (Html.BeginForm("QualityReport", "Material", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @role = "form" }))
+                                {
+                                <div class="form-group col-md-12">
+                                    <label for="signin_form">产品质量证明：</label>
+                                    <div class="layui-upload">
+                                        <div class="layui-upload-list">
+                                            <table class="layui-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>预览图</th>
+                                                        <th>操作</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var img in Model)
+                                                    {
+                                                        <tr>
+                                                            <th>
+                                                                <img src="data:image/jpeg;base64,@Convert.ToBase64String(img.img)" class="layui-upload-img" data-src="data:image/jpeg;base64,@Convert.ToBase64String(img.img)" width="200" heigth="200px">
+                                                            </th>
+                                                            <th>
+                                                                <button class="layui-btn layui-btn-xs layui-btn-danger" onclick="delect(this,@img.id)">删除</button>
+                                                                <button class="layui-btn layui-btn-xs layui-btn-danger demo-delete">查看</button>
+                                                            </th>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <input class="form-control" id="quality" name="quality" type="text" hidden>
+                                    <div class="layui-upload">
+                                        <button type="button" class="layui-btn layui-btn-normal" id="testList">添加</button>
+                                        <div class="layui-upload-list">
+                                            <table class="layui-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>文件名</th>
+                                                        <th>预览图</th>
+                                                        <th>大小</th>
+                                                        <th>操作</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="demoList"></tbody>
+                                            </table>
+                                        </div>
+                                        <div class="form-group" id="qualityId">
+                                        </div>
+                                    </div>
+                                    <input class="form-control" id="qualityCount" name="qualityCount" type="text" hidden>
+                                </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="signin-footer">
+                                <button type="button" class="btn btn-primary" onclick="update();">
+                                    修改
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

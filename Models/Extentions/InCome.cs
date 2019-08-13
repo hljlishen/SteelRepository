@@ -234,6 +234,7 @@ namespace Models
                 double? kgPrice = 0;
                 double weight = 0;
                 if (BatchIdExist(inCome.batch,inCome.id ,helper)) throw new Exception("批号已存在");
+                //修改单价
                 foreach (var outcome in OutCome.InComeIdSelect(inCome.id, helper))
                 {
                     if (inCome.priceMeasure == "g         ")
