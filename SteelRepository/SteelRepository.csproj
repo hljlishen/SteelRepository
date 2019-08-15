@@ -268,7 +268,7 @@
     <Content Include="Content\layui\font\iconfont.svg" />
     <Content Include="Content\layui\layui.all.js" />
     <Content Include="Content\layui\layui.js" />
-    <Content Include="Content\layui\echarts.min.js" />
+    <Content Include="Content\layui\echarts.min%281%29.js" />
     <Content Include="Content\layui\lay\modules\carousel.js" />
     <Content Include="Content\layui\lay\modules\code.js" />
     <Content Include="Content\layui\lay\modules\colorpicker.js" />
@@ -389,10 +389,10 @@
     <Content Include="Views\Material\InCome_selete.cshtml" />
     <Content Include="Views\Department\Department_list.cshtml" />
     <Content Include="Views\Index\Index.cshtml" />
-    <Content Include="Views\Index\Pie.cshtml" />
     <Content Include="Views\Department\Department_add.cshtml" />
     <Content Include="Views\Department\Department_Update.cshtml" />
     <Content Include="Views\Material\QualityReport.cshtml" />
+    <Content Include="Views\Index\P1.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

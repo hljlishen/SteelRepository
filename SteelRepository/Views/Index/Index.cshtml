@@ -7,8 +7,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="~/Content/layui/css/layui.css" media="all">
-    <link rel="stylesheet" href="~/Content/layui/echarts.min.js" media="all" />
+    <script src="~/Content/layui/echarts.min(1).js"></script>
     <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+
+
 </head>
 <body>
     <div class="nav" style="margin-top: 10px;">
@@ -17,8 +19,9 @@
                 <li class="layui-nav-item">
                     <a href=""><img src="~/images/6b0263055f6110e8622111f6d4c7982.png" height="80" />钢料库管理系统</a>
                 </li>
-                <li class="layui-nav-item layui-this"><a href="#projectMsg">库存信息</a></li>
-                <li class="layui-nav-item "><a href="">项目信息</a></li>
+                <li class="layui-nav-item layui-this">库存信息</li>
+                <li class="layui-nav-item"><a href="#projectPho">图表展示</a></li>
+                <li class="layui-nav-item "><a href="#projectMsg">项目信息</a></li>
             </ul>
         </div>
         <div class="right">
@@ -68,22 +71,21 @@
                 var table = layui.table;
 
                 table.render({
-                    elem: '#test'
-                    , url: '/test/table/demo1.json'
+                    elem: '#materiaName'
+                    , url: '/Models/Model1.edmx'
                     , toolbar: '#toolbarDemo'
                     , title: '数据表'
                     , cols: [[
                         { type: 'checkbox', fixed: 'left' }
-                        , { field: 'incomeId', title: '入库ID', width: 150, fixed: 'left', unresize: true, sort: true }
                         , { field: 'categoryName', title: '材料名称', width: 150, edit: 'text' }
-                        , { field: '', title: '种类', width: 120, edit: 'text' }
+                        , { field: '', title: '种类', width: 150, edit: 'text' }
                         , { field: '', title: '批次信息', width: 150, sort: true }
                         , { field: 'amount', title: '统计数量', width: 150, edit: 'text', sort: true }
                         , { field: '', title: '库存余量', width: 150, sort: true }
                         , { field: 'unit', title: '单位' }
                         , { field: 'positionId', title: '位置', width: 150 }
                         , { field: 'manufacturersName', title: '厂商名称', width: 150 }
-                        , { field: 'price', title: '金额', width: 100, sort: true }
+                        , { field: 'price', title: '金额', width: 150, sort: true }
                         //, { fixed: 'right', title: '操作', toolbar: '#barDemo', width: 150 }
                     ]]
                     , page: true
@@ -110,72 +112,275 @@
                 //监听行工具事件
                 table.on('tool(test)', function (obj) {
                     var data = obj.data;
+                    console.log(obj)
                     //console.log(obj)
-                    if (obj.event === 'del') {
-                        layer.confirm('真的删除行么', function (index) {
-                            obj.del();
-                            layer.close(index);
-                        });
-                    } else if (obj.event === 'edit') {
-                        layer.prompt({
-                            formType: 2
-                            , value: data.email
-                        }, function (value, index) {
-                            obj.update({
-                                email: value
-                            });
-                            layer.close(index);
-                        });
-                    }
+                    //if (obj.event === 'del') {
+                    //    layer.confirm('真的删除行么', function (index) {
+                    //        obj.del();
+                    //        layer.close(index);
+                    //    });
+                    //} else if (obj.event === 'edit') {
+                    //    layer.prompt({
+                    //        formType: 2
+                    //        , value: data.email
+                    //    }, function (value, index) {
+                    //        obj.update({
+                    //            email: value
+                    //        });
+                    //        layer.close(index);
+                    //    });
+                    //}
                 });
             });
         </script>
 
     </div>
     <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
-        <legend><a name="projectMsg"></a>分类展示</legend>
+        <legend><a name="projectPho"></a>图表展示</legend>
     </fieldset>
 
     <div style="padding: 20px; background-color: #F2F2F2;">
         <div class="layui-row layui-col-space15">
             <div class="layui-col-md6">
                 <div class="layui-card">
-                    <div class="layui-card-header">卡片面板</div>
+                    <div class="layui-card-header">饼状图展示</div>
                     <div class="layui-card-body">
-                        可以加个饼状图
+                        <div id="main" style="width: 600px;height:400px;"></div>
+                        <script type="text/javascript">
+                            var myChart = echarts.init(document.getElementById('main'));
+                            // 基于准备好的dom，初始化echarts实例
+                            var data = genData(50);
+
+                            option = {
+                                title: {
+                                    text: '库存种类金额统计',
+                                    subtext: '',
+                                    x: 'center'
+                                },
+                                tooltip: {
+                                    trigger: 'item',
+                                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                                },
+                                legend: {
+                                    type: 'scroll',
+                                    orient: 'vertical',
+                                    right: 10,
+                                    top: 20,
+                                    bottom: 20,
+                                    data: data.legendData,
+
+                                    selected: data.selected
+                                },
+                                series: [
+                                    {
+                                        name: '库存种类',
+                                        type: 'pie',
+                                        radius: '60%',
+                                        center: ['40%', '50%'],
+                                        data: data.seriesData,
+                                        itemStyle: {
+                                            emphasis: {
+                                                shadowBlur: 10,
+                                                shadowOffsetX: 0,
+                                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                            }
+                                        }
+                                    }
+                                ]
+                            };
+                            function data() {
+
+                            }
+
+
+
+                            function genData(count) {
+                                var nameList = [
+                                    '赵', '钱', '孙', '李', '周', '吴', '郑', '王', '冯', '陈', '褚', '卫', '蒋', '沈', '韩', '杨', '朱', '秦', '尤', '许', '何', '吕', '施', '张', '孔', '曹', '严', '华', '金', '魏', '陶', '姜', '戚', '谢', '邹', '喻', '柏', '水', '窦', '章', '云', '苏', '潘', '葛', '奚', '范', '彭', '郎', '鲁', '韦', '昌', '马', '苗', '凤', '花', '方', '俞', '任', '袁', '柳', '酆', '鲍', '史', '唐', '费', '廉', '岑', '薛', '雷', '贺', '倪', '汤', '滕', '殷', '罗', '毕', '郝', '邬', '安', '常', '乐', '于', '时', '傅', '皮', '卞', '齐', '康', '伍', '余', '元', '卜', '顾', '孟', '平', '黄', '和', '穆', '萧', '尹', '姚', '邵', '湛', '汪', '祁', '毛', '禹', '狄', '米', '贝', '明', '臧', '计', '伏', '成', '戴', '谈', '宋', '茅', '庞', '熊', '纪', '舒', '屈', '项', '祝', '董', '梁', '杜', '阮', '蓝', '闵', '席', '季', '麻', '强', '贾', '路', '娄', '危'
+                                ];
+                                var legendData = [];
+                                var seriesData = [];
+                                var selected = {};
+                                for (var i = 0; i < 50; i++) {
+                                    name = Math.random() > 0.65
+                                        ? makeWord(4, 1) + '·' + makeWord(3, 0)
+                                        : makeWord(2, 1);
+                                    legendData.push(name);
+                                    seriesData.push({
+                                        name: name,
+                                        value: Math.round(Math.random() * 100000)
+                                    });
+                                    selected[name] = i < 6;
+                                }
+
+                                return {
+                                    legendData: legendData,
+                                    seriesData: seriesData,
+                                    selected: selected
+                                };
+
+                                function makeWord(max, min) {
+                                    var nameLen = Math.ceil(Math.random() * max + min);
+                                    var name = [];
+                                    for (var i = 0; i < nameLen; i++) {
+                                        name.push(nameList[Math.round(Math.random() * nameList.length - 1)]);
+                                    }
+                                    return name.join('');
+                                }
+                            }
+                            myChart.setOption(option);
+                        </script>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="layui-col-md6">
+                <div class="layui-card">
+                    <div class="layui-card-header">折线图展示随季度各种类消耗趋势</div>
+                    <div class="layui-card-body">
+                        <div id="Zhext" style="width: 600px;height:400px;"></div>
+                        <script type="text/javascript">
+                            // 基于准备好的dom，初始化echarts实例
+                            var myChart = echarts.init(document.getElementById('Zhext'));
+
+                            // 指定图表的配置项和数据
+                            var option = {
+                                title: {
+                                    text: '折线图堆叠'
+                                },
+                                tooltip: {
+                                    trigger: 'axis'
+                                },
+                                legend: {
+                                    data: ['钢', '铜', '铁', '铝', '银']
+                                },
+                                grid: {
+                                    left: '3%',
+                                    right: '4%',
+                                    bottom: '3%',
+                                    containLabel: true
+                                },
+                                toolbox: {
+                                    feature: {
+                                        saveAsImage: {}
+                                    }
+                                },
+                                xAxis: {
+                                    type: 'category',
+                                    boundaryGap: false,
+                                    data: ['一季度', '二季度', '三季度', '四季度']
+                                },
+                                yAxis: {
+                                    type: 'value'
+                                },
+                                series: [
+                                    {
+                                        name: '钢',
+                                        type: 'line',
+                                        stack: '总量',
+                                        data: [120, 132, 101, 134, 90, 230, 210]
+                                    },
+                                    {
+                                        name: '铜',
+                                        type: 'line',
+                                        stack: '总量',
+                                        data: [220, 182, 191, 234, 290, 330, 310]
+                                    },
+                                    {
+                                        name: '铁',
+                                        type: 'line',
+                                        stack: '总量',
+                                        data: [150, 232, 201, 154, 190, 330, 410]
+                                    },
+                                    {
+                                        name: '铝',
+                                        type: 'line',
+                                        stack: '总量',
+                                        data: [320, 332, 301, 334, 390, 330, 320]
+                                    },
+                                    {
+                                        name: '银',
+                                        type: 'line',
+                                        stack: '总量',
+                                        data: [820, 932, 901, 934, 1290, 1330, 1320]
+                                    }
+                                ]
+                            };
+
+
+                            // 使用刚指定的配置项和数据显示图表。
+                            myChart.setOption(option);
+                        </script>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-col-md6"  style="width:1325px;height:650px;">
+                <div class="layui-card">
+                    <div class="layui-card-header">柱状图展示</div>
+                    <div class="layui-card-body">
+                        <div id="Pzhu" style="width: 1000px;height:600px;"></div>
+                        <script type="text/javascript">
+                            // 基于准备好的dom，初始化echarts实例
+                            var myChart = echarts.init(document.getElementById('Pzhu'));
+
+                            // 指定图表的配置项和数据
+                            var option = {
+                                title: {
+                                    text: '月度消耗量'
+                                },
+                                tooltip: {},
+                                legend: {
+                                    data: ['消耗量']
+                                },
+                                xAxis: {
+                                    data: ["一月", "二月", "三月", "四月", "五月", "六月", "八月", "九月", "十月", "十一月", "十二月"]
+                                },
+                                yAxis: {},
+                                series: [{
+                                    name: '消耗量',
+                                    type: 'bar',
+                                    data: [5, 20, 36, 10, 10, 20, 15, 45, 60, 89, 78]
+                                }]
+                            };
+
+                            // 使用刚指定的配置项和数据显示图表。
+                            myChart.setOption(option);
+                        </script>
                     </div>
                 </div>
             </div>
             <div class="layui-col-md6">
                 <div class="layui-card">
-                    <div class="layui-card-header">卡片面板</div>
+                    <div class="layui-card-header"></div>
                     <div class="layui-card-body">
-                        或者是<br>
-                        柱状图
+                        <script src="http://how2j.cn/study/js/chartjs/2.8.0/chart.min.js"></script>
+
+                        <div style="width:400px;margin:0px auto">
+                            <canvas id="myChart"></canvas>
+                        </div>
+                        <script>
+                            var ctx = document.getElementById('myChart').getContext('2d');
+                            var myChart = new Chart(ctx, {
+                                type: 'pie',
+                                data: {
+                                    labels: ['红', '蓝', '黄', '绿', '紫', '橙'],
+                                    datasets: [{
+                                        label: '示例',
+                                        data: [12, 19, 3, 5, 0, 3],
+                                        borderColor: 'lightGray',
+                                        backgroundColor: ['pink', 'skyblue', 'LightYellow', 'LawnGreen', 'MediumPurple', 'orange'],
+                                        borderWidth: 1
+                                    }]
+                                }
+                            });
+                        </script>
                     </div>
                 </div>
             </div>
-            <div class="layui-col-md6">
-                <div class="layui-card">
-                    <div class="layui-card-header">卡片面板</div>
-                    <div class="layui-card-body">
-                        材料余量金额等总览<br>
-                        图表等
-                    </div>
-                </div>
-            </div>
-            <div class="layui-col-md6">
-                <div class="layui-card">
-                    <div class="layui-card-header">卡片面板</div>
-                    <div class="layui-card-body">
-                        结合 layui 的栅格系统<br>
-                        轻松实现响应式布局 可调大小
-                        <br>
-                        <br>
-                        <br>
-                    </div>
-                </div>
-            </div>
+            
         </div>
     </div>
     <h3></h3>
@@ -183,7 +388,8 @@
         <legend><a name="projectMsg"></a>项目信息</legend>
     </fieldset>
 
-    <div style="height: 800px;"></div>
+    @*返回顶部小火箭*@
+    <div style="height: 600px;"></div>
     <script>
         layui.use(['util', 'laydate', 'layer'], function () {
             var util = layui.util
