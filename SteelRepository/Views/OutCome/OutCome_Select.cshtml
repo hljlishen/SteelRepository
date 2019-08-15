@@ -22,165 +22,156 @@
     <script src="~/Content/OutCome/js/demo.customers.js"></script>
 </head>
 <body>
+    @{
+        List<Models.MaterialCode> material = (List<Models.MaterialCode>)ViewData["MaterialCode"];
+    }
+    @{
+        List<Models.Employee> employee = (List<Models.Employee>)ViewData["employee"];
+    }
+    @{
+        List<Models.OutCome> outcomelist = (List<Models.OutCome>)ViewData["outcome"];
+    }
     <div style="overflow-x:auto;width:inherit;height:inherit">
-    <div class="container-fluid">
-        <div class="wrapper">
-            <div class="content-page">
-                <div class="content">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="page-title-box">
-                                <h4 class="page-title">请输入想要查询的起止时间</h4>
+        <div class="container-fluid">
+            <div class="wrapper">
+                <div class="content-page">
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box">
+                                    <h4 class="page-title">请输入查询索引</h4>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <form method="post" action="/OutCome/OutCome_SelectCheck">
-                                                <div class="form-group mb-3">
-                                                    <label for="example-date">开始时间</label>
-                                                    <input class="form-control" id="date" type="date" name="date">
-                                                    <label for="example-date">结束时间</label>
-                                                    <input class="form-control" id="date1" type="date" name="date1">
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-sm-12">
-                                                        <div class="signin-footer">
-                                                            <button type="submit" style="width:60px;height:60px; float:right" class="btn signin_btn signin_btn_two"
-                                                                    data-toggle="modal" data-target=".signin_modal">
-                                                                查询
-                                                            </button>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <h5>组合查询</h5>
+                                                <form method="post" action="/OutCome/OutCome_Select">
+                                                    <div class="form-group mb-3">
+                                                        <table contenteditable="inherit">
+                                                            <tr>
+                                                                <td>
+                                                                    <label for="example-date">开始时间</label>
+                                                                    <input class="form-control" id="date" type="date" name="date" style="width:200px">
+                                                                </td>
+                                                                <td>
+                                                                    <label for="example-date">结束时间</label>
+                                                                    <input class="form-control" id="date1" type="date" name="date1" style="width:200px">
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <label>借 用 人 查 询:</label>
+                                                                    <select name="employeeid" style="width:100px;height:30px">
+                                                                        <option value="0">请选择</option>
+                                                                        @foreach (var emp in employee)
+                                                                        {
+                                                                            <option value="@emp.id">@emp.name</option>
+                                                                        }
+                                                                    </select>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <label>货品编号查询:</label>
+                                                                    <select name="materialCodeid" style="width:100px;height:30px">
+                                                                        <option value="0">请选择</option>
+                                                                        @foreach (var emp in material)
+                                                                        {
+                                                                            <option value="@emp.id">@emp.code</option>
+                                                                        }
+                                                                    </select>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <div class="signin-footer">
+                                                                <button type="submit" style="width:60px;height:60px; float:unset" class="btn signin_btn signin_btn_two"
+                                                                        data-toggle="modal" data-target=".signin_modal">
+                                                                    查询
+                                                                </button>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </form>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="page-title-box">
-                                <h4 class="page-title">其它查询索引</h4>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <form method="post" action="/OutCome/OutCome_SelectCheck">
-                                                <div class="form-group mb-3">
-                                                    <label>按仓位查询</label>
-                                                    <label for="example-date">请输入你要查询的仓位</label>
-                                                    <input class="form-control" id="positionName" type="text" name="positionName">
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-sm-12">
-                                                        <div class="signin-footer">
-                                                            <button type="submit" style="width:60px;height:60px; float:right" class="btn signin_btn signin_btn_two"
-                                                                    data-toggle="modal" data-target=".signin_modal">
-                                                                查询
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
+
+
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box">
+                                    <h4 class="page-title">查询结果</h4>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <form method="post" action="/OutCome/OutCome_SelectCheck">
-                                                <div class="form-group mb-3">
-                                                    <label>按出库数量查询</label>
-                                                    <label for="example-date">请输入你要查询的数量</label>
-                                                    <input class="form-control" id="number" type="number" name="number">
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-sm-12">
-                                                        <div class="signin-footer">
-                                                            <button type="submit" style="width:60px;height:60px; float:right" class="btn signin_btn signin_btn_two"
-                                                                    data-toggle="modal" data-target=".signin_modal">
-                                                                查询
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <form method="post" action="/OutCome/OutCome_SelectCheck">
-                                                <div class="form-group mb-3">
-                                                    <label>按借用人查询</label>
-                                                    <label for="example-date">请输入你要查询的借用人名</label>
-                                                    <input class="form-control" id="employeeName" type="text" name="employeeName">
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-sm-12">
-                                                        <div class="signin-footer">
-                                                            <button type="submit" style="width:60px;height:60px; float:right" class="btn signin_btn signin_btn_two"
-                                                                    data-toggle="modal" data-target=".signin_modal">
-                                                                查询
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <form method="post" action="/OutCome/OutCome_SelectCheck">
-                                                <div class="form-group mb-3">
-                                                    <label>按项目查询</label>
-                                                    <label for="example-date">请输入你要查询的项目名</label>
-                                                    <input class="form-control" id="projectName" type="text" name="projectName">
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-sm-12">
-                                                        <div class="signin-footer">
-                                                            <button type="submit" style="width:60px;height:60px; float:right" class="btn signin_btn signin_btn_two"
-                                                                    data-toggle="modal" data-target=".signin_modal">
-                                                                查询
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </form>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-centered table-striped dt-responsive nowrap w-100" id="products-datatable3">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 20px;">
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                                                <label class="custom-control-label" for="customCheck1">&nbsp;</label>
+                                                            </div>
+                                                        </th>
+                                                        <th>编号</th>
+                                                        <th>货品编号</th>
+                                                        <th>货品名称</th>
+                                                        <th>货品类别</th>
+                                                        <th>货品数量</th>
+                                                        <th>货品单位</th>
+                                                        <th>货品单价</th>
+                                                        <th>货品总价</th>
+                                                        <th>货品出库时间</th>
+                                                        <th>货品借用人</th>
+                                                        <th style="width: 125px;">更多</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @{int count = 1; }
+                                                    @foreach (var outComes in outcomelist)
+                                                    {
+                                                        <tr>
+                                                            <td>
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" id="customCheck2">
+                                                                    <label class="custom-control-label" for="customCheck2">&nbsp;</label>
+                                                                </div>
+                                                            </td>
+                                                            <td class="table-user">@count</td>
+                                                            <td>@Models.OutCome.GetMaterCodeName(outComes.inventoryId)</td>
+                                                            <td>@Models.OutCome.GetNameName(outComes.inventoryId)</td>
+                                                            <td>@Models.OutCome.GetModelName(outComes.inventoryId)</td>
+                                                            <td>@outComes.number</td>
+                                                            <td>@outComes.unit</td>
+                                                            <td>@Models.OutCome.GetInComeunitPrice(outComes.inventoryId)</td>
+                                                            <td>@outComes.price</td>
+                                                            <td>@outComes.recipientsTime</td>
+                                                            <td>@Models.OutCome.GetEmployeeName(outComes.borrowerId)</td>
+                                                            <td>
+                                                                <a href="javascript:OutComeMore(@outComes.id)" class="action-icon"> <i class="mdi mdi-calendar-text-outline"></i></a>
+                                                            </td>
+                                                        </tr>
+                                                        count++;
+                                                    }
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
@@ -190,7 +181,6 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
     <script src="http://localhost:8376/Content/OutCome/js/app.min.js"></script>
 </body>

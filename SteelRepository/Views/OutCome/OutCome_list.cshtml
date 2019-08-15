@@ -14,14 +14,18 @@
     <link href="~/Content/AdminIndex/css/icons.min.css" rel="stylesheet" />
     <link href="~/Content/AdminIndex/css/app.min.css" rel="stylesheet" />
     <script type="text/javascript">
-        
         function OutComeSelect() {
             var url = "OutCome_Select";
             var width = "100%";
             var height = "780px";
             parent.OpenWin2(url, width, height);
         }
-        
+        function OutComeMore(id) {
+            var url = "OutCome_More?id="+id;
+            var width = "100%";
+            var height = "780px";
+            parent.OpenWin(url, width, height);
+        }
     </script>
 </head>
 
@@ -60,6 +64,7 @@
                                                 <label class="custom-control-label" for="customCheck1">&nbsp;</label>
                                             </div>
                                         </th>
+                                        <th>编号</th>
                                         <th>货品编号</th>
                                         <th>货品名称</th>
                                         <th>货品类别</th>
@@ -84,6 +89,7 @@
                                             </div>
                                         </td>
                                         <td class="table-user">@count</td>
+                                        <td>@Models.OutCome.GetMaterCodeName(outComes.inventoryId)</td>
                                         <td>@Models.OutCome.GetNameName(outComes.inventoryId)</td>
                                         <td>@Models.OutCome.GetModelName(outComes.inventoryId)</td>
                                         <td>@outComes.number</td>
@@ -93,7 +99,7 @@
                                         <td>@outComes.recipientsTime</td>
                                         <td>@Models.OutCome.GetEmployeeName(outComes.borrowerId)</td>
                                         <td>
-                                            <a href="javascript:PositionSelect(@outComes.id)" class="action-icon"> <i class="mdi mdi-calendar-text-outline"></i></a>
+                                            <a href="javascript:OutComeMore(@outComes.id)" class="action-icon"> <i class="mdi mdi-calendar-text-outline"></i></a>
                                         </td>
                                     </tr>
                                         count++;

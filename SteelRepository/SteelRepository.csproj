@@ -295,6 +295,8 @@
     <Content Include="Content\OutCome\css\app.min.css" />
     <Content Include="Content\OutCome\js\app.min.js" />
     <Content Include="Content\OutCome\js\demo.customers.js" />
+    <Content Include="Content\OutCome\js\jquery-3.1.1.js" />
+    <Content Include="Content\OutCome\js\jquery-3.1.1.min.js" />
     <Content Include="Content\Position\css\app.min.css" />
     <Content Include="Content\Login\css\bootsnav.css" />
     <Content Include="Content\Login\css\bootstrap.min.css" />
@@ -399,6 +401,7 @@
     <Content Include="Views\OutCome\OutCome_Select.cshtml" />
     <Content Include="Views\Position\Position_Update.cshtml" />
     <Content Include="Views\OutCome\OutCome_SelectCheck.cshtml" />
+    <Content Include="Views\OutCome\OutCome_More.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -2,13 +2,15 @@
 using DbService;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Tools;
 
 namespace Models
 {
     public partial class OutCome
     {
         public static IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities());
-        public static  List<OutCome> comes;
+        public static List<OutCome> comes = new List<OutCome>();
         public static OutCome NewOutCome(DateTime dateTime, int inventoryId, double amount, string measure, int borrowerId, int? projectId = null, string instructions = "")
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
@@ -56,6 +58,10 @@ namespace Models
         {
             return Dbhelper.SelectAll<OutCome>();
         }
+        public static OutCome GetOutCome(int OutComeId)
+        {
+            return Dbhelper.FindId<OutCome>(OutComeId);
+        }
         public static string GetPositionName(int inventoryid)
         {
             int Pid = Dbhelper.FindId<Inventory>(inventoryid).positionId;
@@ -64,6 +70,15 @@ namespace Models
         public static string GetEmployeeName(int borrowerid)
         {
             return Dbhelper.FindId<Employee>(borrowerid).name;
+        }
+        public static List<string> GetEmployeeNames()
+        {
+            List<string> listr = new List<string>();
+            foreach (var employee in Dbhelper.SelectAll<Employee>())
+            {
+                listr.Add(employee.name);
+            }
+            return listr;
         }
         public static string GetProjectName(int? projectid)
         {
@@ -90,41 +105,283 @@ namespace Models
             var Income = Dbhelper.FindId<InCome>(Dbhelper.FindId<Inventory>(inventoryid).incomeId);
             return Income.unitPrice;
         }
-        public static List<OutCome> ReverseGetPositionName(string positionName)
+        public static string GetMaterCodeName(int inventoryid)
         {
-            var position = Dbhelper.FindFirst<Position, string>("positionName", positionName);
-            foreach (var inventory in Dbhelper.Select<Inventory>(p => p.positionId == position.id))
-            {
-               var coms = Dbhelper.Select<OutCome>(p => p.inventoryId == inventory.id);
-                foreach (var com in coms)
-                {
-                    comes.Add(com);
-                }
-            }
-            return comes;
+            var Income = Dbhelper.FindId<InCome>(Dbhelper.FindId<Inventory>(inventoryid).incomeId);
+            return Dbhelper.FindId<MaterialCode>(Income.codeId).code;
         }
         public static List<OutCome> ReverseGetEmployeeName(string employeeName)
         {
             var employee = Dbhelper.FindFirst<Employee, string>("employeeName", employeeName);
+            if (employee == null)
+                return null;
             foreach (var come in Dbhelper.Select<OutCome>(p => p.borrowerId == employee.id))
             {
                 comes.Add(come);
             }
             return comes;
         }
-        public static List<OutCome> ReverseGetProjectName(string projectName)
-        {
-            var project = Dbhelper.FindFirst<Project, string>("projectName", projectName);
-            foreach (var come in Dbhelper.Select<OutCome>(p => p.projectId == project.id))
-            {
-                comes.Add(come);
-            }
-            return comes;
-        }
-        public static List<OutCome> OutComeNumber(int number)
+        public static List<OutCome> OutComeNumber(double number)
         {
             return Dbhelper.Select<OutCome>(p => p.number == number);
         }
-
+        public static List<OutCome> CodeidGetOutCome(int MaterialCodeid)
+        {
+            List<OutCome> comes = new List<OutCome>();
+            var inComes = Dbhelper.Select<InCome>(p => p.codeId == MaterialCodeid);
+            foreach (var income in inComes)
+            {
+                var inventorys = Dbhelper.Select<Inventory>(p => p.incomeId == income.id);
+                foreach (var inventory in inventorys)
+                {
+                    var outcomes = Dbhelper.Select<OutCome>(p => p.inventoryId == inventory.id);
+                    foreach (var outcom in outcomes)
+                    {
+                        comes.Add(outcom);
+                    }
+                }
+            }
+            return comes;
+        }
+        public static List<int> CodeidGetOutComeId(int MaterialCodeid)
+        {
+            List<int> listId = new List<int>();
+            foreach ( var come in CodeidGetOutCome(MaterialCodeid))
+            {
+                listId.Add(come.id);
+            }
+            return listId;
+        }
+        public static List<OutCome> MulSelectCheckOutCome(bool b, DateTime begin, bool e, DateTime end, int MaterCodeid, int employeeid)
+        {
+            ExpressionBuilder<OutCome> builder = new ExpressionBuilder<OutCome>();
+            List<OutCome> comes = new List<OutCome>();
+            if (b)
+            {
+                if (e)
+                {
+                    if (MaterCodeid != 0)
+                    {
+                        if (employeeid != 0)
+                        {
+                            builder.And(p => p.borrowerId == employeeid);
+                            var exp = builder.GetExpression();
+                            var Icomes = GetOutComes(begin, end).Where(exp.Compile());
+                            foreach (var come in Icomes)
+                            {
+                                foreach (var comeid in CodeidGetOutComeId(MaterCodeid))
+                                {
+                                    if (come.id == comeid)
+                                    {
+                                        comes.Add(come);
+                                    }
+                                }
+                            }
+                            return comes;
+                        }
+                        else
+                        {
+                            foreach (var come in GetOutComes(begin, end))
+                            {
+                                foreach (var comeid in CodeidGetOutComeId(MaterCodeid))
+                                {
+                                    if (come.id == comeid)
+                                    {
+                                        comes.Add(come);
+                                    }
+                                }
+                            }
+                            return comes;
+                        }
+                    }
+                    else
+                    {
+                        if (employeeid != 0)
+                        {
+                            builder.And(p => p.borrowerId == employeeid);
+                            var exp = builder.GetExpression();
+                            var Icomes = GetOutComes(begin, end).Where(exp.Compile());
+                            foreach (var come in Icomes)
+                            {
+                                comes.Add(come);
+                            }
+                            return comes;
+                        }
+                        else
+                        {
+                            return GetOutComes(begin, end);
+                        }
+                    }
+                }
+                else
+                {
+                    if (MaterCodeid != 0)
+                    {
+                        if (employeeid != 0)
+                        {
+                            builder.And(p => p.borrowerId == employeeid);
+                            var exp = builder.GetExpression();
+                            var Icomes = GetOutComes(begin, DateTime.MaxValue).Where(exp.Compile());
+                            foreach (var come in Icomes)
+                            {
+                                foreach (var comeid in CodeidGetOutComeId(MaterCodeid))
+                                {
+                                    if (come.id == comeid)
+                                    {
+                                        comes.Add(come);
+                                    }
+                                }
+                            }
+                            return comes;
+                        }
+                        else
+                        {
+                            foreach (var come in GetOutComes(begin, DateTime.MaxValue))
+                            {
+                                foreach (var comeid in CodeidGetOutComeId(MaterCodeid))
+                                {
+                                    if (come.id == comeid)
+                                    {
+                                        comes.Add(come);
+                                    }
+                                }
+                            }
+                            return comes;
+                        }
+                    }
+                    else
+                    {
+                        if (employeeid != 0)
+                        {
+                            builder.And(p => p.borrowerId == employeeid);
+                            var exp = builder.GetExpression();
+                            var Icomes = GetOutComes(begin, DateTime.MaxValue).Where(exp.Compile());
+                            foreach (var come in Icomes)
+                            {
+                                comes.Add(come);
+                            }
+                            return comes;
+                        }
+                        else
+                        {
+                            return GetOutComes(begin, DateTime.MaxValue);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (e)
+                {
+                    if (MaterCodeid != 0)
+                    {
+                        if (employeeid != 0)
+                        {
+                            builder.And(p => p.borrowerId == employeeid);
+                            var exp = builder.GetExpression();
+                            var Icomes = GetOutComes(DateTime.MinValue, end).Where(exp.Compile());
+                            foreach (var come in Icomes)
+                            {
+                                foreach (var comeid in CodeidGetOutComeId(MaterCodeid))
+                                {
+                                    if (come.id == comeid)
+                                    {
+                                        comes.Add(come);
+                                    }
+                                }
+                            }
+                            return comes;
+                        }
+                        else
+                        {
+                            foreach (var come in GetOutComes(DateTime.MinValue, end))
+                            {
+                                foreach (var comeid in CodeidGetOutComeId(MaterCodeid))
+                                {
+                                    if (come.id == comeid)
+                                    {
+                                        comes.Add(come);
+                                    }
+                                }
+                            }
+                            return comes;
+                        }
+                    }
+                    else
+                    {
+                        if (employeeid != 0)
+                        {
+                            builder.And(p => p.borrowerId == employeeid);
+                            var exp = builder.GetExpression();
+                            var Icomes = GetOutComes(DateTime.MinValue, end).Where(exp.Compile());
+                            foreach (var come in Icomes)
+                            {
+                                comes.Add(come);
+                            }
+                            return comes;
+                        }
+                        else
+                        {
+                            return GetOutComes(DateTime.MinValue, end);
+                        }
+                    }
+                }
+                else
+                {
+                    if (MaterCodeid != 0)
+                    {
+                        if (employeeid != 0)
+                        {
+                            builder.And(p => p.borrowerId == employeeid);
+                            var exp = builder.GetExpression();
+                            var Icomes = SelectAll().Where(exp.Compile());
+                            foreach (var come in Icomes)
+                            {
+                                foreach (var comeid in CodeidGetOutComeId(MaterCodeid))
+                                {
+                                    if (come.id == comeid)
+                                    {
+                                        comes.Add(come);
+                                    }
+                                }
+                            }
+                            return comes;
+                        }
+                        else
+                        {
+                            foreach (var come in SelectAll())
+                            {
+                                foreach (var comeid in CodeidGetOutComeId(MaterCodeid))
+                                {
+                                    if (come.id == comeid)
+                                    {
+                                        comes.Add(come);
+                                    }
+                                }
+                            }
+                            return comes;
+                        }
+                    }
+                    else
+                    {
+                        if (employeeid != 0)
+                        {
+                            builder.And(p => p.borrowerId == employeeid);
+                            var exp = builder.GetExpression();
+                            var Icomes = SelectAll().Where(exp.Compile());
+                            foreach (var come in Icomes)
+                            {
+                                comes.Add(come);
+                            }
+                            return comes;
+                        }
+                        else
+                        {
+                            return SelectAll();
+                        }
+                    }
+                }
+            }
+        }
     }
 }
