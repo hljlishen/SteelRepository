@@ -13,5 +13,9 @@ namespace SteelRepository.Controllers
         {
             return View();
         }
+        public ActionResult P1()
+        {
+            return View();
+        }
     }
 }

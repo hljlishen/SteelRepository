@@ -10,6 +10,7 @@ namespace Models
 {
     public partial class Inventory
     {
+        private static IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities());
         public static Inventory Insert(int incomeId, double amount, string unit, int positionId, IDbInterface dbInterface)
         {
             var inven = new Inventory() { amount = amount, incomeId = incomeId, unit = unit, positionId = positionId , consumptionAmount = amount};
@@ -38,6 +39,10 @@ namespace Models
             {
                 return helper.Select<Inventory>(p => p.incomeId == incomeId);
             }
+        }
+        public static List<Inventory> SelectAll()
+        {
+            return Dbhelper.SelectAll<Inventory>();
         }
     }
 }

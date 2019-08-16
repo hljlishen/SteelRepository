@@ -65,6 +65,7 @@
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -173,6 +174,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ManufacturerController.cs" />
     <Compile Include="Controllers\MaterialController.cs" />
+    <Compile Include="Controllers\OutComeController.cs" />
     <Compile Include="Controllers\PositionController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Global.asax.cs">
@@ -278,7 +280,7 @@
     <Content Include="Content\layui\font\iconfont.svg" />
     <Content Include="Content\layui\layui.all.js" />
     <Content Include="Content\layui\layui.js" />
-    <Content Include="Content\layui\echarts.min.js" />
+    <Content Include="Content\layui\echarts.min%281%29.js" />
     <Content Include="Content\layui\lay\modules\carousel.js" />
     <Content Include="Content\layui\lay\modules\code.js" />
     <Content Include="Content\layui\lay\modules\colorpicker.js" />
@@ -299,8 +301,12 @@
     <Content Include="Content\layui\lay\modules\tree.js" />
     <Content Include="Content\layui\lay\modules\upload.js" />
     <Content Include="Content\layui\lay\modules\util.js" />
-    <Content Include="Content\layui\vintage.js" />
     <Content Include="Content\Login\css\animate.css" />
+    <Content Include="Content\OutCome\css\app.min.css" />
+    <Content Include="Content\OutCome\js\app.min.js" />
+    <Content Include="Content\OutCome\js\demo.customers.js" />
+    <Content Include="Content\OutCome\js\jquery-3.1.1.js" />
+    <Content Include="Content\OutCome\js\jquery-3.1.1.min.js" />
     <Content Include="Content\Position\css\app.min.css" />
     <Content Include="Content\Login\css\bootsnav.css" />
     <Content Include="Content\Login\css\bootstrap.min.css" />
@@ -321,7 +327,6 @@
     <Content Include="Content\Position\js\d3.min.js" />
     <Content Include="Content\Position\js\demo.britechart1.js" />
     <Content Include="Content\Position\js\demo.customers.js" />
-    <Content Include="Content\Position\js\demo.customers2.js" />
     <Content Include="Content\Position\js\echarts.min.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\a.jpg" />
@@ -381,11 +386,10 @@
     <Content Include="Views\Employee\Employee_select.cshtml" />
     <Content Include="Views\Login\UserRegistered.cshtml" />
     <Content Include="Views\Employee\Employee_information.cshtml" />
-    <Content Include="Views\Inventory\Inventory.cshtml" />
+    <Content Include="Views\Inventory\Inventory_list.cshtml" />
     <Content Include="Views\Project\Project_update.cshtml" />
     <Content Include="Views\Manufacturer\Manufacturer_add.cshtml" />
     <Content Include="Views\Manufacturer\Manufacturer_list.cshtml" />
-    <Content Include="Views\Position\Position_Update.cshtml" />
     <Content Include="Views\Position\Position_Select.cshtml" />
     <Content Include="Views\Manufacturer\Manufacturer_information.cshtml" />
     <Content Include="Views\Manufacturer\Manufacturer_select.cshtml" />
@@ -397,10 +401,15 @@
     <Content Include="Views\Material\InCome_selete.cshtml" />
     <Content Include="Views\Department\Department_list.cshtml" />
     <Content Include="Views\Index\Index.cshtml" />
+    <Content Include="Views\Department\Department_add.cshtml" />
     <Content Include="Views\Index\Pie.cshtml" />
     <Content Include="Views\Department\Company_add.cshtml" />
     <Content Include="Views\Department\Department_Update.cshtml" />
     <Content Include="Views\Material\QualityReport.cshtml" />
+    <Content Include="Views\OutCome\OutCome_list.cshtml" />
+    <Content Include="Views\Position\Position_Update.cshtml" />
+    <Content Include="Views\OutCome\OutCome_More.cshtml" />
+    <Content Include="Views\Index\P1.cshtml" />
     <Content Include="Views\Material\RecheckReports.cshtml" />
     <Content Include="Views\Department\Department_add.cshtml" />
     <Content Include="Views\Department\Department_add2.cshtml" />
