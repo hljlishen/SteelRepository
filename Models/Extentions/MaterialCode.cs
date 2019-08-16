@@ -87,20 +87,6 @@ namespace Models
                 return helper.Select<MaterialCode>(p => p.code == code);
             }
         }
-        //public static List<Name> GetNames(string code)
-        //{
-        //    foreach (var materialCode in GetMaterialCodes(code))
-        //    {
-
-        //    }
-
-
-        //    var MaterialCodes = GetMaterialCodes(code);
-        //    using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
-        //    {
-        //        helper.Select<Name>(p => p.id == MaterialCodes);
-        //    }
-        //}
 
         public static MaterialCode GetMaterialCode(string name, string model)
         {
@@ -127,19 +113,18 @@ namespace Models
                     return null;
             }
         }
-
-        //public static void Insert(string code, IDbInterface helper)
-        //{
-        //    var record = helper.FindFirst<MaterialCode, string>("code", code);
-        //    if (record != null) return;
-        //    helper.Insert(new MaterialCode() { code = code }, false);
-        //}
-
         public static MaterialCode GetMaterialCode(int codeId)
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
                 return helper.FindId<MaterialCode>(codeId);
+            }
+        }
+        public static List<MaterialCode> GetMaterialCodeList()
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return helper.SelectAll<MaterialCode>();
             }
         }
     }
