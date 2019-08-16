@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -7,45 +11,83 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="~/Content/layui/css/layui.css" media="all">
+    <link href="~/Content/AdminIndex/css/vendor/fullcalendar.min.css" rel="stylesheet" />
+    <link href="~/Content/AdminIndex/css/icons.min.css" rel="stylesheet" />
+    <link href="~/Content/AdminIndex/css/app.min.css" rel="stylesheet" />
+    <script src="~/Content/AdminIndex/js/app.min.js"></script>
+    <script src="~/Content/AdminIndex/js/pages/demo.calendar.js"></script>
+    <script src="~/Content/AdminIndex/js/vendor/jquery.dataTables.min.js"></script>
+    <script src="~/Content/AdminIndex/js/vendor/dataTables.bootstrap4.js"></script>
+    <script src="~/Content/AdminIndex/js/vendor/dataTables.responsive.min.js"></script>
+    <script src="~/Content/AdminIndex/js/vendor/responsive.bootstrap4.min.js"></script>
+    <script src="~/Content/AdminIndex/js/vendor/dataTables.checkboxes.min.js"></script>
+    <script charset="utf-8" src="~/Content/AdminIndex/js/pages/demo.customers.js"></script>
     <script src="~/Content/layui/echarts.min(1).js"></script>
     <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
 
+    <script type="text/javascript">
+        function AdminLogin() {
+            var url = "../Index/UserLogin";
+            var width = "100%";
+            var height = "800px";
+            OpenWin(url, width, height);
+        }
 
+        function AdminRegistered() {
+            var url = "../Index/UserRegistered";
+            var width = "100%";
+            var height = "600px";
+            OpenWin(url, width, height);
+        }
+
+        function openFrame(url) {
+            location.href = url;
+        }
+
+        //打开模态框函数
+        function OpenWin(url, width, height) {
+            var frame = "<iframe width='" + width + "' height='" + height + "' onscroll='true' style='border: 0px;' src='" + url + "'></iframe>";
+            $("#myModalBody").html(frame);
+            $("#myModal").modal("show");
+        }
+
+        function closeWin() {
+            //关闭模态框
+            $("#myModal").modal("hide");
+        }
+
+
+    </script>
 </head>
 <body>
     <div class="nav" style="margin-top: 10px;">
         <div>
             <ul class="layui-nav layui-bg-cyan  ">
                 <li class="layui-nav-item">
-                    <a href=""><img src="~/images/6b0263055f6110e8622111f6d4c7982.png" height="80" />钢料库管理系统</a>
+                    <a href=""><img src="~/images/6b0263055f6110e8622111f6d4c7982.png" height="70" />钢料库管理系统</a>
                 </li>
                 <li class="layui-nav-item layui-this">库存信息</li>
                 <li class="layui-nav-item"><a href="#projectPho">图表展示</a></li>
-                <li class="layui-nav-item "><a href="#projectMsg">项目信息</a></li>
+                @*<li class="layui-nav-item "><a href="#projectMsg">项目信息</a></li>*@
             </ul>
         </div>
         <div class="right">
             <ul class="layui-nav layui-layout-right" style="margin:10px">
                 <li class="layui-nav-item">
-                    <a href="~/Views/Login/UserRegistered.cshtml">登录</a>
+                    <a href="javascript:AdminLogin()">登录</a>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="">注册</a>
+                    <a href="javascript:AdminRegistered()">注册</a>
                 </li>
             </ul>
         </div>
-
-
-
-
-
     </div>
 
     <div>
         <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
             <legend>库存信息</legend>
         </fieldset>
-        <table class="layui-hide" id="test" lay-filter="test"></table>
+        <table class="layui-hide" id="materialName" lay-filter=""></table>
 
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container">
@@ -71,21 +113,21 @@
                 var table = layui.table;
 
                 table.render({
-                    elem: '#materiaName'
-                    , url: '/Models/Model1.edmx'
+                    elem: '#materialName'
+                    , url: '/Models/Model1.edmx/Model1.tt'
                     , toolbar: '#toolbarDemo'
-                    , title: '数据表'
+                    , title: '库存信息一览表'
                     , cols: [[
                         { type: 'checkbox', fixed: 'left' }
-                        , { field: 'categoryName', title: '材料名称', width: 150, edit: 'text' }
-                        , { field: '', title: '种类', width: 150, edit: 'text' }
-                        , { field: '', title: '批次信息', width: 150, sort: true }
+                        , { field: 'materialName', title: '材料名称', width: 150, edit: 'text', align: 'center' }
+                        , { field: '', title: '种类', width: 150, edit: 'text', align: 'center' }
+                        , { field: 'categoryId', title: '批次信息', width: 150, sort: true, align: 'center' }
                         , { field: 'amount', title: '统计数量', width: 150, edit: 'text', sort: true }
                         , { field: '', title: '库存余量', width: 150, sort: true }
                         , { field: 'unit', title: '单位' }
                         , { field: 'positionId', title: '位置', width: 150 }
                         , { field: 'manufacturersName', title: '厂商名称', width: 150 }
-                        , { field: 'price', title: '金额', width: 150, sort: true }
+                        , { field: 'price', title: '金额', width: 150, sort: true, align: 'center' }
                         //, { fixed: 'right', title: '操作', toolbar: '#barDemo', width: 150 }
                     ]]
                     , page: true
@@ -280,31 +322,31 @@
                                         name: '钢',
                                         type: 'line',
                                         stack: '总量',
-                                        data: [120, 132, 101, 134, 90, 230, 210]
+                                        data: [158, 189, 456, 352]
                                     },
                                     {
                                         name: '铜',
                                         type: 'line',
                                         stack: '总量',
-                                        data: [220, 182, 191, 234, 290, 330, 310]
+                                        data: [220, 182, 191, 234]
                                     },
                                     {
                                         name: '铁',
                                         type: 'line',
                                         stack: '总量',
-                                        data: [150, 232, 201, 154, 190, 330, 410]
+                                        data: [150, 232, 201, 154]
                                     },
                                     {
                                         name: '铝',
                                         type: 'line',
                                         stack: '总量',
-                                        data: [320, 332, 301, 334, 390, 330, 320]
+                                        data: [320, 332, 301, 334]
                                     },
                                     {
                                         name: '银',
                                         type: 'line',
                                         stack: '总量',
-                                        data: [820, 932, 901, 934, 1290, 1330, 1320]
+                                        data: [820, 932, 901, 934]
                                     }
                                 ]
                             };
@@ -316,8 +358,8 @@
                     </div>
                 </div>
             </div>
-
-            <div class="layui-col-md6"  style="width:1325px;height:650px;">
+            @*copyright*@
+            <div class="layui-col-md6" style="width:1325px;height:660px;">
                 <div class="layui-card">
                     <div class="layui-card-header">柱状图展示</div>
                     <div class="layui-card-body">
@@ -352,41 +394,40 @@
                     </div>
                 </div>
             </div>
-            <div class="layui-col-md6">
-                <div class="layui-card">
-                    <div class="layui-card-header"></div>
-                    <div class="layui-card-body">
-                        <script src="http://how2j.cn/study/js/chartjs/2.8.0/chart.min.js"></script>
+            @*<div class="layui-col-md6">
+                    <div class="layui-card">
+                        <div class="layui-card-header"></div>
+                        <div class="layui-card-body">
 
-                        <div style="width:400px;margin:0px auto">
-                            <canvas id="myChart"></canvas>
-                        </div>
-                        <script>
-                            var ctx = document.getElementById('myChart').getContext('2d');
-                            var myChart = new Chart(ctx, {
-                                type: 'pie',
-                                data: {
-                                    labels: ['红', '蓝', '黄', '绿', '紫', '橙'],
-                                    datasets: [{
-                                        label: '示例',
-                                        data: [12, 19, 3, 5, 0, 3],
-                                        borderColor: 'lightGray',
-                                        backgroundColor: ['pink', 'skyblue', 'LightYellow', 'LawnGreen', 'MediumPurple', 'orange'],
-                                        borderWidth: 1
-                                    }]
-                                }
-                            });
-                        </script>
                     </div>
-                </div>
-            </div>
-            
+                </div>*@
+
         </div>
     </div>
-    <h3></h3>
-    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
-        <legend><a name="projectMsg"></a>项目信息</legend>
-    </fieldset>
+    @*<h3></h3>
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+            <legend><a name="projectMsg"></a>项目信息</legend>
+        </fieldset>*@
+
+
+    <div class="content-page">
+        <div class="content">
+            <footer class="footer">
+                <center>Copyright &copy; <b>2019</b> 西安红叶通讯公司</center>
+                <div class="row">
+                    <div class="col-md-6">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="text-md-right footer-links d-none d-md-block">
+                            <a href="javascript: void(0);">关于</a>
+                            <a href="javascript: void(0);">支持</a>
+                            <a href="javascript: void(0);">联系我们</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
 
     @*返回顶部小火箭*@
     <div style="height: 600px;"></div>
@@ -409,6 +450,17 @@
         });
     </script>
 
-
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="background:#FFFFFF; color:#FFF">
+                <div class="modal-header" style="padding: 10px;">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                </div>
+                <div class="modal-body" id="myModalBody"></div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

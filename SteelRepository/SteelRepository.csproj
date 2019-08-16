@@ -52,10 +52,20 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Json.Net, Version=1.0.16.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Json.Net.1.0.16\lib\netstandard2.0\Json.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="LitJson, Version=2.0.0.14, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MarkerMetro.Unity.LitJson.2.0.0.14\lib\net35\LitJson.dll</HintPath>
+    </Reference>
+    <Reference Include="MarkerMetro.Unity.WinLegacy, Version=1.8.0.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MarkerMetro.Unity.WinLegacy.1.8.0.7\lib\net35\MarkerMetro.Unity.WinLegacy.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -256,6 +266,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\img.css" />
     <Content Include="Content\layui\css\layui.css" />
     <Content Include="Content\layui\css\layui.mobile.css" />
     <Content Include="Content\layui\css\modules\code.css" />
@@ -368,7 +379,6 @@
     <Content Include="Views\Project\Project_list.cshtml" />
     <Content Include="Views\Project\Project_add.cshtml" />
     <Content Include="Views\Employee\Employee_list.cshtml" />
-    <Content Include="Views\Department\AccountingDepartment.cshtml" />
     <Content Include="Views\Employee\Employee_add.cshtml" />
     <Content Include="Views\Position\Position_add.cshtml" />
     <Content Include="Views\Position\Position_list.cshtml" />
@@ -386,19 +396,23 @@
     <Content Include="Views\Manufacturer\Manufacturer_update.cshtml" />
     <Content Include="Views\Project\Project_StatisticalChart.cshtml" />
     <Content Include="Views\Material\InCome_list.cshtml" />
-    <Content Include="Views\Material\OutCome_list.cshtml" />
     <Content Include="Views\Material\InCome_add.cshtml" />
     <Content Include="Views\Material\InCome_update.cshtml" />
     <Content Include="Views\Material\InCome_selete.cshtml" />
     <Content Include="Views\Department\Department_list.cshtml" />
     <Content Include="Views\Index\Index.cshtml" />
     <Content Include="Views\Department\Department_add.cshtml" />
+    <Content Include="Views\Department\Company_add.cshtml" />
     <Content Include="Views\Department\Department_Update.cshtml" />
     <Content Include="Views\Material\QualityReport.cshtml" />
     <Content Include="Views\OutCome\OutCome_list.cshtml" />
     <Content Include="Views\Position\Position_Update.cshtml" />
     <Content Include="Views\OutCome\OutCome_More.cshtml" />
-    <Content Include="Views\Index\P1.cshtml" />
+    <Content Include="Views\Material\RecheckReports.cshtml" />
+    <Content Include="Views\Department\Department_add.cshtml" />
+    <Content Include="Views\Department\Department_add2.cshtml" />
+    <Content Include="Views\Index\UserLogin.cshtml" />
+    <Content Include="Views\Index\UserRegistered.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
