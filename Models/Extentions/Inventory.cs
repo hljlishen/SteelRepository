@@ -49,5 +49,59 @@ namespace Models
             int  income = Dbhelper.FindId<InCome>(incomeId).codeId;
             return Dbhelper.FindId<MaterialCode>(income).code;
         }
+        public static string GetNameName(int incomeId)
+        {
+            var nameId = Dbhelper.FindId<MaterialCode>(Dbhelper.FindId<InCome>(incomeId).codeId).materialNameId;
+            return Dbhelper.FindId<Name>(nameId).materialName;
+        }
+        public static string GetModelName(int incomeId)
+        {
+            var nameId = Dbhelper.FindId<MaterialCode>(Dbhelper.FindId<InCome>(incomeId).codeId).materialNameId;
+            return Dbhelper.FindId<Model>(nameId).modelName;
+        }
+        public static double GetInComeAmount( int incomeId)
+        {
+            return Dbhelper.FindId<InCome>(incomeId).amount;
+        }
+        public static double GetOutComeNumber(int InventoryId)
+        {
+            double sum = 0;
+            foreach ( var number in Dbhelper.Select<OutCome>(p =>p.inventoryId == InventoryId))
+            {
+                sum += number.number;
+            }
+            return sum;
+        }
+        public static string GetInComeUnit(int incomeId)
+        {
+            return Dbhelper.FindId<InCome>(incomeId).unit;
+        }
+        public static string GetPositionName( int Positionid)
+        {
+            return Dbhelper.FindId<Position>(Positionid).positionName;
+        }
+        public static DateTime GetInComeTime(int incomeId)
+        {
+            return Dbhelper.FindId<InCome>(incomeId).storageTime;
+        }
+        public static double GetSurpius( int Incomeid,int Inventoryid)
+        {
+            double dif= GetInComeAmount(Incomeid) - GetOutComeNumber(Inventoryid);
+            if (dif > 0)
+            {
+                return dif;
+            }
+            return 0;
+        }
+        public static List<double> GetInComeAmounts()
+        {
+            List<double> doulist = new List<double>();
+            foreach (var incom in InCome.GetInComes())
+            {
+                doulist.Add(incom.amount);
+            }
+            return doulist;
+        }
+
     }
 }

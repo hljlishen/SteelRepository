@@ -267,6 +267,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\img.css" />
+    <Content Include="Content\Inventory\js\demo.customers.js" />
     <Content Include="Content\layui\css\layui.css" />
     <Content Include="Content\layui\css\layui.mobile.css" />
     <Content Include="Content\layui\css\modules\code.css" />
@@ -305,8 +306,6 @@
     <Content Include="Content\OutCome\css\app.min.css" />
     <Content Include="Content\OutCome\js\app.min.js" />
     <Content Include="Content\OutCome\js\demo.customers.js" />
-    <Content Include="Content\OutCome\js\jquery-3.1.1.js" />
-    <Content Include="Content\OutCome\js\jquery-3.1.1.min.js" />
     <Content Include="Content\Position\css\app.min.css" />
     <Content Include="Content\Login\css\bootsnav.css" />
     <Content Include="Content\Login\css\bootstrap.min.css" />
