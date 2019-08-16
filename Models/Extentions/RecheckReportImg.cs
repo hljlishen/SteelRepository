@@ -20,5 +20,13 @@ namespace Models
                 return helper.Select<RecheckReportImg>(p => p.reportId == reportId);
             }
         }
+
+        public static int Delect(int recheckImgId)
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return helper.Delete<RecheckReportImg>(recheckImgId);
+            }
+        }
     }
 }
