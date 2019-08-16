@@ -377,7 +377,7 @@
     <Content Include="Views\Employee\Employee_select.cshtml" />
     <Content Include="Views\Login\UserRegistered.cshtml" />
     <Content Include="Views\Employee\Employee_information.cshtml" />
-    <Content Include="Views\Inventory\Inventory.cshtml" />
+    <Content Include="Views\Inventory\Inventory_list.cshtml" />
     <Content Include="Views\Project\Project_update.cshtml" />
     <Content Include="Views\Manufacturer\Manufacturer_add.cshtml" />
     <Content Include="Views\Manufacturer\Manufacturer_list.cshtml" />
@@ -397,9 +397,7 @@
     <Content Include="Views\Department\Department_Update.cshtml" />
     <Content Include="Views\Material\QualityReport.cshtml" />
     <Content Include="Views\OutCome\OutCome_list.cshtml" />
-    <Content Include="Views\OutCome\OutCome_Select.cshtml" />
     <Content Include="Views\Position\Position_Update.cshtml" />
-    <Content Include="Views\OutCome\OutCome_SelectCheck.cshtml" />
     <Content Include="Views\OutCome\OutCome_More.cshtml" />
     <Content Include="Views\Index\P1.cshtml" />
   </ItemGroup>

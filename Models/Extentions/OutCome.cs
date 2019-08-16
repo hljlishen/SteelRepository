@@ -377,7 +377,7 @@ namespace Models
                         }
                         else
                         {
-                            return SelectAll();
+                            return new List<OutCome>();
                         }
                     }
                 }

@@ -15,25 +15,30 @@ namespace SteelRepository.Controllers
     public class OutComeController : Controller
     {
         // GET: OutCome
-        private static List<OutCome> outComes;
         public ActionResult OutCome_list()
         {
-            return View(OutCome.SelectAll());
+            ViewData["MaterialCode"] = MaterialCode.GetMaterialCodeList();
+            ViewData["employee"] = Employee.SelectAll();
+            ViewData["outcome"] = OutCome.SelectAll();
+            return View();
         }
         public ActionResult OutCome_More(int id)
         {
-            ViewData["OutCome"] = OutCome.GetOutCome(id);
+            ViewData["outcome"] = null;
+            ViewData["outcome"] = OutCome.GetOutCome(id);
             return View();
         }
+
         public ActionResult OutCome_Select()
         {
             ViewData["MaterialCode"] = MaterialCode.GetMaterialCodeList();
             ViewData["employee"] = Employee.SelectAll();
+            ViewData["outcome"] = null;
             ViewData["outcome"] = new List<OutCome>();
-            return View();
+            return View("OutCome_list");
         }
         [HttpPost]
-        public ActionResult OutCome_Select(FormCollection collection)
+        public ActionResult OutCome_list(FormCollection collection)
         {
             ViewData["MaterialCode"] = MaterialCode.GetMaterialCodeList();
             ViewData["employee"] = Employee.SelectAll();
