@@ -56,6 +56,7 @@
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -289,7 +290,6 @@
     <Content Include="Content\layui\lay\modules\tree.js" />
     <Content Include="Content\layui\lay\modules\upload.js" />
     <Content Include="Content\layui\lay\modules\util.js" />
-    <Content Include="Content\layui\vintage.js" />
     <Content Include="Content\Login\css\animate.css" />
     <Content Include="Content\Position\css\app.min.css" />
     <Content Include="Content\Login\css\bootsnav.css" />
