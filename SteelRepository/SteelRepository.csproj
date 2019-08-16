@@ -290,7 +290,6 @@
     <Content Include="Content\layui\lay\modules\tree.js" />
     <Content Include="Content\layui\lay\modules\upload.js" />
     <Content Include="Content\layui\lay\modules\util.js" />
-    <Content Include="Content\layui\vintage.js" />
     <Content Include="Content\Login\css\animate.css" />
     <Content Include="Content\OutCome\css\app.min.css" />
     <Content Include="Content\OutCome\js\app.min.js" />
