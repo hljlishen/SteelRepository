@@ -19,11 +19,6 @@ namespace SteelRepository.Controllers
             return View(InCome.GetInComes());
         }
 
-        public ActionResult OutCome_list()
-        {
-            return View();
-        }
-
         public ActionResult InCome_add()
         {
             SelectList select = new SelectList(GetUnitList(), "Value", "Text");
@@ -139,14 +134,12 @@ namespace SteelRepository.Controllers
             return Json(InCome.Update(inCome));
         }
 
-        public ActionResult QualityReport(int id)
+        public ActionResult QualityReport(int inComeid)
         {
-            incomeid = id;
-            List<QualityCertificationReportImg> quality = QualityCertificationReportImg.GetQualityCertificationReportImg(id);
+            incomeid = inComeid;
+            List<QualityCertificationReportImg> quality = QualityCertificationReportImg.GetQualityCertificationReportImg(inComeid);
             if (quality != null)
-            {
                 return View(quality);
-            }
             return View();
         }
 
@@ -163,6 +156,47 @@ namespace SteelRepository.Controllers
                 }
             }
             return Json(true);
+        }
+
+        public ActionResult RecheckReports(int id)
+        {
+            incomeid = id;
+            List<RecheckReportImg> recheckReportImgs = new List<RecheckReportImg>();
+            foreach (var recheck in RecheckReport.GetRecheckReports(id))
+            {
+                foreach (var recheckImg in RecheckReportImg.GetRecheckReportImgs(recheck.id))
+                {
+                    recheckReportImgs.Add(recheckImg);
+                }
+            }
+            return View(recheckReportImgs);
+        }
+
+        [HttpPost]
+        public JsonResult RecheckReports(FormCollection collection)
+        {
+            DelectRecheckReportImg(collection["recheck"]);
+            List<byte[]> byteList = recheckReport(collection);
+            if (byteList != null && byteList.Count != 0)
+            {
+                DateTime dateTime = DateTime.Parse(collection["RecheckTime"]);
+                RecheckReport.Insert(incomeid, dateTime, byteList);
+            }
+            return Json(true);
+        }
+
+        private void DelectRecheckReportImg(string imgIds)
+        {
+            if (imgIds != null)
+            {
+                string[] array = imgIds.Split(',');
+                foreach (var imgId in array)
+                {
+                    if (imgId == "")
+                        return;
+                    RecheckReportImg.Delect(int.Parse(imgId));
+                }
+            }
         }
 
         private void DelectQualityReportImg(string imgIds)

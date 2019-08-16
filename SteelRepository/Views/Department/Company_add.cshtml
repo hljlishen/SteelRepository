@@ -3,27 +3,26 @@
     Layout = null;
 }
 
-
 <!DOCTYPE html>
 
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>修改部门名称</title>
+    <title></title>
     <link href="~/Content/AdminIndex/css/app.min.css" rel="stylesheet" />
     <link href="~/Content/AdminIndex/css/icons.min.css" rel="stylesheet" />
     <script src="~/Content/AdminIndex/js/app.min.js"></script>
     <script type="text/javascript">
-        function Update() {
+        function add() {
             $.ajax({
-                url: "@Url.Action("Department_Update")",
+                url: "@Url.Action("Company_add")",
                 type: "post",
                 data: $("form").serialize(),
                 dataType: "json",
                 success: function (data) {
                     data = eval("(" + data + ")");
                     if (data) {
-                        alert("修改成功");
+                        alert("添加成功");
                         parent.closeWin();
                         parent.openFrame("Department_list");
                     } else {
@@ -38,16 +37,16 @@
         <div class="container">
             <div class="sign-content popup-in-content">
                 <div class="popup-in-txt">
-                    <h2>修改部门名称</h2>
+                    <h2>添加公司</h2>
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="signin-form">
-                                @using (Html.BeginForm("Department_Update", "Department", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @role = "form" }))
+                                @using (Html.BeginForm("Company_add", "Department", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @role = "form" }))
                                 {
-                                    <div class="form-group">
-                                        <label for="signin_form">部门名称：</label>
-                                        @Html.TextBoxFor(m => m.departmentName, new { @class = "form-control", type = "text" })
-                                    </div>
+                                <div class="form-group">
+                                    <label for="signin_form">公司名称：</label>
+                                    @Html.TextBoxFor(m => m.departmentName, new { @class = "form-control", type = "text" })
+                                </div>
                                 }
                             </div>
                         </div>
@@ -56,8 +55,8 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="signin-footer">
-                                <button type="button" class="btn btn-primary" onclick="Update();">
-                                    修改
+                                <button type="button" class="btn btn-primary" onclick="add();">
+                                    添加
                                 </button>
                             </div>
                         </div>

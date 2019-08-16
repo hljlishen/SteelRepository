@@ -72,6 +72,14 @@ namespace Models
             }
         }
 
+        public static RecheckReport GetRecheckReport(int recheckReportId)
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return helper.FindId<RecheckReport>(recheckReportId);
+            }
+        }
+
         public static List<RecheckReport> GetRecheckReports(int inComeId)
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
