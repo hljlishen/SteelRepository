@@ -31,6 +31,7 @@ namespace Tools.Tests
             builder.And(p => p.Value < 15);
             var exp = builder.GetExpression();
             var result = ls.Where(exp.Compile());
+            var se = result.ToString();
             Assert.AreEqual(result.Count(), 3);
 
 
