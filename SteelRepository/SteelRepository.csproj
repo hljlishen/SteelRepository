@@ -402,17 +402,17 @@
     <Content Include="Views\Department\Department_list.cshtml" />
     <Content Include="Views\Index\Index.cshtml" />
     <Content Include="Views\Department\Department_add.cshtml" />
-    <Content Include="Views\Index\Pie.cshtml" />
     <Content Include="Views\Department\Company_add.cshtml" />
     <Content Include="Views\Department\Department_Update.cshtml" />
     <Content Include="Views\Material\QualityReport.cshtml" />
     <Content Include="Views\OutCome\OutCome_list.cshtml" />
     <Content Include="Views\Position\Position_Update.cshtml" />
     <Content Include="Views\OutCome\OutCome_More.cshtml" />
-    <Content Include="Views\Index\P1.cshtml" />
     <Content Include="Views\Material\RecheckReports.cshtml" />
     <Content Include="Views\Department\Department_add.cshtml" />
     <Content Include="Views\Department\Department_add2.cshtml" />
+    <Content Include="Views\Index\UserLogin.cshtml" />
+    <Content Include="Views\Index\UserRegistered.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
