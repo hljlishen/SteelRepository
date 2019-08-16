@@ -44,5 +44,10 @@ namespace Models
         {
             return Dbhelper.SelectAll<Inventory>();
         }
+        public static string GetMaterCodeName(int incomeId)
+        {
+            int  income = Dbhelper.FindId<InCome>(incomeId).codeId;
+            return Dbhelper.FindId<MaterialCode>(income).code;
+        }
     }
 }
