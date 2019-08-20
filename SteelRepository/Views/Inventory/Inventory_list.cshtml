@@ -1,11 +1,14 @@
 ﻿@{
-    Layout = "~/Views/Login/AdminIndex.cshtml";
+    Layout = "~/Views/AdminIndex/AdminIndex.cshtml";
 }
 
 <!DOCTYPE html>
 
 <html>
 <head>
+    @{
+        List<Models.Name> names = Models.Name.SelectAll();
+      }
     <meta charset="utf-8" />
     <title>库存信息</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,24 +18,18 @@
     <link href="~/Content/AdminIndex/css/vendor/responsive.bootstrap4.css" rel="stylesheet" />
     <link href="~/Content/AdminIndex/css/app.min.css" rel="stylesheet" />
     <link href="~/Content/AdminIndex/css/icons.min.css" rel="stylesheet" />
-    <style>
-        select {
-            border: solid 1px #000;
-            appearance: none;
-            -moz-appearance: none;
-            -webkit-appearance: none;
-            background: url("下拉箭头图片") right center no-repeat;
-            padding-right: 20px;
-        }
-
-            select::-ms-expand {
-                display: none;
+    <script type="text/javascript">
+            function OutComeAdd() {
+                var url = "OutCome_add";
+                var width = "100%";
+                var height = "700px";
+                parent.OpenWin2(url, width, height);
             }
-    </style>
+    </script>
 </head>
 <body>
-    @{ 
-        List<Models.Inventory> inventorylist = (List<Models.Inventory>)ViewData["Inventorylist"]; 
+    @{
+        List<Models.Inventory> inventorylist = (List<Models.Inventory>)ViewData["Inventorylist"];
         List<Models.MaterialCode> material = (List<Models.MaterialCode>)ViewData["MaterialCode"];
     }
     <div class="content-page">
@@ -54,7 +51,7 @@
                         <div class="card-body">
                             <div class="row mb-2">
                                 <div class="col-sm-4">
-                                    <a href="/Inventory/add" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle mr-2"></i>新增出库</a>
+                                    <a href="javascript:OutComeAdd()" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle mr-2"></i>新增出库</a>
                                 </div>
                             </div>
 
@@ -74,42 +71,32 @@
                                                 <table contenteditable="inherit" style="width:100%;text-align:center">
                                                     <tr>
                                                         <td>
-                                                            <label for="example-date" style="width:100%;text-align:left">开始时间</label>
+                                                            <label style="width:100%;text-align:left">货品编号查询</label>
+                                                            <input id="codeinput" name="codeinput" list="codelist" style="width:200px;height:40px" class="form-control" placeholder="请选择或输入编号" />
+                                                            <datalist id="codelist">
+                                                                @foreach (var emp in material)
+                                                                {
+                                                                    <option>@emp.code</option>
+                                                                }
+                                                            </datalist>
+                                                        </td>
+                                                        <td>
+                                                            <label style="width:100%;text-align:left">材料名称查询</label>
+                                                            <input id="nameinput" name="nameinput" list="namelist" style="width:200px;height:40px" class="form-control" placeholder="请选择或输入名称" />
+                                                            <datalist id="namelist">
+                                                                @foreach (var name in names)
+                                                                {
+                                                                    <option>@name.materialName</option>
+                                                                }
+                                                            </datalist>
+                                                        </td>
+                                                        <td>
+                                                            <label for="example-date" style="width:100%;text-align:left">入库开始时间</label>
                                                             <input class="form-control" id="date" type="date" name="date" style="width:200px">
                                                         </td>
                                                         <td>
                                                             <label for="example-date" style="width:100%;text-align:left">结束时间</label>
                                                             <input class="form-control" id="date1" type="date" name="date1" style="width:200px">
-                                                        </td>
-                                                        <td>
-                                                                    <label style="width:100%;text-align:left">剩余量查询</label>
-                                                                    <select name="Surpiusid" style="width:200px;height:40px" class="form-control">
-                                                                        <option value="0">请选择</option>
-                                                                        <option value="1">请选择1</option>
-                                                                        <option value="2">请选择2</option>
-                                                                        <option value="3">请选择3</option>
-                                                                        @*@foreach (var emp in employee)
-                                                                        {
-                                                                            <option value="@emp.id">@emp.name</option>
-                                                                        }*@
-                                                                    </select>
-                                                        </td>
-                                                        <td>
-                                                            <label style="width:100%;text-align:left">单位</label>
-                                                            <select name="Unitid" style="width:70px;height:40px" class="form-control">
-                                                                <option value="0">g</option>
-                                                                <option value="1">kg</option>
-                                                            </select>
-                                                        </td>
-                                                        <td>
-                                                            <label style="width:100%;text-align:left">货品编号查询</label>
-                                                            <select name="materialCodeid" style="width:200px;height:40px" class="form-control">
-                                                                <option value="0">请选择</option>
-                                                                @foreach (var emp in material)
-                                                                {
-                                                                    <option value="@emp.id">@emp.code</option>
-                                                                }
-                                                            </select>
                                                         </td>
                                                         <td>
                                                             <div class="button-list">
@@ -156,7 +143,6 @@
                                             <th>货品余量</th>
                                             <th>货品单位</th>
                                             <th>货品仓位</th>
-                                            <th>货品消耗量</th>
                                             <th>货品入库时间</th>
                                         </tr>
                                     </thead>
@@ -164,35 +150,30 @@
                                         @{int count = 1; }
                                         @foreach (var inventory in inventorylist)
                                         {
-                                            if (Models.Inventory.GetSurpius(inventory.incomeId, inventory.id) > 0)
+                                            if (inventory.amount > 0)
                                             {
-                                            <tr>
-                                                <td>
-                                                    <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                                        <label class="custom-control-label" for="customCheck2">&nbsp;</label>
-                                                    </div>
-                                                </td>
-                                                <td class="table-user">@count</td>
-                                                <td>@Models.Inventory.GetMaterCodeName(inventory.incomeId)</td>
-                                                <td>@Models.Inventory.GetNameName(inventory.incomeId)</td>
-                                                <td>@Models.Inventory.GetModelName(inventory.incomeId)</td>
-                                                <td>@Models.Inventory.GetSurpius(inventory.incomeId, inventory.id)</td>
-                                                <td>@Models.Inventory.GetInComeUnit(inventory.incomeId)</td>
-                                                <td>@Models.Inventory.GetPositionName(inventory.positionId)</td>
-                                                <td>@Models.Inventory.GetOutComeNumber(inventory.id)</td>
-                                                <td>@Models.Inventory.GetInComeTime(inventory.incomeId)</td>
-                                            </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input" id="customCheck2">
+                                                            <label class="custom-control-label" for="customCheck2">&nbsp;</label>
+                                                        </div>
+                                                    </td>
+                                                    <td class="table-user">@count</td>
+                                                    <td>@Models.Inventory.GetMaterCodeName(inventory.incomeId)</td>
+                                                    <td>@Models.Inventory.GetNameName(inventory.incomeId)</td>
+                                                    <td>@Models.Inventory.GetModelName(inventory.incomeId)</td>
+                                                    <td>@inventory.amount</td>
+                                                    <td>@inventory.unit</td>
+                                                    <td>@Models.Inventory.GetPositionName(inventory.positionId)</td>
+                                                    <td>@Models.Inventory.GetInComeTime(inventory.incomeId).ToString("d")</td>
+                                                </tr>
                                                 count++;
                                             }
                                         }
                                     </tbody>
                                 </table>
                             </div>
-
-
-
-
                         </div>
                     </div>
                 </div>

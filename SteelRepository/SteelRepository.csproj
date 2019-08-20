@@ -175,7 +175,7 @@
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\IndexController.cs" />
     <Compile Include="Controllers\InventoryController.cs" />
-    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\AdminIndexController.cs" />
     <Compile Include="Controllers\ManufacturerController.cs" />
     <Compile Include="Controllers\MaterialController.cs" />
     <Compile Include="Controllers\OutComeController.cs" />
@@ -272,6 +272,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\img.css" />
     <Content Include="Content\Inventory\js\demo.customers.js" />
+    <Content Include="Content\Inventory\js\jquery-3.1.1.js" />
     <Content Include="Content\layui\css\layui.css" />
     <Content Include="Content\layui\css\layui.mobile.css" />
     <Content Include="Content\layui\css\modules\code.css" />
@@ -377,8 +378,6 @@
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Views\Login\UserLogin.cshtml" />
-    <Content Include="Views\Login\AdminIndex.cshtml" />
     <Content Include="Views\Project\Project_list.cshtml" />
     <Content Include="Views\Project\Project_add.cshtml" />
     <Content Include="Views\Employee\Employee_list.cshtml" />
@@ -387,7 +386,6 @@
     <Content Include="Views\Position\Position_list.cshtml" />
     <Content Include="Views\Employee\Employee_update.cshtml" />
     <Content Include="Views\Employee\Employee_select.cshtml" />
-    <Content Include="Views\Login\UserRegistered.cshtml" />
     <Content Include="Views\Employee\Employee_information.cshtml" />
     <Content Include="Views\Inventory\Inventory_list.cshtml" />
     <Content Include="Views\Project\Project_update.cshtml" />
@@ -412,10 +410,11 @@
     <Content Include="Views\Position\Position_Update.cshtml" />
     <Content Include="Views\OutCome\OutCome_More.cshtml" />
     <Content Include="Views\Material\RecheckReports.cshtml" />
-    <Content Include="Views\Department\Department_add.cshtml" />
     <Content Include="Views\Department\Department_add2.cshtml" />
     <Content Include="Views\Index\UserLogin.cshtml" />
     <Content Include="Views\Index\UserRegistered.cshtml" />
+    <Content Include="Views\Inventory\OutCome_add.cshtml" />
+    <Content Include="Views\AdminIndex\AdminIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

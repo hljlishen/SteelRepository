@@ -17,23 +17,6 @@ namespace Models
                 return outcomes;
             }
         }
-        public static List<OutCome> GetOutComes(DateTime begin, DateTime end,int? alwaysid=null)
-        {
-            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
-            {
-                if (alwaysid == null)
-                {
-                    return GetOutComes(begin,end);
-                }
-                else
-                {
-                    var muloutcomes = helper.Select<OutCome>(p => (p.recipientsTime > begin && p.recipientsTime < end)
-                    & (p.inventoryId == alwaysid || p.borrowerId == alwaysid || p.projectId == alwaysid));
-                    return muloutcomes;
-                }
-            }
-        }
-
         public static Dictionary<string, Dictionary<string, double>> StatisticsAmountByMonth(DateTime begin, DateTime end)
         {
             Func<OutCome, string> monthMapper = p =>

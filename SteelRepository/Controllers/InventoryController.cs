@@ -20,15 +20,16 @@ namespace SteelRepository.Controllers
         public ActionResult Inventory_list(FormCollection collection)
         {
             ViewData["MaterialCode"] = MaterialCode.GetMaterialCodeList();
-            
             bool b = DateTime.TryParse(collection["date"], out DateTime begin);
             bool e = DateTime.TryParse(collection["date1"], out DateTime end);
-            int materialCodeid = Convert.ToInt32(collection["materialCodeid"]);
-            int employeeid = Convert.ToInt32(collection["Surpiusid"]);
-            int unitid = Convert.ToInt32(collection["Unitid"]);
-
+            var codeinput = collection["codeinput"];
+            var nameinput = collection["nameinput"];
             ViewData["Inventorylist"] = null;
-            ViewData["Inventorylist"] = OutCome.MulSelectCheckOutCome(b, begin, e, end, materialCodeid, employeeid);
+            ViewData["Inventorylist"] = Inventory.MulSelectCheckInventory(b,begin,e,end,codeinput,nameinput);
+            return View();
+        }
+        public ActionResult OutCome_add()
+        {
             return View();
         }
     }

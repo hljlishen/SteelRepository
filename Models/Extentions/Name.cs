@@ -10,11 +10,23 @@ namespace Models
 {
     public partial class Name
     {
+        private static  IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities());
         public static Name GetName(string name)
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
                 return helper.FindFirst<Name, string>("materialName", name);
+            }
+        }
+        public static List<Name> GetNames(string name)
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                if (name == "")
+                {
+                    return null;
+                }
+                return helper.Select<Name>(p => p.materialName == name);
             }
         }
 
@@ -28,6 +40,10 @@ namespace Models
                 helper.Insert(ret);
                 return ret;
             }
+        }
+        public static List<Name> SelectAll()
+        {
+            return Dbhelper.SelectAll<Name>();
         }
     }
 }
