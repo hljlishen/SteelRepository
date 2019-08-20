@@ -25,6 +25,14 @@ namespace Models
             var materialCode = db.FindId<MaterialCode>(income.codeId);
             return materialCode.code;
         }
+
+        public string GetMaterialCode(int incomeId,IDbInterface db)
+        {
+            var income = db.FindId<InCome>(incomeId);
+            var materialCode = db.FindId<MaterialCode>(income.codeId);
+            return materialCode.code;
+        }
+
         public static List<Inventory> InComeIdGetInventory(int incomeId)
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))

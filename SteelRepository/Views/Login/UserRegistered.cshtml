@@ -15,7 +15,10 @@
     <script src="~/Content/AdminIndex/js/app.min.js"></script>
     <script type="text/javascript">
         function Registered() {
-            check_pwd();
+            check();
+            //check_name();
+            //check_number();
+            //check_pwd();
              $.ajax({
                 url: "@Url.Action("UserRegistered")",
                 type: "post",
@@ -33,22 +36,62 @@
                 }
             });
         }
+        function check() {
+            var name = document.getElementById('name').value;
+            if (/^[^\x00-\xff]$/.test(name)) {
+                if (/^\w+S{6}$/.test(number)) {
+                    check_pwd();
+                } else
+                {
+                    alert("不为空6位以上,最长12位,输入错误，请重新输入！");
+                 
+                    document.getElementById("number").value = "";
+                    
+                    return;
+                    update();
+                }
+            } else
+            {
+                alert("姓名输入错误，请重新输入！");
+                document.getElementById("name").value = "";
+                return;
+                //update();
+            }
+        }
+        
+        //验证用户名账户
+        //function check_name() {
+        //    var name = document.getElementById('name').value;
+        //    if (!( /^[^\x00-\xff]$/.test(name))) {
+        //        alert("姓名输入错误，请重新输入！");
+        //        Registered();
+        //        document.getElementById("name").value = "";
+        //        //update();
+        //        //return Registered();
+        //    }
+        //}
+        //验证账号
+        //function check_number() {
+        //    var c = $("#number").val();
+        //    reg = /^\w+S{6}$/;
+        //    alert("不为空6位以上,最长12位,输入错误，请重新输入！");
+        //    document.getElementById("number").value = "";
+        //    Registered();
+        //        //update();
+        //        //return Registered();
+        //}
+
 
         //验证密码
         function check_pwd() {
-            var v=$("#pwd").val();
-            reg = /^(?![0-9]+$)(?![a-z]+$)(?![A-Z]+$).{6,}$/;
-            if (pwd2 !== pwd) {
+            var v = $("#pwd").val();
+            var s = $("#pwd2").val();
+            reg = /^(?![0-9]+$)(?![a-z]+$)(?![A-Z]+$).S{6,}$/;
+            if (v != s) {
                 alert("两次输入密码不一致！");
                 update();
-                
-            }
-            alert(reg.test(v));
-            //alert("输入错误重新输入！不能为纯数字，不能为纯小写字母，不能为纯大写字母，至少六位");
-            //if (/^(?![0-9]+$)(?![a-z]+$)(?![A-Z]+$).{6,}$/) {
-            //    alert("输入错误重新输入！");
-            //    update();
-            //}
+                return Registered(); 
+            }  
         }
     </script>
 
@@ -83,11 +126,11 @@
                                 {
                                     <div class="form-group">
                                         <label for="signin_form" class="label">姓名：</label>
-                                        @Html.TextBoxFor(m => m.name, new { @class = "form-control", placeholder = "请输入姓名", id = "signin_form", type = "text" })
+                                        @Html.TextBoxFor(m => m.name, new { @class = "form-control", placeholder = "请输入姓名", id = "name", type = "text" })
                                     </div>
                                     <div class="form-group">
                                         <label for="signin_form" class="label">账号：</label>
-                                        @Html.TextBoxFor(m => m.number, new { @class = "form-control", placeholder = "请输入账号", id = "signin_form", type = "text" })
+                                        @Html.TextBoxFor(m => m.number, new { @class = "form-control", placeholder = "账号由数字、26个英文字母或者下划线组成的字符串", id = "number", type = "text", maxlength="12"})
                                     </div>
                                     <div class="form-group">
                                         <label for="signin_form" class="label">密码：</label>
@@ -102,7 +145,7 @@
                                         <div class="input-group">
                                             @Html.TextBoxFor(m => m.departmentId, new { @class = "form-control", type = "text", placeholder = "请选择部门" })
                                             <div class="input-group-append">
-                                                <button class="btn btn-dark" type="button" onclick="check_pwd()">选择</button>
+                                                <button class="btn btn-dark" type="button" onclick="Registered()">选择</button>
                                             </div>
                                         </div>
                                     </div>
