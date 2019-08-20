@@ -125,6 +125,11 @@ namespace Models
                 return helper.FindId<MaterialCode>(codeId);
             }
         }
+
+        public static MaterialCode GetMaterialCode(int codeId,IDbInterface helper)
+        {
+            return helper.FindId<MaterialCode>(codeId);
+        }
         public static List<MaterialCode> GetMaterialCodeList()
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
