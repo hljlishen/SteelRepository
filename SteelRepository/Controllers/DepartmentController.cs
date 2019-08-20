@@ -23,6 +23,13 @@ namespace SteelRepository.Controllers
             return View(Department.SelectAll());
         }
 
+        [HttpPost]
+        public ActionResult Department_list(int id)
+        {
+            ViewData["Employee"] = Employee.Select(id);
+            return View(Department.SelectAll());
+        }
+
         public ActionResult Company_add()
         {
             return View();

@@ -134,10 +134,10 @@ namespace SteelRepository.Controllers
             return Json(InCome.Update(inCome));
         }
 
-        public ActionResult QualityReport(int inComeid)
+        public ActionResult QualityReport(int id)
         {
-            incomeid = inComeid;
-            List<QualityCertificationReportImg> quality = QualityCertificationReportImg.GetQualityCertificationReportImg(inComeid);
+            incomeid = id;
+            List<QualityCertificationReportImg> quality = QualityCertificationReportImg.GetQualityCertificationReportImg(id);
             if (quality != null)
                 return View(quality);
             return View();
