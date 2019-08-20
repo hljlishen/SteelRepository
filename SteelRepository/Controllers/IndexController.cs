@@ -47,5 +47,6 @@ namespace SteelRepository.Controllers
             employee.state = 3;
             return Json(Employee.Inster(employee));
         }
+        
     }
 }

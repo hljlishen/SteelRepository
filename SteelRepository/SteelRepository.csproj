@@ -416,7 +416,6 @@
     <Content Include="Views\Department\Department_add2.cshtml" />
     <Content Include="Views\Index\UserLogin.cshtml" />
     <Content Include="Views\Index\UserRegistered.cshtml" />
-    <Content Include="Views\Index\ViewPage1.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
