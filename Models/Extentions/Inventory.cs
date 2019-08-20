@@ -48,8 +48,8 @@ namespace Models
         }
         public static string GetModelName(int incomeId)
         {
-            var nameId = Dbhelper.FindId<MaterialCode>(Dbhelper.FindId<InCome>(incomeId).codeId).materialNameId;
-            return Dbhelper.FindId<Model>(nameId).modelName;
+            var modelId = Dbhelper.FindId<MaterialCode>(Dbhelper.FindId<InCome>(incomeId).codeId).materialModelId;
+            return Dbhelper.FindId<Model>(modelId).modelName;
         }
         public static double GetInComeAmount( int incomeId)
         {
