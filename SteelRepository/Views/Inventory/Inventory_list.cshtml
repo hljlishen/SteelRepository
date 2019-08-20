@@ -160,7 +160,6 @@
                                             <th>货品余量</th>
                                             <th>货品单位</th>
                                             <th>货品仓位</th>
-                                            <th>货品消耗量</th>
                                             <th>货品入库时间</th>
                                         </tr>
                                     </thead>
@@ -181,10 +180,9 @@
                                                     <td>@Models.Inventory.GetMaterCodeName(inventory.incomeId)</td>
                                                     <td>@Models.Inventory.GetNameName(inventory.incomeId)</td>
                                                     <td>@Models.Inventory.GetModelName(inventory.incomeId)</td>
-                                                    <td>@Models.Inventory.GetSurpius(inventory.incomeId, inventory.id)</td>
-                                                    <td>@Models.Inventory.GetInComeUnit(inventory.incomeId)</td>
+                                                    <td>@inventory.amount</td>
+                                                    <td>@inventory.unit</td>
                                                     <td>@Models.Inventory.GetPositionName(inventory.positionId)</td>
-                                                    <td>@Models.Inventory.GetOutComeNumber(inventory.id)</td>
                                                     <td>@Models.Inventory.GetInComeTime(inventory.incomeId).ToString("d")</td>
                                                 </tr>
                                                 count++;

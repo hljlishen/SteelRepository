@@ -28,5 +28,9 @@ namespace SteelRepository.Controllers
             ViewData["Inventorylist"] = Inventory.MulSelectCheckInventory(b,begin,e,end,codeinput,nameinput);
             return View();
         }
+        public ActionResult OutCome_add()
+        {
+            return View();
+        }
     }
 }

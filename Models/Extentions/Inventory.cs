@@ -129,6 +129,10 @@ namespace Models
             }
             return invenlists;
         }
+        public static Inventory GetInventory(int inventoryId ,IDbInterface helper)
+        {
+            return helper.FindId<Inventory>(inventoryId);
+        }
         public static List<Inventory> GetCodeNameInventorys(string codeinput)
         {
             List<Inventory> invenlists = new List<Inventory>();
