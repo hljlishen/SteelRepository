@@ -87,6 +87,36 @@ namespace Models
                 return helper.Select<RecheckReport>(p => p.incomeId == inComeId);
             }
         }
+
+        public static string GetMaxDate(List<RecheckReport> reports,double storageTime)
+        {
+            List<DateTime> dates = new List<DateTime>();
+            List<int> repId = new List<int>();
+            foreach (var rep in reports)
+            {
+                List<RecheckReportImg> s = RecheckReportImg.GetRecheckReportImgs(rep.id);
+                if (s != null && s.Count>0)
+                    repId.Add(rep.id);
+                dates.Add(rep.recheckTime);
+
+            }
+            if (dates == null || dates.Count <= 0)
+                return "未添加复检报告";
+            if(repId == null || repId.Count <= 0)
+                return "未添加复检报告";
+            DateTime maxDate = dates[0];
+            foreach (DateTime datetime in dates)
+            {
+                if (datetime > maxDate)
+                    maxDate = datetime;
+            }
+            return RecheckReportTime(maxDate, storageTime).ToString("d");
+        }
+
+        public static DateTime RecheckReportTime(DateTime dateTime, double storageTime)
+        {
+            return dateTime.AddDays(storageTime*365);
+        }
     }
 
     internal class RecheckReportComparer : IComparer<RecheckReport>

@@ -24,6 +24,7 @@ namespace SteelRepository.Controllers
             SelectList selectState = new SelectList(GetStateList(), "Value", "Text");
             ViewBag.select = select;
             ViewBag.selectState = selectState;
+            ViewData["department"] = Department.SelectAll();
             return View();
         }
 
@@ -78,6 +79,12 @@ namespace SteelRepository.Controllers
         public ActionResult Employee_update(int id)
         {
             ViewData["Employee"] = Employee.FindId(id);
+            ViewData["department"] = Department.SelectAll();
+            Department department = Department.GetDepartment((int)Employee.FindId(id).departmentId);
+            if (department!= null)
+            {
+                ViewData["depname"] = department.departmentName;
+            }
             em = Employee.FindId(id);
             return View();
         }
@@ -113,7 +120,6 @@ namespace SteelRepository.Controllers
         [HttpPost]
         public JsonResult Employee_information(Employee employee)
         {
-            
             employee.id = em.id;
             employee.permissions = em.permissions;
             employee.state = em.state;

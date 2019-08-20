@@ -76,5 +76,29 @@ namespace Models
                 return helper.Update(employee);
             }
         }
+
+        public static List<Employee> Select(int depId)
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return helper.Select<Employee>(p => p.departmentId == depId);
+            }
+        }
+
+        public static List<OutCome> GetOutComes(int employeeId,IDbInterface helper)
+        {
+            return helper.Select<OutCome>(p => p.borrowerId == employeeId);
+        }
+
+        //public static Dictionary<string, double> StatisticAmount(int employeeId)
+        //{ 
+        //    using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+        //    {
+        //        foreach (var outcome in GetOutComes(employeeId, helper))
+        //        {
+        //            Inventory.outcome.inventoryId
+        //        }
+        //    }
+        //}
     }
 }

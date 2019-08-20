@@ -1,6 +1,6 @@
 ﻿@model List<Models.Department>
 @{
-    Layout = "~/Views/Login/AdminIndex.cshtml";
+    Layout = "~/Views/AdminIndex/AdminIndex.cshtml";
 }
 @{ List<Models.Employee> employee = (List<Models.Employee>)ViewData["Employee"];}
 <!DOCTYPE html>
@@ -49,6 +49,24 @@
             var width = "100%";
             var height = "780px";
             parent.OpenWin2(url, width, height);
+        }
+
+        function EmployeeSelect(id) {
+            alert(id);
+            $.ajax({
+                url: "@Url.Action("Department_list")",
+                type: "post",
+                data: {
+                    "id": id
+                },
+                dataType: "json",
+                success: function (data) {
+                    data = eval("(" + data + ")");
+                    if (data) {
+                    } else {
+                    }
+                }
+            });
         }
 
         function DepartmentDelete(id) {
@@ -131,7 +149,7 @@
                                                                 if (dep.parentNodeId == depart.id)
                                                                 {
                                                                     <li class="form-row">
-                                                                        <a href="javascript:EmployeeSelect(@dep.id)">
+                                                                        <a href="javascript:EmployeeSelect(@dep.id);">
                                                                             <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="mdi mdi-alpha-g-box"></i>@dep.departmentName</span>
                                                                         </a>
                                                                         <div class="layui-btn-group">
@@ -163,15 +181,9 @@
                         <div div class="card-body ">
                             <div class="table-responsive ">
                                 
-                                <table class="table table-centered table-striped dt-responsive nowrap w-100" id="products-datatable">
+                                <table class="table table-centered table-striped dt-responsive nowrap w-100">
                                     <thead>
                                         <tr>
-                                            <th style="width: 20px;">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                    <label class="custom-control-label" for="customCheck1">&nbsp;</label>
-                                                </div>
-                                            </th>
                                             <th>编号</th>
                                             <th>姓名</th>
                                             <th>状态</th>
@@ -182,13 +194,7 @@
                                         @foreach (var e in employee)
                                         {
                                             <tr>
-                                                <td>
-                                                    <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                                        <label class="custom-control-label" for="customCheck2">&nbsp;</label>
-                                                    </div>
-                                                </td>
-                                                <td class="table-user">@count</td>
+                                                <td>@count</td>
                                                 <td>@e.name</td>
                                                 @if (e.state == 1)
                                                 {

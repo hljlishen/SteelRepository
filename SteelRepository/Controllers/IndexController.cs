@@ -37,6 +37,7 @@ namespace SteelRepository.Controllers
 
         public ActionResult UserRegistered()
         {
+            ViewData["department"] = Department.SelectAll();
             return View();
         }
 
