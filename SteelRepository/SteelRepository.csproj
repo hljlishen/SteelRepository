@@ -268,6 +268,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\img.css" />
     <Content Include="Content\Inventory\js\demo.customers.js" />
+    <Content Include="Content\Inventory\js\jquery-3.1.1.js" />
     <Content Include="Content\layui\css\layui.css" />
     <Content Include="Content\layui\css\layui.mobile.css" />
     <Content Include="Content\layui\css\modules\code.css" />
@@ -412,6 +413,7 @@
     <Content Include="Views\Department\Department_add2.cshtml" />
     <Content Include="Views\Index\UserLogin.cshtml" />
     <Content Include="Views\Index\UserRegistered.cshtml" />
+    <Content Include="Views\Inventory\OutCome_add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

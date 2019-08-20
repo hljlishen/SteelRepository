@@ -28,14 +28,6 @@ namespace SteelRepository.Controllers
             ViewData["outcome"] = OutCome.GetOutCome(id);
             return View();
         }
-        //public ActionResult OutCome_Select()
-        //{
-        //    ViewData["MaterialCode"] = MaterialCode.GetMaterialCodeList();
-        //    ViewData["employee"] = Employee.SelectAll();
-        //    ViewData["outcome"] = null;
-        //    ViewData["outcome"] = new List<OutCome>();
-        //    return View("OutCome_list");
-        //}
         [HttpPost]
         public ActionResult OutCome_list(FormCollection collection)
         {
