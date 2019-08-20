@@ -50,30 +50,64 @@
             <div class="sign-content popup-in-content">
                 <div class="popup-in-txt">
                     <h2>新增出库</h2>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="signin-form">
-                                @using (Html.BeginForm("Position_add", "Position", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @role = "form" }))
-                                {
-                                    <div class="form-group">
-                                        <label for="signin_form">仓库位置：</label>
-                                        @Html.TextBoxFor(m => m.positionName, new { @class = "form-control", type = "text" })
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="signin_form">备注：</label>
-                                        @Html.TextBoxFor(m => m.note, new { @class = "form-control", type = "text" })
-                                    </div>
-                                }
-                            </div>
-                        </div>
-                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div style="width:100%;text-align:center">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <form method="post" action="/Inventory/Inventory_list" style="width:100%;text-align:left">
+                                            <div class="form-group mb-3">
+                                                <table contenteditable="inherit" style="width:100%;text-align:left">
+                                                    <tr>
+                                                        <td>
+                                                            <label for="example-date" style="width:100%;text-align:left">出库时间</label>
+                                                            <input class="form-control" id="date" type="date" name="date" style="width:200px">
+                                                        </td>
+                                                       
+                                                    
+                                                        <td>
+                                                            <label style="width:100%;text-align:left">材料名称查询</label>
+                                                            <input id="nameinput" name="nameinput" list="namelist" style="width:200px;height:40px" class="form-control" placeholder="请选择或输入名称" />
+                                                            <datalist id="namelist">
+                                                                @*@foreach (var name in names)
+                                                    {
+                                                        <option>@name.materialName</option>
+                                                    }*@
+                                                            </datalist>
+                                                        </td>
+                                                   
+                                                        <td>
+                                                            <label style="width:100%;text-align:left">货品编号查询</label>
+                                                            <input id="codeinput" name="codeinput" list="codelist" style="width:200px;height:40px" class="form-control" placeholder="请选择或输入编号" />
+                                                            <datalist id="codelist">
+                                                                @*@foreach (var emp in material)
+                {
+                    <option>@emp.code</option>
+                }*@
+                                                            </datalist>
+                                                        </td>
 
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="signin-footer">
-                                <button type="button" class="btn signin_btn signin_btn_two" data-toggle="modal" data-target=".signin_modal" onclick="add();">
-                                    添加
-                                </button>
+                                                   
+                                                        <td>
+                                                            <label for="example-date" style="width:100%;text-align:left">结束时间</label>
+                                                            <input class="form-control" id="date1" type="date" name="date1" style="width:200px">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="button-list">
+                                                                <button type="submit" style="width:60px;height:50px; float:unset" class="btn btn-primary"
+                                                                        data-toggle="modal" data-target=".signin_modal">
+                                                                    查询
+                                                                </button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
