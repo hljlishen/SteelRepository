@@ -15,6 +15,7 @@
     <script src="~/Content/AdminIndex/js/app.min.js"></script>
     <script type="text/javascript">
         function Registered() {
+            check_pwd();
              $.ajax({
                 url: "@Url.Action("UserRegistered")",
                 type: "post",
@@ -32,7 +33,26 @@
                 }
             });
         }
+
+        //验证密码
+        function check_pwd() {
+            var v=$("#pwd").val();
+            reg = /^(?![0-9]+$)(?![a-z]+$)(?![A-Z]+$).{6,}$/;
+            if (pwd2 !== pwd) {
+                alert("两次输入密码不一致！");
+                update();
+                
+            }
+            alert(reg.test(v));
+            //alert("输入错误重新输入！不能为纯数字，不能为纯小写字母，不能为纯大写字母，至少六位");
+            //if (/^(?![0-9]+$)(?![a-z]+$)(?![A-Z]+$).{6,}$/) {
+            //    alert("输入错误重新输入！");
+            //    update();
+            //}
+        }
     </script>
+
+
 
     <style>
         body {
@@ -71,18 +91,18 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="signin_form" class="label">密码：</label>
-                                        @Html.TextBoxFor(m => m.password, new { @class = "form-control", placeholder = "请输入密码", id = "signin_form", type = "password" })
+                                        @Html.TextBoxFor(m => m.password, new { @class = "form-control", placeholder = "请输入密码", id = "pwd", type = "password" ,maxlength="14"})
                                     </div>
                                     <div class="form-group">
                                         <label for="signin_form" class="label">重复密码：</label>
-                                        <input class = "form-control" placeholder = "请输入密码" id = "signin_form" type = "password">
+                                        <input class = "form-control" placeholder = "请输入密码" id = "pwd2" type = "password" maxlength="14">
                                     </div>
                                     <div class="form-group">
                                         <label for="signin_form" class="label">所属部门：</label>
                                         <div class="input-group">
                                             @Html.TextBoxFor(m => m.departmentId, new { @class = "form-control", type = "text", placeholder = "请选择部门" })
                                             <div class="input-group-append">
-                                                <button class="btn btn-dark" type="button" onclick="">选择</button>
+                                                <button class="btn btn-dark" type="button" onclick="check_pwd()">选择</button>
                                             </div>
                                         </div>
                                     </div>
