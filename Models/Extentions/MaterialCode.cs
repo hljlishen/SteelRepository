@@ -7,6 +7,7 @@ namespace Models
 {
     public partial class MaterialCode
     {
+        private static IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities());
         public Name GetName()
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
@@ -84,6 +85,10 @@ namespace Models
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
+                if (code == "")
+                {
+                    return null;
+                }
                 return helper.Select<MaterialCode>(p => p.code == code);
             }
         }
@@ -126,6 +131,21 @@ namespace Models
             {
                 return helper.SelectAll<MaterialCode>();
             }
+        }
+        public static List<int> GetMaterialId(string codeinput, string nameinput)
+        {
+            List<int> codeid = new List<int>();
+            foreach (var code in GetMaterialCodes(codeinput))
+            {
+                foreach (var name in Name.GetNames(nameinput))
+                {
+                    if (code.materialNameId == name.id)
+                    {
+                        codeid.Add(code.id);
+                    }
+                }
+            }
+            return codeid;
         }
     }
 }
