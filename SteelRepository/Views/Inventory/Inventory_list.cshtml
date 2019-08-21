@@ -51,10 +51,10 @@
                     <div class="card">
                         <div class="card-body">
                             @*<div class="row mb-2">
-                                <div class="col-sm-4">
-                                    <a href="javascript:OutComeAdd()" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle mr-2"></i>新增出库</a>
-                                </div>
-                            </div>*@
+                            <div class="col-sm-4">
+                                <a href="javascript:OutComeAdd()" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle mr-2"></i>新增出库</a>
+                            </div>
+                        </div>*@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="page-title-box">
@@ -112,15 +112,17 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row mb-2">
-                                <div class="col-sm-4">
-                                    <a href="/Inventory/Inventory_list" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle mr-2"></i>显示全部</a>
-                                </div>
-                            </div>
-
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
                             <div class="row">
                                 <div class="col-12">
-                                    <div class="page-title-box">
+                                    <div class="page-title-center">
                                         <h4 class="page-title">库存信息</h4>
                                     </div>
                                 </div>
@@ -139,13 +141,13 @@
                                             <th>批号</th>
                                             <th>货品编号</th>
                                             <th>货品名称</th>
-                                            <th>货品类别</th>
+                                            <th>货品规格</th>
                                             <th>货品余量</th>
                                             <th>货品单位</th>
                                             <th>货品仓位</th>
                                             <th>入库操作人</th>
                                             <th>货品入库时间</th>
-                                            <th style="width: 75px;">出库</th>
+                                            <th style="width: 125px;">出库</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -154,27 +156,27 @@
                                         {
                                             if (inventory.amount > 0)
                                             {
-                                        <tr>
-                                            <td>
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                                    <label class="custom-control-label" for="customCheck2">&nbsp;</label>
-                                                </div>
-                                            </td>
-                                            <td class="table-user">@count</td>
-                                            <th>@Models.Inventory.IncomeIdGetInCome(inventory.incomeId).batch</th>
-                                            <td>@Models.Inventory.GetMaterCodeName(inventory.incomeId)</td>
-                                            <td>@Models.Inventory.GetNameName(inventory.incomeId)</td>
-                                            <td>@Models.Inventory.GetModelName(inventory.incomeId)</td>
-                                            <td>@inventory.amount</td>
-                                            <td>@inventory.unit</td>
-                                            <td>@Models.Inventory.GetPositionName(inventory.positionId)</td>
-                                            <td>@Models.Inventory.GetEmployeeName(inventory.incomeId)</td>
-                                            <td>@Models.Inventory.GetInComeTime(inventory.incomeId).ToString("d")</td>
-                                            <td>
-                                                <a href="javascript:OutComeAdd(@inventory.id)" class="action-icon"> <i class="mdi mdi-calendar-text-outline"></i></a>
-                                            </td>
-                                        </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input" id="customCheck2">
+                                                            <label class="custom-control-label" for="customCheck2">&nbsp;</label>
+                                                        </div>
+                                                    </td>
+                                                    <td class="table-user">@count</td>
+                                                    <th>@Models.Inventory.IncomeIdGetInCome(inventory.incomeId).batch</th>
+                                                    <td>@Models.Inventory.GetMaterCodeName(inventory.incomeId)</td>
+                                                    <td>@Models.Inventory.GetNameName(inventory.incomeId)</td>
+                                                    <td>@Models.Inventory.GetModelName(inventory.incomeId)</td>
+                                                    <td>@inventory.amount</td>
+                                                    <td>@inventory.unit</td>
+                                                    <td>@Models.Inventory.GetPositionName(inventory.positionId)</td>
+                                                    <td>@Models.Inventory.GetEmployeeName(inventory.incomeId)</td>
+                                                    <td>@Models.Inventory.GetInComeTime(inventory.incomeId).ToString("d")</td>
+                                                    <td>
+                                                        <a href="javascript:OutComeAdd(@inventory.id)" class="action-icon"> <i class="mdi mdi-call-merge "></i></a>
+                                                    </td>
+                                                </tr>
                                                 count++;
                                             }
                                         }

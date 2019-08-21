@@ -41,6 +41,7 @@ namespace Models
                 }
 
                 inventory.amount -= outcomeAmout;
+                inventory.consumptionAmount += outcomeAmout;
                 helper.Update(inventory, false);
                 var outcome = new OutCome() { borrowerId = borrowerId, number = amount, unit = measure, inventoryId = inventoryId, projectId = projectId, recipientsTime = dateTime, instructions = instructions, price = outcomePrice };
                 helper.Insert(outcome, false);

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -149,6 +150,11 @@ namespace DbService
             if (result.Count() == 0)
                 return null;
             return result.First();
+        }
+
+        public DbRawSqlQuery<T> SqlQuery<T>(string sql, params object[] parameters)
+        {
+            return context.Database.SqlQuery<T>(sql, parameters);
         }
     }
 }

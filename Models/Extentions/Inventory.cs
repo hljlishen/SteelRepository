@@ -86,11 +86,10 @@ namespace Models
         {
             return Dbhelper.FindId<InCome>(incomeId).storageTime;
         }
-        //public static double GetSurpius(int Incomeid, int Inventoryid)
-        //{
-        //    double dif = GetInComeAmount(Incomeid) - GetOutComeNumber(Inventoryid);
-        //    return dif;
-        //}
+        public static string NewDateTime()
+        {
+            return DateTime.Now.ToLongDateString().ToString();
+        }
         public static Inventory GetInventory(int Inventoryid)
         {
             return Dbhelper.FindId<Inventory>(Inventoryid);
@@ -428,7 +427,7 @@ namespace Models
                         }
                         else
                         {
-                            return inventorys;
+                            return SelectAll();
                         }
                     }
                 }
