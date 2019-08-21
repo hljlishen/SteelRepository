@@ -18,6 +18,8 @@
     <link href="~/Content/AdminIndex/css/app.min.css" rel="stylesheet" />
  
     <script type="text/javascript">
+        var isTrue = true;
+
         function ChooseDepartment() {
             document.getElementById("ChooseDepartment").style.display = "";
         }
@@ -28,23 +30,67 @@
             document.getElementById("ChooseDepartment").style.display = "none";
         }
 
-        function Registered() {
-             $.ajax({
-                url: "@Url.Action("UserRegistered")",
-                type: "post",
-                data: $("form").serialize(),
-                dataType: "json",
-                success: function (data) {
-                    data = eval("(" + data + ")");
-                    if (data) {
-                        alert("注册成功");
-                        parent.closeWin();
-                        parent.openFrame("../Index/Index");
-                    } else {
+        function check() {
+            //姓名
+            var name = $("#name").val();
+            var n = /^[\u4E00-\u9FA5A-Za-z]+$/;
+            if (!n.test(name) ||name == "") {
+                document.getElementById("Isname").style.display = "";
+                isTrue = false;
+                update();
+                return;
+            }
+            //账号
+            var number = $("#number").val();
+            var nu =/^\w+$/;
+            if (!nu.test(number) || number == "") {
+                document.getElementById("IsNum").style.display = "";
+                isTrue = false;
+                update();
+                return;               
+            }
+            //密码
+            var pwd = $("#pwd").val();
+            var p = /^(\w){6,20}$/;
+            if (!p.test(pwd) || pwd == "") {
+                document.getElementById("IsPwd").style.display = "";
+                isTrue = false;
+                update();
+                return;
+                
+            }
+            
+            //再次密码
+            var rePwd = $("#rePwd").val();
+            if (rePwd!= pwd) {
+                    document.getElementById("IsRePwd").style.display = "";
+                    update();
+                    return isTrue = false;
+            }
+             
+            return isTrue;
+        } 
 
+        function Registered() {
+            check();
+            if (isTrue) {
+                $.ajax({
+                    url: "@Url.Action("UserRegistered")",
+                    type: "post",
+                    data: $("form").serialize(),
+                    dataType: "json",
+                    success: function (data) {
+                        data = eval("(" + data + ")");
+                        if (data) {
+                            alert("注册成功");
+                            parent.closeWin();
+                            parent.openFrame("../Index/Index");
+                        } else {
+                            return;
+                        }
                     }
-                }
-            });
+                });
+            }
         }
     </script>
 
@@ -77,22 +123,26 @@
                             <div class="signin-form">
                                 @using (Html.BeginForm("UserRegistered", "Index", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @role = "form" }))
                                 {
-                                    <div class="form-group">
-                                        <label for="signin_form" class="label">姓名：</label>
-                                        @Html.TextBoxFor(m => m.name, new { @class = "form-control", placeholder = "请输入姓名", id = "signin_form", type = "text" })
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="signin_form" class="label">账号：</label>
-                                        @Html.TextBoxFor(m => m.number, new { @class = "form-control", placeholder = "请输入账号", id = "signin_form", type = "text" })
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="signin_form" class="label">密码：</label>
-                                        @Html.TextBoxFor(m => m.password, new { @class = "form-control", placeholder = "请输入密码", id = "signin_form", type = "password" })
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="signin_form" class="label">重复密码：</label>
-                                        <input class="form-control" placeholder="请输入密码" id="signin_form" type="password">
-                                    </div>
+                                <div class="form-group">
+                                    <label for="signin_form" class="label">姓名：</label>
+                                    <label id="Isname" style="color:#ff0000;display:none;font-size:13px">*姓名应为汉字或字母且不为空</label>
+                                    @Html.TextBoxFor(m => m.name, new { @class = "form-control", placeholder = "请输入姓名", id = "name", type = "text" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="signin_form" class="label">账号：</label>
+                                    <label id="IsNum" style="color:#ff0000;display:none;font-size:13px">*账号不能为空，应为字母数字下划线</label>
+                                    @Html.TextBoxFor(m => m.number, new { @class = "form-control", placeholder = "请输入账号", id = "number", type = "text" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="signin_form" class="label">密码：</label>
+                                    <label id="IsPwd" style="color:#ff0000;display:none;font-size:13px">*密码只能输入6-20个字母、数字、下划线且不为空</label>
+                                    @Html.TextBoxFor(m => m.password, new { @class = "form-control", placeholder = "请输入密码", id = "pwd", type = "password" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="signin_form" class="label">重复密码：</label>
+                                    <label id="IsRePwd" style="color:#ff0000;display:none;font-size:13px">*两次输入的密码不一致</label>
+                                    <input class="form-control" placeholder="请输入密码" id="rePwd" type="password">
+                                </div>
                                     <div class="form-group">
                                         <label for="signin_form" class="label">所属部门：</label>
                                         <div class="input-group">
