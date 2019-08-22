@@ -10,7 +10,8 @@ namespace SteelRepository.Controllers
     public class InventoryController : Controller
     {
         // GET: Inventory
-        private static Inventory inventory;
+        private static Inventory inventorysta;
+        private static int invenId;
         public ActionResult Inventory_list()
         {
             ViewData["MaterialCode"] = MaterialCode.GetMaterialCodeList();
@@ -32,15 +33,50 @@ namespace SteelRepository.Controllers
         public ActionResult OutCome_add(int id)
         {
             ViewData["Inventory"] = Inventory.GetInventory(id);
-
-            inventory = Inventory.GetInventory(id);
+            SelectList select = new SelectList(GetUnitList(), "Value", "Text");
+            ViewBag.select = select;
+            ViewData["employee"] = Employee.SelectAll();
+            ViewData["name"] = IndexController.adminName();
+            inventorysta = Inventory.GetInventory(id);
+            ViewData["project"] = Project.SelectAll();
+            invenId = id;
             return View();
         }
-        //[HttpPost]
-        //public JsonResult OutCome_add(Inventory inven, FormCollection collection)
-        //{
+        private List<SelectListItem> GetUnitList()
+        {
+            List<SelectListItem> itemList = new List<SelectListItem>();
+            SelectListItem item1 = new SelectListItem()
+            {
+                Value = "g",
+                Text = "g"
+            };
+            SelectListItem item2 = new SelectListItem()
+            {
+                Value = "kg",
+                Text = "kg"
+            };
+            itemList.Add(item1);
+            itemList.Add(item2);
+            return itemList;
+        }
+         [HttpPost]
+        public JsonResult OutCome_add( Inventory inventory, FormCollection collection)
+        {
+            bool b = DateTime.TryParse(collection["date"], out DateTime begin);
+            var number = Convert.ToInt32(collection["number"]);
+            var employeeid =Convert.ToInt32(collection["employeeName"]);
+            var projectid =Convert.ToInt32(collection["project"]);
+            var instruction = collection["instruction"];
+            var ins = collection["instructions"];
+            var unit = inventory.unit;
+            if (b) {
+                //try {
+                    var newOutcome = OutCome.NewOutCome(begin, invenId, number, unit, employeeid, projectid, instruction);
+                //}
             
-        //    return Json();
-        //}
+                return Json(1);
+            }else 
+            return Json(0);
+        }
     }
 }
