@@ -19,6 +19,11 @@
  
     <script type="text/javascript">
         var isTrue = true;
+        var isName = true;
+        var isNumber = true;
+        var isPassword = true;
+        var isPassword2 = true;
+        var isDepartment = true;
 
         function ChooseDepartment() {
             document.getElementById("ChooseDepartment").style.display = "";
@@ -34,40 +39,62 @@
             //姓名
             var name = $("#name").val();
             var n = /^[\u4E00-\u9FA5A-Za-z]+$/;
-            if (!n.test(name) ||name == "") {
+            if (!n.test(name) || name == "") {
                 document.getElementById("Isname").style.display = "";
-                isTrue = false;
-                update();
-                return;
+                isName = false;
+            } else {
+                document.getElementById("Isname").style.display = "none";
+                isName = true;
             }
+            
             //账号
             var number = $("#number").val();
             var nu =/^\w+$/;
             if (!nu.test(number) || number == "") {
                 document.getElementById("IsNum").style.display = "";
-                isTrue = false;
-                update();
-                return;               
+                isNumber = false;
+            } else {
+                document.getElementById("IsNum").style.display = "none";
+                isNumber = true;
             }
             //密码
             var pwd = $("#pwd").val();
             var p = /^(\w){6,20}$/;
             if (!p.test(pwd) || pwd == "") {
                 document.getElementById("IsPwd").style.display = "";
-                isTrue = false;
-                update();
-                return;
-                
+                isPassword = false;
+
+            } else {
+                document.getElementById("IsPwd").style.display = "none";
+                isPassword = true;
             }
             
             //再次密码
             var rePwd = $("#rePwd").val();
-            if (rePwd!= pwd) {
-                    document.getElementById("IsRePwd").style.display = "";
-                    update();
-                    return isTrue = false;
+            if (rePwd != pwd) {
+                document.getElementById("IsRePwd").style.display = "";
+                isPassword2 = false;
+
+            } else {
+                document.getElementById("IsRePwd").style.display = "none";
+                isPassword2 = true;
             }
-             
+            //部门
+            var departmentName = $("#departmentName").val();
+            if (departmentName =="") {
+                document.getElementById("IsDep").style.display = "";
+                isDepartment = false;
+
+            } else {
+                document.getElementById("IsDep").style.display = "none";
+                isDepartment = true;
+            }
+            if (isName && isNumber && isPassword && isPassword2 && isDepartment)
+                isTrue = true;
+            else {
+                isTrue = false;
+            }
+                
             return isTrue;
         } 
 
@@ -91,6 +118,7 @@
                     }
                 });
             }
+            else { return; }
         }
     </script>
 
@@ -143,16 +171,18 @@
                                     <label id="IsRePwd" style="color:#ff0000;display:none;font-size:13px">*两次输入的密码不一致</label>
                                     <input class="form-control" placeholder="请输入密码" id="rePwd" type="password">
                                 </div>
-                                    <div class="form-group">
-                                        <label for="signin_form" class="label">所属部门：</label>
-                                        <div class="input-group">
-                                            @Html.TextBoxFor(m => m.departmentId, new { @class = "form-control", type = "text", placeholder = "请选择部门" ,id="departmentId" ,style="display:none"})
-                                            <input class="form-control" placeholder="请选择部门" type="text"  id="departmentName" readonly>
-                                            <div class="input-group-append">
-                                                <button class="btn btn-dark" type="button" onclick="ChooseDepartment()">选择</button>
-                                            </div>
+                                <div class="form-group">
+                                    <label for="signin_form" class="label">所属部门：</label>
+                                    <label id="IsDep" style="color:#ff0000;display:none;font-size:13px">*部门不能为空</label>
+                                    <div class="input-group">
+                                        
+                                        @Html.TextBoxFor(m => m.departmentId, new { @class = "form-control", type = "text", placeholder = "请选择部门", id = "departmentId", style = "display:none" })
+                                        <input class="form-control" placeholder="请选择部门" type="text" id="departmentName" readonly>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-dark" type="button" onclick="ChooseDepartment()">选择</button>
                                         </div>
                                     </div>
+                                </div>
                                     <div class="container-fluid" id="ChooseDepartment" style="display:none">
                                         <div class="wrapper">
                                             <div class="card col-md-12">

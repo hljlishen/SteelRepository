@@ -125,29 +125,29 @@
                     , cols: [[
                         { type: 'checkbox', fixed: 'left' }
                         , { field: 'materialName', title: '材料名称', width: 150, edit: 'text', align: 'center' }
-                        , { field: '', title: '种类', width: 150, edit: 'text', align: 'center' }
-                        , { field: 'categoryId', title: '批次信息', width: 150, sort: true, align: 'center' }
+                        , { field: 'categoryName', title: '种类', width: 150, edit: 'text', align: 'center' }
+                        , { field: 'batch', title: '批次信息', width: 150, sort: true, align: 'center' }
                         , { field: 'amount', title: '统计数量', width: 150, edit: 'text', sort: true }
-                        , { field: '', title: '库存余量', width: 150, sort: true }
+                        , { field: 'consumptionAmount', title: '库存余量', width: 150, sort: true }
                         , { field: 'unit', title: '单位' }
                         , { field: 'positionId', title: '位置', width: 150 }
                         , { field: 'manufacturersName', title: '厂商名称', width: 150 }
                         , { field: 'price', title: '金额', width: 150, sort: true, align: 'center' }
                     ]]
-                    ,method:post
+                    , method: post
                     , page: true,
                     response: {
-                      statusName: 'code' //数据状态的字段名称，默认：code
-                      ,statusCode: 200 //成功的状态码，默认：0
-                      ,msgName: 'msg' //状态信息的字段名称，默认：msg
-                      ,countName: 'count' //数据总数的字段名称，默认：count
-                      ,dataName: 'data' //数据列表的字段名称，默认：data
+                        statusName: 'code' //数据状态的字段名称，默认：code
+                        , statusCode: 200 //成功的状态码，默认：0
+                        , msgName: 'msg' //状态信息的字段名称，默认：msg
+                        , countName: 'count' //数据总数的字段名称，默认：count
+                        , dataName: 'data' //数据列表的字段名称，默认：data
                     }
                 });
 
                 //{ function() {
                 //        var getListUrl = "/Models/Model1.edmx/Model1.tt";
-                //        get 
+                //        get
                 //    }
                 //}
 
@@ -250,7 +250,7 @@
                             function data() {
 
                             }
-                          
+
 
                             function genData(count) {
                                 var nameList = [
@@ -362,7 +362,7 @@
                                         name: '银',
                                         type: 'line',
                                         stack: '总量',
-                                        data: [263,450,300,60
+                                        data: [263, 450, 300, 60
                                             /*url="Models/Model1.edmx/Model1.tt/.."*/
                                         ]
                                     }
@@ -376,38 +376,56 @@
                     </div>
                 </div>
             </div>
-            @*copyright*@
+
             <div class="layui-col-md6" style="width:1325px;height:600px;">
                 <div class="layui-card">
                     <div class="layui-card-header">柱状图展示</div>
                     <div class="layui-card-body">
                         <div id="Pzhu" style="width: 700px;height:540px;"></div>
                         <script type="text/javascript">
-                            // 基于准备好的dom，初始化echarts实例
-                            var myChart = echarts.init(document.getElementById('Pzhu'));
+                            
+                            function(ecl) {
+                                // 基于准备好的dom，初始化echarts实例
+                                var myChart = echarts.init(document.getElementById('Pzhu'));
+                                // 指定图表的配置项和数据
+                                var option = {
+                                    title: {
+                                        text: '月度消耗量'
+                                    },
+                                    myChart.showLoading();
+                                    $.ajax({
+                                        url: 'Models/Model1.edmx/Model1.tt' + (new.Date()).getTime(),
+                                        type: 'post',
+                                        async: true,
+                                        dataType: 'json',
+                                        success: function (result) {
+                                            myChart.hideLoading();
+                                            myChart.setOption({
+                                                tooltip: {
+                                                    trigger: 'item',
+                                                    formatter: "{a}<br/>{b}:({d}%)"
+                                                },
+                                                legend: {//图例
+                                                    data: ['消耗量']
+                                                },
+                                                xAxis: {
+                                                    data: ["一月", "二月", "三月", "四月", "五月", "六月", "八月", "九月", "十月", "十一月", "十二月"]
+                                                },
+                                                yAxis: {},
+                                                series: [{
+                                                    name: '消耗量',
+                                                    type: 'bar',
+                                                    data: [result
+                                                        //添加数据
+                                                    ]
+                                                }]
+                                            })
+                                        }
+                                    })
 
-                            // 指定图表的配置项和数据
-                            var option = {
-                                title: {
-                                    text: '月度消耗量'
-                                },
-                                tooltip: {},
-                                legend: {
-                                    data: ['消耗量']
-                                },
-                                xAxis: {
-                                    data: ["一月", "二月", "三月", "四月", "五月", "六月", "八月", "九月", "十月", "十一月", "十二月"]
-                                },
-                                yAxis: {},
-                                series: [{
-                                    name: '消耗量',
-                                    type: 'bar',
-                                    data: [5, 20, 36, 10, 10, 20, 15, 45, 60, 89, 78
-                                        //添加数据
-                                    ]
-                                }]
+
+                                };
                             };
-
                             // 使用刚指定的配置项和数据显示图表。
                             myChart.setOption(option);
                         </script>
@@ -429,7 +447,7 @@
             <legend><a name="projectMsg"></a>项目信息</legend>
         </fieldset>*@
 
-
+    @*copyright*@
     <div class="content-page">
         <div class="content">
             <footer class="footer">
