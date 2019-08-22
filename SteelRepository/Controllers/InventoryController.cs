@@ -66,12 +66,11 @@ namespace SteelRepository.Controllers
             var number = Convert.ToInt32(collection["number"]);
             var employeeid =Convert.ToInt32(collection["employeeName"]);
             var projectid =Convert.ToInt32(collection["project"]);
-            var instruction = collection["instruction"];
             var ins = collection["instructions"];
             var unit = inventory.unit;
             if (b) {
                 //try {
-                    var newOutcome = OutCome.NewOutCome(begin, invenId, number, unit, employeeid, projectid, instruction);
+                    var newOutcome = OutCome.NewOutCome(begin, invenId, number, unit, employeeid, projectid, ins);
                 //}
             
                 return Json(1);

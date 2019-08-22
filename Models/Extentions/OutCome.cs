@@ -43,7 +43,8 @@ namespace Models
                 inventory.amount -= outcomeAmout;
                 inventory.consumptionAmount += outcomeAmout;
                 helper.Update(inventory, false);
-                var outcome = new OutCome() { borrowerId = borrowerId, number = amount, unit = measure, inventoryId = inventoryId, projectId = projectId, recipientsTime = dateTime, instructions = instructions, price = outcomePrice };
+                var state1 = 1;
+                var outcome = new OutCome() { borrowerId = borrowerId, number = amount, unit = measure, inventoryId = inventoryId, projectId = projectId, recipientsTime = dateTime, instructions = instructions, price = outcomePrice,state = state1 };
                 helper.Insert(outcome, false);
                 helper.Commit();
 
@@ -153,6 +154,33 @@ namespace Models
                 listId.Add(come.id);
             }
             return listId;
+        }
+        public static Category GetCategoryName(int inventoryid)
+        {
+            var income = Dbhelper.FindId<InCome>(Dbhelper.FindId<Inventory>(inventoryid).incomeId);
+            return Dbhelper.FindId<Category>(income.categoryId);
+        }
+        public static int OutComeRevocation()
+        {
+            List<int> outcomeid = new List<int>();
+            foreach (var id in SelectAll())
+            {
+                outcomeid.Add(id.id);
+            }
+            var Maxoutcome = Dbhelper.FindId<OutCome>(outcomeid.Max());
+            var Inventory = Dbhelper.FindId<Inventory>(Maxoutcome.inventoryId);
+            if (Maxoutcome.state < 2) {
+                var Number = WeightConverter.Convert(Maxoutcome.unit, Maxoutcome.number, Inventory.unit);
+                Inventory.amount += Number;
+                Inventory.consumptionAmount -= Number;
+                Maxoutcome.state = 2;
+                Maxoutcome.instructions += "(已撤销)";
+                Dbhelper.Update(Maxoutcome,false);
+                Dbhelper.Update(Inventory, false);
+                return Dbhelper.Commit();
+            }
+            else 
+            return 0;
         }
         public static List<OutCome> MulSelectCheckOutCome(bool b, DateTime begin, bool e, DateTime end, int MaterCodeid, int employeeid)
         {
@@ -379,7 +407,7 @@ namespace Models
                         }
                         else
                         {
-                            return new List<OutCome>();
+                            return SelectAll();
                         }
                     }
                 }

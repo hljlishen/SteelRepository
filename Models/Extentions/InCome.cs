@@ -112,15 +112,6 @@ namespace Models
                 return helper.Select<RecheckReport>(p => p.incomeId == id);
             }
         }
-
-        //public Position GetPosition()
-        //{
-        //    using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
-        //    {
-        //        return helper.FindId<Position>(positionId);
-        //    }
-        //}
-
         public Position GetPosition(int incomeId)
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))

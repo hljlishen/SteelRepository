@@ -163,7 +163,11 @@ namespace Models
             }
             return invenlists;
         }
-
+        public static Category GetCategoryName(int incomeid)
+        {
+            var incom = Dbhelper.FindId<InCome>(incomeid);
+            return Dbhelper.FindId<Category>(incom.categoryId);
+        }
         public static List<Inventory> MulSelectCheckInventory(bool b, DateTime begin, bool e, DateTime end, string codeinput, string nameinput)
         {
             ExpressionBuilder<Inventory> builder = new ExpressionBuilder<Inventory>();
