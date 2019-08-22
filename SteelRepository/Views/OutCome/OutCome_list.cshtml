@@ -56,11 +56,7 @@
 </head>
 @{
     List<Models.MaterialCode> material = (List<Models.MaterialCode>)ViewData["MaterialCode"];
-}
-@{
     List<Models.Employee> employee = (List<Models.Employee>)ViewData["employee"];
-}
-@{
     List<Models.OutCome> outcomelist = (List<Models.OutCome>)ViewData["outcome"];
 }
 <div class="content-page">
@@ -207,6 +203,7 @@
                         <div class="row mb-2">
                             <div class="col-sm-4">
                                 <a href="javascript:OutComerevocation()" class="btn btn-primary"><i class="mdi mdi-plus-circle mr-2"></i>撤销最新出库记录</a>
+                                <a href="/OutCome/OutCome_revocationlist" class="btn btn-primary"><i class="mdi mdi-plus-circle mr-2"></i>显示撤销记录</a>
                             </div>
                         </div>
 

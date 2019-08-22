@@ -46,5 +46,13 @@ namespace SteelRepository.Controllers
         {
             return Json(OutCome.OutComeRevocation());
         }
+        public ActionResult OutCome_revocationlist()
+        {
+            ViewData["MaterialCode"] = MaterialCode.GetMaterialCodeList();
+            ViewData["employee"] = Employee.SelectAll();
+            ViewData["outcome"] = null;
+            ViewData["outcome"] = OutCome.GetRevocationOutComes();
+            return View("OutCome_list");
+        }
     }
 }

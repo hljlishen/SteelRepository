@@ -16,6 +16,9 @@
     <script src="~/Content/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript">
         function add() {
+
+
+
             $.ajax({
                 url: "@Url.Action("OutCome_add")",
                 type: "post",
@@ -36,19 +39,6 @@
             });
         }
     </script>
-    <style>
-        select {
-            border: solid 1px #000;
-            -moz-appearance: none;
-            -webkit-appearance: none;
-            background: url("下拉箭头图片") right center no-repeat;
-            padding-right: 20px;
-        }
-
-            select::-ms-expand {
-                display: none;
-            }
-    </style>
 </head>
 <body>
     @{
@@ -103,12 +93,11 @@
                                             @Html.TextBox("Name", @name, new { @readonly = "readonly", @class = "form-control", type = "text" })
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label for="signin_form">借用人：</label>
+                                            <label for="signin_form">领用人：</label>
                                             <select class="form-control" name="employeeName">
-                                                <option value="0">------请选择------</option>
                                                 @foreach (var emp in employee)
                                                 {
-                                                    <option value="@emp.id">@emp.name</option>
+                                                    <option value="@emp.id">姓名：@emp.name  工号：@emp.number  部门：@Models.Department.GetDepartment(emp.departmentId.Value).departmentName</option>
                                                 }
                                             </select>
                                         </div>
@@ -117,7 +106,6 @@
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">项目令号：</label>
                                             <select class="form-control" name="project">
-                                                <option value="0">------请选择------</option>
                                                 @foreach (var pro in project)
                                                 {
                                                     <option value="@pro.id">令号：@pro.projectCode      名称：@pro.projectName</option>
@@ -145,7 +133,7 @@
                     <div class="row" align="center">
                         <div class="col-sm-12">
                             <div class="signin-footer">
-                                <button type="button" class="btn btn-primary" onclick="add();" style="width:200px;height:50px">
+                                <button type="button" name="but" class="btn btn-primary" onclick="add();" style="width:200px;height:50px">
                                     出库
                                 </button>
                             </div>

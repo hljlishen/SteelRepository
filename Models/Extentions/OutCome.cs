@@ -89,7 +89,8 @@ namespace Models
             {
                 return null;
             }
-            return Dbhelper.FindId<Project>(projectid.Value).projectName;
+            var pro = Dbhelper.FindId<Project>(projectid.Value).projectName;
+            return pro;
         }
         public static string GetNameName(int inventoryid)
         {
@@ -181,6 +182,10 @@ namespace Models
             }
             else 
             return 0;
+        }
+        public static List<OutCome> GetRevocationOutComes()
+        {
+            return Dbhelper.Select<OutCome>(p => p.state == 2);
         }
         public static List<OutCome> MulSelectCheckOutCome(bool b, DateTime begin, bool e, DateTime end, int MaterCodeid, int employeeid)
         {
