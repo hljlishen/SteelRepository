@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tools;
+using Tools.Statistics;
 
 namespace Models
 {
@@ -20,13 +21,6 @@ namespace Models
         }
 
         public string GetMaterialCode(IDbInterface db)
-        {
-            var income = db.FindId<InCome>(incomeId);
-            var materialCode = db.FindId<MaterialCode>(income.codeId);
-            return materialCode.code;
-        }
-
-        public string GetMaterialCode(int incomeId,IDbInterface db)
         {
             var income = db.FindId<InCome>(incomeId);
             var materialCode = db.FindId<MaterialCode>(income.codeId);
@@ -435,6 +429,23 @@ namespace Models
                         }
                     }
                 }
+            }
+        }
+
+        public static Dictionary<string, double> StatisticAmount()
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                List<Inventory> inventories = new List<Inventory>();
+                MultipleSeriesStatistics2D<Inventory> statistics2D = new MultipleSeriesStatistics2D<Inventory>(p => p.GetMaterialCode(helper));
+                statistics2D.AddSeries("amount", p => p.amount);
+                foreach (var inv in helper.Select<Inventory>(p => p.amount > 0))
+                {
+                    inv.amount = WeightConverter.Convert(inv.unit,inv.amount,"kg");
+                    inventories.Add(inv);
+                }
+                var Sum = statistics2D.GetValues(inventories);
+                return Sum["amount"];
             }
         }
     }

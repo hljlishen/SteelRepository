@@ -86,25 +86,38 @@ namespace Models
             }
         }
 
-        public static List<OutCome> GetOutComes(int employeeId)
+        public static List<OutCome> GetOutComes(int employeeId, IDbInterface helper)
         {
-            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
-                return helper.Select<OutCome>(p => p.borrowerId == employeeId);
+            return helper.Select<OutCome>(p => p.borrowerId == employeeId);
         }
 
-        public static Dictionary<string, double> StatisticAmount(int employeeId)
+        public static Dictionary<string, double> StatisticPrice(int employeeId)
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                var Sum = new Dictionary<string, Dictionary<string, double>>();
-                foreach (var outcome in GetOutComes(employeeId))
+                //var Sum = new Dictionary<string, Dictionary<string, double>>();
+                //foreach (var outcome in GetOutComes(employeeId, helper))
+                //{
+                //    int incomeId = Inventory.GetInventory(outcome.inventoryId, helper).incomeId;
+                //    MultipleSeriesStatistics2D<OutCome> statistics2D = new MultipleSeriesStatistics2D<OutCome>(p => p.GetMaterialCode(incomeId, helper));
+                //    statistics2D.AddSeries("price", p => 
+                //    {
+                //        return p.price == null ? 0: p.price.Value;
+                //    });
+                //    Sum = statistics2D.GetValues(helper.Select<OutCome>(p => p.borrowerId == employeeId));
+                //}
+                MultipleSeriesStatistics2D<OutCome> statistics2D = new MultipleSeriesStatistics2D<OutCome>(p => p.GetMaterialCode(helper));
+                statistics2D.AddSeries("price", p => p.price == null ? 0 : p.price.Value/*, StatisticsType.UserDefine, p =>
                 {
-                    int incomeId = Inventory.GetInventory(outcome.inventoryId, helper).incomeId;
-                    MultipleSeriesStatistics2D<Inventory> statistics2D = new MultipleSeriesStatistics2D<Inventory>(p => p.GetMaterialCode(incomeId,helper));
-                    statistics2D.AddSeries("consumptionAmount", p => p.consumptionAmount);
-                    Sum = statistics2D.GetValues(helper.Select<Inventory>(p => p.incomeId == incomeId && p.consumptionAmount > 0));
-                }
-                return Sum["consumptionAmount"];
+                    double ret = 1;
+                    foreach (var item in p)
+                    {
+                        ret *= item;
+                    }
+                    return ret;
+                }*/);
+                var Sum = statistics2D.GetValues(helper.Select<OutCome>(p => p.borrowerId == employeeId));
+                return Sum.Keys.Contains("price") ? Sum["price"] : null;
             }
         }
     }

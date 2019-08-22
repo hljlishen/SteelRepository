@@ -171,6 +171,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\DataGenerator.cs" />
+    <Compile Include="Controllers\DataStatisticsController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\IndexController.cs" />
@@ -422,6 +423,7 @@
     <Content Include="Views\Index\UserRegistered.cshtml" />
     <Content Include="Views\Inventory\OutCome_add.cshtml" />
     <Content Include="Views\AdminIndex\AdminIndex.cshtml" />
+    <Content Include="Views\DataStatistics\DataStatistics.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

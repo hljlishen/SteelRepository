@@ -16,7 +16,23 @@ namespace SteelRepository.Controllers
         // GET: Material
         public ActionResult InCome_list()
         {
+            ViewData["MaterialCode"] = MaterialCode.GetMaterialCodeList();
+            ViewData["employee"] = Employee.SelectAll();
+            ViewData["outcome"] = OutCome.SelectAll();
             return View(InCome.GetInComes());
+        }
+
+        [HttpPost]
+        public ActionResult InCome_list(FormCollection collection)
+        {
+            ViewData["MaterialCode"] = MaterialCode.GetMaterialCodeList();
+            ViewData["employee"] = Employee.SelectAll();
+            bool b = DateTime.TryParse(collection["date"], out DateTime begin);
+            bool e = DateTime.TryParse(collection["date1"], out DateTime end);
+            int materialCodeid = Convert.ToInt32(collection["materialCodeid"]);
+            int employeeid = Convert.ToInt32(collection["employeeid"]);
+            ViewData["income"] = OutCome.MulSelectCheckOutCome(b, begin, e, end, materialCodeid, employeeid);
+            return View();
         }
 
         public ActionResult InCome_add()
