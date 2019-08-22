@@ -102,29 +102,34 @@
                                     <a href="javascript: void(0);" class="text-dark">
                                         <small></small>
                                     </a>
-                                </span>Notification
+                                </span>库存提醒
+                            </h5>
+                        </div>
+                        <div class="dropdown-item noti-title">
+                            <h5 class="m-0">
+                                <span class="float-right">
+                                    <a href="javascript: void(0);" class="text-dark">
+                                        <small></small>
+                                    </a>
+                                </span>复检提醒
                             </h5>
                         </div>
                     </div>
                 </li>
+
+                @*@if (!IsLogin)
+            {
                 <li class="dropdown notification-list">
-                    <a class="nav-link right-bar-toggle">
-                        <i class="dripicons-gear noti-icon"></i>
+                    <a class="nav-link right-bar-toggle" href="javascript:AdminLogin()">
+                        <i class="noti-icon">登录</i>
                     </a>
                 </li>
-                @*@if (!IsLogin)
-                {
-                    <li class="dropdown notification-list">
-                        <a class="nav-link right-bar-toggle" href="javascript:AdminLogin()">
-                            <i class="noti-icon">登录</i>
-                        </a>
-                    </li>
-                    <li class="dropdown notification-list">
-                        <a class="nav-link right-bar-toggle" href="javascript:AdminRegistered()">
-                            <i class="noti-icon">注册</i>
-                        </a>
-                    </li>
-                }*@
+                <li class="dropdown notification-list">
+                    <a class="nav-link right-bar-toggle" href="javascript:AdminRegistered()">
+                        <i class="noti-icon">注册</i>
+                    </a>
+                </li>
+            }*@
                 @if (IsLogin)
                 {
                     <li class="dropdown notification-list">
@@ -137,15 +142,15 @@
                                 </span>
                             </span>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated topbar-dropdown-menu profile-dropdown" aria-labelledby="topbar-userdrop">
-                            <div class=" dropdown-header noti-title">
-                                <h6 class="text-overflow m-0">欢迎!</h6>
-                            </div>
-                            <a href="javascript:AdminLogin()" class="dropdown-item notify-item">
-                                <i class="mdi mdi-account-circle mr-1"></i>
-                                <span>登录</span>
-                            </a>
+                        @*<div class="dropdown-menu dropdown-menu-right dropdown-menu-animated topbar-dropdown-menu profile-dropdown" aria-labelledby="topbar-userdrop">
+                        <div class=" dropdown-header noti-title">
+                            <h6 class="text-overflow m-0">欢迎!</h6>
                         </div>
+                        <a href="javascript:AdminLogin()" class="dropdown-item notify-item">
+                            <i class="mdi mdi-account-circle mr-1"></i>
+                            <span>登录</span>
+                        </a>
+                    </div>*@
                     </li>
                     <li class="dropdown notification-list">
                         <a class="nav-link right-bar-toggle" href="../Index/Index">
@@ -154,7 +159,10 @@
                     </li>
                 }
             </ul>
-           
+            @if (IsLogin == false)
+            {
+                <meta http-equiv="refresh" content="0;url=../Index/Index">
+            }
         </div>
     </div>
 
@@ -173,6 +181,12 @@
                         <a href="../Inventory/Inventory_list" class="side-nav-link">
                             <i class="mdi mdi-clipboard-text-play-outline"></i>
                             <span> 库存信息 </span>
+                        </a>
+                    </li>
+                    <li class="side-nav-item">
+                        <a href="../DataStatistics/DataStatistics" class="side-nav-link">
+                            <i class="mdi mdi-clipboard-text-play-outline"></i>
+                            <span> 数据统计 </span>
                         </a>
                     </li>
                     <li class="side-nav-item">

@@ -1,0 +1,282 @@
+﻿@{
+    Layout = "~/Views/AdminIndex/AdminIndex.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    @{
+        Dictionary<string, double> keyValuePairs1 = (Dictionary<string, double>)ViewData["inventory"];
+    }
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+    <script src="~/Content/Position/js/echarts.min.js"></script>
+    <script src="~/Content/layui/layui.js"></script>
+    <link href="~/Content/layui/css/layui.css" rel="stylesheet" />
+    <script type="text/javascript">
+    </script>
+</head>
+<body>
+    <div class="content-page">
+        <div class="content">
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box">
+                        <h4 class="page-title">数据统计</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-tab">
+                <ul class="layui-tab-title">
+                    <li class="layui-this" >库存数据统计图</li>
+                    <li>月度消耗数据统计图</li>
+                    <li>年度消耗数据统计图</li>
+                    <li>项目消耗数据统计图</li>
+                    <li>总消耗数据统计图</li>
+                </ul>
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item layui-show">
+                        @if (keyValuePairs1 != null)
+                        {
+                            <div id="inventory" style="width:100%;height:600%;">
+
+                            </div>
+                            <script type="text/javascript">
+                            @{
+                                var sData = keyValuePairs1;
+                            }
+                            var codes = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(sData.Keys.ToArray()));
+                            var values = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(sData.Values.ToArray()));
+                            var myChart = echarts.init(document.getElementById('inventory'));
+                            var option = {
+                                title: {
+                                    text: '库存数据统计图'
+                                },
+                                tooltip: {},
+                                legend: {
+                                    data: ['编号']
+                                },
+                                xAxis: {
+                                    name: '编号',
+                                    data: codes
+                                },
+                                yAxis: {
+                                    name: '重量（kg）',
+                                },
+                                series: [{
+                                    name: '重量（kg）',
+                                    type: 'bar',
+                                    data: values
+                                }]
+                            };
+                            myChart.setOption(option);
+                            </script>
+                        }
+                        else
+                        {
+                            <div class="layui-tab-item layui-show">
+                                无数据展示
+                            </div>
+                        }
+                    </div>
+                    <div class="layui-tab-item layui-show">
+                        @if (keyValuePairs1 != null)
+                        {
+                            <div id="monthlyConsumption" style="width:100%;height:600%">
+
+                            </div>
+                            <script type="text/javascript">
+                            @{
+                                var sData = keyValuePairs1;
+                            }
+                            var codes = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(sData.Keys.ToArray()));
+                            var values = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(sData.Values.ToArray()));
+                            var myChart = echarts.init(document.getElementById('monthlyConsumption'));
+                            var option = {
+                                title: {
+                                    text: '月度消耗数据统计图'
+                                },
+                                tooltip: {},
+                                legend: {
+                                    data: ['编号']
+                                },
+                                xAxis: {
+                                    name: '编号',
+                                    data: codes
+                                },
+                                yAxis: {
+                                    name: '重量（kg）',
+                                },
+                                series: [{
+                                    name: '重量（kg）',
+                                    type: 'bar',
+                                    data: values
+                                }]
+                            };
+                            myChart.setOption(option);
+                            </script>
+                        }
+                        else
+                        {
+                            <div class="layui-tab-item">无数据展示</div>
+                        }
+                    </div>
+                    <div class="layui-tab-item layui-show">
+                        @if (keyValuePairs1 != null)
+                        {
+                            <div id="annualConsumption" style="width:100%;height:600%;">
+
+                            </div>
+                            <script type="text/javascript">
+                            @{
+                                var sData = keyValuePairs1;
+                            }
+                            var codes = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(sData.Keys.ToArray()));
+                            var values = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(sData.Values.ToArray()));
+                            var myChart = echarts.init(document.getElementById('annualConsumption'));
+                            var option = {
+                                title: {
+                                    text: '年度消耗数据统计图'
+                                },
+                                tooltip: {},
+                                legend: {
+                                    data: ['编号']
+                                },
+                                xAxis: {
+                                    name: '编号',
+                                    data: codes
+                                },
+                                yAxis: {
+                                    name: '重量（kg）',
+                                },
+                                series: [{
+                                    name: '重量（kg）',
+                                    type: 'bar',
+                                    data: values
+                                }]
+                            };
+                            myChart.setOption(option);
+                            </script>
+                        }
+                        else
+                        {
+                            <div class="layui-tab-item">无数据展示</div>
+                        }
+                    </div>
+                    <div class="layui-tab-item layui-show">
+                        @if (keyValuePairs1 != null)
+                        {
+                            <div id="projectConsumption" style="width:100%;height:600%;">
+
+                            </div>
+                            <script type="text/javascript">
+                            @{
+                                var sData = keyValuePairs1;
+                            }
+                            var codes = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(sData.Keys.ToArray()));
+                            var values = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(sData.Values.ToArray()));
+                            var myChart = echarts.init(document.getElementById('projectConsumption'));
+                            var option = {
+                                title: {
+                                    text: '项目消耗数据统计图'
+                                },
+                                tooltip: {},
+                                legend: {
+                                    data: ['编号']
+                                },
+                                xAxis: {
+                                    name: '编号',
+                                    data: codes
+                                },
+                                yAxis: {
+                                    name: '重量（kg）',
+                                },
+                                series: [{
+                                    name: '重量（kg）',
+                                    type: 'bar',
+                                    data: values
+                                }]
+                            };
+                            myChart.setOption(option);
+                            </script>
+                        }
+                        else
+                        {
+                            <div class="layui-tab-item">无数据展示</div>
+                        }
+                    </div>
+                    <div class="layui-tab-item layui-show">
+                        @if (keyValuePairs1 != null)
+                        {
+                            <div id="totalConsumption" style="width:100%;height:600%;">
+
+                            </div>
+                            <script type="text/javascript">
+                            @{
+                                var sData = keyValuePairs1;
+                            }
+                            var codes = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(sData.Keys.ToArray()));
+                            var values = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(sData.Values.ToArray()));
+                            var myChart = echarts.init(document.getElementById('totalConsumption'));
+                            var option = {
+                                title: {
+                                    text: '总消耗数据统计图'
+                                },
+                                tooltip: {},
+                                legend: {
+                                    data: ['编号']
+                                },
+                                xAxis: {
+                                    name: '编号',
+                                    data: codes
+                                },
+                                yAxis: {
+                                    name: '重量（kg）',
+                                },
+                                series: [{
+                                    name: '重量（kg）',
+                                    type: 'bar',
+                                    data: values
+                                }]
+                            };
+                            myChart.setOption(option);
+                            </script>
+                        }
+                        else
+                        {
+                            <div class="layui-tab-item">无数据展示</div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <script>
+                layui.use('element', function () {
+                    var $ = layui.jquery
+                        , element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+
+                    //触发事件
+                    var active = {
+                        tabAdd: function () {
+                            //新增一个Tab项
+                            element.tabAdd('demo', {
+                                title: '新选项' + (Math.random() * 1000 | 0) //用于演示
+                                , content: '内容' + (Math.random() * 1000 | 0)
+                                , id: new Date().getTime() //实际使用一般是规定好的id，这里以时间戳模拟下
+                            })
+                        }, tabChange: function () {
+                            //切换到指定Tab项
+                            element.tabChange('demo', '22'); //切换到：用户管理
+                        }
+                    };
+
+                    $('.site-demo-active').on('click', function () {
+                        var othis = $(this), type = othis.data('type');
+                        active[type] ? active[type].call(this, othis) : '';
+                    });
+                });
+            </script>
+        </div>
+    </div>
+</body>
+</html>

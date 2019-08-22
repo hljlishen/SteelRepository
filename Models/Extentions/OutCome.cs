@@ -384,5 +384,13 @@ namespace Models
                 }
             }
         }
+
+        public string GetMaterialCode(IDbInterface db)
+        {
+            var incomeId = db.FindId<Inventory>(inventoryId).incomeId;
+            var income = db.FindId<InCome>(incomeId);
+            var materialCode = db.FindId<MaterialCode>(income.codeId);
+            return materialCode.code;
+        }
     }
 }

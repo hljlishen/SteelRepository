@@ -68,6 +68,11 @@
             $("#quality").val($("#quality").val()+id+",")
         }
 
+        function img(obj) {
+            var $box2=document.getElementById("img");
+            $box2.src="data:image/jpeg;base64,"+obj+"";
+        }
+
         function update() {
             $.ajax({
                 url: "@Url.Action("QualityReport")",
@@ -114,11 +119,11 @@
                                                     {
                                                         <tr>
                                                             <th>
-                                                                <img src="data:image/jpeg;base64,@Convert.ToBase64String(img.img)" class="layui-upload-img" data-src="data:image/jpeg;base64,@Convert.ToBase64String(img.img)" width="200" heigth="200px">
+                                                                <img src="data:image/jpeg;base64,@Convert.ToBase64String(img.img)" class="layui-upload-img" width="200" heigth="200px">
                                                             </th>
                                                             <th>
                                                                 <button class="layui-btn layui-btn-xs layui-btn-danger" onclick="delect(this,@img.id)">删除</button>
-                                                                <button class="layui-btn layui-btn-xs layui-btn-danger demo-delete">查看</button>
+                                                                <a href="javascript:img('@Convert.ToBase64String(img.img)')" class="layui-btn layui-btn-xs layui-btn-danger"><i class="mdi mdi-plus-circle"></i>查看</a>
                                                             </th>
                                                         </tr>
                                                     }
@@ -127,6 +132,9 @@
                                         </div>
                                     </div>
                                     <input class="form-control" id="quality" name="quality" type="text" hidden>
+                                    <label for="signin_form">图片预览</label>
+                                    <img style="width:100%;height:50%;background-color:#ff0000" id="img" />
+                                    <br />
                                     <div class="layui-upload">
                                         <button type="button" class="layui-btn layui-btn-normal" id="testList">添加</button>
                                         <div class="layui-upload-list">

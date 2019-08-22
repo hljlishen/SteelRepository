@@ -2,7 +2,7 @@
 @{
     Layout = "~/Views/AdminIndex/AdminIndex.cshtml";
 }
-@{ List<Models.Employee> employee = (List<Models.Employee>)ViewData["Employee"];}
+
 <!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -52,7 +52,6 @@
         }
 
         function EmployeeSelect(id) {
-            alert(id);
             $.ajax({
                 url: "@Url.Action("Department_list")",
                 type: "post",
@@ -93,6 +92,7 @@
         }
     </script>
 </head>
+@{ List<Models.Employee> employee = (List<Models.Employee>)ViewData["Employee"];}
 <body>
 
     <div class="content-page">
@@ -149,9 +149,11 @@
                                                                 if (dep.parentNodeId == depart.id)
                                                                 {
                                                                     <li class="form-row">
-                                                                        <a href="javascript:EmployeeSelect(@dep.id);">
-                                                                            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="mdi mdi-alpha-g-box"></i>@dep.departmentName</span>
-                                                                        </a>
+                                                                        <form method="post" action="/Department/Department_list">
+                                                                            <a href="javascript:EmployeeSelect(@dep.id);">
+                                                                                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="mdi mdi-alpha-g-box"></i>@dep.departmentName</span>
+                                                                            </a>
+                                                                        </form>
                                                                         <div class="layui-btn-group">
                                                                             <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" onclick="DepartmentDelete(@dep.id)"><i class="layui-icon"></i></button>
                                                                             <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" onclick="DepartmentUpdate(@dep.id)"><i class="layui-icon"></i></button>
@@ -180,7 +182,7 @@
                     <div class="card col-md-4">
                         <div div class="card-body ">
                             <div class="table-responsive ">
-                                
+
                                 <table class="table table-centered table-striped dt-responsive nowrap w-100">
                                     <thead>
                                         <tr>
@@ -221,6 +223,6 @@
 
 
         </div>
-     </div>
+    </div>
 </body>
 </html>
