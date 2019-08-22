@@ -17,7 +17,7 @@ namespace SteelRepository.Controllers
         public ActionResult InCome_list()
         {
             ViewData["MaterialCode"] = MaterialCode.GetMaterialCodeList();
-            ViewData["employee"] = Employee.SelectAll();
+            ViewData["manufacturer"] = Manufacturer.SelectAll();
             ViewData["outcome"] = OutCome.SelectAll();
             return View(InCome.GetInComes());
         }

@@ -4,7 +4,7 @@
 }
 @{
     List<Models.MaterialCode> material = (List<Models.MaterialCode>)ViewData["MaterialCode"];
-    List<Models.Employee> employee = (List<Models.Employee>)ViewData["employee"];
+    List<Models.Manufacturer> manufacturer = (List<Models.Manufacturer>)ViewData["manufacturer"];
 }
 <head>
     <meta charset="utf-8" />
@@ -112,12 +112,12 @@
                                                         <input class="form-control" id="test2" type="text" name="date1" style="width:200px">
                                                     </td>
                                                     <td>
-                                                        <label style="width:100%;text-align:left">借用人查询</label>
+                                                        <label style="width:100%;text-align:left">厂商查询</label>
                                                         <select name="employeeid" style="width:200px;height:40px" class="form-control">
                                                             <option value="0">请选择</option>
-                                                            @foreach (var emp in employee)
+                                                            @foreach (var man in manufacturer)
                                                             {
-                                                                <option value="@emp.id">@emp.name</option>
+                                                                <option value="@man.id">@man.manufacturersName</option>
                                                             }
                                                         </select>
                                                     </td>
