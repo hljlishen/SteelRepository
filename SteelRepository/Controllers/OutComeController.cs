@@ -41,5 +41,10 @@ namespace SteelRepository.Controllers
             ViewData["outcome"] = OutCome.MulSelectCheckOutCome(b, begin, e, end, materialCodeid, employeeid);
             return View();
         }
+        [HttpPost]
+        public JsonResult OutCome_revocation()
+        {
+            return Json(OutCome.OutComeRevocation());
+        }
     }
 }

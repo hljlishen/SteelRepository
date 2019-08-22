@@ -89,7 +89,8 @@ namespace Models
                 {
                     return null;
                 }
-                return helper.Select<MaterialCode>(p => p.code == code);
+                var a  = helper.Select<MaterialCode>(p => p.code == code);
+                return a;
             }
         }
 

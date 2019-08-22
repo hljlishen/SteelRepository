@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq.Expressions;
 
 namespace DbInterface
@@ -18,6 +19,7 @@ namespace DbInterface
         int Delete<T>(int id, bool commit = true) where T : class;
         int DeleteRange<T>(IEnumerable<T> tList, bool commit = true) where T : class;
         int DeleteWhere<T>(Expression<Func<T, bool>> expression, bool commit = true) where T : class;
+        DbRawSqlQuery<T> SqlQuery<T>(string sql, params object[] parameters);
         int Commit();
     }
 }

@@ -33,25 +33,72 @@
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-centered table-striped dt-responsive nowrap w-100" id="products-datatable3">
-                                        <thead>
-                                            <tr>
-                                                <th>货品出库时仓位</th>
-                                                <th>出库项目名称</th>
-                                                <th>备注</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>@Models.OutCome.GetPositionName(outCome.inventoryId)</td>
-                                                <td>@Models.OutCome.GetProjectName(outCome.inventoryId)</td>
-                                                <td>@outCome.instructions</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                        <div class="signin-form">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="signin_form">货品编号：</label>
+                                    <input class="form-control" name="name1" type="text" value="@Models.OutCome.GetMaterCodeName(outCome.inventoryId)" readonly="" />
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="signin_form">货品种类：</label>
+                                    <input class="form-control" name="model" type="text" value="@Models.OutCome.GetCategoryName(outCome.inventoryId).categoryName" readonly="" />
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="signin_form">货品名称：</label>
+                                    <input class="form-control" name="category" type="text" value="@Models.OutCome.GetNameName(outCome.inventoryId)" readonly="" />
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="signin_form">货品规格：</label>
+                                    <input class="form-control" name="materialCode" type="text" value="@Models.OutCome.GetModelName(outCome.inventoryId)" readonly="" />
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="signin_form">货品出库数量：</label>
+                                    <input class="form-control" name="batch" type="text" value="@outCome.number" readonly="" />
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="signin_form">货品单位：</label>
+                                    <input class="form-control" name="unit" type="text" value="@outCome.unit" readonly="" />
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="signin_form">货品单价（元）：</label>
+                                    <input class="form-control" name="unitPrice" type="text" value="@Models.OutCome.GetInComeunitPrice(outCome.inventoryId)" readonly="" />
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="signin_form">货品总价（元）：</label>
+                                    <input class="form-control" name="unitPrice" type="text" value="@outCome.price" readonly="" />
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="signin_form">货品出库时间：</label>
+                                    <input class="form-control" name="operator" type="text" value="@outCome.recipientsTime.ToString("d")" readonly="" />
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="signin_form">货品借用人：</label>
+                                    <input class="form-control" name="amount" type="text" value="@Models.OutCome.GetEmployeeName(outCome.borrowerId)" readonly="" />
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="signin_form">货品出库仓位：</label>
+                                    <input class="form-control" name="menufacture" type="text" value="@Models.OutCome.GetPositionName(outCome.inventoryId)" readonly="" />
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="signin_form">出库项目名称：</label>
+                                    <input class="form-control" name="position" type="text" value="@Models.OutCome.GetProjectName(outCome.inventoryId)" readonly="" />
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="layui-inline col-md-6 form-group">
+                                    <label for="signin_form">备注:</label>
+                                    <textarea id="instructions" name="instructions" style=" width: 99%; height: 90px" readonly="">@outCome.instructions</textarea>
+                                    </div>
                                 </div>
                             </div>
                         </div>

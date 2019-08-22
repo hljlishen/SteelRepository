@@ -43,42 +43,53 @@ namespace Models
                 return helper.Delete<Position>(id);
             }
         }
-        //public static List<InCome> GetInComes(int id)
-        //{
-        //    List<InCome> ret = new List<InCome>();
-        //    using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
-        //    {
-        //        var inventories = helper.Select<Inventory>(p => p.positionId == id);
-        //        foreach (var item in inventories)
-        //        {
-        //            ret.Add(helper.FindId<InCome>(item.incomeId));
-        //        }
-        //    }
-
-        //    return ret;
-        //}
-
-        //public static List<InCome> GetInCome(int id)
-        //{
-        //    using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
-        //    {
-        //        List<InCome> ins = new List<InCome>();
-        //        foreach (var income in GetInComes(id))
-        //        {
-        //            income.amount = WeightConverter.Convert(income.unit, income.amount, "kg");
-        //            ins.Add(income);
-        //        }
-        //        return ins;
-        //    }
-        //}
+        public static string ValueGetName(string value)
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                List<string> namestr = new List<string>();
+                foreach (var Mater in MaterialCode.GetMaterialCodes(value))
+                {
+                    namestr.Add(helper.FindId<Name>(Mater.materialNameId).materialName);
+                }
+                return ToString(namestr);
+            }
+        }
+        public static string ValueGetModel(string value)
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                List<string> namestr = new List<string>();
+                foreach (var Mater in MaterialCode.GetMaterialCodes(value))
+                {
+                    namestr.Add(helper.FindId<Model>(Mater.materialModelId).modelName);
+                }
+                return ToString(namestr);
+            }
+        }
+        public static string ToString(List<string> list)
+        {
+            string Tostr = "";
+            foreach (var str in list)
+            {
+                Tostr += str + " ";
+            }
+            return Tostr;
+        }
 
         public static Dictionary<string, double> StatisticAmount(int positionId)
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
+                List<Inventory> ins = new List<Inventory>();
                 MultipleSeriesStatistics2D<Inventory> statistics2D = new MultipleSeriesStatistics2D<Inventory>(p => p.GetMaterialCode(helper));
                 statistics2D.AddSeries("amount", p => p.amount);
-                var Sum = statistics2D.GetValues(helper.Select<Inventory>(p => p.positionId == positionId && p.amount > 0));
+                foreach (var inven in helper.Select<Inventory>(p => p.positionId == positionId && p.amount > 0))
+                {
+                    inven.amount = WeightConverter.Convert(inven.unit, inven.amount, "kg");
+                    ins.Add(inven);
+                }
+                var Sum = statistics2D.GetValues(ins);
                 return Sum["amount"];
             }
         }

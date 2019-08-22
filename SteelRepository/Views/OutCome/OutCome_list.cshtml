@@ -14,19 +14,36 @@
     <link href="~/Content/AdminIndex/css/icons.min.css" rel="stylesheet" />
     <link href="~/Content/AdminIndex/css/app.min.css" rel="stylesheet" />
     <script src="~/Content/AdminIndex/js/app.min.js"></script>
-
     <script type="text/javascript">
         function OutComeMore(id) {
             var url = "OutCome_More?id=" + id;
             var width = "100%";
             var height = "400px";
-            parent.OpenWin(url, width, height);
+            parent.OpenWin2(url, width, height);
+        }
+        function OutComerevocation() {
+            var flag = confirm("是否要撤销最新一条出库信息？");
+        if (flag) {
+            $.ajax({
+                url: "@Url.Action("OutCome_revocation")",
+                type: "post",
+                dataType: "json",
+                success: function (data) {
+                    data = eval("(" + data + ")");
+                    if (data) {
+                        alert("撤销成功！");
+                        parent.openFrame("OutCome_list");
+                    } else {
+                        alert("撤销失败！");
+                    }
+                }
+            });
+        }
         }
     </script>
     <style>
         select {
             border: solid 1px #000;
-            appearance: none;
             -moz-appearance: none;
             -webkit-appearance: none;
             background: url("下拉箭头图片") right center no-repeat;
@@ -122,13 +139,16 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row mb-2">
-                            <div class="col-sm-4">
-                                <a href="/OutCome/OutCome_list" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle mr-2"></i>显示全部</a>
-                            </div>
-                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-centered table-striped dt-responsive nowrap w-100" id="products-datatable3">
+                            <table class="table table-centered table-striped dt-responsive nowrap w-100" id="products-datatable3" style="width:auto;height:auto">
                                 <thead>
                                     <tr>
                                         <th style="width: 20px;">
@@ -139,22 +159,24 @@
                                         </th>
                                         <th>编号</th>
                                         <th>货品编号</th>
+                                        <th>货品种类</th>
                                         <th>货品名称</th>
-                                        <th>货品类别</th>
+                                        <th>货品规格</th>
                                         <th>货品出库数量</th>
                                         <th>货品单位</th>
                                         <th>货品单价</th>
                                         <th>货品总价</th>
                                         <th>货品出库时间</th>
                                         <th>货品借用人</th>
-                                        <th style="width: 125px;">更多</th>
+                                        <th >备注</th>
+                                        <th style="width: 50px;">详细信息</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @{int count = 1; }
                                     @foreach (var outComes in outcomelist)
                                     {
-                                        <tr>
+                                        <tr >
                                             <td>
                                                 <div class="custom-control custom-checkbox">
                                                     <input type="checkbox" class="custom-control-input" id="customCheck2">
@@ -163,6 +185,7 @@
                                             </td>
                                             <td class="table-user">@count</td>
                                             <td>@Models.OutCome.GetMaterCodeName(outComes.inventoryId)</td>
+                                            <td>@Models.OutCome.GetCategoryName(outComes.inventoryId).categoryName</td>
                                             <td>@Models.OutCome.GetNameName(outComes.inventoryId)</td>
                                             <td>@Models.OutCome.GetModelName(outComes.inventoryId)</td>
                                             <td>@outComes.number</td>
@@ -171,6 +194,7 @@
                                             <td>@outComes.price</td>
                                             <td>@outComes.recipientsTime.ToString("d")</td>
                                             <td>@Models.OutCome.GetEmployeeName(outComes.borrowerId)</td>
+                                            <td style= "word-wrap:break-word">@outComes.instructions</td>
                                             <td>
                                                 <a href="javascript:OutComeMore(@outComes.id)" class="action-icon"> <i class="mdi mdi-calendar-text-outline"></i></a>
                                             </td>
@@ -180,6 +204,12 @@
                                 </tbody>
                             </table>
                         </div>
+                        <div class="row mb-2">
+                            <div class="col-sm-4">
+                                <a href="javascript:OutComerevocation()" class="btn btn-primary"><i class="mdi mdi-plus-circle mr-2"></i>撤销最新出库记录</a>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

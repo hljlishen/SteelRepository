@@ -1,8 +1,7 @@
-﻿@model Models.OutCome
+﻿@model Models.Inventory
 @{
     Layout = null;
 }
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,24 +17,46 @@
     <script type="text/javascript">
         function add() {
             $.ajax({
-                url: "@Url.Action("InCome_add")",
+                url: "@Url.Action("OutCome_add")",
                 type: "post",
                 data: $("form").serialize(),
                 dataType: "json",
                 success: function (data) {
                     data = eval("(" + data + ")");
                     if (data) {
-                        alert("添加成功");
+                        alert("出库成功");
                         parent.closeWin2();
-                        parent.openFrame("InCome_list");
+                        parent.openFrame("Inventory_list");
                     } else {
+                        alert("出库失败");
+                        parent.closeWin2();
+                        parent.openFrame("Inventory_list");
                     }
                 }
             });
         }
     </script>
+    <style>
+        select {
+            border: solid 1px #000;
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            background: url("下拉箭头图片") right center no-repeat;
+            padding-right: 20px;
+        }
+
+            select::-ms-expand {
+                display: none;
+            }
+    </style>
 </head>
 <body>
+    @{
+        Models.Inventory inventory = (Models.Inventory)ViewData["Inventory"];
+        List<Models.Employee> employee = (List<Models.Employee>)ViewData["employee"];
+        string name = (string)ViewData["name"];
+        List<Models.Project> project = (List<Models.Project>)ViewData["project"];
+    }
     <section class="signin popup-in">
         <div class="container">
             <div class="sign-content popup-in-content">
@@ -49,130 +70,87 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">材料名称：</label>
-                                            <input class="form-control" name="name1" type="text" />
+                                            @Html.TextBox("name", @Models.Inventory.GetNameName(inventory.incomeId), new { @readonly = "readonly", @class = "form-control", type = "text" })
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">材料规格：</label>
-                                            <input class="form-control" name="model" type="text" />
+                                            @Html.TextBox("ModelName", Models.Inventory.GetModelName(inventory.incomeId), new { @readonly = "readonly", @class = "form-control", type = "text" })
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">材料编号：</label>
-                                            <input class="form-control" name="materialCode" type="text" />
+                                            @Html.TextBox("CodeName", Models.Inventory.GetMaterCodeName(inventory.incomeId), new { @readonly = "readonly", @class = "form-control", type = "text" })
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="example-date">出库时间：</label>
-                                            <input class="form-control" type="date" name="date">
+                                            <input class="form-control" name="date" value="@Models.Inventory.NewDateTime()">
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">出库数量：</label>
-                                            <input class="form-control" name="batch" type="text" />
+                                            @Html.TextBox("number", inventory.amount, new { @class = "form-control", type = "number" })
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">货品单位：</label>
-                                            @*@Html.DropDownListFor(m => m.unit, ViewBag.select as SelectList, new { @class = "form-control", id = "example-select" })*@
+                                            @Html.DropDownListFor(m => m.unit, ViewBag.select as SelectList, new { @class = "form-control", id = "example-select" })
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">操作人：</label>
-                                            @*@Html.DropDownListFor(m => m.operatorId, ViewBag.selectOperator as SelectList, new { @class = "form-control", id = "example-select" })*@
-                                            <div class="form-group col-md-6">
-                                                <label for="signin_form">项目名称：</label>
-                                                <input class="form-control" name="amount" type="text" />
-                                            </div>
+                                            @Html.TextBox("Name", @name, new { @readonly = "readonly", @class = "form-control", type = "text" })
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="signin_form">借用人：</label>
+                                            <select class="form-control" name="employeeName">
+                                                <option value="0">------请选择------</option>
+                                                @foreach (var emp in employee)
+                                                {
+                                                    <option value="@emp.id">@emp.name</option>
+                                                }
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            <label for="signin_form">厂家：</label>
-                                            @Html.DropDownListFor(m => m.menufactureId, ViewBag.selectMenu as SelectList, new { @class = "form-control", id = "example-select" })
+                                            <label for="signin_form">项目令号：</label>
+                                            <select class="form-control" name="project">
+                                                <option value="0">------请选择------</option>
+                                                @foreach (var pro in project)
+                                                {
+                                                    <option value="@pro.id">令号：@pro.projectCode      名称：@pro.projectName</option>
+                                                }
+                                            </select>
                                         </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="signin_form">备  注：</label>
-                                            @Html.DropDownList("position", ViewBag.selectPosition as SelectList, new { @class = "form-control", id = "example-select" })
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            <label for="signin_form">入库时间：</label>
-                                            <input type="text" class="layui-input" id="test1" name="InComeTime">
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="signin_form">复检时间：</label>
-                                            <input type="text" class="layui-input" id="test2" name="RecheckTime">
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            <label for="signin_form">复检周期(年)：</label>
-                                            <input class="form-control" name="RecheckCycle" type="text" />
-                                        </div>
-                                    </div>
 
-                                    <div class="form-group col-md-12">
-                                        <label for="signin_form">产品质量证明：</label>
-                                        <div class="layui-upload">
-                                            <button type="button" class="layui-btn layui-btn-normal" id="testList">选择</button>
-                                            <div class="layui-upload-list">
-                                                <table class="layui-table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>文件名</th>
-                                                            <th>预览图</th>
-                                                            <th>大小</th>
-                                                            <th>操作</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody id="demoList"></tbody>
-                                                </table>
-                                            </div>
-                                            <div class="form-group" id="qualityId">
-                                            </div>
-                                        </div>
-                                        <input class="form-control" id="qualityCount" name="qualityCount" type="text" hidden>
-                                    </div>
-
-                                    <div class="form-group col-md-12">
-                                        <label for="signin_form">复验结果报告：</label>
-                                        <div class="layui-upload">
-                                            <button type="button" class="layui-btn layui-btn-normal" id="testList2">选择</button>
-                                            <div class="layui-upload-list">
-                                                <table class="layui-table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>文件名</th>
-                                                            <th>预览图</th>
-                                                            <th>大小</th>
-                                                            <th>操作</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody id="demoList2"></tbody>
-                                                </table>
-                                            </div>
-                                            <div class="form-group" id="recheckId">
-                                            </div>
-                                        </div>
-                                        <input class="form-control" id="recheckCount" name="recheckCount" type="text" hidden>
                                     </div>
                                 }
                             </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-body" >
+                                            <h4 class="header-title">备注：</h4>
+                                            <form method="post" action="/Inventory/OutCome_add">
+                                                <textarea id="instructions" name="instructions" style=" width: 99%; height: 90px" placeholder="请输入详细描述......."></textarea>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="row">
+                    <div class="row" align="center">
                         <div class="col-sm-12">
                             <div class="signin-footer">
-                                <button type="button" class="btn btn-primary" onclick="add();">
-                                    添加
+                                <button type="button" class="btn btn-primary" onclick="add();" style="width:200px;height:50px">
+                                    出库
                                 </button>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>

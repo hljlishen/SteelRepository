@@ -271,6 +271,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\fastjson-1.2.58.jar" />
     <Content Include="Content\img.css" />
     <Content Include="Content\Inventory\js\demo.customers.js" />
     <Content Include="Content\Inventory\js\jquery-3.1.1.js" />
@@ -333,6 +334,12 @@
     <Content Include="Content\Position\js\demo.britechart1.js" />
     <Content Include="Content\Position\js\demo.customers.js" />
     <Content Include="Content\Position\js\echarts.min.js" />
+    <Content Include="Content\text\css\app.min.css" />
+    <Content Include="Content\text\css\simplemde.min.css" />
+    <Content Include="Content\text\css\summernote-bs4.css" />
+    <Content Include="Content\text\js\app.min.js" />
+    <Content Include="Content\text\js\demo.summernote.js" />
+    <Content Include="Content\text\js\summernote-bs4.min.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\a.jpg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />

@@ -204,5 +204,33 @@ namespace DbService.Tests
                 Assert.IsTrue(result != null);
             }
         }
+
+        [TestMethod()]
+        public void SqlQueryTest()
+        {
+            using (DbHelper dbHelper = new DbHelper(new userEntities()))
+            {
+                var ret = dbHelper.SqlQuery<Query3<string, string, string>>("select InCome.batch as Q1, MaterialCode.code as Q2, Name.materialName as Q3 from InCome, MaterialCode, Name where InCome.codeId = MaterialCode.id and MaterialCode.materialNameId = Name.id");
+                foreach (var item in ret)
+                {
+
+                }
+            }
+        }
+    }
+
+    class Query3<T1,T2,T3>
+    {
+        T1 Q1 { get; set; }
+        T2 Q2 { get; set; }
+        T3 Q3 { get; set; }
+    }
+
+    class Query4<T1, T2, T3, T4>
+    {
+        T1 Q1 { get; set; }
+        T2 Q2 { get; set; }
+        T3 Q3 { get; set; }
+        T4 Q4 { get; set; }
     }
 }

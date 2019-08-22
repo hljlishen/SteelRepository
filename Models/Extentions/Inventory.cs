@@ -68,9 +68,9 @@ namespace Models
             }
             return sum;
         }
-        public static string GetInComeUnit(int incomeId)
+        public static InCome IncomeIdGetInCome(int incomeId)
         {
-            return Dbhelper.FindId<InCome>(incomeId).unit;
+            return Dbhelper.FindId<InCome>(incomeId);
         }
         public static string GetPositionName( int Positionid)
         {
@@ -80,10 +80,17 @@ namespace Models
         {
             return Dbhelper.FindId<InCome>(incomeId).storageTime;
         }
-        public static double GetSurpius(int Incomeid, int Inventoryid)
+        public static string NewDateTime()
         {
-            double dif = GetInComeAmount(Incomeid) - GetOutComeNumber(Inventoryid);
-            return dif;
+            return DateTime.Now.ToLongDateString().ToString();
+        }
+        public static Inventory GetInventory(int Inventoryid)
+        {
+            return Dbhelper.FindId<Inventory>(Inventoryid);
+        }
+        public static string GetEmployeeName(int Incomeid)
+        {
+            return Dbhelper.FindId<Employee>(IncomeIdGetInCome(Incomeid).operatorId).name;
         }
         public static List<Inventory> GetInventoryIds(string codeinput, string nameinput)
         {
@@ -149,6 +156,11 @@ namespace Models
                 }
             }
             return invenlists;
+        }
+        public static Category GetCategoryName(int incomeid)
+        {
+            var incom = Dbhelper.FindId<InCome>(incomeid);
+            return Dbhelper.FindId<Category>(incom.categoryId);
         }
         public static List<Inventory> MulSelectCheckInventory(bool b, DateTime begin, bool e, DateTime end, string codeinput, string nameinput)
         {
@@ -413,7 +425,7 @@ namespace Models
                         }
                         else
                         {
-                            return inventorys;
+                            return SelectAll();
                         }
                     }
                 }

@@ -9,6 +9,7 @@ namespace SteelRepository.Controllers
 {
     public class IndexController : Controller
     {
+        private static string adminname;
         // GET: Index
         public ActionResult Index()
         {
@@ -28,6 +29,7 @@ namespace SteelRepository.Controllers
             {
                 IsLogin = true;
                 Session["name"] = e.name;
+                adminname = e.name;
                 Session["permissions"] = e.permissions;
                 Session["IsLogin"] = true;
                 Session["id"] = e.id;
@@ -47,6 +49,11 @@ namespace SteelRepository.Controllers
             employee.permissions = 3;
             employee.state = 3;
             return Json(Employee.Inster(employee));
+        }
+
+        public static string adminName()
+        {
+            return adminname;
         }
     }
 }
