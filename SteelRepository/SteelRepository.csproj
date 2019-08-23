@@ -400,7 +400,6 @@
     <Content Include="Views\Manufacturer\Manufacturer_add.cshtml" />
     <Content Include="Views\Manufacturer\Manufacturer_list.cshtml" />
     <Content Include="Views\Position\Position_Select.cshtml" />
-    <Content Include="Views\Manufacturer\Manufacturer_information.cshtml" />
     <Content Include="Views\Manufacturer\Manufacturer_select.cshtml" />
     <Content Include="Views\Manufacturer\Manufacturer_update.cshtml" />
     <Content Include="Views\Project\Project_StatisticalChart.cshtml" />
