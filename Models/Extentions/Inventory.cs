@@ -162,6 +162,11 @@ namespace Models
             var incom = Dbhelper.FindId<InCome>(incomeid);
             return Dbhelper.FindId<Category>(incom.categoryId);
         }
+        public static Manufacturer GetMenufactureName(int InComeid)
+        {
+            var income = Dbhelper.FindId<InCome>(InComeid);
+            return Dbhelper.FindId<Manufacturer>(income.menufactureId.Value);
+        }
         public static List<Inventory> MulSelectCheckInventory(bool b, DateTime begin, bool e, DateTime end, string codeinput, string nameinput)
         {
             ExpressionBuilder<Inventory> builder = new ExpressionBuilder<Inventory>();

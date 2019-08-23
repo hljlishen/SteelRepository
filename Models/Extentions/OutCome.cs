@@ -61,6 +61,19 @@ namespace Models
         {
             return Dbhelper.SelectAll<OutCome>();
         }
+        public static List<OutCome> GetOutComesDesc()
+        {
+            List<OutCome> liDesc = new List<OutCome>();
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                var ret = helper.SqlQuery<OutCome>("select OutCome.* from OutCome order by OutCome.recipientsTime desc");
+                foreach (var outcome in ret)
+                {
+                    liDesc.Add(outcome);
+                }
+                return liDesc;
+            }
+        }
         public static OutCome GetOutCome(int OutComeId)
         {
             return Dbhelper.FindId<OutCome>(OutComeId);
@@ -191,6 +204,11 @@ namespace Models
         {
             ExpressionBuilder<OutCome> builder = new ExpressionBuilder<OutCome>();
             List<OutCome> comes = new List<OutCome>();
+
+
+
+
+
             if (b)
             {
                 if (e)

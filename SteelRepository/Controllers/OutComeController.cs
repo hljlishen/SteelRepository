@@ -19,7 +19,7 @@ namespace SteelRepository.Controllers
         {
             ViewData["MaterialCode"] = MaterialCode.GetMaterialCodeList();
             ViewData["employee"] = Employee.SelectAll();
-            ViewData["outcome"] = OutCome.SelectAll();
+            ViewData["outcome"] = OutCome.GetOutComesDesc();
             return View();
         }
         public ActionResult OutCome_More(int id)

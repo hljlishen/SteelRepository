@@ -18,20 +18,21 @@ namespace SteelRepository.Controllers
         {
             ViewData["MaterialCode"] = MaterialCode.GetMaterialCodeList();
             ViewData["manufacturer"] = Manufacturer.SelectAll();
-            ViewData["outcome"] = OutCome.SelectAll();
-            return View(InCome.GetInComes());
+            ViewData["income"] = InCome.GetInComesDesc();
+            return View();
         }
 
         [HttpPost]
         public ActionResult InCome_list(FormCollection collection)
         {
             ViewData["MaterialCode"] = MaterialCode.GetMaterialCodeList();
-            ViewData["employee"] = Employee.SelectAll();
-            bool b = DateTime.TryParse(collection["date"], out DateTime begin);
-            bool e = DateTime.TryParse(collection["date1"], out DateTime end);
+            ViewData["manufacturer"] = Manufacturer.SelectAll();
+            string begin = collection["date"];
+            string end = collection["date1"];
             int materialCodeid = Convert.ToInt32(collection["materialCodeid"]);
-            int employeeid = Convert.ToInt32(collection["employeeid"]);
-            ViewData["income"] = OutCome.MulSelectCheckOutCome(b, begin, e, end, materialCodeid, employeeid);
+            int manufacturerid = Convert.ToInt32(collection["manufacturerid"]);
+            ViewData["income"] = null;
+            ViewData["income"] = MaterialCode.MulSelectCheckInCome(begin, end, materialCodeid, manufacturerid);
             return View();
         }
 
