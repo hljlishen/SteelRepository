@@ -13,22 +13,41 @@
     <link href="~/Content/AdminIndex/css/icons.min.css" rel="stylesheet" />
     <script src="~/Content/AdminIndex/js/app.min.js"></script>
     <script type="text/javascript">
+        var isName = true;
+        function check() {
+            var name = $("#name").val();
+            var n = /^[\u4E00-\u9FA5A-Za-z0-9]+$/;
+            if (!n.test(name) || name == "") {
+                document.getElementById("Isname").style.display = "";
+                isName = false;
+            } else {
+                document.getElementById("Isname").style.display = "none";
+                isName = true;
+             }
+
+        }
+
         function add() {
-            $.ajax({
-                url: "@Url.Action("Company_add")",
-                type: "post",
-                data: $("form").serialize(),
-                dataType: "json",
-                success: function (data) {
-                    data = eval("(" + data + ")");
-                    if (data) {
-                        alert("添加成功");
-                        parent.closeWin();
-                        parent.openFrame("Department_list");
-                    } else {
+            check();
+            if (isName) {
+                $.ajax({
+                    url: "@Url.Action("Company_add")",
+                    type: "post",
+                    data: $("form").serialize(),
+                    dataType: "json",
+                    success: function (data) {
+                        data = eval("(" + data + ")");
+                        if (data) {
+                            alert("添加成功");
+                            parent.closeWin();
+                            parent.openFrame("Department_list");
+                        } else {
+                        }
                     }
-                }
-            });
+                });
+            } else {
+                return;
+            }
         }
     </script>
 </head>
@@ -45,7 +64,8 @@
                                 {
                                 <div class="form-group">
                                     <label for="signin_form">公司名称：</label>
-                                    @Html.TextBoxFor(m => m.departmentName, new { @class = "form-control", type = "text" })
+                                    <label id="Isname" style="color:#ff0000;display:none;font-size:13px">*公司名称不为空</label>
+                                    @Html.TextBoxFor(m => m.departmentName, new { @class = "form-control", type = "text",id="name" })
                                 </div>
                                 }
                             </div>
