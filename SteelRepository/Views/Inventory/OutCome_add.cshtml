@@ -94,12 +94,19 @@
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">领用人：</label>
-                                            <select class="form-control" name="employeeName">
+                                            @*<select class="form-control" name="employeeName">
                                                 @foreach (var emp in employee)
                                                 {
                                                     <option value="@emp.id">姓名：@emp.name  工号：@emp.number  部门：@Models.Department.GetDepartment(emp.departmentId.Value).departmentName</option>
                                                 }
-                                            </select>
+                                            </select>*@
+                                            <input id="employeeName" name="employeeName" list="codelist" style="width:350px;height:40px" class="form-control" placeholder="请选择或输入领用人" />
+                                            <datalist id="codelist">
+                                                @foreach (var emp in employee)
+                                                {
+                                                <option>姓名：@emp.name  工号：@emp.number  部门：@Models.Department.GetDepartment(emp.departmentId.Value).departmentName</option>
+                                                }
+                                            </datalist>
                                         </div>
                                     </div>
                                     <div class="form-row">
