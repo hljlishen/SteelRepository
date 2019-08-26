@@ -14,23 +14,24 @@
     <script src="~/Content/AdminIndex/js/app.min.js"></script>
     <script type="text/javascript">
         var isTrue = true;
-        var ismName1 = true;
+        var ismName1 = false;
         var isNumber1 = true;
         var isAddress1 = true;
 
         function check() {
             //名称
             var mName1 = $("#mName1").val();
-            if (mName1 == "") {
-                document.getElementById("IsmNames").style.display = "";
-                ismName1 = false;
-            } else {
-                document.getElementById("IsmNames").style.display = "none";
+            var reg = /^\s*$/;
+            if (!reg.test(mName1)) {
+                document.getElementById("IsmName1").style.display = "none";
                 ismName1 = true;
+            } else {
+                document.getElementById("IsmName1").style.display = "";
+                ismName1 = false;
             }
+           
             //电话
             var tel1 = $("#tel1").val();
-            //var tel1 = document.getElementById('tel1').value;
             if (!(/^((0\d{2,3}-\d{7,8})|(1[34578]\d{9}))$/.test(tel1))|| tel1=="") {
                 document.getElementById("IsNum1").style.display = "";
                 isNumber1 = false;
@@ -40,12 +41,13 @@
             }
             //地址
             var address1 = $("#address1").val();
-            if (address1 == "") {
-                document.getElementById("IsAddress1").style.display = "";
-                isAddress1 = false;
-            } else {
+            var reg = /^\s*$/;
+            if (!reg.test(address1)) {
                 document.getElementById("IsAddress1").style.display = "none";
                 isAddress1 = true;
+            } else {
+                document.getElementById("IsAddress1").style.display = "";
+                isAddress1 = false;
             }
             if (ismName1 && isNumber1 && isAddress1) {
                 isTrue = true;
@@ -96,7 +98,7 @@
                                 {
                                 <div class="form-group">
                                     <label for="signin_form">厂商名称：</label>
-                                    <label id="IsmNames" style="color:#ff0000;display:none;font-size:13px">*名称不能为空，请重新填写</label>
+                                    <label id="IsmName1" style="color:#ff0000;display:none;font-size:13px">*名称不能为空，请重新填写</label>
                                     <div class="input-group">
                                         @Html.TextBox("manufacturersName", manufacturer.manufacturersName, new { @class = "form-control", type = "text",id="mName1" })
                                     </div>
