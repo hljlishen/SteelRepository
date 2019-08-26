@@ -46,6 +46,8 @@
     @{
         List<Models.Inventory> inventorylist = (List<Models.Inventory>)ViewData["Inventorylist"];
         List<Models.MaterialCode> material = (List<Models.MaterialCode>)ViewData["MaterialCode"];
+        List<Models.Manufacturer> manufacturers = (List<Models.Manufacturer>)ViewData["manufacturer"];
+        List<Models.Position> positions = (List<Models.Position>)ViewData["position"];
     }
     <div class="content-page">
         <div class="content">
@@ -97,6 +99,26 @@
                                                                     <option>@name.materialName</option>
                                                                 }
                                                             </datalist>
+                                                        </td>
+                                                        <td>
+                                                            <label style="width:100%;text-align:left">厂商查询</label>
+                                                            <select name="manufacturerid" style="width:200px;height:40px" class="form-control">
+                                                                <option value="0">请选择</option>
+                                                                @foreach (var man in manufacturers)
+                                                                {
+                                                                    <option value="@man.id">@man.manufacturersName</option>
+                                                                }
+                                                            </select>
+                                                        </td>
+                                                        <td>
+                                                            <label style="width:100%;text-align:left">仓位查询</label>
+                                                            <select name="positionid" style="width:200px;height:40px" class="form-control">
+                                                                <option value="0">请选择</option>
+                                                                @foreach (var posi in positions)
+                                                                {
+                                                                    <option value="@posi.id">@posi.positionName</option>
+                                                                }
+                                                            </select>
                                                         </td>
                                                         <td>
                                                             <label for="example-date" style="width:100%;text-align:left">开始时间：</label>

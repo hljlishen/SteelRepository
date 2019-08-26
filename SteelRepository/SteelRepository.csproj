@@ -424,6 +424,7 @@
     <Content Include="Views\Inventory\OutCome_add.cshtml" />
     <Content Include="Views\AdminIndex\AdminIndex.cshtml" />
     <Content Include="Views\DataStatistics\DataStatistics.cshtml" />
+    <Content Include="Views\Inventory\OutComeEmployee_new.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

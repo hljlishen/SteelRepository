@@ -16,9 +16,6 @@
     <script src="~/Content/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript">
         function add() {
-
-
-
             $.ajax({
                 url: "@Url.Action("OutCome_add")",
                 type: "post",
@@ -94,17 +91,11 @@
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">领用人：</label>
-                                            @*<select class="form-control" name="employeeName">
-                                                @foreach (var emp in employee)
-                                                {
-                                                    <option value="@emp.id">姓名：@emp.name  工号：@emp.number  部门：@Models.Department.GetDepartment(emp.departmentId.Value).departmentName</option>
-                                                }
-                                            </select>*@
                                             <input id="employeeName" name="employeeName" list="codelist" style="width:350px;height:40px" class="form-control" placeholder="请选择或输入领用人" />
-                                            <datalist id="codelist">
+                                            <datalist id="codelist" name="codelist">
                                                 @foreach (var emp in employee)
                                                 {
-                                                <option>姓名：@emp.name  工号：@emp.number  部门：@Models.Department.GetDepartment(emp.departmentId.Value).departmentName</option>
+                                                <option id=@emp.id>姓名：@emp.name  工号：@emp.number  部门：@Models.Department.GetDepartment(emp.departmentId.Value).departmentName</option>
                                                 }
                                             </datalist>
                                         </div>
@@ -115,11 +106,13 @@
                                             <select class="form-control" name="project">
                                                 @foreach (var pro in project)
                                                 {
-                                                    <option value="@pro.id">令号：@pro.projectCode      名称：@pro.projectName</option>
+                                                    <option value="@pro.id">令号：@pro.projectCode      名称：@pro.projectName </option>
                                                 }
                                             </select>
                                         </div>
-
+                                        <div class="signin-footer">
+                                            <a href="/Inventory/OutComeEmployee_new" class="btn btn-primary"><i class="mdi mdi-plus-circle mr-2"></i>新增员工</a>
+                                        </div>
                                     </div>
                                 }
                             </div>
