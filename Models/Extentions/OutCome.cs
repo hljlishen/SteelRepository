@@ -54,8 +54,13 @@ namespace Models
 
         public static List<OutCome> InComeIdSelect(int inComeId, IDbInterface helper)
         {
-            var inventory = helper.FindFirst<Inventory, int>("incomId", inComeId);
-            return helper.Select<OutCome>(p => p.inventoryId == inventory.id);
+            var inventory = helper.Select<Inventory>(p => p.incomeId == inComeId);
+            int inventoryId = 0;
+            foreach (var inv in inventory)
+            {
+                inventoryId = inv.id;
+            }
+            return helper.Select<OutCome>(p => p.inventoryId == inventoryId);
         }
         public static List<OutCome> SelectAll()
         {

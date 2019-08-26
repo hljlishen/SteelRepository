@@ -32,7 +32,7 @@
            
             //电话
             var tel1 = $("#tel1").val();
-            if (!(/^((0\d{2,3}-\d{7,8})|(1[34578]\d{9}))$/.test(tel1))|| tel1=="") {
+            if (/*!(/^((0\d{2,3}-\d{7,8})|(1[34578]\d{9}))$/.test(tel1))|| */tel1=="") {
                 document.getElementById("IsNum1").style.display = "";
                 isNumber1 = false;
             } else {
@@ -105,7 +105,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="signin_form">联系方式：</label>
-                                    <label id="IsNum1" style="color:#ff0000;display:none;font-size:13px">*电话有误，请重新填写</label>
+                                    <label id="IsNum1" style="color:#ff0000;display:none;font-size:13px">*电话格式有误，请重新填写，其中固定电话须填写区号</label>
                                     <div class="input-group">
                                         @Html.TextBox("contact", manufacturer.contact, new { @class = "form-control", type = "text", id = "tel1" })
 

@@ -142,8 +142,8 @@ namespace SteelRepository.Controllers
             inCome.batch = collection["batch"];
             inCome.menufactureId = int.Parse(collection["manufacturer"]);
             inCome.unit = collection["unit"];
-            inCome.amount = int.Parse(collection["amount"]);
-            inCome.unitPrice = int.Parse(collection["unitPrice"]);
+            inCome.amount = double.Parse(collection["amount"]);
+            inCome.unitPrice = double.Parse(collection["unitPrice"]);
             inCome.priceMeasure = collection["priceMeasure"];
             inCome.storageTime = DateTime.Parse(collection["IncomeText"]);
             inCome.operatorId = int.Parse(collection["operator"]);

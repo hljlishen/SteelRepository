@@ -32,22 +32,97 @@
               });
         });
 
+
+        var isTrue = true;
+        var isISpecise = true;
+        var isIPH = true;
+        var isIper = true;
+        var isINumber = true;
+        var isICycle = true;
+
+        
+        function check() {
+            
+            //类别
+            var ISpecise = $("#ISpecise").val();
+            var n = /^\s*$/;
+            if (!n.test(ISpecise)) {
+                document.getElementById("IsSpecise").style.display = "none";
+                isISpecise = true;
+            } else {
+                document.getElementById("IsSpecise").style.display = "";
+                isISpecise = false;
+            }
+           
+            //批号
+            var IPh = $("#IPh").val();
+            var n = /^\s*$/;
+            if (!n.test(IPh)) {
+                document.getElementById("IsPH").style.display = "none";
+                isIPH = true;
+            } else {
+                document.getElementById("IsPH").style.display = "";
+                isIPH = false;
+            }
+            //单价
+            var Iper = $("#Iper").val();
+            var i = /^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/;
+            if (!i.test(Iper)|| Iper == "") {
+                document.getElementById("IsPer").style.display = "";
+                isIper = false;
+            } else {
+                document.getElementById("IsPer").style.display = "none";
+                isIper = true;
+
+            }
+            //数量
+            var INumber = $("#INumber").val();
+            if (!i.test(INumber) || INumber == "") {
+                document.getElementById("IsNumber").style.display = "";
+                isINumber = false;
+            } else {
+                document.getElementById("IsNumber").style.display = "none";
+                isINumber = true;
+            }
+            //周期
+            var ICycle = $("#ICycle").val();
+            var n = /^\s*$/;
+            if (!n.test(ICycle)) {
+                document.getElementById("IsCycle").style.display = "none";
+                isICycle = true;
+            } else {
+                document.getElementById("IsCycle").style.display = "";
+                isICycle = false;
+            }
+            if (isISpecise && isIPH && isIper && isINumber && isICycle) {
+                isTrue = true;
+            } else {
+                isTrue = false;
+            }
+            return isTrue;
+        }
+
         function update() {
-            $.ajax({
-                url: "@Url.Action("InCome_update")",
-                type: "post",
-                data: $("form").serialize(),
-                dataType: "json",
-                success: function (data) {
-                    data = eval("(" + data + ")");
-                    if (data) {
-                        alert("修改成功");
-                        parent.closeWin2();
-                        parent.openFrame("InCome_list");
-                    } else {
+            check();
+            if (isTrue) {
+                $.ajax({
+                    url: "@Url.Action("InCome_update")",
+                    type: "post",
+                    data: $("form").serialize(),
+                    dataType: "json",
+                    success: function (data) {
+                        data = eval("(" + data + ")");
+                        if (data) {
+                            alert("修改成功");
+                            parent.closeWin2();
+                            parent.openFrame("InCome_list");
+                        } else {
+                        }
                     }
-                }
-            });
+                });
+            } else {
+                return;
+            }
         }
     </script>
 </head>
@@ -65,27 +140,29 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">名称：</label>
-                                            <input class="form-control" name="name1" type="text" value="@inCome.GetName(inCome.codeId).materialName" readonly=""/>
+                                            <input class="form-control" name="name1" type="text" value="@inCome.GetName(inCome.codeId).materialName" readonly="" />
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">规格：</label>
-                                            <input class="form-control" name="model" type="text" value="@inCome.GetModel(inCome.codeId).modelName" readonly=""/>
+                                            <input class="form-control" name="model" type="text" value="@inCome.GetModel(inCome.codeId).modelName" readonly="" />
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">类别：</label>
-                                            <input class="form-control" name="category" type="text" value="@inCome.GetCategory(inCome.categoryId).categoryName" />
+                                            <label id="IsSpecise" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
+                                            <input class="form-control" name="category" type="text" value="@inCome.GetCategory(inCome.categoryId).categoryName" id="ISpecise"/>
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">编号：</label>
-                                            <input class="form-control" name="materialCode" type="text" value="@Models.InCome.GetMaterialCode(inCome.codeId).code" readonly=""/>
+                                            <input class="form-control" name="materialCode" type="text" value="@Models.InCome.GetMaterialCode(inCome.codeId).code" readonly="" />
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">批号：</label>
-                                            <input class="form-control" name="batch" type="text" value="@inCome.batch" />
+                                            <label id="IsPH" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
+                                            <input class="form-control" name="batch" type="text" value="@inCome.batch" id="IPh"/>
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">计量单位：</label>
@@ -95,7 +172,8 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">单价（元）：</label>
-                                            <input class="form-control" name="unitPrice" type="text" value="@inCome.unitPrice" />
+                                            <label id="IsPer" style="color:#ff0000;display:none;font-size:13px">*不能为空,最多到小数点后两位</label>
+                                            <input class="form-control" name="unitPrice" type="text" value="@inCome.unitPrice" id="Iper"/>
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">单价的单位：</label>
@@ -109,7 +187,8 @@
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">数量：</label>
-                                            <input class="form-control" name="amount" type="text" value="@inCome.amount" />
+                                            <label id="IsNumber" style="color:#ff0000;display:none;font-size:13px">*不能为空,最多到小数点后两位</label>
+                                            <input class="form-control" name="amount" type="text" value="@inCome.amount" id="INumber"/>
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -129,7 +208,8 @@
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">复检周期：</label>
-                                            <input type="text" class="form-control" name="reviewCycle" value="@inCome.reviewCycle">
+                                            <label id="IsCycle" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
+                                            <input type="text" class="form-control" name="reviewCycle" value="@inCome.reviewCycle" id="ICycle">
                                         </div>
                                     </div>
                                 }
