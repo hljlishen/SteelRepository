@@ -250,7 +250,7 @@
                                 <a href="javascript:OutComerevocation()" class="btn btn-primary"><i class="mdi mdi-plus-circle mr-2"></i>撤销最新出库记录</a>
                                 <a href="/OutCome/OutCome_revocationlist" class="btn btn-primary"><i class="mdi mdi-plus-circle mr-2"></i>显示撤销记录</a>
                             </div>
-                            <div class="col-sm-2">
+                            <div class="col-sm-1">
                                 <form method="post" action="/OutCome/OutCome_revocation" style="width:100%;text-align:center">
                                     <table contenteditable="inherit" style="width:100%;text-align:center">
                                         <tr>
@@ -265,12 +265,12 @@
                                                 </select>
                                             </td>
                                             <td>
-                                                <div class="button-list">
-                                                    <button type="submit" style="width:60px;height:50px; float:unset" class="btn btn-primary"
-                                                            data-toggle="modal" data-target=".signin_modal">
+                                                <label style="height:16px"></label>
+                                                    <button type="submit" style="width:80px;height:42px" class="btn btn-primary"
+                                                            @*data-toggle="modal" data-target=".signin_modal"*@>
                                                         撤销
                                                     </button>
-                                                </div>
+                                              
                                                
                                             </td>
                                         </tr>

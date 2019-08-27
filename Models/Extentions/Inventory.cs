@@ -216,15 +216,19 @@ namespace Models
             if (begin != "")
             {
                 DateTime begintime = Convert.ToDateTime(begin);
-                foreach (var incom in Dbhelper.Select<InCome>(p => p.storageTime >= begintime))
+                var tar = Dbhelper.SqlQuery<Inventory>("select Inventory.* from Inventory, InCome where InCome.storageTime >= '"+begintime+"' and InCome.id = Inventory.incomeId");
+                foreach (var incom in tar)
                 {
-                    builder.And(p => p.incomeId == incom.id);
+                    builder.Or(p => p.id == incom.id);
                 }
             }
             if (end != "")
             {
                 DateTime endtime = Convert.ToDateTime(end);
-                foreach (var incom in Dbhelper.Select<InCome>(p =>p.storageTime <= endtime)) { }
+                var tar = Dbhelper.SqlQuery<Inventory>("select Inventory.* from Inventory, InCome where InCome.storageTime <= '" +endtime+ "' and InCome.id = Inventory.incomeId");
+                foreach (var incom in tar) {
+                    builder.Or(p => p.id == incom.id);
+                }
             }
             if (codeinput != "")
             {
@@ -232,7 +236,7 @@ namespace Models
                     codeinput+"' and InCome.codeId = MaterialCode.id and Inventory.incomeId = InCome.id");
                 foreach (var inven in tar)
                 {
-                    builder.And(p => p.id == inven.id);
+                    builder.Or(p => p.id == inven.id);
                 }
             }
             if (nameinput != "")
@@ -241,7 +245,7 @@ namespace Models
                     nameinput+"' and InCome.codeId = MaterialCode.id and Inventory.incomeId = InCome.id");
                 foreach (var inven in tar)
                 {
-                    builder.And(p => p.id == inven.id);
+                    builder.Or(p => p.id == inven.id);
                 }
             }
             if (positionid != 0)
@@ -250,12 +254,13 @@ namespace Models
             }
             if (manufacturerid != 0)
             {
-                var tar = Dbhelper.SqlQuery<Inventory>("select Inventory.* from Inventory, InCome, Manufacturer where Manufacturer.id = "+
-                    manufacturerid+" and InCome.menufactureId = Manufacturer.id and Inventory.incomeId = InCome.id");
+                var tar = Dbhelper.SqlQuery<Inventory>("select Inventory.* from Inventory, InCome where InCome.menufactureId = " +
+                    manufacturerid+"and Inventory.incomeId = InCome.id");
                 foreach (var inven in tar)
                 {
-                    builder.And(p => p.id == inven.id);
+                    builder.Or(p => p.id == inven.id);
                 }
+                var s = builder;
             }
             var exp = builder.GetExpression();
             if (exp == null)

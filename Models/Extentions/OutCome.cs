@@ -220,7 +220,6 @@ namespace Models
         public static List<OutCome> MulSelectCheckOutCome(string begin,string end, int MaterCodeid, int employeeid,int manufacturerid,int departmentid)
         {
             ExpressionBuilder<OutCome> builder = new ExpressionBuilder<OutCome>();
-            List<OutCome> comes = new List<OutCome>();
             if (begin=="" && end == "" && MaterCodeid == 0 && employeeid == 0 && manufacturerid == 0 && departmentid == 0)
             {
                 return Dbhelper.SelectAll<OutCome>();
@@ -241,7 +240,7 @@ namespace Models
                     +" and InCome.id = Inventory.incomeId and Inventory.id = OutCome.inventoryId");
                 foreach ( var outcome in ret)
                 {
-                    builder.And(p => p.inventoryId == outcome.inventoryId);
+                    builder.Or(p => p.id == outcome.id);
                 }
             }
             if (manufacturerid != 0)
@@ -250,15 +249,16 @@ namespace Models
                    + " and InCome.id = Inventory.incomeId and Inventory.id = OutCome.inventoryId");
                 foreach (var outcome in ret)
                 {
-                    builder.And(p => p.inventoryId == outcome.inventoryId);
+                    builder.Or(p => p.id == outcome.id);
                 }
             }
             if ( departmentid != 0)
             {
-                var ret = Dbhelper.SqlQuery<OutCome>("select OutCome.* from OutCome, Employee where Employee.departmentId ="+departmentid+" and OutCome.borrowerId = Employee.id");
+                var ret = Dbhelper.SqlQuery<OutCome>("select OutCome.* from OutCome, Employee where Employee.departmentId ="+
+                    departmentid+" and OutCome.borrowerId = Employee.id");
                 foreach (var outcome in ret)
                 {
-                    builder.And(p => p.inventoryId == outcome.inventoryId);
+                    builder.Or(p => p.id == outcome.id);
                 }
             }
             if (employeeid != 0)

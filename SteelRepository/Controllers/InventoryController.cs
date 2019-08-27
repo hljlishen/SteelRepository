@@ -32,8 +32,9 @@ namespace SteelRepository.Controllers
             var nameinput = collection["nameinput"];
             int  positionid = Convert.ToInt32(collection["positionid"]);
             int manufacturerid = Convert.ToInt32(collection["manufacturerid"]);
-            ViewData["Inventorylist"] = null;
-            ViewData["Inventorylist"] = Inventory.MulSelectCheckInventory(begin,end,codeinput,nameinput,positionid,manufacturerid);
+            //ViewData["Inventorylist"] = null;
+            var inv = Inventory.MulSelectCheckInventory(begin,end,codeinput,nameinput,positionid,manufacturerid);
+            ViewData["Inventorylist"] = inv;
             return View();
         }
         public ActionResult OutCome_add(int id)
@@ -41,7 +42,7 @@ namespace SteelRepository.Controllers
             ViewData["Inventory"] = Inventory.GetInventory(id);
             SelectList select = new SelectList(GetUnitList(), "Value", "Text");
             ViewBag.select = select;
-            ViewData["employee"] = Employee.SelectAll();
+            ViewData["employee"] = Employee.SelectAllDesc();
             ViewData["name"] = IndexController.adminName();
             inventorysta = Inventory.GetInventory(id);
             ViewData["project"] = Project.SelectAll();
