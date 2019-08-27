@@ -12,6 +12,7 @@ namespace Models
 {
     public partial class Employee
     {
+        private static bool isJudge = false;
         public static List<Employee> SelectAll()
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
@@ -19,10 +20,17 @@ namespace Models
                 return helper.SelectAll<Employee>();
             }
         }
-        //public static List<Employee> SelectAllDesc()
-        //{
-
-        //}
+        public static List<Employee> SelectAllDesc()
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                List<Employee> list = new List<Employee>();
+                foreach (var emplo in helper.SqlQuery<Employee>("select Employee.* from Employee order by employee.id desc")) {
+                    list.Add(emplo);
+                }
+                return list;
+            }
+        }
 
         public static int Inster(Employee employee)
         {
@@ -67,11 +75,18 @@ namespace Models
                 foreach (var em in employees)
                 {
                     if (em.number == employee.number && em.password == employee.password)
+                    {
+                        isJudge = true;
                         return em;
+                    }
                 }
                 return null;
             }
         }
+
+        public static void NoJudge() => isJudge = false;
+
+        public static bool JudgeLogin() => isJudge;
 
         public static int DeleteState(int id)
         {

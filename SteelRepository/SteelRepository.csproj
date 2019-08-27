@@ -170,7 +170,6 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\DataGenerator.cs" />
     <Compile Include="Controllers\DataStatisticsController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
@@ -200,6 +199,9 @@
     <Content Include="Content\AdminIndex\css\vendor\simplemde.min.css" />
     <Content Include="Content\AdminIndex\css\vendor\summernote-bs4.css" />
     <Content Include="Content\AdminIndex\js\app.min.js" />
+    <Content Include="Content\AdminIndex\js\customers9.js" />
+    <Content Include="Content\AdminIndex\js\demo.customers12.js" />
+    <Content Include="Content\AdminIndex\js\demo.customers5.js" />
     <Content Include="Content\AdminIndex\js\pages\customers2.js" />
     <Content Include="Content\AdminIndex\js\pages\demo.apex-area.js" />
     <Content Include="Content\AdminIndex\js\pages\demo.apex-bar.js" />
@@ -314,6 +316,7 @@
     <Content Include="Content\OutCome\css\app.min.css" />
     <Content Include="Content\OutCome\js\app.min.js" />
     <Content Include="Content\OutCome\js\demo.customers.js" />
+    <Content Include="Content\OutCome\js\JavaScript.js" />
     <Content Include="Content\Position\css\app.min.css" />
     <Content Include="Content\Login\css\bootsnav.css" />
     <Content Include="Content\Login\css\bootstrap.min.css" />
@@ -333,7 +336,7 @@
     <Content Include="Content\Position\js\britecharts.min.js" />
     <Content Include="Content\Position\js\d3.min.js" />
     <Content Include="Content\Position\js\demo.britechart1.js" />
-    <Content Include="Content\Position\js\demo.customers.js" />
+    <Content Include="Content\AdminIndex\js\demo.customers4.js" />
     <Content Include="Content\Position\js\echarts.min.js" />
     <Content Include="Content\text\css\app.min.css" />
     <Content Include="Content\text\css\simplemde.min.css" />
@@ -427,6 +430,8 @@
     <Content Include="Views\Inventory\OutComeEmployee_new.cshtml" />
     <Content Include="Views\AdminIndex\AllowanceRemind.cshtml" />
     <Content Include="Views\AdminIndex\RecheckRemind.cshtml" />
+    <Content Include="Views\AdminIndex\Index1.cshtml" />
+    <Content Include="Views\Index\Index2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

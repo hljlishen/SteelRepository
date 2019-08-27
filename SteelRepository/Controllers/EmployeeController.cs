@@ -15,6 +15,7 @@ namespace SteelRepository.Controllers
         // GET: Employee
         public ActionResult Employee_list()
         {
+            Employee.NoJudge();
             return View(Employee.SelectAll());
         }
 
@@ -111,6 +112,7 @@ namespace SteelRepository.Controllers
 
         public ActionResult Employee_information(int id)
         {
+            Employee.NoJudge();
             Employee employee = Employee.FindId(id);
             ViewData["Employee"] = employee;
             ViewData["Dictionary"] = Employee.StatisticPrice(id);

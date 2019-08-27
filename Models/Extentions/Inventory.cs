@@ -208,6 +208,12 @@ namespace Models
         public static List<Inventory> MulSelectCheckInventory(string begin, string end, string codeinput, string nameinput,int positionid,int manufacturerid)
         {
             ExpressionBuilder<Inventory> builder = new ExpressionBuilder<Inventory>();
+            ExpressionBuilder<Inventory> builder0 = new ExpressionBuilder<Inventory>();
+            ExpressionBuilder<Inventory> builder1 = new ExpressionBuilder<Inventory>();
+            ExpressionBuilder<Inventory> builder2 = new ExpressionBuilder<Inventory>();
+            ExpressionBuilder<Inventory> builder3 = new ExpressionBuilder<Inventory>();
+            ExpressionBuilder<Inventory> builder4 = new ExpressionBuilder<Inventory>();
+            ExpressionBuilder<Inventory> builder5 = new ExpressionBuilder<Inventory>();
             List<Inventory> inventorys = new List<Inventory>();
             if (begin == "" && end == "" && codeinput == "" && nameinput == "" && positionid == 0 && manufacturerid == 0 )
             {
@@ -216,15 +222,19 @@ namespace Models
             if (begin != "")
             {
                 DateTime begintime = Convert.ToDateTime(begin);
-                foreach (var incom in Dbhelper.Select<InCome>(p => p.storageTime >= begintime))
+                var tar = Dbhelper.SqlQuery<Inventory>("select Inventory.* from Inventory, InCome where InCome.storageTime >= '"+begintime+"' and InCome.id = Inventory.incomeId");
+                foreach (var incom in tar)
                 {
-                    builder.And(p => p.incomeId == incom.id);
+                    builder0.Or(p => p.id == incom.id);
                 }
             }
             if (end != "")
             {
                 DateTime endtime = Convert.ToDateTime(end);
-                foreach (var incom in Dbhelper.Select<InCome>(p =>p.storageTime <= endtime)) { }
+                var tar = Dbhelper.SqlQuery<Inventory>("select Inventory.* from Inventory, InCome where InCome.storageTime <= '" +endtime+ "' and InCome.id = Inventory.incomeId");
+                foreach (var incom in tar) {
+                    builder1.Or(p => p.id == incom.id);
+                }
             }
             if (codeinput != "")
             {
@@ -232,7 +242,7 @@ namespace Models
                     codeinput+"' and InCome.codeId = MaterialCode.id and Inventory.incomeId = InCome.id");
                 foreach (var inven in tar)
                 {
-                    builder.And(p => p.id == inven.id);
+                    builder2.Or(p => p.id == inven.id);
                 }
             }
             if (nameinput != "")
@@ -241,22 +251,34 @@ namespace Models
                     nameinput+"' and InCome.codeId = MaterialCode.id and Inventory.incomeId = InCome.id");
                 foreach (var inven in tar)
                 {
-                    builder.And(p => p.id == inven.id);
+                    builder3.Or(p => p.id == inven.id);
                 }
             }
             if (positionid != 0)
             { 
-                builder.And(p => p.positionId == positionid);
+                builder4.Or(p => p.positionId == positionid);
             }
             if (manufacturerid != 0)
             {
-                var tar = Dbhelper.SqlQuery<Inventory>("select Inventory.* from Inventory, InCome, Manufacturer where Manufacturer.id = "+
-                    manufacturerid+" and InCome.menufactureId = Manufacturer.id and Inventory.incomeId = InCome.id");
+                var tar = Dbhelper.SqlQuery<Inventory>("select Inventory.* from Inventory, InCome where InCome.menufactureId = " +
+                    manufacturerid+"and Inventory.incomeId = InCome.id");
                 foreach (var inven in tar)
                 {
-                    builder.And(p => p.id == inven.id);
+                    builder5.Or(p => p.id == inven.id);
                 }
             }
+            var exptimebegin = builder0.GetExpression();
+            var exptimeend = builder1.GetExpression();
+            var expcode = builder2.GetExpression();
+            var expname = builder3.GetExpression();
+            var expposi = builder4.GetExpression();
+            var expman = builder5.GetExpression();
+            if (exptimebegin != null) builder.And(exptimebegin);
+            if (exptimeend != null) builder.And(exptimeend);
+            if (expcode != null) builder.And(expcode);
+            if (expname != null) builder.And(expname);
+            if (expposi != null) builder.And(expposi);
+            if (expman != null) builder.And(expman);
             var exp = builder.GetExpression();
             if (exp == null)
             {

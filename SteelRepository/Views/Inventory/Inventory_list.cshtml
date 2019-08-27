@@ -151,83 +151,79 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header">
-                            <div class="page-title-box" style="margin:5px;">
-                                <h4 class="page-title">库存信息</h4>
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="page-title-center row">
-                                            <div class="l-button">
-                                                <a href="javascript:export_excel('products-datatable12')" class="side-nav-link">
-                                                    <i class=" dripicons-export "></i>
-                                                    <span> 导出Excel </span>
-                                                </a>
-                                            </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="page-title-center row">
+                                        <h4 class="page-title col-md-11">库存信息</h4>
+                                        <div class="l-button">
+                                            <a href="javascript:export_excel('products-datatable3')" class="side-nav-link">
+                                                <i class=" dripicons-export "></i>
+                                                <span> 导出Excel </span>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="table-responsive">
-                                    <table class="table table-centered table-striped dt-responsive nowrap w-100" id="products-datatable3" style="width:auto;height:auto">
-                                        <thead>
-                                            <tr>
-                                                <th style="width: 20px;">
-                                                    <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                        <label class="custom-control-label" for="customCheck1">&nbsp;</label>
-                                                    </div>
-                                                </th>
-                                                <th>编号</th>
-                                                <th>批号</th>
-                                                <th>货品编号</th>
-                                                <th>货品种类</th>
-                                                <th>货品名称</th>
-                                                <th>货品规格</th>
-                                                <th>货品余量</th>
-                                                <th>货品单位</th>
-                                                <th>货品仓位</th>
-                                                <th>生产厂商</th>
-                                                <th>入库操作人</th>
-                                                <th>货品入库时间</th>
-                                                <th style="width: 70px;">出库</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @{int count = 1; }
-                                            @foreach (var inventory in inventorylist)
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-centered table-striped dt-responsive nowrap w-100" id="products-datatable3"  style="width:auto;height:auto">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 20px;">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                                    <label class="custom-control-label" for="customCheck1">&nbsp;</label>
+                                                </div>
+                                            </th>
+                                            <th>编号</th>
+                                            <th>批号</th>
+                                            <th>货品编号</th>
+                                            <th>货品种类</th>
+                                            <th>货品名称</th>
+                                            <th>货品规格</th>
+                                            <th>货品余量</th>
+                                            <th>货品单位</th>
+                                            <th>货品仓位</th>
+                                            <th>生产厂商</th>
+                                            <th>入库操作人</th>
+                                            <th>货品入库时间</th>
+                                            <th style="width: 70px;">出库</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{int count = 1; }
+                                        @foreach (var inventory in inventorylist)
+                                        {
+                                            if (inventory.amount > 0)
                                             {
-                                                if (inventory.amount > 0)
-                                                {
-                                                    <tr>
-                                                        <td>
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                                                <label class="custom-control-label" for="customCheck2">&nbsp;</label>
-                                                            </div>
-                                                        </td>
-                                                        <td class="table-user">@count</td>
-                                                        <th>@Models.Inventory.IncomeIdGetInCome(inventory.incomeId).batch</th>
-                                                        <td>@Models.Inventory.GetMaterCodeName(inventory.incomeId)</td>
-                                                        <td>@Models.Inventory.GetCategoryName(inventory.incomeId).categoryName</td>
-                                                        <td>@Models.Inventory.GetNameName(inventory.incomeId)</td>
-                                                        <td>@Models.Inventory.GetModelName(inventory.incomeId)</td>
-                                                        <td>@inventory.amount</td>
-                                                        <td>@inventory.unit</td>
-                                                        <td>@Models.Inventory.GetPositionName(inventory.positionId)</td>
-                                                        <td>@Models.Inventory.GetMenufactureName(inventory.incomeId).manufacturersName</td>
-                                                        <td>@Models.Inventory.GetEmployeeName(inventory.incomeId)</td>
-                                                        <td>@Models.Inventory.GetInComeTime(inventory.incomeId).ToString("d")</td>
-                                                        <td>
-                                                            <a href="javascript:OutComeAdd(@inventory.id)" class="action-icon"> <i class="dripicons-export "></i></a>
-                                                        </td>
-                                                    </tr>
-                                                    count++;
-                                                }
+                                                <tr>
+                                                    <td>
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input" id="customCheck2">
+                                                            <label class="custom-control-label" for="customCheck2">&nbsp;</label>
+                                                        </div>
+                                                    </td>
+                                                    <td class="table-user">@count</td>
+                                                    <th>@Models.Inventory.IncomeIdGetInCome(inventory.incomeId).batch</th>
+                                                    <td>@Models.Inventory.GetMaterCodeName(inventory.incomeId)</td>
+                                                    <td>@Models.Inventory.GetCategoryName(inventory.incomeId).categoryName</td>
+                                                    <td>@Models.Inventory.GetNameName(inventory.incomeId)</td>
+                                                    <td>@Models.Inventory.GetModelName(inventory.incomeId)</td>
+                                                    <td>@inventory.amount</td>
+                                                    <td>@inventory.unit</td>
+                                                    <td>@Models.Inventory.GetPositionName(inventory.positionId)</td>
+                                                    <td>@Models.Inventory.GetMenufactureName(inventory.incomeId).manufacturersName</td>
+                                                    <td>@Models.Inventory.GetEmployeeName(inventory.incomeId)</td>
+                                                    <td>@Models.Inventory.GetInComeTime(inventory.incomeId).ToString("d")</td>
+                                                    <td>
+                                                        <a href="javascript:OutComeAdd(@inventory.id)" class="action-icon"> <i class="dripicons-export "></i></a>
+                                                    </td>
+                                                </tr>
+                                                count++;
                                             }
-                                        </tbody>
-                                    </table>
-                                </div>
+                                        }
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>

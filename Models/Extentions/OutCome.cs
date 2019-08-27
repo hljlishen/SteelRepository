@@ -198,6 +198,7 @@ namespace Models
                     outcomeid.Add(id2.id);
                 }
             }
+            if (outcomeid.Count == 0) throw new Exception("该货品编号无出库记录！！");
             var Maxoutcome = Dbhelper.FindId<OutCome>(outcomeid.Max());
             var Inventory = Dbhelper.FindId<Inventory>(Maxoutcome.inventoryId);
             if (Maxoutcome.state < 2) {
@@ -210,8 +211,7 @@ namespace Models
                 Dbhelper.Update(Inventory, false);
                 return Dbhelper.Commit();
             }
-            else 
-            return 0;
+            throw new Exception("该货品的最后一条出库记录处于撤销状态，不能再执行本次操作！！");
         }
         public static List<OutCome> GetRevocationOutComes()
         {
@@ -220,7 +220,12 @@ namespace Models
         public static List<OutCome> MulSelectCheckOutCome(string begin,string end, int MaterCodeid, int employeeid,int manufacturerid,int departmentid)
         {
             ExpressionBuilder<OutCome> builder = new ExpressionBuilder<OutCome>();
-            List<OutCome> comes = new List<OutCome>();
+            ExpressionBuilder<OutCome> builder1 = new ExpressionBuilder<OutCome>();
+            ExpressionBuilder<OutCome> builder2 = new ExpressionBuilder<OutCome>();
+            ExpressionBuilder<OutCome> builder3 = new ExpressionBuilder<OutCome>();
+            ExpressionBuilder<OutCome> builder4 = new ExpressionBuilder<OutCome>();
+            ExpressionBuilder<OutCome> builder5 = new ExpressionBuilder<OutCome>();
+            ExpressionBuilder<OutCome> builder6 = new ExpressionBuilder<OutCome>();
             if (begin=="" && end == "" && MaterCodeid == 0 && employeeid == 0 && manufacturerid == 0 && departmentid == 0)
             {
                 return Dbhelper.SelectAll<OutCome>();
@@ -228,12 +233,12 @@ namespace Models
             if (begin != "")
             {
                 DateTime begintime = Convert.ToDateTime(begin);
-                builder.And(p => p.recipientsTime >= begintime);
+                builder1.And(p => p.recipientsTime >= begintime);
             }
             if (end != "")
             {
                 DateTime endtime = Convert.ToDateTime(end);
-                builder.And(p => p.recipientsTime <= endtime);
+                builder2.And(p => p.recipientsTime <= endtime);
             }
             if (MaterCodeid != 0)
             {
@@ -241,7 +246,7 @@ namespace Models
                     +" and InCome.id = Inventory.incomeId and Inventory.id = OutCome.inventoryId");
                 foreach ( var outcome in ret)
                 {
-                    builder.And(p => p.inventoryId == outcome.inventoryId);
+                    builder3.Or(p => p.id == outcome.id);
                 }
             }
             if (manufacturerid != 0)
@@ -250,21 +255,34 @@ namespace Models
                    + " and InCome.id = Inventory.incomeId and Inventory.id = OutCome.inventoryId");
                 foreach (var outcome in ret)
                 {
-                    builder.And(p => p.inventoryId == outcome.inventoryId);
+                    builder4.Or(p => p.id == outcome.id);
                 }
             }
             if ( departmentid != 0)
             {
-                var ret = Dbhelper.SqlQuery<OutCome>("select OutCome.* from OutCome, Employee where Employee.departmentId ="+departmentid+" and OutCome.borrowerId = Employee.id");
+                var ret = Dbhelper.SqlQuery<OutCome>("select OutCome.* from OutCome, Employee where Employee.departmentId ="+
+                    departmentid+" and OutCome.borrowerId = Employee.id");
                 foreach (var outcome in ret)
                 {
-                    builder.And(p => p.inventoryId == outcome.inventoryId);
+                    builder5.Or(p => p.id == outcome.id);
                 }
             }
             if (employeeid != 0)
             {
-                builder.And(p => p.borrowerId == employeeid);
+                builder6.Or(p => p.borrowerId == employeeid);
             }
+            var exptimebegin = builder1.GetExpression();
+            var exptimeend = builder2.GetExpression();
+            var expcode = builder3.GetExpression();
+            var expman = builder4.GetExpression();
+            var dapar = builder5.GetExpression();
+            var emplo = builder6.GetExpression();
+            if (exptimebegin != null) builder.And(exptimebegin);
+            if (exptimeend != null) builder.And(exptimeend);
+            if (expcode != null) builder.And(expcode);
+            if (emplo != null) builder.And(emplo);
+            if (dapar != null) builder.And(dapar);
+            if (expman != null) builder.And(expman);
             var exp = builder.GetExpression();
             if (exp == null)
             {

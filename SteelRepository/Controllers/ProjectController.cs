@@ -13,6 +13,7 @@ namespace SteelRepository.Controllers
         // GET: Project
         public ActionResult Project_list()
         {
+            Employee.NoJudge();
             return View(Project.SelectAll());
         }
 

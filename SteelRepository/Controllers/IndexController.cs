@@ -17,18 +17,30 @@ namespace SteelRepository.Controllers
         {
             ViewData["MaterialCode"] = MaterialCode.GetMaterialCodeList();
             ViewData["Inventorylist"] = Inventory.SelectAll();
+            ViewData["manufacturer"] = Manufacturer.SelectAll();
+            ViewData["position"] = Position.SelectAll();
             return View();
         }
+
+        public ActionResult Index2()
+        {
+            return View();
+        }
+
         [HttpPost]
         public ActionResult Index(FormCollection collection)
         {
             ViewData["MaterialCode"] = MaterialCode.GetMaterialCodeList();
-            //bool b = DateTime.TryParse(collection["date"], out DateTime begin);
-            //bool e = DateTime.TryParse(collection["date1"], out DateTime end);
-            //var codeinput = collection["codeinput"];
-            //var nameinput = collection["nameinput"];
-            //ViewData["Inventorylist"] = null;
-            //ViewData["Inventorylist"] = Inventory.MulSelectCheckInventory(b, begin, e, end, codeinput, nameinput);
+            ViewData["manufacturer"] = Manufacturer.SelectAll();
+            ViewData["position"] = Position.SelectAll();
+            string begin = collection["date"];
+            string end = collection["date1"];
+            var codeinput = collection["codeinput"];
+            var nameinput = collection["nameinput"];
+            int positionid = Convert.ToInt32(collection["positionid"]);
+            int manufacturerid = Convert.ToInt32(collection["manufacturerid"]);
+            ViewData["Inventorylist"] = null;
+            ViewData["Inventorylist"] = Inventory.MulSelectCheckInventory(begin, end, codeinput, nameinput, positionid, manufacturerid);
             return View();
         }
 
@@ -51,11 +63,15 @@ namespace SteelRepository.Controllers
                 Session["IsLogin"] = true;
                 Session["id"] = e.id;
                 inventories = Inventory.SelectRemaining();
-                if(inventories != null)
+                if (inventories != null)
                     Session["RemindCount"] = inventories.Count();
-                inComes = InCome.SelectRemaining();
-                if(inComes != null)
+                else
+                    Session["RemindCount"] = 0;
+                inComes = InCome.SelectRemind();
+                if (inComes != null)
                     Session["inComes"] = inComes.Count();
+                else
+                    Session["inComes"] = 0;
             }
             return Json(IsLogin);
         }

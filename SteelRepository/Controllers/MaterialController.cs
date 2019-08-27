@@ -16,6 +16,7 @@ namespace SteelRepository.Controllers
         // GET: Material
         public ActionResult InCome_list()
         {
+            Employee.NoJudge();
             ViewData["MaterialCode"] = MaterialCode.GetMaterialCodeList();
             ViewData["manufacturer"] = Manufacturer.SelectAll();
             ViewData["income"] = InCome.GetInComesDesc();

@@ -17,6 +17,7 @@ namespace SteelRepository.Controllers
         // GET: OutCome
         public ActionResult OutCome_list()
         {
+            Employee.NoJudge();
             ViewData["MaterialCode"] = MaterialCode.GetMaterialCodeList();
             ViewData["employee"] = Employee.SelectAll();
             ViewData["outcome"] = OutCome.GetOutComesDesc();

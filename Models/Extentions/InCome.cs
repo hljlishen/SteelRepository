@@ -310,5 +310,29 @@ namespace Models
             }
             return inComes;
         }
+
+        public static List<InCome> SelectRemind()
+        {
+            List<InCome> inComes = new List<InCome>();
+            foreach (var inc in GetInComes())
+            {
+                string datetime = RecheckReport.GetMaxDate(RecheckReport.GetRecheckReports(inc.id), inc.reviewCycle);
+                if (datetime != "未添加复检报告")
+                {
+                    DateTime d1 = Convert.ToDateTime(datetime);
+                    DateTime d2 = DateTime.Now;
+                    DateTime d3 = Convert.ToDateTime(string.Format("{0}-{1}-{2}", d1.Year, d1.Month, d1.Day));
+                    DateTime d4 = Convert.ToDateTime(string.Format("{0}-{1}-{2}", d2.Year, d2.Month, d2.Day));
+                    int days = (d3 - d4).Days;
+                    if (days <= 30)
+                    {
+                        inc.storageTime = Convert.ToDateTime(datetime);
+                        inComes.Add(inc);
+                    }
+
+                }
+            }
+            return inComes;
+        }
     }
 }

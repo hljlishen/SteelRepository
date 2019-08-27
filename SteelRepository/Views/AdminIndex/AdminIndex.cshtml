@@ -1,10 +1,8 @@
-﻿
-@{
+﻿@{
     Layout = null;
 }
 
 <!DOCTYPE html>
-
 <html>
 <head>
     @{
@@ -14,6 +12,7 @@
         var id = "";
         var RemindCount = "";
         var income = "";
+        var IsJudge = "";
         if (Session["name"] != null)
         {
             name = Session["name"].ToString();
@@ -38,6 +37,14 @@
         {
             income = Session["inComes"].ToString();
         }
+        if (Models.Employee.JudgeLogin())
+        {
+            IsJudge = "0";
+        }
+        else
+        {
+            IsJudge = "1";
+        }
     }
     <meta charset="utf-8" />
     <title>主页导航栏</title>
@@ -48,6 +55,11 @@
     <link href="~/Content/AdminIndex/css/icons.min.css" rel="stylesheet" />
     <link href="~/Content/AdminIndex/css/app.min.css" rel="stylesheet" />
     <script type="text/javascript">
+        var judeg = @IsJudge;
+        var inv = @RemindCount;
+        var inc = @income;
+
+
 
         function AdminInventory() {
             var url = "../AdminIndex/AllowanceRemind";
@@ -97,30 +109,31 @@
         }
 
         setTimeout(function () {
-            // IE
-            if (document.all) {
-                document.getElementById("Onclick1").click();
+            if (inv != 0 && judeg == 0) {
+                // IE
+                if (document.all) {
+                    document.getElementById("Onclick1").click();
+                }
+                    // 其它浏览器
+                else {
+                    var e = document.createEvent("MouseEvents");
+                        e.initEvent("click", true, true);
+                        document.getElementById("Onclick1").dispatchEvent(e);
+                }
             }
-                // 其它浏览器
-            else {
-                var e = document.createEvent("MouseEvents");
-                    e.initEvent("click", true, true);
-                    document.getElementById("Onclick1").dispatchEvent(e);
+            if (inc != 0 && judeg == 0) {
+                // IE
+                if (document.all) {
+                    document.getElementById("Onclick2").click();
+                }
+                    // 其它浏览器
+                else {
+                    var e = document.createEvent("MouseEvents");
+                        e.initEvent("click", true, true);
+                        document.getElementById("Onclick2").dispatchEvent(e);
+                }   
             }
         }, 1000);
-
-        setTimeout(function () {
-            // IE
-            if (document.all) {
-                document.getElementById("Onclick2").click();
-            }
-                // 其它浏览器
-            else {
-                var e = document.createEvent("MouseEvents");
-                    e.initEvent("click", true, true);
-                    document.getElementById("Onclick2").dispatchEvent(e);
-            }
-         }, 1000);
     </script>
 </head>
 <body>
@@ -296,7 +309,7 @@
                     <li class="side-nav-item">
                         <a href="../Manufacturer/Manufacturer_list" class="side-nav-link">
                             <i class="dripicons-briefcase"></i>
-                            <span> 厂家信息 </span>
+                            <span> 厂商信息 </span>
                         </a>
                     </li>
 
@@ -392,13 +405,13 @@
     <script src="~/Content/AdminIndex/js/vendor/jquery.dataTables.min.js"></script>
     <script src="~/Content/AdminIndex/js/vendor/dataTables.bootstrap4.js"></script>
     <script src="~/Content/AdminIndex/js/vendor/dataTables.responsive.min.js"></script>
-    <script src="~/Content/AdminIndex/js/vendor/responsive.bootstrap4.min.js"></script>
     <script src="~/Content/AdminIndex/js/vendor/dataTables.checkboxes.min.js"></script>
     <script charset="utf-8" src="~/Content/AdminIndex/js/pages/demo.customers.js"></script>
-    <script src="~/Content/Position/js/demo.customers.js"></script>
     <script src="~/Content/AdminIndex/js/pages/customers2.js"></script>
     <script src="~/Content/OutCome/js/demo.customers.js"></script>
     <script src="~/Content/Inventory/js/demo.customers.js"></script>
+    <script src="~/Content/AdminIndex/js/demo.customers4.js"></script>
+    <script src="~/Content/AdminIndex/js/demo.customers5.js"></script>
     <script type="text/javascript">
 
     </script>
