@@ -9,11 +9,19 @@ namespace SteelRepository.Controllers
 {
     public class AdminIndexController : Controller
     {
-
         public ActionResult AdminIndex()
         {
             return View(); 
         }
 
+        public ActionResult AllowanceRemind()
+        {
+            return View(IndexController.Remind());
+        }
+
+        public ActionResult RecheckRemind()
+        {
+            return View(IndexController.Recheck());
+        }
     }
 }

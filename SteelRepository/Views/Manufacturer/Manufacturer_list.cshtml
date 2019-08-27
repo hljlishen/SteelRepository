@@ -4,18 +4,18 @@
 }
 
 
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
-    <meta content="Coderthemes" name="author" />
-    <link href="~/Content/AdminIndex/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" />
-    <link href="~/Content/AdminIndex/css/vendor/responsive.bootstrap4.css" rel="stylesheet" />
-    <link href="~/Content/AdminIndex/css/app.min.css" rel="stylesheet" />
-    <link href="~/Content/AdminIndex/css/icons.min.css" rel="stylesheet" />
-
-    <script type="text/javascript">
+    <head>
+        <meta charset="utf-8" />
+        <title></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+        <meta content="Coderthemes" name="author" />
+        <link href="~/Content/AdminIndex/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" />
+        <link href="~/Content/AdminIndex/css/vendor/responsive.bootstrap4.css" rel="stylesheet" />
+        <link href="~/Content/AdminIndex/css/app.min.css" rel="stylesheet" />
+        <link href="~/Content/AdminIndex/css/icons.min.css" rel="stylesheet" />
+        <script src="~/Content/Excel/Excel1.js"></script>
+        <script type="text/javascript">
         function ManufacturerAdd() {
             var url = "Manufacturer_add";
             var width = "100%";
@@ -59,8 +59,8 @@
             });
         }
         }
-    </script>
-</head>
+        </script>
+    </head>
 <div class="content-page">
     <div class="content">
         <div class="row">
@@ -82,8 +82,14 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row mb-2">
-                            <div class="col-sm-4">
+                            <div class="col-sm-11">
                                 <a href="javascript:ManufacturerAdd()" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle mr-2"></i>添加厂商信息</a>
+                            </div>
+                            <div class="l-button">
+                                <a href="javascript:export_excel('products-datatable')" class="side-nav-link">
+                                    <i class=" dripicons-export "></i>
+                                    <span> 导出Excel </span>
+                                </a>
                             </div>
                         </div>
 

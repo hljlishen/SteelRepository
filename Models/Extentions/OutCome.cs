@@ -279,5 +279,11 @@ namespace Models
             var materialCode = db.FindId<MaterialCode>(income.codeId);
             return materialCode.code;
         }
+
+        public string GetMaterialProject(IDbInterface db)
+        {
+            var projectName = db.FindId<Project>(projectId.Value).projectName;
+            return projectName;
+        }
     }
 }

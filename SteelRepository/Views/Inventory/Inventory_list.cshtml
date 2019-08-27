@@ -21,6 +21,7 @@
 
     <link href="~/Content/layui/css/layui.css" rel="stylesheet" />
     <script src="~/Content/layui/layui.js"></script>
+    <script src="~/Content/Excel/Excel.js"></script>
     <script type="text/javascript">
         function OutComeAdd(id) {
             var url = "OutCome_add?id=" + id;
@@ -153,8 +154,14 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-12">
-                                    <div class="page-title-center">
-                                        <h3 class="page-title">库存信息</h3>
+                                    <div class="page-title-center row">
+                                        <h4 class="page-title col-md-11">库存信息</h4>
+                                        <div class="l-button">
+                                            <a href="javascript:export_excel('products-datatable12')" class="side-nav-link">
+                                                <i class=" dripicons-export "></i>
+                                                <span> 导出Excel </span>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

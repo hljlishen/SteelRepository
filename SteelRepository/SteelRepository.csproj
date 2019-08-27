@@ -271,6 +271,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Excel\Excel.js" />
     <Content Include="Content\fastjson-1.2.58.jar" />
     <Content Include="Content\img.css" />
     <Content Include="Content\Inventory\js\demo.customers.js" />
@@ -424,6 +425,8 @@
     <Content Include="Views\AdminIndex\AdminIndex.cshtml" />
     <Content Include="Views\DataStatistics\DataStatistics.cshtml" />
     <Content Include="Views\Inventory\OutComeEmployee_new.cshtml" />
+    <Content Include="Views\AdminIndex\AllowanceRemind.cshtml" />
+    <Content Include="Views\AdminIndex\RecheckRemind.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

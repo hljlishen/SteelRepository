@@ -7,7 +7,9 @@
 <html>
 <head>
     @{
-        Dictionary<string, double> keyValuePairs1 = (Dictionary<string, double>)ViewData["inventory"];
+        Dictionary<string, double> keyValuePairs1 = (Dictionary<string, double>)ViewData["amount"];
+        Dictionary<string, double> keyValuePairs4 = (Dictionary<string, double>)ViewData["project"];
+        Dictionary<string, double> keyValuePairs5 = (Dictionary<string, double>)ViewData["consumptionAmount"];
     }
     <meta name="viewport" content="width=device-width" />
     <title></title>
@@ -73,12 +75,6 @@
                             myChart.setOption(option);
                             </script>
                         }
-                        else
-                        {
-                            <div class="layui-tab-item layui-show">
-                                无数据展示
-                            </div>
-                        }
                     </div>
                     <div class="layui-tab-item layui-show">
                         @if (keyValuePairs1 != null)
@@ -116,10 +112,6 @@
                             };
                             myChart.setOption(option);
                             </script>
-                        }
-                        else
-                        {
-                            <div class="layui-tab-item">无数据展示</div>
                         }
                     </div>
                     <div class="layui-tab-item layui-show">
@@ -172,7 +164,7 @@
                             </div>
                             <script type="text/javascript">
                             @{
-                                var sData = keyValuePairs1;
+                                var sData = keyValuePairs4;
                             }
                             var codes = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(sData.Keys.ToArray()));
                             var values = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(sData.Values.ToArray()));
@@ -183,27 +175,23 @@
                                 },
                                 tooltip: {},
                                 legend: {
-                                    data: ['编号']
+                                    data: ['项目']
                                 },
                                 xAxis: {
-                                    name: '编号',
+                                    name: '项目',
                                     data: codes
                                 },
                                 yAxis: {
-                                    name: '重量（kg）',
+                                    name: '金额（元）',
                                 },
                                 series: [{
-                                    name: '重量（kg）',
+                                    name: '金额（元）',
                                     type: 'bar',
                                     data: values
                                 }]
                             };
                             myChart.setOption(option);
                             </script>
-                        }
-                        else
-                        {
-                            <div class="layui-tab-item">无数据展示</div>
                         }
                     </div>
                     <div class="layui-tab-item layui-show">
@@ -214,7 +202,7 @@
                             </div>
                             <script type="text/javascript">
                             @{
-                                var sData = keyValuePairs1;
+                                var sData = keyValuePairs5;
                             }
                             var codes = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(sData.Keys.ToArray()));
                             var values = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(sData.Values.ToArray()));
@@ -242,10 +230,6 @@
                             };
                             myChart.setOption(option);
                             </script>
-                        }
-                        else
-                        {
-                            <div class="layui-tab-item">无数据展示</div>
                         }
                     </div>
                 </div>
