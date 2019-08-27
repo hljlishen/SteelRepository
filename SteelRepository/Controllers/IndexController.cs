@@ -23,12 +23,12 @@ namespace SteelRepository.Controllers
         public ActionResult Index(FormCollection collection)
         {
             ViewData["MaterialCode"] = MaterialCode.GetMaterialCodeList();
-            bool b = DateTime.TryParse(collection["date"], out DateTime begin);
-            bool e = DateTime.TryParse(collection["date1"], out DateTime end);
-            var codeinput = collection["codeinput"];
-            var nameinput = collection["nameinput"];
-            ViewData["Inventorylist"] = null;
-            ViewData["Inventorylist"] = Inventory.MulSelectCheckInventory(b, begin, e, end, codeinput, nameinput);
+            //bool b = DateTime.TryParse(collection["date"], out DateTime begin);
+            //bool e = DateTime.TryParse(collection["date1"], out DateTime end);
+            //var codeinput = collection["codeinput"];
+            //var nameinput = collection["nameinput"];
+            //ViewData["Inventorylist"] = null;
+            //ViewData["Inventorylist"] = Inventory.MulSelectCheckInventory(b, begin, e, end, codeinput, nameinput);
             return View();
         }
 

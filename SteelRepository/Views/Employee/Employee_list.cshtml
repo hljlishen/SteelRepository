@@ -183,14 +183,17 @@
                                             }
                                             @if (employee.state.ToString() == "1" || employee.state.ToString() == "2")
                                             {
-                                                <td>
-                                                    @if (employee.permissions.ToString() != "1")
-                                                    {
-                                                        <a href="javascript:EmployeeDelete(@employee.id)" class="action-icon"> <i class="mdi mdi-delete"></i></a>
-                                                    }
-                                                    <a href="javascript:EmployeeUpdate(@employee.id)" class="action-icon"> <i class="dripicons-pencil"></i></a>
-                                                    @*<a hsref="javascript:EmployeeSelect(@employee.id)" class="action-icon"> <i class="mdi mdi-calendar-text-outline"></i></a>*@
-                                                </td>
+                                        <td>
+                                            @if (employee.permissions.ToString() != "1")
+                                            {
+                                                <a href="javascript:EmployeeDelete(@employee.id)" class="action-icon"> <i class="mdi mdi-delete"></i></a>
+                                            }
+                                            @if (employee.number != "admin")
+                                            {
+                                                <a href="javascript:EmployeeUpdate(@employee.id)" class="action-icon"> <i class="dripicons-pencil"></i></a>
+                                            }
+                                            @*<a hsref="javascript:EmployeeSelect(@employee.id)" class="action-icon"> <i class="mdi mdi-calendar-text-outline"></i></a>*@
+                                        </td>
                                             }
                                             else
                                             {
