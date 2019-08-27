@@ -19,6 +19,10 @@ namespace Models
                 return helper.SelectAll<Employee>();
             }
         }
+        //public static List<Employee> SelectAllDesc()
+        //{
+
+        //}
 
         public static int Inster(Employee employee)
         {

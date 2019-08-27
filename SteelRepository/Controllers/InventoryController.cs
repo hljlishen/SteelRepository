@@ -65,11 +65,11 @@ namespace SteelRepository.Controllers
             itemList.Add(item2);
             return itemList;
         }
-         [HttpPost]
-        public JsonResult OutCome_add( Inventory inventory, FormCollection collection)
+        [HttpPost]
+        public JsonResult OutCome_add(Inventory inventory, FormCollection collection)
         {
             bool b = DateTime.TryParse(collection["date"], out DateTime begin);
-            var number = Convert.ToInt32(collection["number"]);
+            var number = double.Parse(collection["number"]);
             var employeeid = Inventory.NameGetEmployeeid(collection["employeeName"]);
             var projectid =Convert.ToInt32(collection["project"]);
             var ins = collection["instructions"];
@@ -90,12 +90,14 @@ namespace SteelRepository.Controllers
             ViewBag.select = select;
             ViewBag.selectState = selectState;
             ViewData["department"] = Department.SelectAll();
+            ViewData["OutComeId"] = invenId;
             return View();
         }
 
         [HttpPost]
         public JsonResult OutComeEmployee_new(Employee employee)
         {
+            ViewData["OutComeId"] = invenId;
             return Json(Employee.Inster(employee));
         }
 
