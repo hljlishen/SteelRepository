@@ -33,6 +33,7 @@
         
         function check() {
             //姓名
+            document.getElementById("IsNum2").style.display = "none";
             var name = $("#name").val();
             var n = /^[\u4E00-\u9FA5A-Za-z]+$/;
             if (!n.test(name) || name == "") {
@@ -108,7 +109,7 @@
                             parent.closeWin();
                             parent.openFrame("Employee_list");
                         } else {
-                            return;
+                            document.getElementById("IsNum2").style.display = "";
                         }
                     }
                 });
@@ -139,6 +140,7 @@
                                 <div class="form-group">
                                     <label for="signin_form">账号：</label>
                                     <label id="IsNum" style="color:#ff0000;display:none;font-size:13px">*账号不能为空，应为字母数字下划线</label>
+                                    <label id="IsNum2" style="color:#ff0000;display:none;font-size:13px">*账号已存在，请重新输入</label>
                                     @Html.TextBoxFor(m => m.number, new { @class = "form-control", type = "text", id = "number" })
                                 </div>
                                 <div class="form-group">
