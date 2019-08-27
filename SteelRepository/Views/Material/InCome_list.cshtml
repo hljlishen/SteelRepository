@@ -110,14 +110,6 @@
                                             <table contenteditable="inherit" style="width:100%;text-align:center">
                                                 <tr>
                                                     <td>
-                                                        <label for="example-date" style="width:100%;text-align:left">开始时间：</label>
-                                                        <input class="form-control" id="test1" type="text" name="date" style="width:200px">
-                                                    </td>
-                                                    <td>
-                                                        <label for="example-date" style="width:100%;text-align:left">结束时间</label>
-                                                        <input class="form-control" id="test2" type="text" name="date1" style="width:200px">
-                                                    </td>
-                                                    <td>
                                                         <label style="width:100%;text-align:left">厂商查询</label>
                                                         <select name="manufacturerid" style="width:200px;height:40px" class="form-control">
                                                             <option value="0">请选择</option>
@@ -136,6 +128,14 @@
                                                                 <option value="@emp.id">@emp.code</option>
                                                             }
                                                         </select>
+                                                    </td>
+                                                    <td>
+                                                        <label for="example-date" style="width:100%;text-align:left">开始时间：</label>
+                                                        <input class="form-control" id="test1" type="text" name="date" style="width:200px">
+                                                    </td>
+                                                    <td>
+                                                        <label for="example-date" style="width:100%;text-align:left">结束时间</label>
+                                                        <input class="form-control" id="test2" type="text" name="date1" style="width:200px">
                                                     </td>
                                                     <td>
                                                         <div class="button-list">
@@ -184,7 +184,7 @@
                                                 <label class="custom-control-label" for="customCheck1">&nbsp;</label>
                                             </div>
                                         </th>
-                                        <th></th>
+                                        <th>编号</th>
                                         <th>名称</th>
                                         <th>规格</th>
                                         <th>类别</th>
@@ -228,7 +228,7 @@
                                             <td>@income.GetOperator().name</td>
                                             <td>
                                                 <a href="javascript:InComeUpdate(@income.id)" class="action-icon"> <i class="dripicons-pencil"></i></a>
-                                                <a href="javascript:InComeSelete(@income.id)" class="action-icon"> <i class="mdi mdi-calendar-text-outline"></i></a>
+                                                <a href="javascript:InComeSelete(@income.id)" class="action-icon"> <i class=" dripicons-blog"></i></a>
                                             </td>
                                         </tr>
                                         count++;

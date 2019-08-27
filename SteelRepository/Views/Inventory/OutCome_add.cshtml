@@ -102,7 +102,7 @@
                                             <datalist id="codelist" name="codelist">
                                                 @foreach (var emp in employee)
                                                 {
-                                                <option id=@emp.id>姓名：@emp.name  工号：@emp.number  部门：@Models.Department.GetDepartment(emp.departmentId.Value).departmentName</option>
+                                                <option id=@emp.id>姓名：@emp.name  工号：@emp.number&nbsp;部门：@Models.Department.GetDepartment(emp.departmentId.Value).departmentName</option>
                                                 }
                                             </datalist>
                                         </div>
