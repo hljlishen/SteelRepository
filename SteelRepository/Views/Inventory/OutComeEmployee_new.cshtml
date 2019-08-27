@@ -4,6 +4,7 @@
 }
 @{
     List<Models.Department> departments = (List<Models.Department>)ViewData["department"];
+    int id1 = (int)ViewData["OutComeId"];
 }
 <!DOCTYPE html>
 
@@ -106,7 +107,7 @@
                         if (data) {
                             alert("添加成功");
                             parent.closeWin();
-                            parent.openFrame("OutCome_add");
+                            parent.OpenWin2("OutCome_add?id=" + id, "100%", "700px");
                         } else {
                             return;
                         }
@@ -118,6 +119,12 @@
             }
 
         }
+        //function OutComeAdd(id) {
+        //    var url = "OutCome_add?id="+id;
+        //    var width = "100%";
+        //    var height = "700px";
+            
+        //}
     </script>
 </head>
 <body>
