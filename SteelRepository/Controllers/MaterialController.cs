@@ -17,21 +17,22 @@ namespace SteelRepository.Controllers
         public ActionResult InCome_list()
         {
             ViewData["MaterialCode"] = MaterialCode.GetMaterialCodeList();
-            ViewData["employee"] = Employee.SelectAll();
-            ViewData["outcome"] = OutCome.SelectAll();
-            return View(InCome.GetInComes());
+            ViewData["manufacturer"] = Manufacturer.SelectAll();
+            ViewData["income"] = InCome.GetInComesDesc();
+            return View();
         }
 
         [HttpPost]
         public ActionResult InCome_list(FormCollection collection)
         {
             ViewData["MaterialCode"] = MaterialCode.GetMaterialCodeList();
-            ViewData["employee"] = Employee.SelectAll();
-            bool b = DateTime.TryParse(collection["date"], out DateTime begin);
-            bool e = DateTime.TryParse(collection["date1"], out DateTime end);
+            ViewData["manufacturer"] = Manufacturer.SelectAll();
+            string begin = collection["date"];
+            string end = collection["date1"];
             int materialCodeid = Convert.ToInt32(collection["materialCodeid"]);
-            int employeeid = Convert.ToInt32(collection["employeeid"]);
-            ViewData["income"] = OutCome.MulSelectCheckOutCome(b, begin, e, end, materialCodeid, employeeid);
+            int manufacturerid = Convert.ToInt32(collection["manufacturerid"]);
+            ViewData["income"] = null;
+            ViewData["income"] = MaterialCode.MulSelectCheckInCome(begin, end, materialCodeid, manufacturerid);
             return View();
         }
 
@@ -141,8 +142,8 @@ namespace SteelRepository.Controllers
             inCome.batch = collection["batch"];
             inCome.menufactureId = int.Parse(collection["manufacturer"]);
             inCome.unit = collection["unit"];
-            inCome.amount = int.Parse(collection["amount"]);
-            inCome.unitPrice = int.Parse(collection["unitPrice"]);
+            inCome.amount = double.Parse(collection["amount"]);
+            inCome.unitPrice = double.Parse(collection["unitPrice"]);
             inCome.priceMeasure = collection["priceMeasure"];
             inCome.storageTime = DateTime.Parse(collection["IncomeText"]);
             inCome.operatorId = int.Parse(collection["operator"]);

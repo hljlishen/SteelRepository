@@ -116,23 +116,124 @@
             }
           });
         });
+        //验证
+        var isTrue = true;
+        var isIName = true;
+        var isISize = true;
+        var isISpecise = true;
+        var isIBH = true;
+        var isIPH = true;
+        var isIper = true;
+        var isINumber = true;
+        var isICycle = true;
+
+        
+        function check() {
+            //名称
+            var IName = $("#IName").val();
+            if (IName == "") {
+                document.getElementById("IsName").style.display = "";
+                isIName = false;
+            } else {
+                document.getElementById("IsName").style.display = "none";
+                isIName = true;
+            }
+            //规格
+            var ISize = $("#ISize").val();
+            if (ISize == "") {
+                document.getElementById("IsSize").style.display = "";
+                isISize = false;
+            } else {
+                document.getElementById("IsSize").style.display = "none";
+                isISize = true;
+            }
+            //类别
+            var ISpecise = $("#ISpecise").val();
+            if (ISpecise == "") {
+                document.getElementById("IsSpecise").style.display = "";
+                isISpecise = false;
+            } else {
+                document.getElementById("IsSpecise").style.display = "none";
+                isISpecise = true;
+            }
+            //编号
+            var IBh = $("#IBh").val();
+            if (IBh == "") {
+                document.getElementById("IsBH").style.display = "";
+                isIBH = false;
+            } else {
+                document.getElementById("IsBH").style.display = "none";
+                isIBH = true;
+            }
+            //批号
+            var IPh = $("#IPh").val();
+            if (IPh == "") {
+                document.getElementById("IsPH").style.display = "";
+                isIPH = false;
+            } else {
+                document.getElementById("IsPH").style.display = "none";
+                isIPH = true;
+            }
+            //单价
+            var Iper = $("#Iper").val();
+            var i = /^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/;
+            if (!i.test(Iper)|| Iper == "") {
+                document.getElementById("IsPer").style.display = "";
+                isIper = false;
+            } else {
+                document.getElementById("IsPer").style.display = "none";
+                isIper = true;
+
+            }
+            //数量
+            var INumber = $("#INumber").val();
+            if (!i.test(INumber) || INumber == "") {
+                document.getElementById("IsNumber").style.display = "";
+                isINumber = false;
+            } else {
+                document.getElementById("IsNumber").style.display = "none";
+                isINumber = true;
+            }
+            //周期
+            var ICycle = $("#ICycle").val();
+            if (ICycle == "") {
+                document.getElementById("IsCycle").style.display = "";
+                isICycle = false;
+            } else {
+                document.getElementById("IsCycle").style.display = "none";
+                isICycle = true;
+            }
+            if (isIName && isISize && isISpecise && isIBH && isIPH && isIper && isINumber && isICycle) {
+                isTrue = true;
+            } else {
+                isTrue = false;
+            }
+            return isTrue;
+        }
+        
 
         function add() {
-            $.ajax({
-                url: "@Url.Action("InCome_add")",
-                type: "post",
-                data: $("form").serialize(),
-                dataType: "json",
-                success: function (data) {
-                    data = eval("(" + data + ")");
-                    if (data) {
-                        alert("添加成功");
-                        parent.closeWin2();
-                        parent.openFrame("InCome_list");
-                    } else {
+            check();
+            if (isTrue) {
+                $.ajax({
+                    url: "@Url.Action("InCome_add")",
+                    type: "post",
+                    data: $("form").serialize(),
+                    dataType: "json",
+                    success: function (data) {
+                        data = eval("(" + data + ")");
+                        if (data) {
+                            alert("添加成功");
+                            parent.closeWin2();
+                            parent.openFrame("InCome_list");
+                        } else {
+                            return;
+                        }
                     }
-                }
-            });
+                });
+            } else {
+                return;
+            }
         }
     </script>
 </head>
@@ -150,27 +251,32 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">名称：</label>
-                                            <input class="form-control" name="name1" type="text" />
+                                            <label id="IsName" style="color:#ff0000;display:none;font-size:13px">*名称不能为空</label>
+                                            <input class="form-control" name="name1" type="text" id="IName" />
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">规格：</label>
-                                            <input class="form-control" name="model" type="text" />
+                                            <label id="IsSize" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
+                                            <input class="form-control" name="model" type="text" id="ISize" />
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">类别：</label>
-                                            <input class="form-control" name="category" type="text" />
+                                            <label id="IsSpecise" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
+                                            <input class="form-control" name="category" type="text" id="ISpecise"/>
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">编号：</label>
-                                            <input class="form-control" name="materialCode" type="text" />
+                                            <label id="IsBH" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
+                                            <input class="form-control" name="materialCode" type="text" id="IBh" />
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">批号：</label>
-                                            <input class="form-control"  name="batch" type="text" />
+                                            <label id="IsPH" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
+                                            <input class="form-control" name="batch" type="text" id="IPh"/>
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">计量单位：</label>
@@ -180,7 +286,8 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">单价（元）：</label>
-                                            <input class="form-control" name="unitPrice" type="text" />
+                                            <label id="IsPer" style="color:#ff0000;display:none;font-size:13px">*不能为空,最多到小数点后两位</label>
+                                            <input class="form-control" name="unitPrice" type="text" id="Iper" />
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">单价的单位：</label>
@@ -194,7 +301,8 @@
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">数量：</label>
-                                            <input class="form-control" name="amount" type="text" />
+                                            <label id="IsNumber" style="color:#ff0000;display:none;font-size:13px">*不能为空,最多到小数点后两位</label>
+                                            <input class="form-control" name="amount" type="text" id="INumber" />
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -220,7 +328,8 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">复检周期(年)：</label>
-                                            <input class="form-control" name="RecheckCycle" type="text" />
+                                            <label id="IsCycle" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
+                                            <input class="form-control" name="RecheckCycle" type="text" id="ICycle"/>
                                         </div>
                                     </div>
 

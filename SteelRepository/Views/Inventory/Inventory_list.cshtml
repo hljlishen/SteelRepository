@@ -18,6 +18,9 @@
     <link href="~/Content/AdminIndex/css/vendor/responsive.bootstrap4.css" rel="stylesheet" />
     <link href="~/Content/AdminIndex/css/app.min.css" rel="stylesheet" />
     <link href="~/Content/AdminIndex/css/icons.min.css" rel="stylesheet" />
+
+    <link href="~/Content/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/Content/layui/layui.js"></script>
     <script src="~/Content/Excel/Excel.js"></script>
     <script type="text/javascript">
         function OutComeAdd(id) {
@@ -26,12 +29,26 @@
             var height = "700px";
             parent.OpenWin2(url, width, height);
         }
+        layui.use('laydate', function () {
+            var laydate = layui.laydate;
+
+            //常规用法
+            laydate.render({
+                elem: '#test1'
+            });
+
+            laydate.render({
+                elem: '#test2'
+            });
+        });
     </script>
 </head>
 <body>
     @{
         List<Models.Inventory> inventorylist = (List<Models.Inventory>)ViewData["Inventorylist"];
         List<Models.MaterialCode> material = (List<Models.MaterialCode>)ViewData["MaterialCode"];
+        List<Models.Manufacturer> manufacturers = (List<Models.Manufacturer>)ViewData["manufacturer"];
+        List<Models.Position> positions = (List<Models.Position>)ViewData["position"];
     }
     <div class="content-page">
         <div class="content">
@@ -85,12 +102,32 @@
                                                             </datalist>
                                                         </td>
                                                         <td>
-                                                            <label for="example-date" style="width:100%;text-align:left">开始时间</label>
-                                                            <input class="form-control" id="date" type="date" name="date" style="width:200px">
+                                                            <label style="width:100%;text-align:left">厂商查询</label>
+                                                            <select name="manufacturerid" style="width:200px;height:40px" class="form-control">
+                                                                <option value="0">请选择</option>
+                                                                @foreach (var man in manufacturers)
+                                                                {
+                                                                    <option value="@man.id">@man.manufacturersName</option>
+                                                                }
+                                                            </select>
+                                                        </td>
+                                                        <td>
+                                                            <label style="width:100%;text-align:left">仓位查询</label>
+                                                            <select name="positionid" style="width:200px;height:40px" class="form-control">
+                                                                <option value="0">请选择</option>
+                                                                @foreach (var posi in positions)
+                                                                {
+                                                                    <option value="@posi.id">@posi.positionName</option>
+                                                                }
+                                                            </select>
+                                                        </td>
+                                                        <td>
+                                                            <label for="example-date" style="width:100%;text-align:left">开始时间：</label>
+                                                            <input class="form-control" id="test1" type="text" name="date" style="width:200px">
                                                         </td>
                                                         <td>
                                                             <label for="example-date" style="width:100%;text-align:left">结束时间</label>
-                                                            <input class="form-control" id="date1" type="date" name="date1" style="width:200px">
+                                                            <input class="form-control" id="test2" type="text" name="date1" style="width:200px">
                                                         </td>
                                                         <td>
                                                             <div class="button-list">
@@ -129,7 +166,7 @@
                                 </div>
                             </div>
                             <div class="table-responsive">
-                                <table class="table table-centered table-striped dt-responsive nowrap w-100" id="products-datatable12">
+                                <table class="table table-centered table-striped dt-responsive nowrap w-100" id="products-datatable3"  style="width:auto;height:auto">
                                     <thead>
                                         <tr>
                                             <th style="width: 20px;">
@@ -147,6 +184,7 @@
                                             <th>货品余量</th>
                                             <th>货品单位</th>
                                             <th>货品仓位</th>
+                                            <th>生产厂商</th>
                                             <th>入库操作人</th>
                                             <th>货品入库时间</th>
                                             <th style="width: 70px;">出库</th>
@@ -174,10 +212,11 @@
                                                     <td>@inventory.amount</td>
                                                     <td>@inventory.unit</td>
                                                     <td>@Models.Inventory.GetPositionName(inventory.positionId)</td>
+                                                    <td>@Models.Inventory.GetMenufactureName(inventory.incomeId).manufacturersName</td>
                                                     <td>@Models.Inventory.GetEmployeeName(inventory.incomeId)</td>
                                                     <td>@Models.Inventory.GetInComeTime(inventory.incomeId).ToString("d")</td>
                                                     <td>
-                                                        <a href="javascript:OutComeAdd(@inventory.id)" class="action-icon"> <i class="mdi mdi-call-merge "></i></a>
+                                                        <a href="javascript:OutComeAdd(@inventory.id)" class="action-icon"> <i class="dripicons-export "></i></a>
                                                     </td>
                                                 </tr>
                                                 count++;

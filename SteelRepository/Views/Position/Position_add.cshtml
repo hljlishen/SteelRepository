@@ -25,22 +25,40 @@
     <script src="~/Content/Login/js/jquery.easing.min.js"></script>
     <script src="~/Content/Login/js/custom.js"></script>
     <script type="text/javascript">
+        var isPosition = true;
+        function check() {
+            var position = $("#position").val();
+            var n = /^[\u4E00-\u9FA5A-Za-z0-9]+$/;
+            if (!n.test(position)|| position == "") {
+                document.getElementById("IsPos").style.display = "";
+                isPosition = false;
+            } else {
+                document.getElementById("IsPos").style.display = "none";
+                isPosition = true;
+            }
+
+        }
         function add() {
-            $.ajax({
-                url: "@Url.Action("Position_add")",
-                type: "post",
-                data: $("form").serialize(),
-                dataType: "json",
-                success: function (data) {
-                    data = eval("(" + data + ")");
-                    if (data) {
-                        alert("添加成功");
-                        parent.closeWin();
-                        parent.openFrame("Position_list");
-                    } else {
+            check();
+            if (isPosition) {
+                $.ajax({
+                    url: "@Url.Action("Position_add")",
+                    type: "post",
+                    data: $("form").serialize(),
+                    dataType: "json",
+                    success: function (data) {
+                        data = eval("(" + data + ")");
+                        if (data) {
+                            alert("添加成功");
+                            parent.closeWin();
+                            parent.openFrame("Position_list");
+                        } else {
+                        }
                     }
-                }
-            });
+                });
+            } else {
+                return;
+            }
         }
     </script>
 </head>
@@ -55,10 +73,11 @@
                             <div class="signin-form">
                                 @using (Html.BeginForm("Position_add", "Position", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @role = "form" }))
                                 {
-                                    <div class="form-group">
-                                        <label for="signin_form">仓库位置：</label>
-                                        @Html.TextBoxFor(m => m.positionName, new { @class = "form-control", type = "text" })
-                                    </div>
+                                <div class="form-group">
+                                    <label for="signin_form">仓库位置：</label>
+                                    <label id="IsPos" style="color:#ff0000;display:none;font-size:13px">*仓库位置不能为空，请重新输入</label>
+                                    @Html.TextBoxFor(m => m.positionName, new { @class = "form-control", type = "text", id = "position" })
+                                </div>
                                     <div class="form-group">
                                         <label for="signin_form">备注：</label>
                                         @Html.TextBoxFor(m => m.note, new { @class = "form-control", type = "text" })

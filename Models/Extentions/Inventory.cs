@@ -13,6 +13,7 @@ namespace Models
     public partial class Inventory
     {
         private static IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities());
+        private static string str;
         public static Inventory Insert(int incomeId, double amount, string unit, int positionId, IDbInterface dbInterface)
         {
             var inven = new Inventory() { amount = amount, incomeId = incomeId, unit = unit, positionId = positionId , consumptionAmount = amount};
@@ -157,296 +158,112 @@ namespace Models
         {
             return helper.FindId<Inventory>(inventoryId);
         }
-        public static List<Inventory> GetCodeNameInventorys(string codeinput)
+        public static int NameGetEmployeeid(string employeeName)
         {
-            List<Inventory> invenlists = new List<Inventory>();
-            foreach (var code in MaterialCode.GetMaterialCodes(codeinput))
+            str = employeeName + " ";
+            string[] str1 = new string[3];
+            for (int i = 0; i < 3; i++)
             {
-                foreach (var Income in Dbhelper.Select<InCome>(p => p.codeId == code.id))
-                {
-                    foreach (var Inven in Dbhelper.Select<Inventory>(p => p.incomeId == Income.id))
-                    {
-                        invenlists.Add(Inven);
-                    }
-                }
+                str1[i] = MidStrEx(str, "：", " ");
             }
-            return invenlists;
+            var employee = Dbhelper.FindFirst<Employee,string>("number", str1[1]);
+            if (employee == null)
+            {
+                throw new Exception("请输入正确的领用人信息！！！");
+            }
+            return employee.id;
+        }
+        public static string MidStrEx(string sourse, string startstr, string endstr)
+        {
+            string result = string.Empty;
+            int startindex, endindex;
+            try
+            {
+                startindex = sourse.IndexOf(startstr);
+                if (startindex == -1)
+                    return result;
+                string tmpstr = sourse.Substring(startindex + startstr.Length);
+                str = tmpstr;
+                endindex = tmpstr.IndexOf(endstr);
+                if (endindex == -1)
+                    return result;
+                result = tmpstr.Remove(endindex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return result;
         }
         public static Category GetCategoryName(int incomeid)
         {
             var incom = Dbhelper.FindId<InCome>(incomeid);
             return Dbhelper.FindId<Category>(incom.categoryId);
         }
-        public static List<Inventory> MulSelectCheckInventory(bool b, DateTime begin, bool e, DateTime end, string codeinput, string nameinput)
+        public static Manufacturer GetMenufactureName(int InComeid)
+        {
+            var income = Dbhelper.FindId<InCome>(InComeid);
+            return Dbhelper.FindId<Manufacturer>(income.menufactureId.Value);
+        }
+        public static List<Inventory> MulSelectCheckInventory(string begin, string end, string codeinput, string nameinput,int positionid,int manufacturerid)
         {
             ExpressionBuilder<Inventory> builder = new ExpressionBuilder<Inventory>();
             List<Inventory> inventorys = new List<Inventory>();
-            if (b)
+            if (begin == "" && end == "" && codeinput == "" && nameinput == "" && positionid == 0 && manufacturerid == 0 )
             {
-                if (e)
+                return Dbhelper.SelectAll<Inventory>();
+            }
+            if (begin != "")
+            {
+                DateTime begintime = Convert.ToDateTime(begin);
+                foreach (var incom in Dbhelper.Select<InCome>(p => p.storageTime >= begintime))
                 {
-                    if (Name.GetNames(nameinput) != null)
-                    {
-                        if (MaterialCode.GetMaterialCodes(codeinput) != null)
-                        {
-                            if (MaterialCode.GetMaterialId(codeinput, nameinput).Count > 0)
-                            {
-                                foreach (var invenid in GetInventoryIds(codeinput, nameinput))
-                                {
-                                    builder.And(p => p.id == invenid.id);
-                                }
-                                var exp = builder.GetExpression();
-                                var Invens = GetTimeInventorys(begin, end).Where(exp.Compile());
-                                foreach (var inven in Invens)
-                                {
-                                    inventorys.Add(inven);
-                                }
-                                return inventorys;
-                            }
-                            else {
-                                foreach (var invenid in GetCodeNameInventorys(codeinput))
-                                {
-                                    builder.And(p => p.id == invenid.id);
-                                }
-                                var exp = builder.GetExpression();
-                                var Invens = GetTimeInventorys(begin, end).Where(exp.Compile());
-                                foreach (var inven in Invens)
-                                {
-                                    inventorys.Add(inven);
-                                }
-                                return inventorys;
-                            }
-                        }
-                        else
-                        {
-                            foreach (var ven in NameGetInventoryId(nameinput))
-                            {
-                                builder.And(p => p.id == ven.id);
-                            }
-                            var exp = builder.GetExpression();
-                            var Invens = GetTimeInventorys(begin, end).Where(exp.Compile());
-                            foreach (var inven in Invens)
-                            {
-                                inventorys.Add(inven);
-                            }
-                            return inventorys;
-                        }
-                    }
-                    else
-                    {
-                        if (MaterialCode.GetMaterialCodes(codeinput) != null)
-                        {
-
-                            foreach (var invenid in GetCodeNameInventorys(codeinput))
-                            {
-                                builder.And(p => p.id == invenid.id);
-                            }
-                            var exp = builder.GetExpression();
-                            var Invens = GetTimeInventorys(begin, end).Where(exp.Compile());
-                            foreach (var inven in Invens)
-                            {
-                                inventorys.Add(inven);
-                            }
-                            return inventorys;
-                        }
-                        else
-                        {
-                            foreach (var inven in GetTimeInventorys(begin, end))
-                            {
-                                inventorys.Add(inven);
-                            }
-                            return inventorys;
-                        }
-                    }
-                }
-                else
-                {
-                    if (Name.GetNames(nameinput) != null)
-                    {
-                        if (MaterialCode.GetMaterialCodes(codeinput) != null)
-                        {
-                            if (MaterialCode.GetMaterialId(codeinput, nameinput).Count > 0)
-                            {
-                                foreach (var invenid in GetInventoryIds(codeinput, nameinput))
-                                {
-                                    builder.And(p => p.id == invenid.id);
-                                }
-                                var exp = builder.GetExpression();
-                                var Invens = GetTimeInventorys(begin, DateTime.MaxValue).Where(exp.Compile());
-                                foreach (var inven in Invens)
-                                {
-                                    inventorys.Add(inven);
-                                }
-                                return inventorys;
-                            }
-                            else
-                            {
-                                foreach (var invenid in GetCodeNameInventorys(codeinput))
-                                {
-                                    builder.And(p => p.id == invenid.id);
-                                }
-                                var exp = builder.GetExpression();
-                                var Invens = GetTimeInventorys(begin, DateTime.MaxValue).Where(exp.Compile());
-                                foreach (var inven in Invens)
-                                {
-                                    inventorys.Add(inven);
-                                }
-                                return inventorys;
-                            }
-                        }
-                        else
-                        {
-                            foreach (var ven in NameGetInventoryId(nameinput))
-                            {
-                                builder.And(p => p.id == ven.id);
-                            }
-                            var exp = builder.GetExpression();
-                            var Invens = GetTimeInventorys(begin, DateTime.MaxValue).Where(exp.Compile());
-                            foreach (var inven in Invens)
-                            {
-                                inventorys.Add(inven);
-                            }
-                            return inventorys;
-                        }
-                    }
-                    else
-                    {
-                        if (MaterialCode.GetMaterialCodes(codeinput) != null)
-                        {
-
-                            foreach (var invenid in GetCodeNameInventorys(codeinput))
-                            {
-                                builder.And(p => p.id == invenid.id);
-                            }
-                            var exp = builder.GetExpression();
-                            var Invens = GetTimeInventorys(begin, DateTime.MaxValue).Where(exp.Compile());
-                            foreach (var inven in Invens)
-                            {
-                                inventorys.Add(inven);
-                            }
-                            return inventorys;
-                        }
-                        else
-                        {
-                            foreach (var inven in GetTimeInventorys(begin, DateTime.MaxValue))
-                            {
-                                inventorys.Add(inven);
-                            }
-                            return inventorys;
-                        }
-                    }
+                    builder.And(p => p.incomeId == incom.id);
                 }
             }
-            else
+            if (end != "")
             {
-                if (e)
+                DateTime endtime = Convert.ToDateTime(end);
+                foreach (var incom in Dbhelper.Select<InCome>(p =>p.storageTime <= endtime)) { }
+            }
+            if (codeinput != "")
+            {
+                var tar = Dbhelper.SqlQuery<Inventory>("select Inventory.* from Inventory, MaterialCode, InCome where MaterialCode.code = '"+
+                    codeinput+"' and InCome.codeId = MaterialCode.id and Inventory.incomeId = InCome.id");
+                foreach (var inven in tar)
                 {
-                    if (Name.GetNames(nameinput) != null)
-                    {
-                        if (MaterialCode.GetMaterialCodes(codeinput) != null)
-                        {
-                            if (MaterialCode.GetMaterialId(codeinput, nameinput).Count > 0)
-                            {
-                                foreach (var invenid in GetInventoryIds(codeinput, nameinput))
-                                {
-                                    builder.And(p => p.id == invenid.id);
-                                }
-                                var exp = builder.GetExpression();
-                                var Invens = GetTimeInventorys(DateTime.MinValue, end).Where(exp.Compile());
-                                foreach (var inven in Invens)
-                                {
-                                    inventorys.Add(inven);
-                                }
-                                return inventorys;
-                            }
-                            else
-                            {
-                                foreach (var invenid in GetCodeNameInventorys(codeinput))
-                                {
-                                    builder.And(p => p.id == invenid.id);
-                                }
-                                var exp = builder.GetExpression();
-                                var Invens = GetTimeInventorys(DateTime.MinValue, end).Where(exp.Compile());
-                                foreach (var inven in Invens)
-                                {
-                                    inventorys.Add(inven);
-                                }
-                                return inventorys;
-                            }
-                        }
-                        else
-                        {
-                            foreach (var ven in NameGetInventoryId(nameinput))
-                            {
-                                builder.And(p => p.id == ven.id);
-                            }
-                            var exp = builder.GetExpression();
-                            var Invens = GetTimeInventorys(DateTime.MinValue, end).Where(exp.Compile());
-                            foreach (var inven in Invens)
-                            {
-                                inventorys.Add(inven);
-                            }
-                            return inventorys;
-                        }
-                    }
-                    else
-                    {
-                        if (MaterialCode.GetMaterialCodes(codeinput) != null)
-                        {
-
-                            foreach (var invenid in GetCodeNameInventorys(codeinput))
-                            {
-                                builder.And(p => p.id == invenid.id);
-                            }
-                            var exp = builder.GetExpression();
-                            var Invens = GetTimeInventorys(DateTime.MinValue, end).Where(exp.Compile());
-                            foreach (var inven in Invens)
-                            {
-                                inventorys.Add(inven);
-                            }
-                            return inventorys;
-                        }
-                        else
-                        {
-                            return GetTimeInventorys(DateTime.MinValue, end);
-                        }
-                    }
-                }
-                else
-                {
-                    if (Name.GetNames(nameinput) != null)
-                    {
-                        if (MaterialCode.GetMaterialCodes(codeinput) != null)
-                        {
-                            if (MaterialCode.GetMaterialId(codeinput, nameinput).Count > 0)
-                            {
-                                return GetInventoryIds(codeinput, nameinput);
-                            }
-                            else
-                            {
-                                return GetCodeNameInventorys(codeinput);
-                            }
-                        }
-                        else
-                        {
-                            return NameGetInventoryId(nameinput);
-                        }
-                    }
-                    else
-                    {
-                        if (MaterialCode.GetMaterialCodes(codeinput) != null)
-                        {
-                            return GetCodeNameInventorys(codeinput);
-                        }
-                        else
-                        {
-                            return SelectAll();
-                        }
-                    }
+                    builder.And(p => p.id == inven.id);
                 }
             }
+            if (nameinput != "")
+            {
+                var tar = Dbhelper.SqlQuery<Inventory>("select Inventory.* from Inventory, MaterialCode, InCome, Name where MaterialCode.materialNameId = Name.id and name.materialName = '"+
+                    nameinput+"' and InCome.codeId = MaterialCode.id and Inventory.incomeId = InCome.id");
+                foreach (var inven in tar)
+                {
+                    builder.And(p => p.id == inven.id);
+                }
+            }
+            if (positionid != 0)
+            { 
+                builder.And(p => p.positionId == positionid);
+            }
+            if (manufacturerid != 0)
+            {
+                var tar = Dbhelper.SqlQuery<Inventory>("select Inventory.* from Inventory, InCome, Manufacturer where Manufacturer.id = "+
+                    manufacturerid+" and InCome.menufactureId = Manufacturer.id and Inventory.incomeId = InCome.id");
+                foreach (var inven in tar)
+                {
+                    builder.And(p => p.id == inven.id);
+                }
+            }
+            var exp = builder.GetExpression();
+            if (exp == null)
+            {
+                return new List<Inventory>();
+            }
+            return Dbhelper.Select(exp);
         }
-
         public static Dictionary<string, double> StatisticAmount()
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))

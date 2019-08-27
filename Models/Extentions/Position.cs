@@ -40,7 +40,11 @@ namespace Models
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                return helper.Delete<Position>(id);
+                if (helper.Select<Inventory>(p =>p.positionId == id).Count != 0)
+                {
+                    return 0;
+                }else 
+                 return helper.Delete<Position>(id);
             }
         }
         public static string ValueGetName(string value)

@@ -19,7 +19,9 @@ namespace SteelRepository.Controllers
         {
             ViewData["MaterialCode"] = MaterialCode.GetMaterialCodeList();
             ViewData["employee"] = Employee.SelectAll();
-            ViewData["outcome"] = OutCome.SelectAll();
+            ViewData["outcome"] = OutCome.GetOutComesDesc();
+            ViewData["manufacturer"] = Manufacturer.SelectAll();
+            ViewData["department"] = Department.SelectAll();
             return View();
         }
         public ActionResult OutCome_More(int id)
@@ -33,18 +35,33 @@ namespace SteelRepository.Controllers
         {
             ViewData["MaterialCode"] = MaterialCode.GetMaterialCodeList();
             ViewData["employee"] = Employee.SelectAll();
-            bool b = DateTime.TryParse(collection["date"], out DateTime begin);
-            bool e = DateTime.TryParse(collection["date1"], out DateTime end);
+            ViewData["manufacturer"] = Manufacturer.SelectAll();
+            ViewData["department"] = Department.SelectAll();
+            string begin = collection["date"];
+            string end = collection["date1"];
             int materialCodeid = Convert.ToInt32(collection["materialCodeid"]);
+            int manufacturerid = Convert.ToInt32(collection["manufacturerid"]);
+            int departmentid = Convert.ToInt32(collection["departmentid"]);
             int  employeeid = Convert.ToInt32(collection["employeeid"]);
             ViewData["outcome"] = null;
-            ViewData["outcome"] = OutCome.MulSelectCheckOutCome(b, begin, e, end, materialCodeid, employeeid);
+            ViewData["outcome"] = OutCome.MulSelectCheckOutCome(begin,end, materialCodeid, employeeid,manufacturerid,departmentid);
             return View();
         }
         [HttpPost]
-        public JsonResult OutCome_revocation()
+        public JsonResult OutCome_revocation(FormCollection collection)
         {
-            return Json(OutCome.OutComeRevocation());
+            int materialCodeid2 = Convert.ToInt32(collection["materialCodeid2"]);
+            return Json(OutCome.OutComeRevocation(materialCodeid2));
+        }
+        public ActionResult OutCome_revocationlist()
+        {
+            ViewData["MaterialCode"] = MaterialCode.GetMaterialCodeList();
+            ViewData["employee"] = Employee.SelectAll();
+            ViewData["manufacturer"] = Manufacturer.SelectAll();
+            ViewData["department"] = Department.SelectAll();
+            ViewData["outcome"] = null;
+            ViewData["outcome"] = OutCome.GetRevocationOutComes();
+            return View("OutCome_list");
         }
     }
 }

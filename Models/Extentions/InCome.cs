@@ -269,6 +269,19 @@ namespace Models
                 return helper.SelectAll<InCome>();
             }
         }
+        public static List<InCome> GetInComesDesc()
+        {
+            List<InCome> liDesc = new List<InCome>();
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                var ret = helper.SqlQuery<InCome>("select InCome.* from InCome order by InCome.storageTime desc");
+                foreach (var income in ret)
+                {
+                    liDesc.Add(income);
+                }
+                return liDesc;
+            }
+        }
         public static InCome GetInCome(int incomeid)
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))

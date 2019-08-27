@@ -36,19 +36,6 @@
             });
         }
     </script>
-    <style>
-        select {
-            border: solid 1px #000;
-            -moz-appearance: none;
-            -webkit-appearance: none;
-            background: url("下拉箭头图片") right center no-repeat;
-            padding-right: 20px;
-        }
-
-            select::-ms-expand {
-                display: none;
-            }
-    </style>
 </head>
 <body>
     @{
@@ -103,28 +90,29 @@
                                             @Html.TextBox("Name", @name, new { @readonly = "readonly", @class = "form-control", type = "text" })
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label for="signin_form">借用人：</label>
-                                            <select class="form-control" name="employeeName">
-                                                <option value="0">------请选择------</option>
+                                            <label for="signin_form">领用人：</label>
+                                            <input id="employeeName" name="employeeName" list="codelist" style="width:350px;height:40px" class="form-control" placeholder="请选择或输入领用人" />
+                                            <datalist id="codelist" name="codelist">
                                                 @foreach (var emp in employee)
                                                 {
-                                                    <option value="@emp.id">@emp.name</option>
+                                                <option id=@emp.id>姓名：@emp.name  工号：@emp.number  部门：@Models.Department.GetDepartment(emp.departmentId.Value).departmentName</option>
                                                 }
-                                            </select>
+                                            </datalist>
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">项目令号：</label>
                                             <select class="form-control" name="project">
-                                                <option value="0">------请选择------</option>
                                                 @foreach (var pro in project)
                                                 {
-                                                    <option value="@pro.id">令号：@pro.projectCode      名称：@pro.projectName</option>
+                                                    <option value="@pro.id">令号：@pro.projectCode      名称：@pro.projectName </option>
                                                 }
                                             </select>
                                         </div>
-
+                                        <div class="signin-footer">
+                                            <a href="/Inventory/OutComeEmployee_new" class="btn btn-primary"><i class="mdi mdi-plus-circle mr-2"></i>新增员工</a>
+                                        </div>
                                     </div>
                                 }
                             </div>
@@ -145,7 +133,7 @@
                     <div class="row" align="center">
                         <div class="col-sm-12">
                             <div class="signin-footer">
-                                <button type="button" class="btn btn-primary" onclick="add();" style="width:200px;height:50px">
+                                <button type="button" name="but" class="btn btn-primary" onclick="add();" style="width:200px;height:50px">
                                     出库
                                 </button>
                             </div>

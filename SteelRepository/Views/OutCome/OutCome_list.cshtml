@@ -14,6 +14,8 @@
         <link href="~/Content/AdminIndex/css/icons.min.css" rel="stylesheet" />
         <link href="~/Content/AdminIndex/css/app.min.css" rel="stylesheet" />
         <script src="~/Content/AdminIndex/js/app.min.js"></script>
+        <link href="~/Content/layui/css/layui.css" rel="stylesheet" />
+        <script src="~/Content/layui/layui.js"></script>
         <script src="~/Content/Excel/Excel1.js"></script>
         <script type="text/javascript">
         function OutComeMore(id) {
@@ -41,29 +43,39 @@
             });
         }
         }
-        </script>
-        <style>
-            select {
-                border: solid 1px #000;
-                -moz-appearance: none;
-                -webkit-appearance: none;
-                background: url("下拉箭头图片") right center no-repeat;
-                padding-right: 20px;
-            }
+        layui.use('laydate', function () {
+            var laydate = layui.laydate;
 
-                select::-ms-expand {
-                    display: none;
-                }
-        </style>
-    </head>
+            //常规用法
+            laydate.render({
+                elem: '#test1'
+            });
+
+            laydate.render({
+                elem: '#test2'
+            });
+        });
+    </script>
+    <style>
+        select {
+            border: solid 1px #000;
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            background: url("下拉箭头图片") right center no-repeat;
+            padding-right: 20px;
+        }
+
+            select::-ms-expand {
+                display: none;
+            }
+    </style>
+</head>
 @{
     List<Models.MaterialCode> material = (List<Models.MaterialCode>)ViewData["MaterialCode"];
-}
-@{
     List<Models.Employee> employee = (List<Models.Employee>)ViewData["employee"];
-}
-@{
     List<Models.OutCome> outcomelist = (List<Models.OutCome>)ViewData["outcome"];
+    List<Models.Manufacturer> manufacturers = (List<Models.Manufacturer>)ViewData["manufacturer"];
+    List<Models.Department> departments = (List<Models.Department>)ViewData["department"];
 }
 <div class="content-page">
     <div class="content">
@@ -99,24 +111,6 @@
                                             <table contenteditable="inherit" style="width:100%;text-align:center">
                                                 <tr>
                                                     <td>
-                                                        <label for="example-date" style="width:100%;text-align:left">开始时间</label>
-                                                        <input class="form-control" id="date" type="date" name="date" style="width:200px">
-                                                    </td>
-                                                    <td>
-                                                        <label for="example-date" style="width:100%;text-align:left">结束时间</label>
-                                                        <input class="form-control" id="date1" type="date" name="date1" style="width:200px">
-                                                    </td>
-                                                    <td>
-                                                        <label style="width:100%;text-align:left">借用人查询</label>
-                                                        <select name="employeeid" style="width:200px;height:40px" class="form-control">
-                                                            <option value="0">请选择</option>
-                                                            @foreach (var emp in employee)
-                                                            {
-                                                                <option value="@emp.id">@emp.name</option>
-                                                            }
-                                                        </select>
-                                                    </td>
-                                                    <td>
                                                         <label style="width:100%;text-align:left">货品编号查询</label>
                                                         <select name="materialCodeid" style="width:200px;height:40px" class="form-control">
                                                             <option value="0">请选择</option>
@@ -126,6 +120,45 @@
                                                             }
                                                         </select>
                                                     </td>
+                                                    <td>
+                                                        <label style="width:100%;text-align:left">厂商查询</label>
+                                                        <select name="manufacturerid" style="width:200px;height:40px" class="form-control">
+                                                            <option value="0">请选择</option>
+                                                            @foreach (var man in manufacturers)
+                                                            {
+                                                                <option value="@man.id">@man.manufacturersName</option>
+                                                            }
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <label style="width:100%;text-align:left">部门查询</label>
+                                                        <select name="departmentid" style="width:200px;height:40px" class="form-control">
+                                                            <option value="0">请选择</option>
+                                                            @foreach (var dep in departments)
+                                                            {
+                                                                <option value="@dep.id">@dep.departmentName</option>
+                                                            }
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <label style="width:100%;text-align:left">领用人查询</label>
+                                                        <select name="employeeid" style="width:200px;height:40px" class="form-control">
+                                                            <option value="0">请选择</option>
+                                                            @foreach (var emp in employee)
+                                                            {
+                                                                <option value="@emp.id">@emp.name</option>
+                                                            }
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <label for="example-date" style="width:100%;text-align:left">开始时间：</label>
+                                                        <input class="form-control" id="test1" type="text" name="date" style="width:200px">
+                                                    </td>
+                                                    <td>
+                                                        <label for="example-date" style="width:100%;text-align:left">结束时间</label>
+                                                        <input class="form-control" id="test2" type="text" name="date1" style="width:200px">
+                                                    </td>
+
                                                     <td>
                                                         <div class="button-list">
                                                             <button type="submit" style="width:60px;height:50px; float:unset" class="btn btn-primary"
@@ -215,9 +248,36 @@
                         <div class="row mb-2">
                             <div class="col-sm-4">
                                 <a href="javascript:OutComerevocation()" class="btn btn-primary"><i class="mdi mdi-plus-circle mr-2"></i>撤销最新出库记录</a>
+                                <a href="/OutCome/OutCome_revocationlist" class="btn btn-primary"><i class="mdi mdi-plus-circle mr-2"></i>显示撤销记录</a>
+                            </div>
+                            <div class="col-sm-2">
+                                <form method="post" action="/OutCome/OutCome_revocation" style="width:100%;text-align:center">
+                                    <table contenteditable="inherit" style="width:100%;text-align:center">
+                                        <tr>
+                                            <td>
+                                                <label style="width:100%;text-align:left">按货品编号撤销出库数据</label>
+                                                <select name="materialCodeid2" style="width:200px;height:40px" class="form-control">
+                                                    <option value="0">请选择</option>
+                                                    @foreach (var emp in material)
+                                                    {
+                                                        <option value="@emp.id">@emp.code</option>
+                                                    }
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <div class="button-list">
+                                                    <button type="submit" style="width:60px;height:50px; float:unset" class="btn btn-primary"
+                                                            data-toggle="modal" data-target=".signin_modal">
+                                                        撤销
+                                                    </button>
+                                                </div>
+                                               
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </form>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>

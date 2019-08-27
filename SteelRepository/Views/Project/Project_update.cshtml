@@ -13,22 +13,60 @@
     <link href="~/Content/AdminIndex/css/icons.min.css" rel="stylesheet" />
     <script src="~/Content/AdminIndex/js/app.min.js"></script>
     <script type="text/javascript">
+        var isTrue = true;
+        var isPnum1 = true;
+        var isPname1 = true;
+        function check() {
+            //项目令号
+            var pnumber1 = $("#pnumber1").val();
+            if (pnumber1 == "") {
+                document.getElementById("Ispnum1").style.display = "";
+                isPnum1 = false;
+            } else {
+                document.getElementById("Ispnum1").style.display = "none";
+                isPnum1 = true;
+            }
+            
+            //项目名称
+            var pname1 = $("#pname1").val();
+            if (pname1 == "") {
+                document.getElementById("Ispname1").style.display = "";
+                isPname1 = false;
+            } else {
+                document.getElementById("Ispname1").style.display = "none";
+                isPname1 = true;
+            }
+            if (isPnum1 && isPname1)
+                isTrue = true;
+            else {
+                isTrue = false;
+            }
+                
+            return isTrue;
+        } 
+
         function update() {
-            $.ajax({
-                url: "@Url.Action("Project_update")",
-                type: "post",
-                data: $("form").serialize(),
-                dataType: "json",
-                success: function (data) {
-                    data = eval("(" + data + ")");
-                    if (data) {
-                        alert("修改成功");
-                        parent.closeWin();
-                        parent.openFrame("Project_list");
-                    } else {
+            check();
+            if (isTrue) {
+                $.ajax({
+                    url: "@Url.Action("Project_update")",
+                    type: "post",
+                    data: $("form").serialize(),
+                    dataType: "json",
+                    success: function (data) {
+                        data = eval("(" + data + ")");
+                        if (data) {
+                            alert("修改成功");
+                            parent.closeWin();
+                            parent.openFrame("Project_list");
+                        } else {
+                            return;
+                        }
                     }
-                }
-            });
+                });
+            } else {
+                return;
+            }
         }
     </script>
 </head>
@@ -43,14 +81,16 @@
                             <div class="signin-form">
                                 @using (Html.BeginForm("Project_update", "Project", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @role = "form" }))
                                 {
-                                    <div class="form-group">
-                                        <label for="signin_form">项目令号：</label>
-                                        @Html.TextBoxFor(m => m.projectCode, new { @class = "form-control", type = "text" })
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="signin_form">项目名称：</label>
-                                        @Html.TextBoxFor(m => m.projectName, new { @class = "form-control", type = "text" })
-                                    </div>
+                                <div class="form-group">
+                                    <label for="signin_form">项目令号：</label>
+                                    <label id="Ispnum1" style="color:#ff0000;display:none;font-size:13px">*项目令号不能为空，请重新输入</label>
+                                    @Html.TextBoxFor(m => m.projectCode, new { @class = "form-control", type = "text",id="pnumber1"  })
+                                </div>
+                                <div class="form-group">
+                                    <label for="signin_form">项目名称：</label>
+                                    <label id="Ispname1" style="color:#ff0000;display:none;font-size:13px">*项目名称不能为空，请重新输入</label>
+                                    @Html.TextBoxFor(m => m.projectName, new { @class = "form-control", type = "text",id="pname1" })
+                                </div>
                                     <div class="form-group">
                                         <label for="signin_form">负责人：</label>
                                         @Html.TextBoxFor(m => m.projectCharge, new { @class = "form-control", type = "text" })
