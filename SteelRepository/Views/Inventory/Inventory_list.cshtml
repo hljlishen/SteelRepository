@@ -83,7 +83,7 @@
                                                     <tr>
                                                         <td>
                                                             <label style="width:100%;text-align:left">货品编号查询</label>
-                                                            <input id="codeinput" name="codeinput" list="codelist" style="width:200px;height:40px" class="form-control" placeholder="请选择或输入编号" />
+                                                            <input id="codeinput" name="codeinput" list="codelist" style="width:140px;height:40px" class="form-control" placeholder="请选择或输入编号" />
                                                             <datalist id="codelist">
                                                                 @foreach (var emp in material)
                                                                 {
@@ -93,7 +93,7 @@
                                                         </td>
                                                         <td>
                                                             <label style="width:100%;text-align:left">材料名称查询</label>
-                                                            <input id="nameinput" name="nameinput" list="namelist" style="width:200px;height:40px" class="form-control" placeholder="请选择或输入名称" />
+                                                            <input id="nameinput" name="nameinput" list="namelist" style="width:140px;height:40px" class="form-control" placeholder="请选择或输入名称" />
                                                             <datalist id="namelist">
                                                                 @foreach (var name in names)
                                                                 {
@@ -103,7 +103,7 @@
                                                         </td>
                                                         <td>
                                                             <label style="width:100%;text-align:left">厂商查询</label>
-                                                            <select name="manufacturerid" style="width:200px;height:40px" class="form-control">
+                                                            <select name="manufacturerid" style="width:140px;height:40px" class="form-control">
                                                                 <option value="0">请选择</option>
                                                                 @foreach (var man in manufacturers)
                                                                 {
@@ -113,7 +113,7 @@
                                                         </td>
                                                         <td>
                                                             <label style="width:100%;text-align:left">仓位查询</label>
-                                                            <select name="positionid" style="width:200px;height:40px" class="form-control">
+                                                            <select name="positionid" style="width:140px;height:40px" class="form-control">
                                                                 <option value="0">请选择</option>
                                                                 @foreach (var posi in positions)
                                                                 {
@@ -123,14 +123,14 @@
                                                         </td>
                                                         <td>
                                                             <label for="example-date" style="width:100%;text-align:left">开始时间：</label>
-                                                            <input class="form-control" id="test1" type="text" name="date" style="width:200px">
+                                                            <input class="form-control" id="test1" type="text" name="date" style="width:140px">
                                                         </td>
                                                         <td>
                                                             <label for="example-date" style="width:100%;text-align:left">结束时间</label>
-                                                            <input class="form-control" id="test2" type="text" name="date1" style="width:200px">
+                                                            <input class="form-control" id="test2" type="text" name="date1" style="width:140px">
                                                         </td>
                                                         <td>
-                                                            <div class="button-list">
+                                                            <div class="button-list" style="margin-top:5px;">
                                                                 <button type="submit" style="width:60px;height:50px; float:unset" class="btn btn-primary"
                                                                         data-toggle="modal" data-target=".signin_modal">
                                                                     查询
@@ -151,79 +151,83 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="page-title-center row">
-                                        <h4 class="page-title col-md-11">库存信息</h4>
-                                        <div class="l-button">
-                                            <a href="javascript:export_excel('products-datatable12')" class="side-nav-link">
-                                                <i class=" dripicons-export "></i>
-                                                <span> 导出Excel </span>
-                                            </a>
+                        <div class="card-header">
+                            <div class="page-title-box" style="margin:5px;">
+                                <h4 class="page-title">库存信息</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="page-title-center row">
+                                            <div class="l-button">
+                                                <a href="javascript:export_excel('products-datatable12')" class="side-nav-link">
+                                                    <i class=" dripicons-export "></i>
+                                                    <span> 导出Excel </span>
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table table-centered table-striped dt-responsive nowrap w-100" id="products-datatable3"  style="width:auto;height:auto">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 20px;">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                    <label class="custom-control-label" for="customCheck1">&nbsp;</label>
-                                                </div>
-                                            </th>
-                                            <th>编号</th>
-                                            <th>批号</th>
-                                            <th>货品编号</th>
-                                            <th>货品种类</th>
-                                            <th>货品名称</th>
-                                            <th>货品规格</th>
-                                            <th>货品余量</th>
-                                            <th>货品单位</th>
-                                            <th>货品仓位</th>
-                                            <th>生产厂商</th>
-                                            <th>入库操作人</th>
-                                            <th>货品入库时间</th>
-                                            <th style="width: 70px;">出库</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @{int count = 1; }
-                                        @foreach (var inventory in inventorylist)
-                                        {
-                                            if (inventory.amount > 0)
+                                <div class="table-responsive">
+                                    <table class="table table-centered table-striped dt-responsive nowrap w-100" id="products-datatable3" style="width:auto;height:auto">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 20px;">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                                        <label class="custom-control-label" for="customCheck1">&nbsp;</label>
+                                                    </div>
+                                                </th>
+                                                <th>编号</th>
+                                                <th>批号</th>
+                                                <th>货品编号</th>
+                                                <th>货品种类</th>
+                                                <th>货品名称</th>
+                                                <th>货品规格</th>
+                                                <th>货品余量</th>
+                                                <th>货品单位</th>
+                                                <th>货品仓位</th>
+                                                <th>生产厂商</th>
+                                                <th>入库操作人</th>
+                                                <th>货品入库时间</th>
+                                                <th style="width: 70px;">出库</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @{int count = 1; }
+                                            @foreach (var inventory in inventorylist)
                                             {
-                                                <tr>
-                                                    <td>
-                                                        <div class="custom-control custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                                            <label class="custom-control-label" for="customCheck2">&nbsp;</label>
-                                                        </div>
-                                                    </td>
-                                                    <td class="table-user">@count</td>
-                                                    <th>@Models.Inventory.IncomeIdGetInCome(inventory.incomeId).batch</th>
-                                                    <td>@Models.Inventory.GetMaterCodeName(inventory.incomeId)</td>
-                                                    <td>@Models.Inventory.GetCategoryName(inventory.incomeId).categoryName</td>
-                                                    <td>@Models.Inventory.GetNameName(inventory.incomeId)</td>
-                                                    <td>@Models.Inventory.GetModelName(inventory.incomeId)</td>
-                                                    <td>@inventory.amount</td>
-                                                    <td>@inventory.unit</td>
-                                                    <td>@Models.Inventory.GetPositionName(inventory.positionId)</td>
-                                                    <td>@Models.Inventory.GetMenufactureName(inventory.incomeId).manufacturersName</td>
-                                                    <td>@Models.Inventory.GetEmployeeName(inventory.incomeId)</td>
-                                                    <td>@Models.Inventory.GetInComeTime(inventory.incomeId).ToString("d")</td>
-                                                    <td>
-                                                        <a href="javascript:OutComeAdd(@inventory.id)" class="action-icon"> <i class="dripicons-export "></i></a>
-                                                    </td>
-                                                </tr>
-                                                count++;
+                                                if (inventory.amount > 0)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input" id="customCheck2">
+                                                                <label class="custom-control-label" for="customCheck2">&nbsp;</label>
+                                                            </div>
+                                                        </td>
+                                                        <td class="table-user">@count</td>
+                                                        <th>@Models.Inventory.IncomeIdGetInCome(inventory.incomeId).batch</th>
+                                                        <td>@Models.Inventory.GetMaterCodeName(inventory.incomeId)</td>
+                                                        <td>@Models.Inventory.GetCategoryName(inventory.incomeId).categoryName</td>
+                                                        <td>@Models.Inventory.GetNameName(inventory.incomeId)</td>
+                                                        <td>@Models.Inventory.GetModelName(inventory.incomeId)</td>
+                                                        <td>@inventory.amount</td>
+                                                        <td>@inventory.unit</td>
+                                                        <td>@Models.Inventory.GetPositionName(inventory.positionId)</td>
+                                                        <td>@Models.Inventory.GetMenufactureName(inventory.incomeId).manufacturersName</td>
+                                                        <td>@Models.Inventory.GetEmployeeName(inventory.incomeId)</td>
+                                                        <td>@Models.Inventory.GetInComeTime(inventory.incomeId).ToString("d")</td>
+                                                        <td>
+                                                            <a href="javascript:OutComeAdd(@inventory.id)" class="action-icon"> <i class="dripicons-export "></i></a>
+                                                        </td>
+                                                    </tr>
+                                                    count++;
+                                                }
                                             }
-                                        }
-                                    </tbody>
-                                </table>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
