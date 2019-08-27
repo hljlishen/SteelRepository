@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     Layout = null;
 }
 
@@ -14,6 +13,7 @@
         var id = "";
         var RemindCount = "";
         var income = "";
+        var IsJudge = Models.Employee.JudgeLogin();
         if (Session["name"] != null)
         {
             name = Session["name"].ToString();
@@ -48,6 +48,11 @@
     <link href="~/Content/AdminIndex/css/icons.min.css" rel="stylesheet" />
     <link href="~/Content/AdminIndex/css/app.min.css" rel="stylesheet" />
     <script type="text/javascript">
+        var judge = @IsJudge;
+        var inv = @RemindCount;
+        var inc = @income;
+
+
 
         function AdminInventory() {
             var url = "../AdminIndex/AllowanceRemind";
@@ -97,30 +102,32 @@
         }
 
         setTimeout(function () {
-            // IE
-            if (document.all) {
-                document.getElementById("Onclick1").click();
+            alert("1");
+            if (inv != 0) {
+                // IE
+                if (document.all) {
+                    document.getElementById("Onclick1").click();
+                }
+                    // 其它浏览器
+                else {
+                    var e = document.createEvent("MouseEvents");
+                        e.initEvent("click", true, true);
+                        document.getElementById("Onclick1").dispatchEvent(e);
+                }
             }
-                // 其它浏览器
-            else {
-                var e = document.createEvent("MouseEvents");
-                    e.initEvent("click", true, true);
-                    document.getElementById("Onclick1").dispatchEvent(e);
+            if (inc != 0) {
+                // IE
+                if (document.all) {
+                    document.getElementById("Onclick2").click();
+                }
+                    // 其它浏览器
+                else {
+                    var e = document.createEvent("MouseEvents");
+                        e.initEvent("click", true, true);
+                        document.getElementById("Onclick2").dispatchEvent(e);
+                }   
             }
         }, 1000);
-
-        setTimeout(function () {
-            // IE
-            if (document.all) {
-                document.getElementById("Onclick2").click();
-            }
-                // 其它浏览器
-            else {
-                var e = document.createEvent("MouseEvents");
-                    e.initEvent("click", true, true);
-                    document.getElementById("Onclick2").dispatchEvent(e);
-            }
-         }, 1000);
     </script>
 </head>
 <body>

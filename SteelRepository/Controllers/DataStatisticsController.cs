@@ -12,6 +12,7 @@ namespace SteelRepository.Controllers
         // GET: DataStatistics
         public ActionResult DataStatistics()
         {
+            Employee.NoJudge();
             ViewData["amount"] = Inventory.StatisticAmount();
             ViewData["project"] = Project.StatisticPrice();
             ViewData["consumptionAmount"] = Inventory.StatisticConsumptionAmount();

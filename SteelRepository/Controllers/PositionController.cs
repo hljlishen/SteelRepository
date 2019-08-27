@@ -15,6 +15,7 @@ namespace SteelRepository.Controllers
         // GET: Position
         public ActionResult Position_list()
         {
+            Employee.NoJudge();
             return View(Position.SelectAll());
         }
         public ActionResult Position_add()

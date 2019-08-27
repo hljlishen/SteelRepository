@@ -314,6 +314,7 @@
     <Content Include="Content\OutCome\css\app.min.css" />
     <Content Include="Content\OutCome\js\app.min.js" />
     <Content Include="Content\OutCome\js\demo.customers.js" />
+    <Content Include="Content\OutCome\js\JavaScript.js" />
     <Content Include="Content\Position\css\app.min.css" />
     <Content Include="Content\Login\css\bootsnav.css" />
     <Content Include="Content\Login\css\bootstrap.min.css" />

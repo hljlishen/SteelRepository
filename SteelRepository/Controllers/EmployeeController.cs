@@ -15,6 +15,7 @@ namespace SteelRepository.Controllers
         // GET: Employee
         public ActionResult Employee_list()
         {
+            Employee.NoJudge();
             return View(Employee.SelectAll());
         }
 

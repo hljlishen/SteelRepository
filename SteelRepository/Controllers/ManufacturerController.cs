@@ -15,6 +15,7 @@ namespace SteelRepository.Controllers
         // GET: Employee
         public ActionResult Manufacturer_list()
         {
+            Employee.NoJudge();
             return View(Manufacturer.SelectAll());
         }
 
