@@ -32,8 +32,9 @@ namespace SteelRepository.Controllers
             var nameinput = collection["nameinput"];
             int  positionid = Convert.ToInt32(collection["positionid"]);
             int manufacturerid = Convert.ToInt32(collection["manufacturerid"]);
-            ViewData["Inventorylist"] = null;
-            ViewData["Inventorylist"] = Inventory.MulSelectCheckInventory(begin,end,codeinput,nameinput,positionid,manufacturerid);
+            //ViewData["Inventorylist"] = null;
+            var inv = Inventory.MulSelectCheckInventory(begin,end,codeinput,nameinput,positionid,manufacturerid);
+            ViewData["Inventorylist"] = inv;
             return View();
         }
         public ActionResult OutCome_add(int id)
