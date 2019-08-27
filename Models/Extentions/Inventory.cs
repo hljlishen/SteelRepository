@@ -38,6 +38,21 @@ namespace Models
         {
             return Dbhelper.SelectAll<Inventory>();
         }
+
+        public static List<Inventory> SelectRemaining()
+        {
+            List<Inventory> inventories = new List<Inventory>();
+            foreach (var inv in Dbhelper.Select<Inventory>(p => p.unit == "g" && p.amount <= 20000))
+            {
+                inventories.Add(inv);
+            }
+            foreach (var inv in Dbhelper.Select<Inventory>(p => p.unit == "kg" && p.amount <= 20))
+            {
+                inventories.Add(inv);
+            }
+            return inventories;
+        }
+
         public static string GetMaterCodeName(int incomeId)
         {
             int  income = Dbhelper.FindId<InCome>(incomeId).codeId;
@@ -446,6 +461,23 @@ namespace Models
                 }
                 var Sum = statistics2D.GetValues(inventories);
                 return Sum["amount"];
+            }
+        }
+
+        public static Dictionary<string, double> StatisticConsumptionAmount()
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                List<Inventory> inventories = new List<Inventory>();
+                MultipleSeriesStatistics2D<Inventory> statistics2D = new MultipleSeriesStatistics2D<Inventory>(p => p.GetMaterialCode(helper));
+                statistics2D.AddSeries("consumptionAmount", p => p.consumptionAmount);
+                foreach (var inv in helper.Select<Inventory>(p => p.consumptionAmount > 0))
+                {
+                    inv.amount = WeightConverter.Convert(inv.unit, inv.consumptionAmount, "kg");
+                    inventories.Add(inv);
+                }
+                var Sum = statistics2D.GetValues(inventories);
+                return Sum["consumptionAmount"];
             }
         }
     }

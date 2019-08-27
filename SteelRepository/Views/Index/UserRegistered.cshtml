@@ -99,6 +99,7 @@
         } 
 
         function Registered() {
+            document.getElementById("IsNum2").style.display = "none";
             check();
             if (isTrue) {
                 $.ajax({
@@ -113,6 +114,7 @@
                             parent.closeWin();
                             parent.openFrame("../Index/Index");
                         } else {
+                            document.getElementById("IsNum2").style.display = "";
                             return;
                         }
                     }
@@ -159,6 +161,7 @@
                                 <div class="form-group">
                                     <label for="signin_form" class="label">账号：</label>
                                     <label id="IsNum" style="color:#ff0000;display:none;font-size:13px">*账号不能为空，应为字母数字下划线</label>
+                                    <label id="IsNum2" style="color:#ff0000;display:none;font-size:13px">*账号已存在,请重新输入!</label>
                                     @Html.TextBoxFor(m => m.number, new { @class = "form-control", placeholder = "请输入账号", id = "number", type = "text" })
                                 </div>
                                 <div class="form-group">

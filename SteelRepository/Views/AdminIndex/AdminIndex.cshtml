@@ -1,4 +1,5 @@
-﻿@{
+﻿
+@{
     Layout = null;
 }
 
@@ -11,6 +12,8 @@
         var permissions = "";
         bool IsLogin = false;
         var id = "";
+        var RemindCount = "";
+        var income = "";
         if (Session["name"] != null)
         {
             name = Session["name"].ToString();
@@ -27,6 +30,14 @@
         {
             id = Session["id"].ToString();
         }
+        if (Session["RemindCount"] != null)
+        {
+            RemindCount = Session["RemindCount"].ToString();
+        }
+        if (Session["inComes"] != null)
+        {
+            income = Session["inComes"].ToString();
+        }
     }
     <meta charset="utf-8" />
     <title>主页导航栏</title>
@@ -38,19 +49,19 @@
     <link href="~/Content/AdminIndex/css/app.min.css" rel="stylesheet" />
     <script type="text/javascript">
 
-        //function AdminLogin() {
-        //    var url = "../Login/UserLogin";
-        //    var width = "100%";
-        //    var height = "800px";
-        //    OpenWin(url, width, height);
-        //}
+        function AdminInventory() {
+            var url = "../AdminIndex/AllowanceRemind";
+            var width = "100%";
+            var height = "800px";
+            OpenWin2(url, width, height);
+        }
 
-        //function AdminRegistered() {
-        //    var url = "../Login/UserRegistered";
-        //    var width = "100%";
-        //    var height = "600px";
-        //    OpenWin(url, width, height);
-        //}
+        function RecheckRemind() {
+            var url = "../AdminIndex/RecheckRemind";
+            var width = "100%";
+            var height = "800px";
+            OpenWin3(url, width, height);
+        }
 
         function openFrame(url) {
             location.href = url;
@@ -69,6 +80,12 @@
             $("#myModal2").modal("show");
         }
 
+         function OpenWin3(url, width, height) {
+            var frame = "<iframe width='" + width + "' height='" + height + "' onscroll='true' style='border: 0px;' src='" + url + "'></iframe>";
+            $("#myModalBody3").html(frame);
+            $("#myModal3").modal("show");
+        }
+
          function closeWin2() {
             //关闭模态框
             $("#myModal2").modal("hide");
@@ -78,6 +95,32 @@
             //关闭模态框
             $("#myModal").modal("hide");
         }
+
+        setTimeout(function () {
+            // IE
+            if (document.all) {
+                document.getElementById("Onclick1").click();
+            }
+                // 其它浏览器
+            else {
+                var e = document.createEvent("MouseEvents");
+                    e.initEvent("click", true, true);
+                    document.getElementById("Onclick1").dispatchEvent(e);
+            }
+        }, 1000);
+
+        setTimeout(function () {
+            // IE
+            if (document.all) {
+                document.getElementById("Onclick2").click();
+            }
+                // 其它浏览器
+            else {
+                var e = document.createEvent("MouseEvents");
+                    e.initEvent("click", true, true);
+                    document.getElementById("Onclick2").dispatchEvent(e);
+            }
+         }, 1000);
     </script>
 </head>
 <body>
@@ -99,37 +142,62 @@
                         <div class="dropdown-item noti-title">
                             <h5 class="m-0">
                                 <span class="float-right">
-                                    <a href="javascript: void(0);" class="text-dark">
+                                    <a href="javascript:void(0);" class="text-dark">
                                         <small></small>
                                     </a>
-                                </span>库存提醒
+                                </span>
                             </h5>
                         </div>
-                        <div class="dropdown-item noti-title">
-                            <h5 class="m-0">
-                                <span class="float-right">
-                                    <a href="javascript: void(0);" class="text-dark">
-                                        <small></small>
-                                    </a>
-                                </span>复检提醒
-                            </h5>
+                        <div class="slimscroll" style="max-height: 230px;">
+                            <a href="javascript:AdminInventory()" class="dropdown-item notify-item" id="Onclick1">
+                                <div class="notify-icon bg-primary">
+                                    <i class="mdi mdi-comment-account-outline"></i>
+                                </div>
+                                <p class="notify-details">
+                                    余量提醒
+                                    @if (RemindCount == "")
+                                    {
+                                        <small class="text-muted">无提醒</small>
+                                    }
+                                    else
+                                    {
+                                        <small class="text-muted">@RemindCount 条提醒</small>
+                                    }
+                                </p>
+                            </a>
+                            <a href="javascript:RecheckRemind()" class="dropdown-item notify-item" id="Onclick2">
+                                <div class="notify-icon bg-info">
+                                    <i class="mdi mdi-account-plus"></i>
+                                </div>
+                                <p class="notify-details">
+                                    复检提醒
+                                    @if (income == "")
+                                    {
+                                        <small class="text-muted">无提醒</small>
+                                    }
+                                    else
+                                    {
+                                        <small class="text-muted">@income 条提醒</small>
+                                    }
+                                </p>
+                            </a>
                         </div>
                     </div>
                 </li>
 
                 @*@if (!IsLogin)
-            {
-                <li class="dropdown notification-list">
-                    <a class="nav-link right-bar-toggle" href="javascript:AdminLogin()">
-                        <i class="noti-icon">登录</i>
-                    </a>
-                </li>
-                <li class="dropdown notification-list">
-                    <a class="nav-link right-bar-toggle" href="javascript:AdminRegistered()">
-                        <i class="noti-icon">注册</i>
-                    </a>
-                </li>
-            }*@
+                    {
+                        <li class="dropdown notification-list">
+                            <a class="nav-link right-bar-toggle" href="javascript:AdminLogin()">
+                                <i class="noti-icon">登录</i>
+                            </a>
+                        </li>
+                        <li class="dropdown notification-list">
+                            <a class="nav-link right-bar-toggle" href="javascript:AdminRegistered()">
+                                <i class="noti-icon">注册</i>
+                            </a>
+                        </li>
+                    }*@
                 @if (IsLogin)
                 {
                     <li class="dropdown notification-list">
@@ -143,14 +211,14 @@
                             </span>
                         </a>
                         @*<div class="dropdown-menu dropdown-menu-right dropdown-menu-animated topbar-dropdown-menu profile-dropdown" aria-labelledby="topbar-userdrop">
-                        <div class=" dropdown-header noti-title">
-                            <h6 class="text-overflow m-0">欢迎!</h6>
-                        </div>
-                        <a href="javascript:AdminLogin()" class="dropdown-item notify-item">
-                            <i class="mdi mdi-account-circle mr-1"></i>
-                            <span>登录</span>
-                        </a>
-                    </div>*@
+                                <div class=" dropdown-header noti-title">
+                                    <h6 class="text-overflow m-0">欢迎!</h6>
+                                </div>
+                                <a href="javascript:AdminLogin()" class="dropdown-item notify-item">
+                                    <i class="mdi mdi-account-circle mr-1"></i>
+                                    <span>登录</span>
+                                </a>
+                            </div>*@
                     </li>
                     <li class="dropdown notification-list">
                         <a class="nav-link right-bar-toggle" href="../Index/Index">
@@ -178,10 +246,13 @@
 
                     <li class="side-nav-title side-nav-item">导航</li>
                     <li class="side-nav-item">
-                        <a href="../Inventory/Inventory_list" class="side-nav-link">
-                            <i class="mdi mdi-clipboard-text-play-outline"></i>
-                            <span> 库存信息 </span>
-                        </a>
+                        @if (permissions == "1")
+                        {
+                            <a href="../Inventory/Inventory_list" class="side-nav-link">
+                                <i class="mdi mdi-clipboard-text-play-outline"></i>
+                                <span> 库存信息 </span>
+                            </a>
+                        }
                     </li>
                     <li class="side-nav-item">
                         <a href="../DataStatistics/DataStatistics" class="side-nav-link">
@@ -190,92 +261,50 @@
                         </a>
                     </li>
                     <li class="side-nav-item">
-                        @if (permissions == "1" || permissions == "2")
-                        {
-                            <a href="javascript: void(0);" class="side-nav-link">
-                                <i class="dripicons-view-apps"></i>
-                                <span> 员工信息 </span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <ul class="side-nav-second-level" aria-expanded="false">
-                                @if (permissions == "1")
-                                {
-                                    <li>
-                                        <a href="../Employee/Employee_list">员工信息管理</a>
-                                    </li>
-
-                                }
+                        <a href="javascript: void(0);" class="side-nav-link">
+                            <i class="dripicons-view-apps"></i>
+                            <span> 员工信息 </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <ul class="side-nav-second-level" aria-expanded="false">
+                            @if (permissions == "1")
+                            {
                                 <li>
-                                    <a href="../Employee/Employee_information?id=@id">个人信息</a>
+                                    <a href="../Employee/Employee_list">员工信息管理</a>
                                 </li>
-                            </ul>
-                        }
+
+                            }
+                            <li>
+                                <a href="../Employee/Employee_information?id=@id">个人信息</a>
+                            </li>
+                        </ul>
                     </li>
                     <li class="side-nav-item">
-                        @if (permissions == "1")
-                        {
-                            <a href="javascript: void(0);" class="side-nav-link">
-                                <i class="dripicons-location"></i>
-                                <span> 仓库位置 </span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <ul class="side-nav-second-level" aria-expanded="false">
-                                <li>
-                                    <a href="../Position/Position_list">仓库位置管理</a>
-                                </li>
-                            </ul>
-                        }
+                        <a href="../Position/Position_list" class="side-nav-link">
+                            <i class="dripicons-location"></i>
+                            <span> 仓库位置管理 </span>
+                        </a>
                     </li>
 
                     <li class="side-nav-item">
-                        @if (permissions == "1")
-                        {
-                            <a href="javascript: void(0);" class="side-nav-link">
-                                <i class="dripicons-copy"></i>
-                                <span> 部门信息 </span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <ul class="side-nav-second-level" aria-expanded="false">
-                                <li>
-                                    <a href="../Department/Department_list">部门管理</a>
-                                </li>
-                            </ul>
-                        }
+                        <a href="../Department/Department_list" class="side-nav-link">
+                            <i class="dripicons-copy"></i>
+                            <span> 部门管理 </span>
+                        </a>
                     </li>
 
                     <li class="side-nav-item">
-                        @if (permissions == "1")
-                        {
-                            <a href="../Manufacturer/Manufacturer_list" class="side-nav-link">
-                                <i class="dripicons-briefcase"></i>
-                                <span> 厂家信息 </span>
-                            </a>
-                        }
+                        <a href="../Manufacturer/Manufacturer_list" class="side-nav-link">
+                            <i class="dripicons-briefcase"></i>
+                            <span> 厂家信息 </span>
+                        </a>
                     </li>
 
                     <li class="side-nav-item">
-                        @if (permissions == "1" || permissions == "2")
-                        {
-                            <a href="javascript: void(0);" class="side-nav-link">
-                                <i class="dripicons-graph-pie"></i>
-                                <span> 项目信息 </span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <ul class="side-nav-second-level" aria-expanded="false">
-                                @if (permissions == "1")
-                                {
-                                    <li>
-                                        <a href="../Project/Project_list">项目信息管理</a>
-                                    </li>
-                                }
-                                @if (permissions == "2")
-                                {
-                                    <li>
-                                        <a href="../Project/Project_StatisticalChart">项目信息统计</a>
-                                    </li>
-                                }
-                            </ul>
-                        }
+                        <a href="../Project/Project_list" class="side-nav-link">
+                            <i class="dripicons-graph-pie"></i>
+                            <span> 项目信息管理 </span>
+                        </a>
                     </li>
 
                     <li class="side-nav-item">
@@ -342,6 +371,19 @@
                     </button>
                 </div>
                 <div class="modal-body" id="myModalBody2"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="background:#FFFFFF; color:#FFF;width:200%">
+                <div class="modal-header" style="padding: 10px;">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                </div>
+                <div class="modal-body" id="myModalBody3"></div>
             </div>
         </div>
     </div>

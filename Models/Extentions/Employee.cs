@@ -24,7 +24,9 @@ namespace Models
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                return helper.Insert(employee);
+                if(helper.Select<Employee>(p => p.number == employee.number).Count <= 0)
+                    return helper.Insert(employee);
+                return 0;
             }
         }
 
@@ -57,7 +59,6 @@ namespace Models
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
                 List<Employee> employees = new List<Employee>();
-                List<Employee> returnEm = new List<Employee>();
                 employees = helper.SelectAll<Employee>();
                 foreach (var em in employees)
                 {
@@ -116,7 +117,7 @@ namespace Models
                     }
                     return ret;
                 }*/);
-                var Sum = statistics2D.GetValues(helper.Select<OutCome>(p => p.borrowerId == employeeId));
+                var Sum = statistics2D.GetValues(helper.Select<OutCome>(p => p.borrowerId == employeeId && p.state !=2));
                 return Sum.Keys.Contains("price") ? Sum["price"] : null;
             }
         }

@@ -3,18 +3,19 @@
     Layout = "~/Views/AdminIndex/AdminIndex.cshtml";
 }
 
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
-    <meta content="Coderthemes" name="author" />
-    <link href="~/Content/AdminIndex/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" />
-    <link href="~/Content/AdminIndex/css/vendor/responsive.bootstrap4.css" rel="stylesheet" />
-    <link href="~/Content/AdminIndex/css/icons.min.css" rel="stylesheet" />
-    <link href="~/Content/AdminIndex/css/app.min.css" rel="stylesheet" />
-    <script src="~/Content/AdminIndex/js/app.min.js"></script>
-    <script type="text/javascript">
+    <head>
+        <meta charset="utf-8" />
+        <title></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+        <meta content="Coderthemes" name="author" />
+        <link href="~/Content/AdminIndex/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" />
+        <link href="~/Content/AdminIndex/css/vendor/responsive.bootstrap4.css" rel="stylesheet" />
+        <link href="~/Content/AdminIndex/css/icons.min.css" rel="stylesheet" />
+        <link href="~/Content/AdminIndex/css/app.min.css" rel="stylesheet" />
+        <script src="~/Content/AdminIndex/js/app.min.js"></script>
+        <script src="~/Content/Excel/Excel1.js"></script>
+        <script type="text/javascript">
         function OutComeMore(id) {
             var url = "OutCome_More?id=" + id;
             var width = "100%";
@@ -40,20 +41,21 @@
             });
         }
         }
-    </script>
-    <style>
-        select {
-            border: solid 1px #000;
-            -moz-appearance: none;
-            -webkit-appearance: none;
-            background: url("下拉箭头图片") right center no-repeat;
-            padding-right: 20px;
-        }
-            select::-ms-expand {
-                display: none;
+        </script>
+        <style>
+            select {
+                border: solid 1px #000;
+                -moz-appearance: none;
+                -webkit-appearance: none;
+                background: url("下拉箭头图片") right center no-repeat;
+                padding-right: 20px;
             }
-    </style>
-</head>
+
+                select::-ms-expand {
+                    display: none;
+                }
+        </style>
+    </head>
 @{
     List<Models.MaterialCode> material = (List<Models.MaterialCode>)ViewData["MaterialCode"];
 }
@@ -147,6 +149,12 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
+                        <div class="l-button" style="float:right">
+                            <a href="javascript:export_excel('products-datatable3')" class="side-nav-link">
+                                <i class=" dripicons-export"></i>
+                                <span> 导出Excel </span>
+                            </a>
+                        </div>
                         <div class="table-responsive">
                             <table class="table table-centered table-striped dt-responsive nowrap w-100" id="products-datatable3" style="width:auto;height:auto">
                                 <thead>
@@ -168,7 +176,7 @@
                                         <th>货品总价</th>
                                         <th>货品出库时间</th>
                                         <th>货品借用人</th>
-                                        <th >备注</th>
+                                        <th>备注</th>
                                         <th style="width: 50px;">详细信息</th>
                                     </tr>
                                 </thead>
@@ -176,7 +184,7 @@
                                     @{int count = 1; }
                                     @foreach (var outComes in outcomelist)
                                     {
-                                        <tr >
+                                        <tr>
                                             <td>
                                                 <div class="custom-control custom-checkbox">
                                                     <input type="checkbox" class="custom-control-input" id="customCheck2">
@@ -194,7 +202,7 @@
                                             <td>@outComes.price</td>
                                             <td>@outComes.recipientsTime.ToString("d")</td>
                                             <td>@Models.OutCome.GetEmployeeName(outComes.borrowerId)</td>
-                                            <td style= "word-wrap:break-word">@outComes.instructions</td>
+                                            <td style="word-wrap:break-word">@outComes.instructions</td>
                                             <td>
                                                 <a href="javascript:OutComeMore(@outComes.id)" class="action-icon"> <i class="mdi mdi-calendar-text-outline"></i></a>
                                             </td>

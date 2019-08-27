@@ -283,5 +283,19 @@ namespace Models
                 return helper.FindId<InCome>(id);
             }
         }
+
+        public static List<InCome> SelectRemaining()
+        {
+            List<InCome> inComes = new List<InCome>();
+            foreach (var inc in GetInComes())
+            {
+                string datetime = RecheckReport.GetMaxDate(RecheckReport.GetRecheckReports(inc.id), inc.reviewCycle);
+                if (datetime == "未添加复检报告")
+                    return null;
+                inc.storageTime = DateTime.Parse(datetime);
+                inComes.Add(inc);
+            }
+            return inComes;
+        }
     }
 }
