@@ -107,7 +107,7 @@
                         if (data) {
                             alert("添加成功");
                             parent.closeWin();
-                            parent.OpenWin2("OutCome_add?id=" + id, "100%", "700px");
+                            OpenWin2("OutCome_add?id=" + id, "100%", "700px");
                         } else {
                             return;
                         }
@@ -118,6 +118,11 @@
                 return;
             }
 
+        }
+        function OpenWin2(url, width, height) {
+            var frame = "<iframe width='" + width + "' height='" + height + "' onscroll='true' style='border: 0px;' src='" + url + "'></iframe>";
+            $("#myModalBody2").html(frame);
+            $("#myModal2").modal("show");
         }
         //function OutComeAdd(id) {
         //    var url = "OutCome_add?id="+id;

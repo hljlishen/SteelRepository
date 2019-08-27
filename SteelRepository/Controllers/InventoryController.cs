@@ -41,7 +41,7 @@ namespace SteelRepository.Controllers
             ViewData["Inventory"] = Inventory.GetInventory(id);
             SelectList select = new SelectList(GetUnitList(), "Value", "Text");
             ViewBag.select = select;
-            ViewData["employee"] = Employee.SelectAll();
+            ViewData["employee"] = Employee.SelectAllDesc();
             ViewData["name"] = IndexController.adminName();
             inventorysta = Inventory.GetInventory(id);
             ViewData["project"] = Project.SelectAll();

@@ -19,10 +19,17 @@ namespace Models
                 return helper.SelectAll<Employee>();
             }
         }
-        //public static List<Employee> SelectAllDesc()
-        //{
-
-        //}
+        public static List<Employee> SelectAllDesc()
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                List<Employee> list = new List<Employee>();
+                foreach (var emplo in helper.SqlQuery<Employee>("select Employee.* from Employee order by employee.id desc")) {
+                    list.Add(emplo);
+                }
+                return list;
+            }
+        }
 
         public static int Inster(Employee employee)
         {

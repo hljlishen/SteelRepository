@@ -29,7 +29,7 @@
                         parent.openFrame("Inventory_list");
                     } else {
                         alert("出库失败");
-                        parent.closeWin2();
+                        //parent.closeWin2();
                         parent.openFrame("Inventory_list");
                     }
                 }
@@ -117,8 +117,10 @@
                                                 }
                                             </select>
                                         </div>
-                                        <div class="signin-footer">
-                                            <a href="javascript:EmployeeAdd()" class="btn btn-primary"><i class="mdi mdi-plus-circle mr-2"></i>新增员工</a>
+                                        <label style="height:16px">&nbsp;</label>
+                                        <div class="form-group col-md-6">
+                                            <label for="signin_form" style="height:16px">新增领用人：</label>
+                                            <a href="javascript:EmployeeAdd()" class="btn btn-primary" style="width:200px;height:42px"><i class="mdi mdi-plus-circle mr-2"></i>新增</a>
                                         </div>
                                     </div>
                                 }
