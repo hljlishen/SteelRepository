@@ -21,6 +21,12 @@ namespace SteelRepository.Controllers
             ViewData["position"] = Position.SelectAll();
             return View();
         }
+
+        public ActionResult Index2()
+        {
+            return View();
+        }
+
         [HttpPost]
         public ActionResult Index(FormCollection collection)
         {
@@ -61,7 +67,7 @@ namespace SteelRepository.Controllers
                     Session["RemindCount"] = inventories.Count();
                 else
                     Session["RemindCount"] = 0;
-                inComes = InCome.SelectRemaining();
+                inComes = InCome.SelectRemind();
                 if (inComes != null)
                     Session["inComes"] = inComes.Count();
                 else

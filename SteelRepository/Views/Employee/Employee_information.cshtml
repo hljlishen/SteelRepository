@@ -21,23 +21,60 @@
     <script src="~/Content/AdminIndex/js/vendor/britecharts.js"></script>
     <script src="~/Content/Position/js/echarts.min.js"></script>
     <script type="text/javascript">
+        var isTrue;
+        function checkp() {
 
+            var Pwd ;
+            var Pwd2;
+
+            var password = $("#password").val();
+            var p = /^(\w){6,20}$/;
+            if (!p.test(password) || password == "") {
+                document.getElementById("IsPwd1").style.display = "";
+                Pwd = false;
+
+            } else {
+                document.getElementById("IsPwd1").style.display = "none";
+                Pwd = true;
+            }
+            
+            //再次密码
+            var repeatPassword = $("#repeatPassword").val();
+            if (repeatPassword != password) {
+                document.getElementById("IsRePwd1").style.display = "";
+                Pwd2 = false;
+
+            } else {
+                document.getElementById("IsRePwd1").style.display = "none";
+                Pwd2 = true;
+            }
+            if (Pwd && Pwd2) {
+                isTrue = true;
+            } else {
+                isTrue = false;
+            }
+        }
         function Update() {
-             $.ajax({
-                url: "@Url.Action("Employee_information")",
-                type: "post",
-                data: $("form").serialize(),
-                dataType: "json",
-                success: function (data) {
-                    data = eval("(" + data + ")");
-                    if (data) {
-                        alert("修改成功");
-                        parent.closeWin();
-                        parent.openFrame("Employee_information?id="+@em.id);
-                    } else {
+            checkp();
+            if (isTrue) {
+                $.ajax({
+                    url: "@Url.Action("Employee_information")",
+                    type: "post",
+                    data: $("form").serialize(),
+                    dataType: "json",
+                    success: function (data) {
+                        data = eval("(" + data + ")");
+                        if (data) {
+                            alert("修改成功");
+                            parent.closeWin();
+                            parent.openFrame("Employee_information?id=" +@em.id);
+                        } else {
+                        }
                     }
-                }
-            });
+                });
+            } else {
+                return;
+            }
         }
     </script>
 </head>
@@ -80,13 +117,15 @@
                                     <label class="col-3 col-form-label">密码：</label>
                                     <div class="col-9">
                                         <input type="password" class="form-control" value="@em.password" id="password" name="password">
+                                        <label id="IsPwd1" style="color:#ff0000;display:none;font-size:13px">*密码只能输入6-20个字母、数字、下划线且不为空</label>
                                     </div>
                                 </div>
                                 <div class="form-group row mb-3">
                                     <label class="col-3 col-form-label">重复密码：</label>
                                     <div class="col-9">
                                         <input type="password" class="form-control" id="repeatPassword">
-                                        <span class="badge badge-danger" style="display:none" id="sp_password">密码不一致</span>
+                                        <label id="IsRePwd1" style="color:#ff0000;display:none;font-size:13px">*两次输入的密码不一致</label>
+                                        @*<span class="badge badge-danger" style="display:none" id="sp_password">密码不一致</span>*@
                                     </div>
                                 </div>
                                 <div class="form-group row mb-3">

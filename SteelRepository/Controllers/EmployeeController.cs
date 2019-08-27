@@ -112,6 +112,7 @@ namespace SteelRepository.Controllers
 
         public ActionResult Employee_information(int id)
         {
+            Employee.NoJudge();
             Employee employee = Employee.FindId(id);
             ViewData["Employee"] = employee;
             ViewData["Dictionary"] = Employee.StatisticPrice(id);

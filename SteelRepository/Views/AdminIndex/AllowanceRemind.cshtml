@@ -1,6 +1,6 @@
 ﻿@model List<Models.Inventory>
 @{ 
-    Layout = null;
+     Layout = "~/Views/AdminIndex/Index1.cshtml";
 }
 <!DOCTYPE html>
 <html>
@@ -31,13 +31,13 @@
             <div class="card">
                 <div class="card-body">
                     <div class="l-button">
-                        <a href="javascript:export_excel('tableExcel')" class="side-nav-link">
+                        <a href="javascript:export_excel('products-datatable9')" class="side-nav-link">
                             <i class=" dripicons-export "></i>
                             <span> 导出Excel </span>
                         </a>
                     </div>
                     <div class="table-responsive" id="myDiv">
-                        <table class="table table-centered table-striped dt-responsive nowrap w-100" id="tableExcel">
+                        <table class="table table-centered table-striped dt-responsive nowrap w-100" id="products-datatable9">
                             <thead>
                                 <tr>
                                     <th style="width: 20px;">
