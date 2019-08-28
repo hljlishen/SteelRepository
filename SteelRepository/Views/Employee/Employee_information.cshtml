@@ -23,9 +23,20 @@
     <script type="text/javascript">
         var isTrue;
         function checkp() {
-
+            var isEName;
             var Pwd ;
             var Pwd2;
+
+            //姓名
+            var Ename = $("#Ename").val();
+            var n = /^[\u4E00-\u9FA5A-Za-z]+$/;
+            if (!n.test(Ename) || Ename == "") {
+                document.getElementById("IsEname").style.display = "";
+                isEName = false;
+            } else {
+                document.getElementById("IsEname").style.display = "none";
+                isEName = true;
+            }
 
             var password = $("#password").val();
             var p = /^(\w){6,20}$/;
@@ -48,7 +59,7 @@
                 document.getElementById("IsRePwd1").style.display = "none";
                 Pwd2 = true;
             }
-            if (Pwd && Pwd2) {
+            if (isEName && Pwd && Pwd2) {
                 isTrue = true;
             } else {
                 isTrue = false;
@@ -104,7 +115,8 @@
                                 <div class="form-group row mb-3">
                                     <label class="col-3 col-form-label">姓名：</label>
                                     <div class="col-9">
-                                        <input type="text" class="form-control" value="@em.name" name="name">
+                                        <input type="text" class="form-control" value="@em.name" name="name" id="Ename">
+                                        <label id="IsEname" style="color:#ff0000;display:none;font-size:13px">*姓名应为汉字或字母且不为空</label>
                                     </div>
                                 </div>
                                 <div class="form-group row mb-3">
