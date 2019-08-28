@@ -50,7 +50,7 @@ namespace Models
                 else { 
                 helper.Delete<Department>(id);
                     return 1;
-                        }
+                }
             }
         }
         public static List<Employee> GetEmployee(int id)
