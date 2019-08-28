@@ -14,17 +14,16 @@
     <link href="~/Content/AdminIndex/css/icons.min.css" rel="stylesheet" />
     <script src="~/Content/AdminIndex/js/app.min.js"></script>
     <script type="text/javascript">
-
         var isTrue = true;
         function check() {
             var Dname = $("#Dname").val();
             var n = /^[\u4E00-\u9FA5A-Za-z0-9][\x21-\x7e]+$/;
-            if (!n.test(Dname) || Dname =="") {
-                document.getElementById("Isname").style.display = "";
-                isTrue = false;
-            } else {
+            if (n.test(Dname) || Dname !=="") {
                 document.getElementById("Isname").style.display = "none";
                 isTrue = true;
+            } else {
+                document.getElementById("Isname").style.display = "";
+                isTrue = false;
             }
         }
         function Update() {
