@@ -160,7 +160,7 @@ namespace Models
         }
         public static int NameGetEmployeeid(string employeeName)
         {
-            str = employeeName + " ";
+            str = employeeName+" ";
             string[] str1 = new string[3];
             for (int i = 0; i < 3; i++)
             {
