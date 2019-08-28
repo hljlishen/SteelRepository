@@ -39,6 +39,7 @@ namespace SteelRepository.Controllers
         public JsonResult Project_update(Project project)
         {
             project.id = pro.id;
+            project.state = 1;
             return Json(Project.Update(project));
         }
 

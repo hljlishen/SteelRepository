@@ -30,6 +30,11 @@ namespace Models
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
+                foreach (var income in helper.SelectAll<InCome>())
+                {
+                    if (income.menufactureId == id)
+                        return 0;
+                }
                 return helper.Delete<Manufacturer>(id);
             }
         }
