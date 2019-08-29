@@ -431,6 +431,7 @@
     <Content Include="Views\AdminIndex\RecheckRemind.cshtml" />
     <Content Include="Views\AdminIndex\Index1.cshtml" />
     <Content Include="Views\Index\Index2.cshtml" />
+    <Content Include="Views\Index\Vp.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
