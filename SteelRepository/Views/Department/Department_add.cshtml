@@ -17,12 +17,12 @@
         function check() {
             var DepName = $("#DepName").val();
             var n = /^[\u4E00-\u9FA5A-Za-z0-9][\x21-\x7e]+$/;
-            if (!n.test(DepName) || DepName == "") {
-                document.getElementById("Isname").style.display = "";
-                isDepName = false;
-            } else {
+            if (n.test(DepName) || DepName !== "") {
                 document.getElementById("Isname").style.display = "none";
                 isDepName = true;
+            } else {
+                document.getElementById("Isname").style.display = "";
+                isDepName = false;
             }
             return isDepName;
         }
