@@ -2,6 +2,13 @@
 @{
     Layout = "~/Views/AdminIndex/AdminIndex.cshtml";
 }
+@{ 
+    Models.Employee loginEmployee = (Models.Employee)ViewData["LoginEmployee"];
+    if (loginEmployee == null)
+    {
+            return;
+    }
+    }
 <head>
     <meta charset="utf-8" />
     <title></title>
@@ -104,7 +111,10 @@
                     <div class="card-body">
                         <div class="row mb-2">
                             <div class="col-sm-11">
-                                <a href="javascript:EmployeeAdd()" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle mr-2"></i>添加员工信息</a>
+                                @if (loginEmployee.permissions == 1)
+                                {
+                                    <a href="javascript:EmployeeAdd()" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle mr-2"></i>添加员工信息</a>
+                                }
                             </div>
                             <div class="l-button">
                                 <a href="javascript:export_excel('products-datatable')" class="side-nav-link">
@@ -130,14 +140,21 @@
                                         <th>所属部门</th>
                                         <th>权限</th>
                                         <th>状态</th>
-                                        <th style="width: 75px;">操作</th>
+                                        @if (loginEmployee.permissions == 1)
+                                        {
+                                            <th style="width: 75px;">操作</th>
+                                        }
+                                        else
+                                        {
+                                            <th style="width: 75px;"></th>
+                                        }
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @{int count = 1; }
                                     @foreach (var employee in Model)
                                     {
-                                        Models.Department dep = Models.Department.GetDepartment((int)employee.departmentId);
+                                        Models.Department dep = Models.Department.GetDepartment(employee.departmentId.Value);
                                         <tr>
                                             <td>
                                                 <div class="custom-control custom-checkbox">
@@ -181,30 +198,36 @@
                                             {
                                                 <td>未通过审核</td>
                                             }
-                                            @if (employee.state.ToString() == "1" || employee.state.ToString() == "2")
+                                            @if (loginEmployee.permissions == 1)
                                             {
-                                        <td>
-                                            @if (employee.permissions.ToString() != "1")
-                                            {
-                                                <a href="javascript:EmployeeDelete(@employee.id)" class="action-icon"> <i class="dripicons-trash"></i></a>
-                                            }
-                                            @if (employee.number != "admin")
-                                            {
-                                                <a href="javascript:EmployeeUpdate(@employee.id)" class="action-icon"> <i class="dripicons-pencil"></i></a>
-                                            }
-                                            @*<a hsref="javascript:EmployeeSelect(@employee.id)" class="action-icon"> <i class="mdi mdi-calendar-text-outline"></i></a>*@
-                                        </td>
+                                                if (employee.state.ToString() == "1" || employee.state.ToString() == "2")
+                                                {
+                                                    <td>
+                                                        @if (employee.permissions.ToString() != "1")
+                                                        {
+                                                            <a href="javascript:EmployeeDelete(@employee.id)" class="action-icon"> <i class="dripicons-trash"></i></a>
+                                                        }
+                                                        @if (employee.number != "admin")
+                                                        {
+                                                            <a href="javascript:EmployeeUpdate(@employee.id)" class="action-icon"> <i class="dripicons-pencil"></i></a>
+                                                        }
+                                                        @*<a hsref="javascript:EmployeeSelect(@employee.id)" class="action-icon"> <i class="mdi mdi-calendar-text-outline"></i></a>*@
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td>
+                                                        <a href="javascript:EmployeeThrough(@employee.id)" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle mr-2"></i>通过</a>
+                                                    </td>
+                                                }
                                             }
                                             else
                                             {
-                                                <td>
-                                                    <a href="javascript:EmployeeThrough(@employee.id)" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle mr-2"></i>通过</a>
-                                                </td>
+                                                <td></td>
                                             }
                                         </tr>
                                         count++;
                                     }
-
                                 </tbody>
                             </table>
                         </div>

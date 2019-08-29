@@ -14,15 +14,14 @@
     <script src="~/Content/AdminIndex/js/app.min.js"></script>
     <link href="~/Content/layui/css/layui.css" rel="stylesheet" />
     <script src="~/Content/layui/layui.js"></script>
-    <script src="https://libs.baidu.com/jquery/1.11.3/jquery.min.js"></script>
-    @{ Models.InCome inCome = (Models.InCome)ViewData["InCome"];}
+    @{ Models.InComeView inCome = (Models.InComeView)ViewData["InComeView"];}
     <script type="text/javascript">
         layui.use('laydate', function () {
             var laydate = layui.laydate;
 
               laydate.render({
                 elem: '#IncomeText'
-                ,value: '@inCome.storageTime.ToShortDateString().ToString()'
+                ,value: ''
                 ,isInitValue: true
               });
 
@@ -53,7 +52,7 @@
                 document.getElementById("IsSpecise").style.display = "";
                 isISpecise = false;
             }
-
+           
             //批号
             var IPh = $("#IPh").val();
             var n = /^\s*$/;
@@ -147,85 +146,82 @@
                     <h2>修改材料</h2>
                     <div class="row">
                         <div class="col-12">
-                            <div class="signin-form" id="myform">
-                                @using (Html.BeginForm("InCome_update", "Material", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @role = "form" }))
-                                {
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            <label for="signin_form">名称：</label>
-                                            <input class="form-control" name="name1" type="text" value="@inCome.GetName(inCome.codeId).materialName" readonly="" />
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="signin_form">规格：</label>
-                                            <input class="form-control" name="model" type="text" value="@inCome.GetModel(inCome.codeId).modelName" readonly="" />
-                                        </div>
+                            <div class="signin-form">
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="signin_form">名称：</label>
+                                        <input class="form-control" name="name1" type="text" value="@inCome.materialName" readonly="" />
                                     </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            <label for="signin_form">类别：</label>
-                                            <label id="IsSpecise" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
-                                            <input class="form-control" name="category" type="text" value="@inCome.GetCategory(inCome.categoryId).categoryName" id="ISpecise"/>
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="signin_form">编号：</label>
-                                            <input class="form-control" name="materialCode" type="text" value="@Models.InCome.GetMaterialCode(inCome.codeId).code" readonly="" />
-                                        </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="signin_form">规格：</label>
+                                        <input class="form-control" name="model" type="text" value="@inCome.modelName" readonly="" />
                                     </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            <label for="signin_form">批号：</label>
-                                            <label id="IsPH" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
-                                            <input class="form-control" name="batch" type="text" value="@inCome.batch" id="IPh"/>
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="signin_form">计量单位：</label>
-                                            @Html.DropDownList("unit", ViewBag.select as SelectList, new { @class = "form-control", id = "example-select" })
-                                        </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="signin_form">类别：</label>
+                                        <label id="IsSpecise" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
+                                        <input class="form-control" name="category" type="text" value="@inCome.categoryName" id="ISpecise" />
                                     </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            <label for="signin_form">单价（元）：</label>
-                                            <label id="IsPer" style="color:#ff0000;display:none;font-size:13px">*不能为空,最多到小数点后两位</label>
-                                            <input class="form-control" name="unitPrice" type="text" value="@inCome.unitPrice" id="Iper"/>
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="signin_form">单价的单位：</label>
-                                            @Html.DropDownList("priceMeasure", ViewBag.selectUnitPrice as SelectList, new { @class = "form-control", id = "example-select" })
-                                        </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="signin_form">编号：</label>
+                                        <input class="form-control" name="materialCode" type="text" value="@inCome.code" readonly="" />
                                     </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            <label for="signin_form">操作人：</label>
-                                            @Html.DropDownList("operator", ViewBag.selectOperator as SelectList, new { @class = "form-control", id = "example-select"})
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="signin_form">数量：</label>
-                                            <label id="IsNumber" style="color:#ff0000;display:none;font-size:13px">*不能为空,最多到小数点后两位</label>
-                                            <input class="form-control" name="amount" type="text" value="@inCome.amount" id="INumber"/>
-                                        </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="signin_form">批号：</label>
+                                        <label id="IsPH" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
+                                        <input class="form-control" name="batch" type="text" value="@inCome.batch" id="IPh" />
                                     </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            <label for="signin_form">厂家：</label>
-                                            @Html.DropDownList("manufacturer", ViewBag.selectMenu as SelectList, new { @class = "form-control", id = "example-select" })
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="signin_form">放置位置：</label>
-                                            @Html.DropDownList("position", ViewBag.selectPosition as SelectList, new { @class = "form-control", id = "example-select" })
-                                        </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="signin_form">计量单位：</label>
+                                        @Html.DropDownList("unit", ViewBag.select as SelectList, new { @class = "form-control", id = "example-select" })
                                     </div>
-                                    <div class="form-row">
-                                        <div class="layui-inline col-md-6 form-group">
-                                            <label for="signin_form">入库时间:</label>
-                                            <input type="text" class="layui-input form-control" id="IncomeText" name="IncomeText">
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="signin_form">复检周期：</label>
-                                            <label id="IsCycle" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
-                                            <input type="text" class="form-control" name="reviewCycle" value="@inCome.reviewCycle" id="ICycle">
-                                        </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="signin_form">单价（元）：</label>
+                                        <label id="IsPer" style="color:#ff0000;display:none;font-size:13px">*不能为空,最多到小数点后两位</label>
+                                        <input class="form-control" name="unitPrice" type="text" value="@inCome.unitPrice" id="Iper" />
                                     </div>
-                                }
+                                    <div class="form-group col-md-6">
+                                        <label for="signin_form">单价的单位：</label>
+                                        @Html.DropDownList("priceMeasure", ViewBag.selectUnitPrice as SelectList, new { @class = "form-control", id = "example-select" })
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="signin_form">操作人：</label>
+                                        @Html.DropDownList("operator", ViewBag.selectOperator as SelectList, new { @class = "form-control", id = "example-select" })
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="signin_form">数量：</label>
+                                        <label id="IsNumber" style="color:#ff0000;display:none;font-size:13px">*不能为空,最多到小数点后两位</label>
+                                        <input class="form-control" name="amount" type="text" value="@inCome.amount" id="INumber" />
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="signin_form">厂家：</label>
+                                        @Html.DropDownList("manufacturer", ViewBag.selectMenu as SelectList, new { @class = "form-control", id = "example-select" })
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="signin_form">放置位置：</label>
+                                        @Html.DropDownList("position", ViewBag.selectPosition as SelectList, new { @class = "form-control", id = "example-select" })
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="layui-inline col-md-6 form-group">
+                                        <label for="signin_form">入库时间:</label>
+                                        <input type="text" class="layui-input form-control" id="IncomeText" name="IncomeText" value="@inCome.storageTime.ToShortDateString().ToString()">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="signin_form">复检周期：</label>
+                                        <label id="IsCycle" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
+                                        <input type="text" class="form-control" name="reviewCycle" value="@inCome.reviewCycle" id="ICycle">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

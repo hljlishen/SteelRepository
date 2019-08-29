@@ -8,6 +8,11 @@
 <head>
     @{
         List<Models.Name> names = Models.Name.SelectAll();
+        Models.Employee loginEmployee = (Models.Employee)ViewData["LoginEmployee"];
+        if (loginEmployee == null)
+        {
+            return;
+        }
     }
     <meta charset="utf-8" />
     <title>库存信息</title>
@@ -26,7 +31,7 @@
         function OutComeAdd(id) {
             var url = "OutCome_add?id=" + id;
             var width = "100%";
-            var height = "700px";
+            var height = "800px";
             parent.OpenWin2(url, width, height);
         }
         layui.use('laydate', function () {
@@ -45,7 +50,7 @@
 </head>
 <body>
     @{
-        List<Models.Inventory> inventorylist = (List<Models.Inventory>)ViewData["Inventorylist"];
+        List<Models.InventoryView> inventorylist = (List<Models.InventoryView>)ViewData["InventoryViewlist"];
         List<Models.MaterialCode> material = (List<Models.MaterialCode>)ViewData["MaterialCode"];
         List<Models.Manufacturer> manufacturers = (List<Models.Manufacturer>)ViewData["manufacturer"];
         List<Models.Position> positions = (List<Models.Position>)ViewData["position"];
@@ -152,12 +157,10 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <div class="page-title-box" style="margin:5px;">
-                                <h4 class="page-title">库存信息</h4>
-                            </div>
                             <div class="row">
                                 <div class="col-12">
                                     <div class="page-title-center row">
+                                        <h4 class="page-title col-md-11">库存信息</h4>
                                         <div class="l-button">
                                             <a href="javascript:export_excel('products-datatable3')" class="side-nav-link">
                                                 <i class=" dripicons-export "></i>
@@ -189,7 +192,14 @@
                                             <th>生产厂商</th>
                                             <th>入库操作人</th>
                                             <th>货品入库时间</th>
-                                            <th style="width: 70px;">出库</th>
+                                            @if (loginEmployee.permissions == 1)
+                                            {
+                                                <th style="width: 70px;">出库</th>
+                                            }
+                                            else
+                                            {
+                                                <th style="width: 70px;"></th>
+                                            }
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -206,19 +216,19 @@
                                                         </div>
                                                     </td>
                                                     <td class="table-user">@count</td>
-                                                    <th>@Models.Inventory.IncomeIdGetInCome(inventory.incomeId).batch</th>
-                                                    <td>@Models.Inventory.GetMaterCodeName(inventory.incomeId)</td>
-                                                    <td>@Models.Inventory.GetCategoryName(inventory.incomeId).categoryName</td>
-                                                    <td>@Models.Inventory.GetNameName(inventory.incomeId)</td>
-                                                    <td>@Models.Inventory.GetModelName(inventory.incomeId)</td>
+                                                    <th>@inventory.batch</th>
+                                                    <td>@inventory.code</td>
+                                                    <td>@inventory.categoryName</td>
+                                                    <td>@inventory.materialName</td>
+                                                    <td>@inventory.modelName</td>
                                                     <td>@inventory.amount</td>
                                                     <td>@inventory.unit</td>
-                                                    <td>@Models.Inventory.GetPositionName(inventory.positionId)</td>
-                                                    <td>@Models.Inventory.GetMenufactureName(inventory.incomeId).manufacturersName</td>
-                                                    <td>@Models.Inventory.GetEmployeeName(inventory.incomeId)</td>
-                                                    <td>@Models.Inventory.GetInComeTime(inventory.incomeId).ToString("d")</td>
+                                                    <td>@inventory.positionName</td>
+                                                    <td>@inventory.manufacturersName</td>
+                                                    <td>@inventory.name</td>
+                                                    <td>@inventory.storageTime.ToString("d")</td>
                                                     <td>
-                                                        <a href="javascript:OutComeAdd(@inventory.id)" class="action-icon"> <i class="dripicons-export "></i></a>
+                                                        <a href="javascript:OutComeAdd(@inventory.InvenId)" class="action-icon"> <i class="dripicons-export "></i></a>
                                                     </td>
                                                 </tr>
                                                 count++;

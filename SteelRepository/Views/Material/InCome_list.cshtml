@@ -5,7 +5,12 @@
 @{
     List<Models.MaterialCode> material = (List<Models.MaterialCode>)ViewData["MaterialCode"];
     List<Models.Manufacturer> manufacturer = (List<Models.Manufacturer>)ViewData["manufacturer"];
-    List<Models.InCome> incomes = (List<Models.InCome>)ViewData["income"];
+    Models.Employee loginEmployee = (Models.Employee)ViewData["LoginEmployee"];
+    if (loginEmployee == null)
+    {
+        return;
+    }
+    List<Models.InComeView> incomes = (List<Models.InComeView>)ViewData["InComeView"];
 }
     <head>
         <meta charset="utf-8" />
@@ -87,10 +92,6 @@
             </div>
         </div>
 
-
-
-       
-
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -164,7 +165,10 @@
                     <div class="card-body">
                         <div class="row mb-2">
                             <div class="col-sm-11">
-                                <a href="javascript:InComeAdd()" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle mr-2"></i>添加材料信息</a>
+                                @if (loginEmployee.permissions == 1)
+                                {
+                                    <a href="javascript:InComeAdd()" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle mr-2"></i>添加材料信息</a>
+                                }
                             </div>
                             <div class="l-button">
                                 <a href="javascript:export_excel('products-datatable10')" class="side-nav-link">
@@ -193,8 +197,16 @@
                                         <th>厂商</th>
                                         <th>入库时间</th>
                                         <th>复验时间</th>
-                                        <th>质量报告</th>
-                                        <th>复检报告</th>
+                                        @if (loginEmployee.permissions == 1)
+                                        {
+                                            <th>质量报告</th>
+                                            <th>复检报告</th>
+                                        }
+                                        else
+                                        {
+                                            <th>存放位置</th>
+                                            <th>数量</th>
+                                        }
                                         <th>操作人</th>
                                         <th style="width: 75px;">操作</th>
                                     </tr>
@@ -211,24 +223,24 @@
                                                 </div>
                                             </td>
                                             <td>@count</td>
-                                            <td>@income.GetName().materialName</td>
-                                            <td>@income.GetModel().modelName</td>
-                                            <td>@income.GetCategory().categoryName</td>
-                                            <td>@income.GetMaterialCode().code</td>
+                                            <td>@income.materialName</td>
+                                            <td>@income.modelName</td>
+                                            <td>@income.categoryName</td>
+                                            <td>@income.code</td>
                                             <td>@income.batch</td>
-                                            <td>@income.GetManufacture().manufacturersName</td>
+                                            <td>@income.manufacturersName</td>
                                             <td>@income.storageTime.ToString("d")</td>
-                                            <td>@Models.RecheckReport.GetMaxDate(Models.RecheckReport.GetRecheckReports(income.id), income.reviewCycle)</td>
+                                            <td>@income.recheckTime</td>
                                             <td>
-                                                <a href="javascript:QualityReport(@income.id)" class="text-body font-weight-bold">查看</a>
+                                                <a href="javascript:QualityReport(@income.incoId)" class="text-body font-weight-bold">查看</a>
                                             </td>
                                             <td>
-                                                <a href="javascript:RecheckReport(@income.id)" class="text-body font-weight-bold">查看</a>
+                                                <a href="javascript:RecheckReport(@income.incoId)" class="text-body font-weight-bold">查看</a>
                                             </td>
-                                            <td>@income.GetOperator().name</td>
+                                            <td>@income.name</td>
                                             <td>
-                                                <a href="javascript:InComeUpdate(@income.id)" class="action-icon"> <i class="dripicons-pencil"></i></a>
-                                                <a href="javascript:InComeSelete(@income.id)" class="action-icon"> <i class=" dripicons-blog"></i></a>
+                                                <a href="javascript:InComeUpdate(@income.incoId)" class="action-icon"> <i class="dripicons-pencil"></i></a>
+                                                <a href="javascript:InComeSelete(@income.incoId)" class="action-icon"> <i class=" dripicons-blog"></i></a>
                                             </td>
                                         </tr>
                                         count++;

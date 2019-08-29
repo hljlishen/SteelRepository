@@ -20,12 +20,12 @@ namespace Models
                 return helper.SelectAll<Employee>();
             }
         }
-        public static List<Employee> SelectAllDesc()
+        public static List<EmployeeDepartView> SelectAllDesc()
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                List<Employee> list = new List<Employee>();
-                foreach (var emplo in helper.SqlQuery<Employee>("select Employee.* from Employee order by employee.id desc")) {
+                List<EmployeeDepartView> list = new List<EmployeeDepartView>();
+                foreach (var emplo in helper.SqlQuery<EmployeeDepartView>("select EmployeeDepartView.* from EmployeeDepartView order by EmployeeDepartView.emploId desc")) {
                     list.Add(emplo);
                 }
                 return list;
@@ -70,13 +70,12 @@ namespace Models
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                List<Employee> employees = new List<Employee>();
-                employees = helper.SelectAll<Employee>();
-                foreach (var em in employees)
+                foreach (var em in helper.SelectAll<Employee>())
                 {
                     if (em.number == employee.number && em.password == employee.password)
                     {
                         isJudge = true;
+                        UseAmountStatisticals.AddAdministratorTraffic(DateTime.Now);
                         return em;
                     }
                 }

@@ -12,11 +12,13 @@ namespace SteelRepository.Controllers
         private static string adminname;
         private static List<Inventory> inventories;
         private static List<InCome> inComes;
+        private static Employee empl;
         // GET: Index
         public ActionResult Index()
         {
+            UseAmountStatisticals.AddTraffic(DateTime.Now);
             ViewData["MaterialCode"] = MaterialCode.GetMaterialCodeList();
-            ViewData["Inventorylist"] = Inventory.SelectAll();
+            ViewData["InventoryViewlist"] = Inventory.InventoryViewSelectAll();
             ViewData["manufacturer"] = Manufacturer.SelectAll();
             ViewData["position"] = Position.SelectAll();
             return View();
@@ -39,8 +41,8 @@ namespace SteelRepository.Controllers
             var nameinput = collection["nameinput"];
             int positionid = Convert.ToInt32(collection["positionid"]);
             int manufacturerid = Convert.ToInt32(collection["manufacturerid"]);
-            ViewData["Inventorylist"] = null;
-            ViewData["Inventorylist"] = Inventory.MulSelectCheckInventory(begin, end, codeinput, nameinput, positionid, manufacturerid);
+            ViewData["InventoryViewlist"] = null;
+            ViewData["InventoryViewlist"] = Inventory.MulSelectCheckInventory(begin, end, codeinput, nameinput, positionid, manufacturerid);
             return View();
         }
 
@@ -54,7 +56,8 @@ namespace SteelRepository.Controllers
         {
             bool IsLogin = false;
             Employee e = Employee.Login(employee);
-            if (e != null && e.permissions != 3)
+            empl = e;
+            if (e != null)
             {
                 IsLogin = true;
                 Session["name"] = e.name;
@@ -103,6 +106,25 @@ namespace SteelRepository.Controllers
         public static List<InCome> Recheck()
         {
             return inComes;
+        }
+
+        [HttpPost]
+        //获取图标数据
+        public JsonResult GetWebClickData()
+        {
+            return Json(UseAmountStatisticals.GetWebClickNumber(DateTime.Now));
+        }
+
+        [HttpPost]
+        //获取点击数据
+        public JsonResult GetNowWebClickData()
+        {
+            return Json(UseAmountStatisticals.GetNowWebClickNumber());
+        }
+
+        public static Employee LoginEmployee()
+        {
+            return empl;
         }
     }
 }

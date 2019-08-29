@@ -40,6 +40,11 @@ namespace Models
         public virtual DbSet<QualityCertificationReportImg> QualityCertificationReportImg { get; set; }
         public virtual DbSet<RecheckReport> RecheckReport { get; set; }
         public virtual DbSet<RecheckReportImg> RecheckReportImg { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<UseAmountStatisticals> UseAmountStatisticals { get; set; }
+        public virtual DbSet<CodeAmountView> CodeAmountView { get; set; }
+        public virtual DbSet<EmployeeDepartView> EmployeeDepartView { get; set; }
+        public virtual DbSet<InComeView> InComeView { get; set; }
+        public virtual DbSet<InventoryView> InventoryView { get; set; }
+        public virtual DbSet<OutcomeQueryView> OutcomeQueryView { get; set; }
     }
 }

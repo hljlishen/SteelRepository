@@ -2,6 +2,13 @@
 @{
     Layout = "~/Views/AdminIndex/AdminIndex.cshtml";
 }
+@{ 
+    Models.Employee loginEmployee = (Models.Employee)ViewData["LoginEmployee"];
+    if (loginEmployee == null)
+    {
+        return;
+    }
+}
     <head>
         <meta charset="utf-8" />
         <title></title>
@@ -79,9 +86,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row mb-2">
-                            <div class="col-sm-11">
-                                <a href="javascript:ManufacturerAdd()" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle mr-2"></i>添加厂商信息</a>
-                            </div>
+
                             <div class="l-button">
                                 <a href="javascript:export_excel('products-datatable5')" class="side-nav-link">
                                     <i class=" dripicons-export "></i>
@@ -104,36 +109,58 @@
                                         <th>厂商名称</th>
                                         <th>联系方式</th>
                                         <th>地址</th>
-                                        <th style="width: 75px;">操作</th>
+                                        @if (loginEmployee.permissions == 1)
+                                        {
+                                            <th style="width: 75px;">操作</th>
+                                        }
+                                        else
+                                        {
+                                            <th></th>
+                                        }
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @{int count = 1; }
                                     @foreach (var manufacturer in Model)
                                     {
-                                        <tr>
-                                            <td>
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                                    <label class="custom-control-label" for="customCheck2">&nbsp;</label>
-                                                </div>
-                                            </td>
-                                            <td class="table-user">
-                                                @count
-                                            </td>
-                                            <td>@manufacturer.manufacturersName</td>
-                                            <td>@manufacturer.contact</td>
-                                            <td>@manufacturer.address</td>
+                                    <tr>
+                                        <td>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck2">
+                                                <label class="custom-control-label" for="customCheck2">&nbsp;</label>
+                                            </div>
+                                        </td>
+                                        <td class="table-user">
+                                            @count
+                                        </td>
+                                        <td>@manufacturer.manufacturersName</td>
+                                        <td>@manufacturer.contact</td>
+                                        <td>@manufacturer.address</td>
+                                        @if (loginEmployee.permissions == 1)
+                                        {
                                             <td>
                                                 <a href="javascript:ManufacturerDelete(@manufacturer.id);" class="action-icon"> <i class="dripicons-trash"></i></a>
                                                 <a href="javascript:ManufacturerUpdate(@manufacturer.id)" class="action-icon"> <i class="dripicons-pencil"></i></a>
-
                                             </td>
-                                        </tr>
+                                        }
+                                        else
+                                        {
+                                            <td></td>
+                                        }
+                                    </tr>
                                         count++;
                                     }
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-sm-11">
+                                @if (loginEmployee.permissions == 1)
+                                {
+                                    <a href="javascript:ManufacturerAdd()" class="btn btn-primary"><i class="mdi mdi-plus-circle mr-2"></i>添加厂商信息</a>
+                                }
+                               
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -16,6 +16,7 @@ namespace SteelRepository.Controllers
         public ActionResult Position_list()
         {
             Employee.NoJudge();
+            ViewData["LoginEmployee"] = IndexController.LoginEmployee();
             return View(Position.SelectAll());
         }
         public ActionResult Position_add()
@@ -40,6 +41,7 @@ namespace SteelRepository.Controllers
         public JsonResult Position_Update(Position position, FormCollection collection)
         {
             po.positionName = position.positionName;
+            po.note = position.note;
             return Json(Position.Update(po));
         }
         [HttpPost]

@@ -153,39 +153,39 @@
                             <div class="signin-form">
                                 @using (Html.BeginForm("UserRegistered", "Index", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @role = "form" }))
                                 {
-                                <div class="form-group">
-                                    <label for="signin_form" class="label">姓名：</label>
-                                    <label id="Isname" style="color:#ff0000;display:none;font-size:13px">*姓名应为汉字或字母且不为空</label>
-                                    @Html.TextBoxFor(m => m.name, new { @class = "form-control", placeholder = "请输入姓名", id = "name", type = "text" })
-                                </div>
-                                <div class="form-group">
-                                    <label for="signin_form" class="label">账号：</label>
-                                    <label id="IsNum" style="color:#ff0000;display:none;font-size:13px">*账号不能为空，应为字母数字下划线</label>
-                                    <label id="IsNum2" style="color:#ff0000;display:none;font-size:13px">*账号已存在,请重新输入!</label>
-                                    @Html.TextBoxFor(m => m.number, new { @class = "form-control", placeholder = "请输入账号", id = "number", type = "text" })
-                                </div>
-                                <div class="form-group">
-                                    <label for="signin_form" class="label">密码：</label>
-                                    <label id="IsPwd" style="color:#ff0000;display:none;font-size:13px">*密码只能输入6-20个字母、数字、下划线且不为空</label>
-                                    @Html.TextBoxFor(m => m.password, new { @class = "form-control", placeholder = "请输入密码", id = "pwd", type = "password" })
-                                </div>
-                                <div class="form-group">
-                                    <label for="signin_form" class="label">重复密码：</label>
-                                    <label id="IsRePwd" style="color:#ff0000;display:none;font-size:13px">*两次输入的密码不一致</label>
-                                    <input class="form-control" placeholder="请输入密码" id="rePwd" type="password">
-                                </div>
-                                <div class="form-group">
-                                    <label for="signin_form" class="label">所属部门：</label>
-                                    <label id="IsDep" style="color:#ff0000;display:none;font-size:13px">*部门不能为空</label>
-                                    <div class="input-group">
-                                        
-                                        @Html.TextBoxFor(m => m.departmentId, new { @class = "form-control", type = "text", placeholder = "请选择部门", id = "departmentId", style = "display:none" })
-                                        <input class="form-control" placeholder="请选择部门" type="text" id="departmentName" readonly>
-                                        <div class="input-group-append">
-                                            <button class="btn btn-dark" type="button" onclick="ChooseDepartment()">选择</button>
+                                    <div class="form-group">
+                                        <label for="signin_form" class="label">姓名：</label>
+                                        <label id="Isname" style="color:#ff0000;display:none;font-size:13px">*姓名应为汉字或字母且不为空</label>
+                                        @Html.TextBoxFor(m => m.name, new { @class = "form-control", placeholder = "请输入姓名", id = "name", type = "text" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="signin_form" class="label">账号：</label>
+                                        <label id="IsNum" style="color:#ff0000;display:none;font-size:13px">*账号不能为空，应为字母数字下划线</label>
+                                        <label id="IsNum2" style="color:#ff0000;display:none;font-size:13px">*账号已存在,请重新输入!</label>
+                                        @Html.TextBoxFor(m => m.number, new { @class = "form-control", placeholder = "请输入账号", id = "number", type = "text" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="signin_form" class="label">密码：</label>
+                                        <label id="IsPwd" style="color:#ff0000;display:none;font-size:13px">*密码只能输入6-20个字母、数字、下划线且不为空</label>
+                                        @Html.TextBoxFor(m => m.password, new { @class = "form-control", placeholder = "请输入密码", id = "pwd", type = "password" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="signin_form" class="label">重复密码：</label>
+                                        <label id="IsRePwd" style="color:#ff0000;display:none;font-size:13px">*两次输入的密码不一致</label>
+                                        <input class="form-control" placeholder="请输入密码" id="rePwd" type="password">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="signin_form" class="label">所属部门：</label>
+                                        <label id="IsDep" style="color:#ff0000;display:none;font-size:13px">*部门不能为空</label>
+                                        <div class="input-group">
+
+                                            @Html.TextBoxFor(m => m.departmentId, new { @class = "form-control", type = "text", placeholder = "请选择部门", id = "departmentId", style = "display:none" })
+                                            <input class="form-control" placeholder="请选择部门" type="text" id="departmentName" readonly>
+                                            <div class="input-group-append">
+                                                <button class="btn btn-dark" type="button" onclick="ChooseDepartment()">选择</button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
                                     <div class="container-fluid" id="ChooseDepartment" style="display:none">
                                         <div class="wrapper">
                                             <div class="card col-md-12">
@@ -243,7 +243,7 @@
                             </div>
                         </div>
                     </div>
-
+                    <br /><br /><br /><br />
                     <div class="row">
                         <div class="col-sm-12">
                             <button type="button" class="btn btn-block btn-primary" onclick="Registered()">注册</button>

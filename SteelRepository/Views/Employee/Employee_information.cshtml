@@ -137,7 +137,6 @@
                                     <div class="col-9">
                                         <input type="password" class="form-control" id="repeatPassword">
                                         <label id="IsRePwd1" style="color:#ff0000;display:none;font-size:13px">*两次输入的密码不一致</label>
-                                        @*<span class="badge badge-danger" style="display:none" id="sp_password">密码不一致</span>*@
                                     </div>
                                 </div>
                                 <div class="form-group row mb-3">
@@ -170,9 +169,13 @@
                                         {
                                             <input type="text" class="form-control" readonly value="在职" name="state">
                                         }
-                                        else
+                                        else if (em.state.ToString() == "2")
                                         {
                                             <input type="text" class="form-control" readonly value="离职" name="state">
+                                        }
+                                        else
+                                        {
+                                            <input type="text" class="form-control" readonly value="未通过审核" name="state">
                                         }
                                     </div>
                                 </div>

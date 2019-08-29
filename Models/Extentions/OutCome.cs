@@ -9,7 +9,7 @@ namespace Models
 {
     public partial class OutCome
     {
-        public static IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities());
+        //public static IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities());
         public static List<OutCome> comes = new List<OutCome>();
         public static OutCome NewOutCome(DateTime dateTime, int inventoryId, double amount, string measure, int borrowerId, int? projectId = null, string instructions = "")
         {
@@ -64,7 +64,10 @@ namespace Models
         }
         public static List<OutCome> SelectAll()
         {
-            return Dbhelper.SelectAll<OutCome>();
+            using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities())) {
+                return Dbhelper.SelectAll<OutCome>();
+            }
+              
         }
         public static List<OutCome> GetOutComesDesc()
         {
@@ -79,91 +82,127 @@ namespace Models
                 return liDesc;
             }
         }
-        public static OutCome GetOutCome(int OutComeId)
+        public static OutcomeQueryView GetOutCome(int OutComeId)
         {
-            return Dbhelper.FindId<OutCome>(OutComeId);
+            using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return Dbhelper.Select<OutcomeQueryView>(p => p.OutId == OutComeId)[0];
+            }
         }
         public static string GetPositionName(int inventoryid)
         {
-            int Pid = Dbhelper.FindId<Inventory>(inventoryid).positionId;
-            return Dbhelper.FindId<Position>(Pid).positionName;
+            using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                int Pid = Dbhelper.FindId<Inventory>(inventoryid).positionId;
+                return Dbhelper.FindId<Position>(Pid).positionName;
+            }
         }
         public static string GetEmployeeName(int borrowerid)
         {
-            return Dbhelper.FindId<Employee>(borrowerid).name;
+            using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return Dbhelper.FindId<Employee>(borrowerid).name;
+            }
         }
         public static List<string> GetEmployeeNames()
         {
-            List<string> listr = new List<string>();
-            foreach (var employee in Dbhelper.SelectAll<Employee>())
+            using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                listr.Add(employee.name);
+                List<string> listr = new List<string>();
+                foreach (var employee in Dbhelper.SelectAll<Employee>())
+                {
+                    listr.Add(employee.name);
+                }
+                return listr;
             }
-            return listr;
         }
         public static string GetProjectName(int? projectid)
         {
-            if (projectid == null)
+            using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                return null;
+                if (projectid == null)
+                {
+                    return null;
+                }
+                var pro = Dbhelper.FindId<Project>(projectid.Value).projectName;
+                return pro;
             }
-            var pro = Dbhelper.FindId<Project>(projectid.Value).projectName;
-            return pro;
         }
         public static string GetNameName(int inventoryid)
         {
-            var Income = Dbhelper.FindId<InCome>(Dbhelper.FindId<Inventory>(inventoryid).incomeId);
-            var Material = Dbhelper.FindId<MaterialCode>(Income.codeId);
-            return Dbhelper.FindId<Name>(Material.materialNameId).materialName;
+            using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                var Income = Dbhelper.FindId<InCome>(Dbhelper.FindId<Inventory>(inventoryid).incomeId);
+                var Material = Dbhelper.FindId<MaterialCode>(Income.codeId);
+                return Dbhelper.FindId<Name>(Material.materialNameId).materialName;
+            }
         }
         public static string GetModelName(int inventoryid)
         {
-            var Income = Dbhelper.FindId<InCome>(Dbhelper.FindId<Inventory>(inventoryid).incomeId);
-            var Material = Dbhelper.FindId<MaterialCode>(Income.codeId);
-            return Dbhelper.FindId<Model>(Material.materialModelId).modelName;
+            using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                var Income = Dbhelper.FindId<InCome>(Dbhelper.FindId<Inventory>(inventoryid).incomeId);
+                var Material = Dbhelper.FindId<MaterialCode>(Income.codeId);
+                return Dbhelper.FindId<Model>(Material.materialModelId).modelName;
+            }
         }
         public static double? GetInComeunitPrice(int inventoryid)
         {
-            var Income = Dbhelper.FindId<InCome>(Dbhelper.FindId<Inventory>(inventoryid).incomeId);
-            return Income.unitPrice;
+            using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                var Income = Dbhelper.FindId<InCome>(Dbhelper.FindId<Inventory>(inventoryid).incomeId);
+                return Income.unitPrice;
+            }
         }
         public static string GetMaterCodeName(int inventoryid)
         {
-            var Income = Dbhelper.FindId<InCome>(Dbhelper.FindId<Inventory>(inventoryid).incomeId);
-            return Dbhelper.FindId<MaterialCode>(Income.codeId).code;
+            using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                var Income = Dbhelper.FindId<InCome>(Dbhelper.FindId<Inventory>(inventoryid).incomeId);
+                return Dbhelper.FindId<MaterialCode>(Income.codeId).code;
+            }
         }
         public static List<OutCome> ReverseGetEmployeeName(string employeeName)
         {
-            var employee = Dbhelper.FindFirst<Employee, string>("employeeName", employeeName);
-            if (employee == null)
-                return null;
-            foreach (var come in Dbhelper.Select<OutCome>(p => p.borrowerId == employee.id))
+            using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                comes.Add(come);
+                var employee = Dbhelper.FindFirst<Employee, string>("employeeName", employeeName);
+                if (employee == null)
+                    return null;
+                foreach (var come in Dbhelper.Select<OutCome>(p => p.borrowerId == employee.id))
+                {
+                    comes.Add(come);
+                }
+                return comes;
             }
-            return comes;
         }
         public static List<OutCome> OutComeNumber(double number)
         {
-            return Dbhelper.Select<OutCome>(p => p.number == number);
+            using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return Dbhelper.Select<OutCome>(p => p.number == number);
+            }
         }
         public static List<OutCome> CodeidGetOutCome(int MaterialCodeid)
         {
-            List<OutCome> comes = new List<OutCome>();
-            var inComes = Dbhelper.Select<InCome>(p => p.codeId == MaterialCodeid);
-            foreach (var income in inComes)
+            using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                var inventorys = Dbhelper.Select<Inventory>(p => p.incomeId == income.id);
-                foreach (var inventory in inventorys)
+                List<OutCome> comes = new List<OutCome>();
+                var inComes = Dbhelper.Select<InCome>(p => p.codeId == MaterialCodeid);
+                foreach (var income in inComes)
                 {
-                    var outcomes = Dbhelper.Select<OutCome>(p => p.inventoryId == inventory.id);
-                    foreach (var outcom in outcomes)
+                    var inventorys = Dbhelper.Select<Inventory>(p => p.incomeId == income.id);
+                    foreach (var inventory in inventorys)
                     {
-                        comes.Add(outcom);
+                        var outcomes = Dbhelper.Select<OutCome>(p => p.inventoryId == inventory.id);
+                        foreach (var outcom in outcomes)
+                        {
+                            comes.Add(outcom);
+                        }
                     }
                 }
+                return comes;
             }
-            return comes;
         }
         public static List<int> CodeidGetOutComeId(int MaterialCodeid)
         {
@@ -176,119 +215,113 @@ namespace Models
         }
         public static Category GetCategoryName(int inventoryid)
         {
-            var income = Dbhelper.FindId<InCome>(Dbhelper.FindId<Inventory>(inventoryid).incomeId);
-            return Dbhelper.FindId<Category>(income.categoryId);
+            using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                var income = Dbhelper.FindId<InCome>(Dbhelper.FindId<Inventory>(inventoryid).incomeId);
+                return Dbhelper.FindId<Category>(income.categoryId);
+            }
         }
         public static int OutComeRevocation( int materialCodeid2)
         {
-            List<int> outcomeid = new List<int>();
-            if (materialCodeid2 == 0)
+            using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                foreach (var id in SelectAll())
+                List<int> outcomeid = new List<int>();
+                if (materialCodeid2 == 0)
                 {
-                    outcomeid.Add(id.id);
+                    foreach (var id in SelectAll())
+                    {
+                        outcomeid.Add(id.id);
+                    }
                 }
-            }
-            else
-            {
-                var tar = Dbhelper.SqlQuery<OutCome>("select OutCome.* from Inventory, OutCome, InCome where InCome.codeId = "+
-                    materialCodeid2+" and InCome.id = Inventory.incomeId and Inventory.id = OutCome.inventoryId");
-                foreach (var id2 in tar)
+                else
                 {
-                    outcomeid.Add(id2.id);
+                    var tar = Dbhelper.Select<OutcomeQueryView>(p => p.codeId == materialCodeid2);
+                    foreach (var id2 in tar)
+                    {
+                        outcomeid.Add(id2.OutId);
+                    }
                 }
+                if (outcomeid.Count == 0) throw new Exception("该货品编号无出库记录！！");
+                var Maxoutcome = Dbhelper.FindId<OutCome>(outcomeid.Max());
+                var Inventory = Dbhelper.FindId<Inventory>(Maxoutcome.inventoryId);
+                if (Maxoutcome.state < 2)
+                {
+                    var Number = WeightConverter.Convert(Maxoutcome.unit, Maxoutcome.number, Inventory.unit);
+                    Inventory.amount += Number;
+                    Inventory.consumptionAmount -= Number;
+                    Maxoutcome.state = 2;
+                    Maxoutcome.instructions += "(已撤销)";
+                    Dbhelper.Update(Maxoutcome, false);
+                    Dbhelper.Update(Inventory, false);
+                    return Dbhelper.Commit();
+                }
+                throw new Exception("该货品的最后一条出库记录处于撤销状态，不能再执行本次操作！！");
             }
-            if (outcomeid.Count == 0) throw new Exception("该货品编号无出库记录！！");
-            var Maxoutcome = Dbhelper.FindId<OutCome>(outcomeid.Max());
-            var Inventory = Dbhelper.FindId<Inventory>(Maxoutcome.inventoryId);
-            if (Maxoutcome.state < 2) {
-                var Number = WeightConverter.Convert(Maxoutcome.unit, Maxoutcome.number, Inventory.unit);
-                Inventory.amount += Number;
-                Inventory.consumptionAmount -= Number;
-                Maxoutcome.state = 2;
-                Maxoutcome.instructions += "(已撤销)";
-                Dbhelper.Update(Maxoutcome,false);
-                Dbhelper.Update(Inventory, false);
-                return Dbhelper.Commit();
-            }
-            throw new Exception("该货品的最后一条出库记录处于撤销状态，不能再执行本次操作！！");
         }
-        public static List<OutCome> GetRevocationOutComes()
+        public static List<OutcomeQueryView> GetRevocationOutComes()
         {
-            return Dbhelper.Select<OutCome>(p => p.state == 2);
+            using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return Dbhelper.Select<OutcomeQueryView>(p => p.state == 2);
+            }
         }
-        public static List<OutCome> MulSelectCheckOutCome(string begin,string end, int MaterCodeid, int employeeid,int manufacturerid,int departmentid)
+        public static List<OutcomeQueryView> MulSelectCheckOutCome(string begin,string end, int MaterCodeid, int employeeid,int manufacturerid,int departmentid)
         {
-            ExpressionBuilder<OutCome> builder = new ExpressionBuilder<OutCome>();
-            ExpressionBuilder<OutCome> builder1 = new ExpressionBuilder<OutCome>();
-            ExpressionBuilder<OutCome> builder2 = new ExpressionBuilder<OutCome>();
-            ExpressionBuilder<OutCome> builder3 = new ExpressionBuilder<OutCome>();
-            ExpressionBuilder<OutCome> builder4 = new ExpressionBuilder<OutCome>();
-            ExpressionBuilder<OutCome> builder5 = new ExpressionBuilder<OutCome>();
-            ExpressionBuilder<OutCome> builder6 = new ExpressionBuilder<OutCome>();
-            if (begin=="" && end == "" && MaterCodeid == 0 && employeeid == 0 && manufacturerid == 0 && departmentid == 0)
+            using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                return Dbhelper.SelectAll<OutCome>();
-            }
-            if (begin != "")
-            {
-                DateTime begintime = Convert.ToDateTime(begin);
-                builder1.And(p => p.recipientsTime >= begintime);
-            }
-            if (end != "")
-            {
-                DateTime endtime = Convert.ToDateTime(end);
-                builder2.And(p => p.recipientsTime <= endtime);
-            }
-            if (MaterCodeid != 0)
-            {
-                var ret = Dbhelper.SqlQuery<OutCome>("select OutCome.* from Inventory, OutCome, InCome where InCome.codeId = "+MaterCodeid
-                    +" and InCome.id = Inventory.incomeId and Inventory.id = OutCome.inventoryId");
-                foreach ( var outcome in ret)
+                ExpressionBuilder<OutcomeQueryView> builder = new ExpressionBuilder<OutcomeQueryView>();
+                ExpressionBuilder<OutcomeQueryView> beginbuilder = new ExpressionBuilder<OutcomeQueryView>();
+                ExpressionBuilder<OutcomeQueryView> endbuilder = new ExpressionBuilder<OutcomeQueryView>();
+                ExpressionBuilder<OutcomeQueryView> Codebuilder = new ExpressionBuilder<OutcomeQueryView>();
+                ExpressionBuilder<OutcomeQueryView> Manbuilder = new ExpressionBuilder<OutcomeQueryView>();
+                ExpressionBuilder<OutcomeQueryView> deparbuilder = new ExpressionBuilder<OutcomeQueryView>();
+                ExpressionBuilder<OutcomeQueryView> emplobuilder = new ExpressionBuilder<OutcomeQueryView>();
+                if (begin != "")
                 {
-                    builder3.Or(p => p.id == outcome.id);
+                    DateTime begintime = Convert.ToDateTime(begin);
+                    beginbuilder.And(p => p.recipientsTime >= begintime);
                 }
-            }
-            if (manufacturerid != 0)
-            {
-                var ret = Dbhelper.SqlQuery<OutCome>("select OutCome.* from Inventory, OutCome, InCome where InCome.menufactureId = " + manufacturerid
-                   + " and InCome.id = Inventory.incomeId and Inventory.id = OutCome.inventoryId");
-                foreach (var outcome in ret)
+                if (end != "")
                 {
-                    builder4.Or(p => p.id == outcome.id);
+                    DateTime endtime = Convert.ToDateTime(end);
+                    endbuilder.And(p => p.recipientsTime <= endtime);
                 }
-            }
-            if ( departmentid != 0)
-            {
-                var ret = Dbhelper.SqlQuery<OutCome>("select OutCome.* from OutCome, Employee where Employee.departmentId ="+
-                    departmentid+" and OutCome.borrowerId = Employee.id");
-                foreach (var outcome in ret)
+                if (MaterCodeid != 0)
                 {
-                    builder5.Or(p => p.id == outcome.id);
+                        Codebuilder.Or(p => p.codeId == MaterCodeid);
                 }
+                if (manufacturerid != 0)
+                {
+                        Manbuilder.Or(p => p.mfId == manufacturerid);
+                }
+                if (departmentid != 0)
+                {
+                        deparbuilder.Or(p => p.deparId==departmentid);
+                }
+                if (employeeid != 0)
+                {
+                    emplobuilder.Or(p => p.emploId == employeeid);
+                }
+                var exptimebegin = beginbuilder.GetExpression();
+                var exptimeend = endbuilder.GetExpression();
+                var expcode = Codebuilder.GetExpression();
+                var expman = Manbuilder.GetExpression();
+                var dapar = deparbuilder.GetExpression();
+                var emplo = emplobuilder.GetExpression();
+                if (exptimebegin != null) builder.And(exptimebegin);
+                if (exptimeend != null) builder.And(exptimeend);
+                if (expcode != null) builder.And(expcode);
+                if (emplo != null) builder.And(emplo);
+                if (dapar != null) builder.And(dapar);
+                if (expman != null) builder.And(expman);
+                var exp = builder.GetExpression();
+                if (exp == null)
+                {
+                    return Dbhelper.SelectAll<OutcomeQueryView>();
+                }
+                else
+                    return Dbhelper.Select(exp);
             }
-            if (employeeid != 0)
-            {
-                builder6.Or(p => p.borrowerId == employeeid);
-            }
-            var exptimebegin = builder1.GetExpression();
-            var exptimeend = builder2.GetExpression();
-            var expcode = builder3.GetExpression();
-            var expman = builder4.GetExpression();
-            var dapar = builder5.GetExpression();
-            var emplo = builder6.GetExpression();
-            if (exptimebegin != null) builder.And(exptimebegin);
-            if (exptimeend != null) builder.And(exptimeend);
-            if (expcode != null) builder.And(expcode);
-            if (emplo != null) builder.And(emplo);
-            if (dapar != null) builder.And(dapar);
-            if (expman != null) builder.And(expman);
-            var exp = builder.GetExpression();
-            if (exp == null)
-            {
-                return new List<OutCome>();
-            }else
-            return Dbhelper.Select(exp);
         }
         public string GetMaterialCode(IDbInterface db)
         {
@@ -302,6 +335,13 @@ namespace Models
         {
             var projectName = db.FindId<Project>(projectId.Value).projectName;
             return projectName;
+        }
+        public static List<OutcomeQueryView> GetOutComeView()
+        {
+            using (IDbInterface db = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return db.SelectAll<OutcomeQueryView>();
+            }
         }
     }
 }

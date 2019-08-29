@@ -29,7 +29,7 @@
                         parent.openFrame("Inventory_list");
                     } else {
                         alert("出库失败");
-                        //parent.closeWin2();
+                        parent.closeWin2();
                         parent.openFrame("Inventory_list");
                     }
                 }
@@ -46,16 +46,17 @@
 </head>
 <body>
     @{
-        Models.Inventory inventory = (Models.Inventory)ViewData["Inventory"];
-        List<Models.Employee> employee = (List<Models.Employee>)ViewData["employee"];
+        Models.InventoryView inventory = (Models.InventoryView)ViewData["Inventory"];
+        List<Models.EmployeeDepartView> employee = (List<Models.EmployeeDepartView>)ViewData["employee"];
         string name = (string)ViewData["name"];
         List<Models.Project> project = (List<Models.Project>)ViewData["project"];
     }
     <section class="signin popup-in">
+        <h2>新增出库</h2>
         <div class="container">
             <div class="sign-content popup-in-content">
                 <div class="popup-in-txt">
-                    <h2>新增出库</h2>
+
                     <div class="row">
                         <div class="col-12">
                             <div class="signin-form">
@@ -64,27 +65,28 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">材料名称：</label>
-                                            @Html.TextBox("name", @Models.Inventory.GetNameName(inventory.incomeId), new { @readonly = "readonly", @class = "form-control", type = "text" })
+                                            @Html.TextBox("name", inventory.materialName, new { @readonly = "readonly", @class = "form-control", type = "text" })
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">材料规格：</label>
-                                            @Html.TextBox("ModelName", Models.Inventory.GetModelName(inventory.incomeId), new { @readonly = "readonly", @class = "form-control", type = "text" })
+                                            @Html.TextBox("ModelName", inventory.modelName, new { @readonly = "readonly", @class = "form-control", type = "text" })
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">材料编号：</label>
-                                            @Html.TextBox("CodeName", Models.Inventory.GetMaterCodeName(inventory.incomeId), new { @readonly = "readonly", @class = "form-control", type = "text" })
+                                            @Html.TextBox("CodeName", inventory.code, new { @readonly = "readonly", @class = "form-control", type = "text" })
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="example-date">出库时间：</label>
-                                            <input class="form-control" name="date" value="@Models.Inventory.NewDateTime()">
+                                            @Html.TextBox("date", Models.Inventory.NewDateTime(), new { @readonly = "readonly", @class = "form-control", type = "date" })
+                                            @*<input class="form-control" name="date" value="@Models.Inventory.NewDateTime()">*@
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">出库数量：</label>
-                                            @Html.TextBox("number", @inventory.amount, new { @class = "form-control", type = "number" })
+                                            @Html.TextBox("number", inventory.amount, new { @class = "form-control", type = "number" })
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">货品单位：</label>
@@ -93,21 +95,12 @@
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            <label for="signin_form">操作人：</label>
-                                            @Html.TextBox("Name", @name, new { @readonly = "readonly", @class = "form-control", type = "text" })
+                                            <label>操作人：</label>
+                                            <div class="input-group" style="height:40px">
+
+                                                @Html.TextBox("Name", @name, new { @readonly = "readonly", @class = "form-control", type = "text" })
+                                            </div>
                                         </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="signin_form">领用人：</label>
-                                            <input id="employeeName" name="employeeName" list="codelist" style="width:350px;height:40px" class="form-control" placeholder="请选择或输入领用人" />
-                                            <datalist id="codelist" name="codelist">
-                                                @foreach (var emp in employee)
-                                                {
-                                                <option id=@emp.id>姓名：@emp.name 工号：@emp.number 部门：@Models.Department.GetDepartment(emp.departmentId.Value).departmentName</option>
-                                                }
-                                            </datalist>
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">项目令号：</label>
                                             <select class="form-control" name="project">
@@ -117,18 +110,32 @@
                                                 }
                                             </select>
                                         </div>
-                                        <label style="height:16px">&nbsp;</label>
-                                        <div class="form-group col-md-6">
-                                            <label for="signin_form" style="height:16px">新增领用人：</label>
-                                            <a href="javascript:EmployeeAdd()" class="btn btn-primary" style="width:200px;height:42px"><i class="mdi mdi-plus-circle mr-2"></i>新增</a>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="input-group col-md-6">
+                                            <label>领用人：</label>
+                                            <div class="input-group">
+                                                <input id="employeeName" name="employeeName" list="codelist" style="width:250px;height:40px" class="form-control" placeholder="请选择或输入领用人" />
+                                                <datalist id="codelist" name="codelist">
+                                                    @foreach (var emp in employee)
+                                                    {
+                                                        <option id=@emp.emploId>姓名：@emp.name 工号：@emp.number&nbsp;部门：@emp.departmentName</option>
+                                                    }
+                                                </datalist>
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-dark" type="button" onclick="EmployeeAdd()" style="height:40px">新增</button>
+                                                </div>
+                                            </div>
                                         </div>
+                                        <label style="height:16px">&nbsp;</label>
                                     </div>
                                 }
                             </div>
+                            <div>&nbsp;</div>
                             <div class="row">
                                 <div class="col-12">
                                     <div class="card">
-                                        <div class="card-body" >
+                                        <div class="card-body">
                                             <h4 class="header-title">备注：</h4>
                                             <form method="post" action="/Inventory/OutCome_add">
                                                 <textarea id="instructions" name="instructions" style=" width: 99%; height: 90px" placeholder="请输入详细描述......."></textarea>

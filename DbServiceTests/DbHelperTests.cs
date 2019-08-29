@@ -210,10 +210,11 @@ namespace DbService.Tests
         {
             using (DbHelper dbHelper = new DbHelper(new userEntities()))
             {
+                List<Query3<string, string, string>> query3 = new List<Query3<string, string, string>>();
                 var ret = dbHelper.SqlQuery<Query3<string, string, string>>("select InCome.batch as Q1, MaterialCode.code as Q2, Name.materialName as Q3 from InCome, MaterialCode, Name where InCome.codeId = MaterialCode.id and MaterialCode.materialNameId = Name.id");
                 foreach (var item in ret)
                 {
-
+                     query3.Add(item);
                 }
             }
         }
