@@ -19,6 +19,7 @@ namespace SteelRepository.Controllers
         // GET: Department
         public ActionResult Department_list()
         {
+            ViewData["LoginEmployee"] = IndexController.LoginEmployee();
             Employee.NoJudge();
             ViewData["Employee"] = Employee.SelectAll();
             return View(Department.SelectAll());

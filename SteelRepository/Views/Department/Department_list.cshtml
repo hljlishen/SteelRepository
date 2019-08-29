@@ -2,7 +2,13 @@
 @{
     Layout = "~/Views/AdminIndex/AdminIndex.cshtml";
 }
-
+@{ 
+    Models.Employee loginEmployee = (Models.Employee)ViewData["LoginEmployee"];
+    if (loginEmployee == null)
+    {
+            return;
+    }
+}
 <!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -115,8 +121,8 @@
             <div class="container-fluid">
                 <div class="wrapper">
                     <div class="card col-md-7">
-                        <div class="leftbar-user">
-                            <a href="javascript:CompanyAdd()" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle mr-2"></i>添加公司</a>
+                        <div class="leftbar-user" style="text-align:left">
+                            <a href="javascript:CompanyAdd()" class="btn btn-primary"><i class="mdi mdi-plus-circle mr-2"></i>添加公司</a>
                         </div>
                         <ul class="metismenu side-nav form-row">
                             @foreach (var department in Model)
@@ -139,11 +145,15 @@
                                                             <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="mdi mdi-alpha-d-box"></i>@depart.departmentName</span>
                                                             <span class="menu-arrow"></span>
                                                         </a>
-                                                        <div class="layui-btn-group col-md-4">
-                                                            <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" onclick="DepartmentAdd2(@depart.id)"><i class="layui-icon"></i></button>
-                                                            <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" onclick="DepartmentDelete(@depart.id)"><i class="layui-icon"></i></button>
-                                                            <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" onclick="DepartmentUpdate(@depart.id)"><i class="layui-icon"></i></button>
-                                                        </div>
+                                                        @if (loginEmployee.permissions == 1)
+                                                        {
+                                                            <div class="layui-btn-group col-md-4">
+                                                                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" onclick="DepartmentAdd2(@depart.id)"><i class="layui-icon"></i></button>
+                                                                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" onclick="DepartmentDelete(@depart.id)"><i class="layui-icon"></i></button>
+                                                                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" onclick="DepartmentUpdate(@depart.id)"><i class="layui-icon"></i></button>
+                                                            </div>
+                                                        }
+
                                                         <ul class="side-nav-second-level" aria-expanded="false">
                                                             @foreach (var dep in Model)
                                                             {
@@ -155,10 +165,13 @@
                                                                                 <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="mdi mdi-alpha-g-box"></i>@dep.departmentName</span>
                                                                             </a>
                                                                         </form>
-                                                                        <div class="layui-btn-group">
-                                                                            <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" onclick="DepartmentDelete(@dep.id)"><i class="layui-icon"></i></button>
-                                                                            <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" onclick="DepartmentUpdate(@dep.id)"><i class="layui-icon"></i></button>
-                                                                        </div>
+                                                                        @if (loginEmployee.permissions == 1)
+                                                                        {
+                                                                            <div class="layui-btn-group">
+                                                                                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" onclick="DepartmentDelete(@dep.id)"><i class="layui-icon"></i></button>
+                                                                                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" onclick="DepartmentUpdate(@dep.id)"><i class="layui-icon"></i></button>
+                                                                            </div>
+                                                                        }
                                                                     </li>
                                                                 }
                                                             }
@@ -169,11 +182,14 @@
                                         </ul>
                                     </li>
 
-                                    <li class="layui-btn-group col-md-3">
-                                        <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" onclick="DepartmentAdd(@department.id)"><i class="layui-icon"></i></button>
-                                        <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" onclick="DepartmentDelete(@department.id)"><i class="layui-icon"></i></button>
-                                        <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" onclick="DepartmentUpdate(@department.id)"><i class="layui-icon"></i></button>
-                                    </li>
+                                    if (loginEmployee.permissions == 1)
+                                    {
+                                        <li class="layui-btn-group col-md-3">
+                                            <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" onclick="DepartmentAdd(@department.id)"><i class="layui-icon"></i></button>
+                                            <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" onclick="DepartmentDelete(@department.id)"><i class="layui-icon"></i></button>
+                                            <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" onclick="DepartmentUpdate(@department.id)"><i class="layui-icon"></i></button>
+                                        </li>
+                                    }
                                 }
                             }
                         </ul>

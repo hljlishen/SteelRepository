@@ -242,7 +242,7 @@
         <div class="container">
             <div class="sign-content popup-in-content">
                 <div class="popup-in-txt">
-                    <h2>添加材料</h2>
+                    <h2 style="text-align:center">添加材料</h2>
                     <div class="row">
                         <div class="col-12">
                             <div class="signin-form">
@@ -264,7 +264,7 @@
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">类别：</label>
                                             <label id="IsSpecise" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
-                                            <input class="form-control" name="category" type="text" id="ISpecise"/>
+                                            <input class="form-control" name="category" type="text" id="ISpecise" />
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">编号：</label>
@@ -276,7 +276,7 @@
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">批号：</label>
                                             <label id="IsPH" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
-                                            <input class="form-control" name="batch" type="text" id="IPh"/>
+                                            <input class="form-control" name="batch" type="text" id="IPh" />
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">计量单位：</label>
@@ -286,7 +286,7 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">单价（元）：</label>
-                                            <label id="IsPer" style="color:#ff0000;display:none;font-size:13px">*不能为空,最多到小数点后两位</label>
+                                            <label id="IsPer" style="color:#ff0000;display:none;font-size:13px">*不能为空,数字最多到小数点后两位</label>
                                             <input class="form-control" name="unitPrice" type="text" id="Iper" />
                                         </div>
                                         <div class="form-group col-md-6">
@@ -301,7 +301,7 @@
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">数量：</label>
-                                            <label id="IsNumber" style="color:#ff0000;display:none;font-size:13px">*不能为空,最多到小数点后两位</label>
+                                            <label id="IsNumber" style="color:#ff0000;display:none;font-size:13px">*不能为空,数字最多到小数点后两位</label>
                                             <input class="form-control" name="amount" type="text" id="INumber" />
                                         </div>
                                     </div>
@@ -329,7 +329,7 @@
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">复检周期(年)：</label>
                                             <label id="IsCycle" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
-                                            <input class="form-control" name="RecheckCycle" type="text" id="ICycle"/>
+                                            <input class="form-control" name="RecheckCycle" type="text" id="ICycle" />
                                         </div>
                                     </div>
 
@@ -382,14 +382,9 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-sm-12">
-                            <div class="signin-footer">
-                                <button type="button" class="btn btn-primary" onclick="add();">
-                                    添加
-                                </button>
-                            </div>
+                            <button type="button" class="btn btn-block btn-primary" onclick="add()">添加</button>
                         </div>
                     </div>
 

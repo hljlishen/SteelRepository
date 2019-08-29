@@ -167,7 +167,7 @@
                             <div class="col-sm-11">
                                 @if (loginEmployee.permissions == 1)
                                 {
-                                    <a href="javascript:InComeAdd()" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle mr-2"></i>添加材料信息</a>
+                                    <a href="javascript:InComeAdd()" class="btn btn-primary"><i class="mdi mdi-plus-circle mr-2"></i>添加材料信息</a>
                                 }
                             </div>
                             <div class="l-button">
@@ -204,45 +204,67 @@
                                         }
                                         else
                                         {
-                                            <th>存放位置</th>
-                                            <th>数量</th>
+                                            <th></th>
+                                            <th></th>
                                         }
                                         <th>操作人</th>
-                                        <th style="width: 75px;">操作</th>
+                                        @if (loginEmployee.permissions == 1)
+                                        {
+                                            <th style="width: 75px;">操作</th>
+                                        }
+                                        else
+                                        {
+                                            <th></th>
+                                        }
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @{ int count = 1;}
                                     @foreach (var income in incomes)
                                     {
-                                        <tr>
-                                            <td>
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                                    <label class="custom-control-label" for="customCheck2">&nbsp;</label>
-                                                </div>
-                                            </td>
-                                            <td>@count</td>
-                                            <td>@income.materialName</td>
-                                            <td>@income.modelName</td>
-                                            <td>@income.categoryName</td>
-                                            <td>@income.code</td>
-                                            <td>@income.batch</td>
-                                            <td>@income.manufacturersName</td>
-                                            <td>@income.storageTime.ToString("d")</td>
-                                            <td>@income.recheckTime</td>
+                                    <tr>
+                                        <td>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck2">
+                                                <label class="custom-control-label" for="customCheck2">&nbsp;</label>
+                                            </div>
+                                        </td>
+                                        <td>@count</td>
+                                        <td>@income.materialName</td>
+                                        <td>@income.modelName</td>
+                                        <td>@income.categoryName</td>
+                                        <td>@income.code</td>
+                                        <td>@income.batch</td>
+                                        <td>@income.manufacturersName</td>
+                                        <td>@income.storageTime.ToString("d")</td>
+                                        <td>@income.recheckTime</td>
+                                        @if (loginEmployee.permissions == 1)
+                                        {
                                             <td>
                                                 <a href="javascript:QualityReport(@income.incoId)" class="text-body font-weight-bold">查看</a>
                                             </td>
                                             <td>
                                                 <a href="javascript:RecheckReport(@income.incoId)" class="text-body font-weight-bold">查看</a>
                                             </td>
-                                            <td>@income.name</td>
+                                        }
+                                        else
+                                        {
+                                            <td></td>
+                                            <td></td>
+                                        }
+                                        <td>@income.name</td>
+                                        @if (loginEmployee.permissions == 1)
+                                        {
                                             <td>
                                                 <a href="javascript:InComeUpdate(@income.incoId)" class="action-icon"> <i class="dripicons-pencil"></i></a>
                                                 <a href="javascript:InComeSelete(@income.incoId)" class="action-icon"> <i class=" dripicons-blog"></i></a>
                                             </td>
-                                        </tr>
+                                        }
+                                        else
+                                        {
+                                            <td></td>
+                                        }
+                                    </tr>
                                         count++;
                                     }
                                 </tbody>

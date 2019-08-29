@@ -109,7 +109,7 @@
                 <div class="col-lg-6">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="mb-3 header-title">个人信息</h4>
+                            <h4 class="mb-3 header-title" style="text-align:center;font-size:200%">个人信息</h4>
                             @using (Html.BeginForm("Employee_information", "Employee", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @role = "form" }))
                             {
                                 <div class="form-group row mb-3">
@@ -182,7 +182,7 @@
                             }
                             <div class="form-group mb-0 justify-content-end row">
                                 <div class="col-9">
-                                    <button type="button" class="btn btn-info" onclick="Update()">修改</button>
+                                    <button type="button" class="btn btn-primary" onclick="Update()">修改</button>
                                 </div>
                             </div>
                         </div>

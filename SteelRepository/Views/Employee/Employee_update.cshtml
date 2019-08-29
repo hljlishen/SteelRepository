@@ -87,17 +87,17 @@
         <div class="container">
             <div class="sign-content popup-in-content">
                 <div class="popup-in-txt">
-                    <h2>修改员工信息</h2>
+                    <h2 style="text-align:center">修改员工信息</h2>
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="signin-form" id="myform">
                                 @using (Html.BeginForm("Employee_update", "Employee", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @role = "form" }))
                                 {
-                                <div class="form-group">
-                                    <label for="signin_form">姓名：</label>
-                                    <label id="Isname" style="color:#ff0000;display:none;font-size:13px">*姓名应为汉字或字母且不为空</label>
-                                    @Html.TextBox("name", employee.name, new { @class = "form-control", type = "text", id = "name" })
-                                </div>
+                                    <div class="form-group">
+                                        <label for="signin_form">姓名：</label>
+                                        <label id="Isname" style="color:#ff0000;display:none;font-size:13px">*姓名应为汉字或字母且不为空</label>
+                                        @Html.TextBox("name", employee.name, new { @class = "form-control", type = "text", id = "name" })
+                                    </div>
                                     <div class="form-group">
                                         <label for="signin_form">所属部门：</label>
                                         <div class="input-group">
@@ -209,14 +209,9 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-sm-12">
-                            <div class="signin-footer">
-                                <button type="button" id="button" class="btn btn-primary" onclick="update();">
-                                    修改
-                                </button>
-                            </div>
+                            <button type="button" class="btn btn-block btn-primary" onclick="update()">修改</button>
                         </div>
                     </div>
                 </div>

@@ -407,7 +407,6 @@
     <Content Include="Views\Position\Position_Select.cshtml" />
     <Content Include="Views\Manufacturer\Manufacturer_select.cshtml" />
     <Content Include="Views\Manufacturer\Manufacturer_update.cshtml" />
-    <Content Include="Views\Project\Project_StatisticalChart.cshtml" />
     <Content Include="Views\Material\InCome_list.cshtml" />
     <Content Include="Views\Material\InCome_add.cshtml" />
     <Content Include="Views\Material\InCome_update.cshtml" />
