@@ -15,6 +15,7 @@ namespace SteelRepository.Controllers
         // GET: Employee
         public ActionResult Employee_list()
         {
+            ViewData["LoginEmployee"] = IndexController.LoginEmployee();
             Employee.NoJudge();
             return View(Employee.SelectAll());
         }
@@ -126,6 +127,7 @@ namespace SteelRepository.Controllers
             employee.id = em.id;
             employee.permissions = em.permissions;
             employee.state = em.state;
+            employee.departmentId = em.departmentId;
             return Json(Employee.Update(employee));
         }
 

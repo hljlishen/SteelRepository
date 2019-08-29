@@ -8,6 +8,11 @@
 <head>
     @{
         List<Models.Name> names = Models.Name.SelectAll();
+        Models.Employee loginEmployee = (Models.Employee)ViewData["LoginEmployee"];
+        if (loginEmployee == null)
+        {
+            return;
+        }
     }
     <meta charset="utf-8" />
     <title>库存信息</title>
@@ -187,7 +192,14 @@
                                             <th>生产厂商</th>
                                             <th>入库操作人</th>
                                             <th>货品入库时间</th>
-                                            <th style="width: 70px;">出库</th>
+                                            @if (loginEmployee.permissions == 1)
+                                            {
+                                                <th style="width: 70px;">出库</th>
+                                            }
+                                            else
+                                            {
+                                                <th style="width: 70px;"></th>
+                                            }
                                         </tr>
                                     </thead>
                                     <tbody>

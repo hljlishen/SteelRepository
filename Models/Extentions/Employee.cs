@@ -70,9 +70,7 @@ namespace Models
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                List<Employee> employees = new List<Employee>();
-                employees = helper.SelectAll<Employee>();
-                foreach (var em in employees)
+                foreach (var em in helper.SelectAll<Employee>())
                 {
                     if (em.number == employee.number && em.password == employee.password)
                     {

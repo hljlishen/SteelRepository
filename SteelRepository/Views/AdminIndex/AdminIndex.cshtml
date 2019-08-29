@@ -141,8 +141,8 @@
         <div class="container-fluid">
             <a href="#" class="topnav-logo">
                 <span class="topnav-logo-lg">
-                    <img src="~/images/6b0263055f6110e8622111f6d4c7982.png" height="50" />
-                    <span>钢材库房管理</span>
+                    <img src="~/images/6b0263055f6110e8622111f6d4c7982.png" height="45" />
+                    <span style="color:#C2C9D0;font-size:160%">钢材库房管理</span>
                 </span>
             </a>
             <ul class="list-unstyled topbar-right-menu float-right mb-0">
@@ -152,7 +152,7 @@
                         <span class="noti-icon-badge"></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated dropdown-lg" aria-labelledby="topbar-notifydrop">
-                        <div class="dropdown-item noti-title">
+                        @*<div class="dropdown-item noti-title">
                             <h5 class="m-0">
                                 <span class="float-right">
                                     <a href="javascript:void(0);" class="text-dark">
@@ -160,7 +160,7 @@
                                     </a>
                                 </span>
                             </h5>
-                        </div>
+                        </div>*@
                         <div class="slimscroll" style="max-height: 230px;">
                             <a href="javascript:AdminInventory()" class="dropdown-item notify-item" id="Onclick1">
                                 <div class="notify-icon bg-primary">
@@ -197,20 +197,6 @@
                         </div>
                     </div>
                 </li>
-
-                @*@if (!IsLogin)
-                    {
-                        <li class="dropdown notification-list">
-                            <a class="nav-link right-bar-toggle" href="javascript:AdminLogin()">
-                                <i class="noti-icon">登录</i>
-                            </a>
-                        </li>
-                        <li class="dropdown notification-list">
-                            <a class="nav-link right-bar-toggle" href="javascript:AdminRegistered()">
-                                <i class="noti-icon">注册</i>
-                            </a>
-                        </li>
-                    }*@
                 @if (IsLogin)
                 {
                     <li class="dropdown notification-list">
@@ -223,15 +209,6 @@
                                 </span>
                             </span>
                         </a>
-                        @*<div class="dropdown-menu dropdown-menu-right dropdown-menu-animated topbar-dropdown-menu profile-dropdown" aria-labelledby="topbar-userdrop">
-                                <div class=" dropdown-header noti-title">
-                                    <h6 class="text-overflow m-0">欢迎!</h6>
-                                </div>
-                                <a href="javascript:AdminLogin()" class="dropdown-item notify-item">
-                                    <i class="mdi mdi-account-circle mr-1"></i>
-                                    <span>登录</span>
-                                </a>
-                            </div>*@
                     </li>
                     <li class="dropdown notification-list">
                         <a class="nav-link right-bar-toggle" href="../Index/Index">
@@ -259,13 +236,10 @@
 
                     <li class="side-nav-title side-nav-item">导航</li>
                     <li class="side-nav-item">
-                        @if (permissions == "1")
-                        {
-                            <a href="../Inventory/Inventory_list" class="side-nav-link">
-                                <i class="mdi mdi-clipboard-text-play-outline"></i>
-                                <span> 库存信息 </span>
-                            </a>
-                        }
+                        <a href="../Inventory/Inventory_list" class="side-nav-link">
+                            <i class="mdi mdi-clipboard-text-play-outline"></i>
+                            <span> 库存信息 </span>
+                        </a>
                     </li>
                     <li class="side-nav-item">
                         <a href="../DataStatistics/DataStatistics" class="side-nav-link">
@@ -280,7 +254,7 @@
                             <span class="menu-arrow"></span>
                         </a>
                         <ul class="side-nav-second-level" aria-expanded="false">
-                            @if (permissions == "1")
+                            @if (permissions != "3")
                             {
                                 <li>
                                     <a href="../Employee/Employee_list">员工信息管理</a>
@@ -292,37 +266,37 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="side-nav-item">
-                        <a href="../Position/Position_list" class="side-nav-link">
-                            <i class="dripicons-location"></i>
-                            <span> 仓库位置管理 </span>
-                        </a>
-                    </li>
+                    @if (permissions != "3")
+                    {
+                        <li class="side-nav-item">
+                            <a href="../Position/Position_list" class="side-nav-link">
+                                <i class="dripicons-location"></i>
+                                <span> 仓库位置管理 </span>
+                            </a>
+                        </li>
 
-                    <li class="side-nav-item">
-                        <a href="../Department/Department_list" class="side-nav-link">
-                            <i class="dripicons-copy"></i>
-                            <span> 部门管理 </span>
-                        </a>
-                    </li>
+                        <li class="side-nav-item">
+                            <a href="../Department/Department_list" class="side-nav-link">
+                                <i class="dripicons-copy"></i>
+                                <span> 部门管理 </span>
+                            </a>
+                        </li>
 
-                    <li class="side-nav-item">
-                        <a href="../Manufacturer/Manufacturer_list" class="side-nav-link">
-                            <i class="dripicons-briefcase"></i>
-                            <span> 厂商信息 </span>
-                        </a>
-                    </li>
+                        <li class="side-nav-item">
+                            <a href="../Manufacturer/Manufacturer_list" class="side-nav-link">
+                                <i class="dripicons-briefcase"></i>
+                                <span> 厂商信息 </span>
+                            </a>
+                        </li>
 
-                    <li class="side-nav-item">
-                        <a href="../Project/Project_list" class="side-nav-link">
-                            <i class="dripicons-graph-pie"></i>
-                            <span> 项目信息管理 </span>
-                        </a>
-                    </li>
+                        <li class="side-nav-item">
+                            <a href="../Project/Project_list" class="side-nav-link">
+                                <i class="dripicons-graph-pie"></i>
+                                <span> 项目信息管理 </span>
+                            </a>
+                        </li>
 
-                    <li class="side-nav-item">
-                        @if (permissions == "1")
-                        {
+                        <li class="side-nav-item">
                             <a href="javascript: void(0);" class="side-nav-link">
                                 <i class="dripicons-document"></i>
                                 <span> 材料出入库信息 </span>
@@ -336,8 +310,8 @@
                                     <a href="../OutCome/OutCome_list">材料出库信息管理</a>
                                 </li>
                             </ul>
-                        }
-                    </li>
+                        </li>
+                    }
                 </ul>
             </div>
             @RenderBody()

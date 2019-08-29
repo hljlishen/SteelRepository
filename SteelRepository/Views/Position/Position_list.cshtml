@@ -2,6 +2,13 @@
 @{
     Layout = "~/Views/AdminIndex/AdminIndex.cshtml";
 }
+@{ 
+    Models.Employee loginEmployee = (Models.Employee)ViewData["LoginEmployee"];
+    if (loginEmployee == null)
+    {
+        return;
+    }
+}
     <head>
         <meta charset="utf-8" />
         <title></title>
@@ -79,7 +86,10 @@
                     <div class="card-body">
                         <div class="row mb-2">
                             <div class="col-sm-11">
-                                <a href="javascript:PositionAdd()" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle mr-2"></i>添加仓库位置</a>
+                                @if (loginEmployee.permissions == 1)
+                                {
+                                    <a href="javascript:PositionAdd()" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle mr-2"></i>添加仓库位置</a>
+                                }
                             </div>
                             <div class="l-button">
                                 <a href="javascript:export_excel('products-datatable4')" class="side-nav-link">
@@ -101,7 +111,14 @@
                                             <th>编号</th>
                                             <th>位置信息</th>
                                             <th>备注</th>
-                                            <th style="width: 125px;">操作</th>
+                                            @if (loginEmployee.permissions == 1)
+                                            {
+                                                <th style="width: 125px;">操作</th>
+                                            }
+                                            else
+                                            {
+                                                <th></th>
+                                            }
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -118,11 +135,18 @@
                                             <td class="table-user">@count</td>
                                             <td>@position.positionName</td>
                                             <td>@position.note</td>
-                                            <td>
-                                                <a href="javascript:PositionDelete(@position.id);" class="action-icon"> <i class="dripicons-trash"></i></a>
-                                                <a href="javascript:PositionUpdate(@position.id)" class="action-icon"> <i class="dripicons-pencil"></i></a>
-                                                <a href="javascript:PositionSelect(@position.id)" class="action-icon"> <i class=" dripicons-blog"></i></a>
-                                            </td>
+                                            @if (loginEmployee.permissions == 1)
+                                            {
+                                                <td>
+                                                    <a href="javascript:PositionDelete(@position.id);" class="action-icon"> <i class="dripicons-trash"></i></a>
+                                                    <a href="javascript:PositionUpdate(@position.id)" class="action-icon"> <i class="dripicons-pencil"></i></a>
+                                                    <a href="javascript:PositionSelect(@position.id)" class="action-icon"> <i class=" dripicons-blog"></i></a>
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td></td>
+                                            }
                                         </tr>
                                             count++;
                                         }
