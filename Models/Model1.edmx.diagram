@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="864588853bbc44e79d75e252afb1f3b2" Name="Diagram1">
+      <Diagram DiagramId="1e3ccfe6ccb044c3afcc272aadd993bc" Name="Diagram1">
         <EntityTypeShape EntityType="SteelRepositoryDBModel.Category" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SteelRepositoryDBModel.Department" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SteelRepositoryDBModel.Employee" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
@@ -21,6 +21,7 @@
         <EntityTypeShape EntityType="SteelRepositoryDBModel.RecheckReport" Width="1.5" PointX="8.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SteelRepositoryDBModel.RecheckReportImg" Width="1.5" PointX="2.75" PointY="9.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SteelRepositoryDBModel.sysdiagrams" Width="1.5" PointX="8.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SteelRepositoryDBModel.UseAmountStatisticals" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

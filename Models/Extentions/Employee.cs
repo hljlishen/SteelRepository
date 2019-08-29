@@ -77,6 +77,7 @@ namespace Models
                     if (em.number == employee.number && em.password == employee.password)
                     {
                         isJudge = true;
+                        UseAmountStatisticals.AddAdministratorTraffic(DateTime.Now);
                         return em;
                     }
                 }

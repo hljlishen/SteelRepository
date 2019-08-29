@@ -41,5 +41,6 @@ namespace Models
         public virtual DbSet<RecheckReport> RecheckReport { get; set; }
         public virtual DbSet<RecheckReportImg> RecheckReportImg { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<UseAmountStatisticals> UseAmountStatisticals { get; set; }
     }
 }

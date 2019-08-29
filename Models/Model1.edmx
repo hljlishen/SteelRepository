@@ -161,6 +161,15 @@
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
+        <EntityType Name="UseAmountStatisticals">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="useTime" Type="datetime" Nullable="false" />
+          <Property Name="userUse" Type="int" Nullable="false" />
+          <Property Name="administratorLogin" Type="int" Nullable="false" />
+        </EntityType>
         <EntityContainer Name="SteelRepositoryDBModelStoreContainer">
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
@@ -178,6 +187,7 @@
           <EntitySet Name="RecheckReport" EntityType="Self.RecheckReport" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RecheckReportImg" EntityType="Self.RecheckReportImg" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UseAmountStatisticals" EntityType="Self.UseAmountStatisticals" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
@@ -340,7 +350,16 @@
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
-        <EntityContainer Name="SteelRepositoryDBEntities9" annotation:LazyLoadingEnabled="true">
+        <EntityType Name="UseAmountStatisticals">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="useTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="userUse" Type="Int32" Nullable="false" />
+          <Property Name="administratorLogin" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="SteelRepositoryDBEntities10" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Category" EntityType="Self.Category" />
           <EntitySet Name="Department" EntityType="Self.Department" />
           <EntitySet Name="Employee" EntityType="Self.Employee" />
@@ -357,13 +376,14 @@
           <EntitySet Name="RecheckReport" EntityType="Self.RecheckReport" />
           <EntitySet Name="RecheckReportImg" EntityType="Self.RecheckReportImg" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="UseAmountStatisticals" EntityType="Self.UseAmountStatisticals" />
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="SteelRepositoryDBModelStoreContainer" CdmEntityContainer="SteelRepositoryDBEntities9">
+        <EntityContainerMapping StorageEntityContainer="SteelRepositoryDBModelStoreContainer" CdmEntityContainer="SteelRepositoryDBEntities10">
           <EntitySetMapping Name="Category">
             <EntityTypeMapping TypeName="SteelRepositoryDBModel.Category">
               <MappingFragment StoreEntitySet="Category">
@@ -533,6 +553,16 @@
                 <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
                 <ScalarProperty Name="version" ColumnName="version" />
                 <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UseAmountStatisticals">
+            <EntityTypeMapping TypeName="SteelRepositoryDBModel.UseAmountStatisticals">
+              <MappingFragment StoreEntitySet="UseAmountStatisticals">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="useTime" ColumnName="useTime" />
+                <ScalarProperty Name="userUse" ColumnName="userUse" />
+                <ScalarProperty Name="administratorLogin" ColumnName="administratorLogin" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
