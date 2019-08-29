@@ -18,30 +18,36 @@
         <script src="~/Content/layui/layui.js"></script>
         <script src="~/Content/Excel/Excel.js"></script>
         <script type="text/javascript">
+
         function OutComeMore(id) {
             var url = "OutCome_More?id=" + id;
             var width = "100%";
             var height = "700px";
             parent.OpenWin2(url, width, height);
         }
+
         function OutComerevocation() {
+            var value = $("#materialCodeid2").val();
             var flag = confirm("是否要撤销最新一条出库信息？");
-        if (flag) {
-            $.ajax({
-                url: "@Url.Action("OutCome_revocation")",
-                type: "post",
-                dataType: "json",
-                success: function (data) {
-                    data = eval("(" + data + ")");
-                    if (data) {
-                        alert("撤销成功！");
-                        parent.openFrame("OutCome_list");
-                    } else {
-                        alert("撤销失败！");
+            if (flag) {
+                $.ajax({
+                    url: "@Url.Action("OutCome_revocation")",
+                    type: "post",
+                    data: {
+                        "id": value
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        data = eval("(" + data + ")");
+                        if (data) {
+                            alert("撤销成功！");
+                            parent.openFrame("OutCome_list");
+                        } else {
+                            alert("撤销失败！");
+                        }
                     }
-                }
-            });
-        }
+                });
+            }
         }
         layui.use('laydate', function () {
             var laydate = layui.laydate;
@@ -64,7 +70,6 @@
             background: url("下拉箭头图片") right center no-repeat;
             padding-right: 20px;
         }
-
             select::-ms-expand {
                 display: none;
             }
@@ -73,7 +78,7 @@
 @{
     List<Models.MaterialCode> material = (List<Models.MaterialCode>)ViewData["MaterialCode"];
     List<Models.Employee> employee = (List<Models.Employee>)ViewData["employee"];
-    List<Models.OutCome> outcomelist = (List<Models.OutCome>)ViewData["outcome"];
+    List<Models.OutcomeQueryView> outcome = (List<Models.OutcomeQueryView>)ViewData["outcome"];
     List<Models.Manufacturer> manufacturers = (List<Models.Manufacturer>)ViewData["manufacturer"];
     List<Models.Department> departments = (List<Models.Department>)ViewData["department"];
 }
@@ -198,6 +203,7 @@
                                                 <label class="custom-control-label" for="customCheck1">&nbsp;</label>
                                             </div>
                                         </th>
+                                        <th style="width: 50px;">详情</th>
                                         <th>编号</th>
                                         <th>货品编号</th>
                                         <th>货品种类</th>
@@ -210,71 +216,56 @@
                                         <th>货品出库时间</th>
                                         <th>货品借用人</th>
                                         <th>备注</th>
-                                        <th style="width: 50px;">详细信息</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @{int count = 1; }
-                                    @foreach (var outComes in outcomelist)
+                                    @foreach (var outComes in outcome)
                                     {
-                                        <tr>
-                                            <td>
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                                    <label class="custom-control-label" for="customCheck2">&nbsp;</label>
-                                                </div>
-                                            </td>
-                                            <td class="table-user">@count</td>
-                                            <td>@Models.OutCome.GetMaterCodeName(outComes.inventoryId)</td>
-                                            <td>@Models.OutCome.GetCategoryName(outComes.inventoryId).categoryName</td>
-                                            <td>@Models.OutCome.GetNameName(outComes.inventoryId)</td>
-                                            <td>@Models.OutCome.GetModelName(outComes.inventoryId)</td>
-                                            <td>@outComes.number</td>
-                                            <td>@outComes.unit</td>
-                                            <td>@Models.OutCome.GetInComeunitPrice(outComes.inventoryId)</td>
-                                            <td>@outComes.price</td>
-                                            <td>@outComes.recipientsTime.ToString("d")</td>
-                                            <td>@Models.OutCome.GetEmployeeName(outComes.borrowerId)</td>
-                                            <td style="word-wrap:break-word">@outComes.instructions</td>
-                                            <td>
-                                                <a href="javascript:OutComeMore(@outComes.id)" class="action-icon"> <i class=" dripicons-blog"></i></a>
-                                            </td>
-                                        </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck2">
+                                                <label class="custom-control-label" for="customCheck2">&nbsp;</label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <a href="javascript:OutComeMore(@outComes.OutId)" class="action-icon"> <i class=" dripicons-blog"></i></a>
+                                        </td>
+                                        <td class="table-user">@count</td>
+                                        <td>@outComes.code</td>
+                                        <td>@outComes.categoryName</td>
+                                        <td>@outComes.materialName</td>
+                                        <td>@outComes.modelName</td>
+                                        <td>@outComes.number</td>
+                                        <td>@outComes.unit</td>
+                                        <td>@outComes.unitPrice</td>
+                                        <td>@outComes.price</td>
+                                        <td>@outComes.recipientsTime.ToString("d")</td>
+                                        <td>@outComes.name</td>
+                                        <td style="word-wrap:break-word">@outComes.instructions</td>
+                                    </tr>
                                         count++;
                                     }
                                 </tbody>
                             </table>
                         </div>
-                        <div class="row mb-2">
-                            <div class="col-sm-4">
-                                <a href="javascript:OutComerevocation()" class="btn btn-primary"><i class="mdi mdi-plus-circle mr-2"></i>撤销最新出库记录</a>
-                                <a href="/OutCome/OutCome_revocationlist" class="btn btn-primary"><i class="mdi mdi-plus-circle mr-2"></i>显示撤销记录</a>
+                        <div class="row mb-4">
+
+                            <div class="col-sm-2">
+                                <select id="materialCodeid2" name="materialCodeid2" style="width:240px;height:42px" class="form-control">
+                                    <option value="0">请选择想要撤销的货品编码</option>
+                                    @foreach (var emp in material)
+                                    {
+                                        <option value="@emp.id">@emp.code</option>
+                                    }
+                                </select>
                             </div>
-                            <div class="col-sm-1">
-                                <form method="post" action="/OutCome/OutCome_revocation" style="width:100%;text-align:center">
-                                    <table contenteditable="inherit" style="width:100%;text-align:center">
-                                        <tr>
-                                            <td>
-                                                <label style="width:100%;text-align:left">按货品编号撤销出库数据</label>
-                                                <select name="materialCodeid2" style="width:200px;height:40px" class="form-control">
-                                                    <option value="0">请选择</option>
-                                                    @foreach (var emp in material)
-                                                    {
-                                                        <option value="@emp.id">@emp.code</option>
-                                                    }
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <label style="height:16px"></label>
-                                                    <button type="submit" style="width:80px;height:42px" class="btn btn-primary">
-                                                        撤销
-                                                    </button>
-                                              
-                                               
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </form>
+                            <div class="col-sm-3">
+                                <a href="javascript:OutComerevocation()" class="btn btn-danger" style="width:200px;height:42px"><i class="mdi mdi-plus-circle mr-2"></i>撤销</a>
+                            </div>
+                            <div class="col-sm-3">
+                                <a href="/OutCome/OutCome_revocationlist" class="btn btn-primary" style="width:150px;height:42px"><i class="mdi mdi-plus-circle mr-2"></i>显示撤销记录</a>
                             </div>
                         </div>
                     </div>

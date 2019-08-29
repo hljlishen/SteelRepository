@@ -154,30 +154,5 @@ namespace Models
             }
             return codeid;
         }
-        public static List<InCome> MulSelectCheckInCome(string begin, string end, int MaterCodeid, int manufacturerid)
-        {
-            ExpressionBuilder<InCome> builder = new ExpressionBuilder<InCome>();
-            if (begin == "" && end == "" && MaterCodeid == 0 && manufacturerid == 0)
-            {
-                return Dbhelper.SelectAll<InCome>();
-            }
-            if (begin != "")
-            {
-                DateTime begintime = Convert.ToDateTime(begin);
-                builder.And(p => p.storageTime >= begintime);
-            }
-            if (end != "")
-            {
-                DateTime endtime = Convert.ToDateTime(end);
-                builder.And(p => p.storageTime <= endtime);
-            }
-            if (MaterCodeid != 0)
-                builder.And(p => p.codeId == MaterCodeid);
-            if (manufacturerid != 0)
-                builder.And(p => p.menufactureId == manufacturerid);
-            var exp = builder.GetExpression();
-            if (exp == null) return new List<InCome>();
-            return Dbhelper.Select(exp);
-        }
     }
 }

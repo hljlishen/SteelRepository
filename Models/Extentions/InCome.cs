@@ -2,6 +2,7 @@
 using DbService;
 using System;
 using System.Collections.Generic;
+using Tools;
 
 namespace Models
 {
@@ -269,12 +270,12 @@ namespace Models
                 return helper.SelectAll<InCome>();
             }
         }
-        public static List<InCome> GetInComesDesc()
+        public static List<InComeView> GetInComeViewDesc()
         {
-            List<InCome> liDesc = new List<InCome>();
+            List<InComeView> liDesc = new List<InComeView>();
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                var ret = helper.SqlQuery<InCome>("select InCome.* from InCome order by InCome.storageTime desc");
+                var ret = helper.SqlQuery<InComeView>("select InComeView.* from InComeView order by InComeView.storageTime desc");
                 foreach (var income in ret)
                 {
                     liDesc.Add(income);
@@ -294,6 +295,13 @@ namespace Models
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
                 return helper.FindId<InCome>(id);
+            }
+        }
+        public static InComeView SeleteInComeView(int id)
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return helper.Select<InComeView>(p => p.incoId == id)[0];
             }
         }
 
@@ -333,6 +341,30 @@ namespace Models
                 }
             }
             return inComes;
+        }
+        public static List<InComeView> MulSelectCheckInCome(string begin, string end, int MaterCodeid, int manufacturerid)
+        {
+            using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                ExpressionBuilder<InComeView> builder = new ExpressionBuilder<InComeView>();
+                if (begin != "")
+                {
+                    DateTime begintime = Convert.ToDateTime(begin);
+                    builder.And(p => p.storageTime >= begintime);
+                }
+                if (end != "")
+                {
+                    DateTime endtime = Convert.ToDateTime(end);
+                    builder.And(p => p.storageTime <= endtime);
+                }
+                if (MaterCodeid != 0)
+                    builder.And(p => p.materId == MaterCodeid);
+                if (manufacturerid != 0)
+                    builder.And(p => p.manuId == manufacturerid);
+                var exp = builder.GetExpression();
+                if (exp == null) return Dbhelper.SelectAll<InComeView>();
+                return Dbhelper.Select(exp);
+            }
         }
     }
 }

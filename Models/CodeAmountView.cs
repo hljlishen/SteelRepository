@@ -12,12 +12,10 @@ namespace Models
     using System;
     using System.Collections.Generic;
     
-    public partial class sysdiagrams
+    public partial class CodeAmountView
     {
-        public string name { get; set; }
-        public int principal_id { get; set; }
-        public int diagram_id { get; set; }
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public double amount { get; set; }
+        public string code { get; set; }
+        public string unit { get; set; }
     }
 }

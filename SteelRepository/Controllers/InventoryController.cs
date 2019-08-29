@@ -10,12 +10,12 @@ namespace SteelRepository.Controllers
     public class InventoryController : Controller
     {
         // GET: Inventory
-        private static Inventory inventorysta;
+        //private static Inventory inventorysta;
         private static int invenId;
         public ActionResult Inventory_list()
         {
             ViewData["MaterialCode"] = MaterialCode.GetMaterialCodeList();
-            ViewData["Inventorylist"] = Inventory.SelectAll();
+            ViewData["InventoryViewlist"] = Inventory.InventoryViewSelectAll();
             ViewData["manufacturer"] = Manufacturer.SelectAll();
             ViewData["position"] = Position.SelectAll();
             return View();
@@ -32,19 +32,17 @@ namespace SteelRepository.Controllers
             var nameinput = collection["nameinput"];
             int  positionid = Convert.ToInt32(collection["positionid"]);
             int manufacturerid = Convert.ToInt32(collection["manufacturerid"]);
-            //ViewData["Inventorylist"] = null;
-            var inv = Inventory.MulSelectCheckInventory(begin,end,codeinput,nameinput,positionid,manufacturerid);
-            ViewData["Inventorylist"] = inv;
+            ViewData["InventoryViewlist"] = null;
+            ViewData["InventoryViewlist"] = Inventory.MulSelectCheckInventory(begin, end, codeinput, nameinput, positionid, manufacturerid);
             return View();
         }
         public ActionResult OutCome_add(int id)
         {
-            ViewData["Inventory"] = Inventory.GetInventory(id);
+            ViewData["Inventory"] = Inventory.GetInventoryView(id);
             SelectList select = new SelectList(GetUnitList(), "Value", "Text");
             ViewBag.select = select;
             ViewData["employee"] = Employee.SelectAllDesc();
             ViewData["name"] = IndexController.adminName();
-            inventorysta = Inventory.GetInventory(id);
             ViewData["project"] = Project.SelectAll();
             invenId = id;
             return View();

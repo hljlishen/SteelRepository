@@ -85,15 +85,9 @@ namespace Models
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                List<Inventory> ins = new List<Inventory>();
                 MultipleSeriesStatistics2D<Inventory> statistics2D = new MultipleSeriesStatistics2D<Inventory>(p => p.GetMaterialCode(helper));
-                statistics2D.AddSeries("amount", p => p.amount);
-                foreach (var inven in helper.Select<Inventory>(p => p.positionId == positionId && p.amount > 0))
-                {
-                    inven.amount = WeightConverter.Convert(inven.unit, inven.amount, "kg");
-                    ins.Add(inven);
-                }
-                var Sum = statistics2D.GetValues(ins);
+                statistics2D.AddSeries("amount", p => WeightConverter.Convert(p.unit, p.amount, "KG"));
+                var Sum = statistics2D.GetValues(helper.Select<Inventory>(p => p.positionId == positionId && p.amount > 0));
                 return Sum["amount"];
             }
         }
