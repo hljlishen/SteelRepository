@@ -11,6 +11,7 @@
     {
         return;
     }
+    List<Models.InComeView> incomes = (List<Models.InComeView>)ViewData["InComeView"];
 }
     <head>
         <meta charset="utf-8" />
@@ -215,44 +216,34 @@
                                     @{ int count = 1;}
                                     @foreach (var income in incomes)
                                     {
-                                    <tr>
-                                        <td>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                                <label class="custom-control-label" for="customCheck2">&nbsp;</label>
-                                            </div>
-                                        </td>
-                                        <td>@count</td>
-                                        <td>@income.GetName().materialName</td>
-                                        <td>@income.GetModel().modelName</td>
-                                        <td>@income.GetCategory().categoryName</td>
-                                        <td>@income.GetMaterialCode().code</td>
-                                        <td>@income.batch</td>
-                                        <td>@income.GetManufacture().manufacturersName</td>
-                                        <td>@income.storageTime.ToString("d")</td>
-                                        <td>@Models.RecheckReport.GetMaxDate(Models.RecheckReport.GetRecheckReports(income.id), income.reviewCycle)</td>
-
-                                        <td>
-                                            <a href="javascript:QualityReport(@income.id)" class="text-body font-weight-bold">查看</a>
-                                        </td>
-                                        <td>
-                                            <a href="javascript:RecheckReport(@income.id)" class="text-body font-weight-bold">查看</a>
-                                        </td>
-                                        <td>@income.GetOperator().name</td>
-                                        @if (loginEmployee.permissions == 1)
-                                        {
+                                        <tr>
                                             <td>
-                                                <a href="javascript:InComeUpdate(@income.id)" class="action-icon"> <i class="dripicons-pencil"></i></a>
-                                                <a href="javascript:InComeSelete(@income.id)" class="action-icon"> <i class=" dripicons-blog"></i></a>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" id="customCheck2">
+                                                    <label class="custom-control-label" for="customCheck2">&nbsp;</label>
+                                                </div>
                                             </td>
-                                        }
-                                        else
-                                        {
+                                            <td>@count</td>
+                                            <td>@income.materialName</td>
+                                            <td>@income.modelName</td>
+                                            <td>@income.categoryName</td>
+                                            <td>@income.code</td>
+                                            <td>@income.batch</td>
+                                            <td>@income.manufacturersName</td>
+                                            <td>@income.storageTime.ToString("d")</td>
+                                            <td>@income.recheckTime</td>
                                             <td>
-                                                <a href="javascript:InComeSelete(@income.id)" class="action-icon"> <i class=" dripicons-blog"></i></a>
+                                                <a href="javascript:QualityReport(@income.incoId)" class="text-body font-weight-bold">查看</a>
                                             </td>
-                                        }
-                                    </tr>
+                                            <td>
+                                                <a href="javascript:RecheckReport(@income.incoId)" class="text-body font-weight-bold">查看</a>
+                                            </td>
+                                            <td>@income.name</td>
+                                            <td>
+                                                <a href="javascript:InComeUpdate(@income.incoId)" class="action-icon"> <i class="dripicons-pencil"></i></a>
+                                                <a href="javascript:InComeSelete(@income.incoId)" class="action-icon"> <i class=" dripicons-blog"></i></a>
+                                            </td>
+                                        </tr>
                                         count++;
                                     }
                                 </tbody>

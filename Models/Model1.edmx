@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="SteelRepositoryDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="SteelRepositoryDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Category">
           <Key>
             <PropertyRef Name="id" />
@@ -151,16 +151,6 @@
           <Property Name="reportId" Type="int" Nullable="false" />
           <Property Name="img" Type="varbinary(max)" Nullable="false" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
         <EntityType Name="UseAmountStatisticals">
           <Key>
             <PropertyRef Name="id" />
@@ -169,6 +159,147 @@
           <Property Name="useTime" Type="datetime" Nullable="false" />
           <Property Name="userUse" Type="int" Nullable="false" />
           <Property Name="administratorLogin" Type="int" Nullable="false" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“SteelRepositoryDB.dbo.CodeAmountView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="CodeAmountView">
+          <Key>
+            <PropertyRef Name="amount" />
+            <PropertyRef Name="code" />
+          </Key>
+          <Property Name="amount" Type="float" Nullable="false" />
+          <Property Name="code" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="unit" Type="nvarchar(max)" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“SteelRepositoryDB.dbo.EmployeeDepartView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="EmployeeDepartView">
+          <Key>
+            <PropertyRef Name="departmentName" />
+            <PropertyRef Name="emploId" />
+            <PropertyRef Name="name" />
+          </Key>
+          <Property Name="departmentName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="emploId" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="number" Type="nvarchar(max)" />
+          <Property Name="departmentId" Type="int" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“SteelRepositoryDB.dbo.InComeView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="InComeView">
+          <Key>
+            <PropertyRef Name="incoId" />
+            <PropertyRef Name="batch" />
+            <PropertyRef Name="unit" />
+            <PropertyRef Name="amount" />
+            <PropertyRef Name="storageTime" />
+            <PropertyRef Name="reviewCycle" />
+            <PropertyRef Name="code" />
+            <PropertyRef Name="materId" />
+            <PropertyRef Name="modelName" />
+            <PropertyRef Name="materialName" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="manuId" />
+            <PropertyRef Name="manufacturersName" />
+            <PropertyRef Name="recheckTime" />
+            <PropertyRef Name="positionName" />
+          </Key>
+          <Property Name="incoId" Type="int" Nullable="false" />
+          <Property Name="batch" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="unit" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="amount" Type="float" Nullable="false" />
+          <Property Name="unitPrice" Type="float" />
+          <Property Name="storageTime" Type="datetime" Nullable="false" />
+          <Property Name="reviewCycle" Type="float" Nullable="false" />
+          <Property Name="priceMeasure" Type="nchar" MaxLength="10" />
+          <Property Name="code" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="materId" Type="int" Nullable="false" />
+          <Property Name="categoryName" Type="nvarchar(max)" />
+          <Property Name="modelName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="materialName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="manuId" Type="int" Nullable="false" />
+          <Property Name="manufacturersName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="recheckTime" Type="datetime" Nullable="false" />
+          <Property Name="positionName" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“SteelRepositoryDB.dbo.InventoryView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="InventoryView">
+          <Key>
+            <PropertyRef Name="storageTime" />
+            <PropertyRef Name="batch" />
+            <PropertyRef Name="amount" />
+            <PropertyRef Name="InvenId" />
+            <PropertyRef Name="consumptionAmount" />
+            <PropertyRef Name="code" />
+            <PropertyRef Name="manufacturersName" />
+            <PropertyRef Name="manuId" />
+            <PropertyRef Name="materialName" />
+            <PropertyRef Name="modelName" />
+            <PropertyRef Name="positionName" />
+            <PropertyRef Name="posiId" />
+            <PropertyRef Name="name" />
+          </Key>
+          <Property Name="storageTime" Type="datetime" Nullable="false" />
+          <Property Name="batch" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="unit" Type="nvarchar(max)" />
+          <Property Name="amount" Type="float" Nullable="false" />
+          <Property Name="InvenId" Type="int" Nullable="false" />
+          <Property Name="consumptionAmount" Type="float" Nullable="false" />
+          <Property Name="categoryName" Type="nvarchar(max)" />
+          <Property Name="code" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="manufacturersName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="manuId" Type="int" Nullable="false" />
+          <Property Name="materialName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="modelName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="positionName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="posiId" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“SteelRepositoryDB.dbo.OutcomeQueryView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="OutcomeQueryView">
+          <Key>
+            <PropertyRef Name="number" />
+            <PropertyRef Name="unit" />
+            <PropertyRef Name="recipientsTime" />
+            <PropertyRef Name="code" />
+            <PropertyRef Name="materialName" />
+            <PropertyRef Name="modelName" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="OutId" />
+            <PropertyRef Name="mfId" />
+            <PropertyRef Name="manufacturersName" />
+            <PropertyRef Name="codeId" />
+            <PropertyRef Name="deparId" />
+            <PropertyRef Name="departmentName" />
+            <PropertyRef Name="emploId" />
+            <PropertyRef Name="projectName" />
+            <PropertyRef Name="positionName" />
+          </Key>
+          <Property Name="number" Type="float" Nullable="false" />
+          <Property Name="unit" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="recipientsTime" Type="datetime" Nullable="false" />
+          <Property Name="price" Type="float" />
+          <Property Name="instructions" Type="nvarchar(max)" />
+          <Property Name="unitPrice" Type="float" />
+          <Property Name="code" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="materialName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="modelName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="categoryName" Type="nvarchar(max)" />
+          <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="OutId" Type="int" Nullable="false" />
+          <Property Name="mfId" Type="int" Nullable="false" />
+          <Property Name="manufacturersName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="codeId" Type="int" Nullable="false" />
+          <Property Name="deparId" Type="int" Nullable="false" />
+          <Property Name="departmentName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="emploId" Type="int" Nullable="false" />
+          <Property Name="projectName" Type="varchar(max)" Nullable="false" />
+          <Property Name="positionName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="state" Type="int" />
         </EntityType>
         <EntityContainer Name="SteelRepositoryDBModelStoreContainer">
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
@@ -186,8 +317,89 @@
           <EntitySet Name="QualityCertificationReportImg" EntityType="Self.QualityCertificationReportImg" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RecheckReport" EntityType="Self.RecheckReport" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RecheckReportImg" EntityType="Self.RecheckReportImg" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UseAmountStatisticals" EntityType="Self.UseAmountStatisticals" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CodeAmountView" EntityType="Self.CodeAmountView" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [CodeAmountView].[amount] AS [amount], 
+    [CodeAmountView].[code] AS [code], 
+    [CodeAmountView].[unit] AS [unit]
+    FROM [dbo].[CodeAmountView] AS [CodeAmountView]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="EmployeeDepartView" EntityType="Self.EmployeeDepartView" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [EmployeeDepartView].[departmentName] AS [departmentName], 
+    [EmployeeDepartView].[emploId] AS [emploId], 
+    [EmployeeDepartView].[name] AS [name], 
+    [EmployeeDepartView].[number] AS [number], 
+    [EmployeeDepartView].[departmentId] AS [departmentId]
+    FROM [dbo].[EmployeeDepartView] AS [EmployeeDepartView]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="InComeView" EntityType="Self.InComeView" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [InComeView].[incoId] AS [incoId], 
+    [InComeView].[batch] AS [batch], 
+    [InComeView].[unit] AS [unit], 
+    [InComeView].[amount] AS [amount], 
+    [InComeView].[unitPrice] AS [unitPrice], 
+    [InComeView].[storageTime] AS [storageTime], 
+    [InComeView].[reviewCycle] AS [reviewCycle], 
+    [InComeView].[priceMeasure] AS [priceMeasure], 
+    [InComeView].[code] AS [code], 
+    [InComeView].[materId] AS [materId], 
+    [InComeView].[categoryName] AS [categoryName], 
+    [InComeView].[modelName] AS [modelName], 
+    [InComeView].[materialName] AS [materialName], 
+    [InComeView].[name] AS [name], 
+    [InComeView].[manuId] AS [manuId], 
+    [InComeView].[manufacturersName] AS [manufacturersName], 
+    [InComeView].[recheckTime] AS [recheckTime], 
+    [InComeView].[positionName] AS [positionName]
+    FROM [dbo].[InComeView] AS [InComeView]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="InventoryView" EntityType="Self.InventoryView" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [InventoryView].[storageTime] AS [storageTime], 
+    [InventoryView].[batch] AS [batch], 
+    [InventoryView].[unit] AS [unit], 
+    [InventoryView].[amount] AS [amount], 
+    [InventoryView].[InvenId] AS [InvenId], 
+    [InventoryView].[consumptionAmount] AS [consumptionAmount], 
+    [InventoryView].[categoryName] AS [categoryName], 
+    [InventoryView].[code] AS [code], 
+    [InventoryView].[manufacturersName] AS [manufacturersName], 
+    [InventoryView].[manuId] AS [manuId], 
+    [InventoryView].[materialName] AS [materialName], 
+    [InventoryView].[modelName] AS [modelName], 
+    [InventoryView].[positionName] AS [positionName], 
+    [InventoryView].[posiId] AS [posiId], 
+    [InventoryView].[name] AS [name]
+    FROM [dbo].[InventoryView] AS [InventoryView]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="OutcomeQueryView" EntityType="Self.OutcomeQueryView" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [OutcomeQueryView].[number] AS [number], 
+    [OutcomeQueryView].[unit] AS [unit], 
+    [OutcomeQueryView].[recipientsTime] AS [recipientsTime], 
+    [OutcomeQueryView].[price] AS [price], 
+    [OutcomeQueryView].[instructions] AS [instructions], 
+    [OutcomeQueryView].[unitPrice] AS [unitPrice], 
+    [OutcomeQueryView].[code] AS [code], 
+    [OutcomeQueryView].[materialName] AS [materialName], 
+    [OutcomeQueryView].[modelName] AS [modelName], 
+    [OutcomeQueryView].[categoryName] AS [categoryName], 
+    [OutcomeQueryView].[name] AS [name], 
+    [OutcomeQueryView].[OutId] AS [OutId], 
+    [OutcomeQueryView].[mfId] AS [mfId], 
+    [OutcomeQueryView].[manufacturersName] AS [manufacturersName], 
+    [OutcomeQueryView].[codeId] AS [codeId], 
+    [OutcomeQueryView].[deparId] AS [deparId], 
+    [OutcomeQueryView].[departmentName] AS [departmentName], 
+    [OutcomeQueryView].[emploId] AS [emploId], 
+    [OutcomeQueryView].[projectName] AS [projectName], 
+    [OutcomeQueryView].[positionName] AS [positionName], 
+    [OutcomeQueryView].[state] AS [state]
+    FROM [dbo].[OutcomeQueryView] AS [OutcomeQueryView]</DefiningQuery>
+          </EntitySet>
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
@@ -340,16 +552,6 @@
           <Property Name="reportId" Type="Int32" Nullable="false" />
           <Property Name="img" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
         <EntityType Name="UseAmountStatisticals">
           <Key>
             <PropertyRef Name="id" />
@@ -358,6 +560,137 @@
           <Property Name="useTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="userUse" Type="Int32" Nullable="false" />
           <Property Name="administratorLogin" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CodeAmountView">
+          <Key>
+            <PropertyRef Name="amount" />
+            <PropertyRef Name="code" />
+          </Key>
+          <Property Name="amount" Type="Double" Nullable="false" />
+          <Property Name="code" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="unit" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="EmployeeDepartView">
+          <Key>
+            <PropertyRef Name="departmentName" />
+            <PropertyRef Name="emploId" />
+            <PropertyRef Name="name" />
+          </Key>
+          <Property Name="departmentName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="emploId" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="number" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="departmentId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="InComeView">
+          <Key>
+            <PropertyRef Name="incoId" />
+            <PropertyRef Name="batch" />
+            <PropertyRef Name="unit" />
+            <PropertyRef Name="amount" />
+            <PropertyRef Name="storageTime" />
+            <PropertyRef Name="reviewCycle" />
+            <PropertyRef Name="code" />
+            <PropertyRef Name="materId" />
+            <PropertyRef Name="modelName" />
+            <PropertyRef Name="materialName" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="manuId" />
+            <PropertyRef Name="manufacturersName" />
+            <PropertyRef Name="recheckTime" />
+            <PropertyRef Name="positionName" />
+          </Key>
+          <Property Name="incoId" Type="Int32" Nullable="false" />
+          <Property Name="batch" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="unit" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="amount" Type="Double" Nullable="false" />
+          <Property Name="unitPrice" Type="Double" />
+          <Property Name="storageTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="reviewCycle" Type="Double" Nullable="false" />
+          <Property Name="priceMeasure" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="code" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="materId" Type="Int32" Nullable="false" />
+          <Property Name="categoryName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="modelName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="materialName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="manuId" Type="Int32" Nullable="false" />
+          <Property Name="manufacturersName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="recheckTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="positionName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="InventoryView">
+          <Key>
+            <PropertyRef Name="storageTime" />
+            <PropertyRef Name="batch" />
+            <PropertyRef Name="amount" />
+            <PropertyRef Name="InvenId" />
+            <PropertyRef Name="consumptionAmount" />
+            <PropertyRef Name="code" />
+            <PropertyRef Name="manufacturersName" />
+            <PropertyRef Name="manuId" />
+            <PropertyRef Name="materialName" />
+            <PropertyRef Name="modelName" />
+            <PropertyRef Name="positionName" />
+            <PropertyRef Name="posiId" />
+            <PropertyRef Name="name" />
+          </Key>
+          <Property Name="storageTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="batch" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="unit" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="amount" Type="Double" Nullable="false" />
+          <Property Name="InvenId" Type="Int32" Nullable="false" />
+          <Property Name="consumptionAmount" Type="Double" Nullable="false" />
+          <Property Name="categoryName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="code" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="manufacturersName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="manuId" Type="Int32" Nullable="false" />
+          <Property Name="materialName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="modelName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="positionName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="posiId" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OutcomeQueryView">
+          <Key>
+            <PropertyRef Name="number" />
+            <PropertyRef Name="unit" />
+            <PropertyRef Name="recipientsTime" />
+            <PropertyRef Name="code" />
+            <PropertyRef Name="materialName" />
+            <PropertyRef Name="modelName" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="OutId" />
+            <PropertyRef Name="mfId" />
+            <PropertyRef Name="manufacturersName" />
+            <PropertyRef Name="codeId" />
+            <PropertyRef Name="deparId" />
+            <PropertyRef Name="departmentName" />
+            <PropertyRef Name="emploId" />
+            <PropertyRef Name="projectName" />
+            <PropertyRef Name="positionName" />
+          </Key>
+          <Property Name="number" Type="Double" Nullable="false" />
+          <Property Name="unit" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="recipientsTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="price" Type="Double" />
+          <Property Name="instructions" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="unitPrice" Type="Double" />
+          <Property Name="code" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="materialName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="modelName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="categoryName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="OutId" Type="Int32" Nullable="false" />
+          <Property Name="mfId" Type="Int32" Nullable="false" />
+          <Property Name="manufacturersName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="codeId" Type="Int32" Nullable="false" />
+          <Property Name="deparId" Type="Int32" Nullable="false" />
+          <Property Name="departmentName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="emploId" Type="Int32" Nullable="false" />
+          <Property Name="projectName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="positionName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="state" Type="Int32" />
         </EntityType>
         <EntityContainer Name="SteelRepositoryDBEntities10" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Category" EntityType="Self.Category" />
@@ -375,8 +708,12 @@
           <EntitySet Name="QualityCertificationReportImg" EntityType="Self.QualityCertificationReportImg" />
           <EntitySet Name="RecheckReport" EntityType="Self.RecheckReport" />
           <EntitySet Name="RecheckReportImg" EntityType="Self.RecheckReportImg" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="UseAmountStatisticals" EntityType="Self.UseAmountStatisticals" />
+          <EntitySet Name="CodeAmountView" EntityType="Self.CodeAmountView" />
+          <EntitySet Name="EmployeeDepartView" EntityType="Self.EmployeeDepartView" />
+          <EntitySet Name="InComeView" EntityType="Self.InComeView" />
+          <EntitySet Name="InventoryView" EntityType="Self.InventoryView" />
+          <EntitySet Name="OutcomeQueryView" EntityType="Self.OutcomeQueryView" />
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -545,17 +882,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="SteelRepositoryDBModel.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="UseAmountStatisticals">
             <EntityTypeMapping TypeName="SteelRepositoryDBModel.UseAmountStatisticals">
               <MappingFragment StoreEntitySet="UseAmountStatisticals">
@@ -563,6 +889,98 @@
                 <ScalarProperty Name="useTime" ColumnName="useTime" />
                 <ScalarProperty Name="userUse" ColumnName="userUse" />
                 <ScalarProperty Name="administratorLogin" ColumnName="administratorLogin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CodeAmountView">
+            <EntityTypeMapping TypeName="SteelRepositoryDBModel.CodeAmountView">
+              <MappingFragment StoreEntitySet="CodeAmountView">
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="unit" ColumnName="unit" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeDepartView">
+            <EntityTypeMapping TypeName="SteelRepositoryDBModel.EmployeeDepartView">
+              <MappingFragment StoreEntitySet="EmployeeDepartView">
+                <ScalarProperty Name="departmentName" ColumnName="departmentName" />
+                <ScalarProperty Name="emploId" ColumnName="emploId" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="number" ColumnName="number" />
+                <ScalarProperty Name="departmentId" ColumnName="departmentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InComeView">
+            <EntityTypeMapping TypeName="SteelRepositoryDBModel.InComeView">
+              <MappingFragment StoreEntitySet="InComeView">
+                <ScalarProperty Name="incoId" ColumnName="incoId" />
+                <ScalarProperty Name="batch" ColumnName="batch" />
+                <ScalarProperty Name="unit" ColumnName="unit" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="unitPrice" ColumnName="unitPrice" />
+                <ScalarProperty Name="storageTime" ColumnName="storageTime" />
+                <ScalarProperty Name="reviewCycle" ColumnName="reviewCycle" />
+                <ScalarProperty Name="priceMeasure" ColumnName="priceMeasure" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="materId" ColumnName="materId" />
+                <ScalarProperty Name="categoryName" ColumnName="categoryName" />
+                <ScalarProperty Name="modelName" ColumnName="modelName" />
+                <ScalarProperty Name="materialName" ColumnName="materialName" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="manuId" ColumnName="manuId" />
+                <ScalarProperty Name="manufacturersName" ColumnName="manufacturersName" />
+                <ScalarProperty Name="recheckTime" ColumnName="recheckTime" />
+                <ScalarProperty Name="positionName" ColumnName="positionName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InventoryView">
+            <EntityTypeMapping TypeName="SteelRepositoryDBModel.InventoryView">
+              <MappingFragment StoreEntitySet="InventoryView">
+                <ScalarProperty Name="storageTime" ColumnName="storageTime" />
+                <ScalarProperty Name="batch" ColumnName="batch" />
+                <ScalarProperty Name="unit" ColumnName="unit" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="InvenId" ColumnName="InvenId" />
+                <ScalarProperty Name="consumptionAmount" ColumnName="consumptionAmount" />
+                <ScalarProperty Name="categoryName" ColumnName="categoryName" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="manufacturersName" ColumnName="manufacturersName" />
+                <ScalarProperty Name="manuId" ColumnName="manuId" />
+                <ScalarProperty Name="materialName" ColumnName="materialName" />
+                <ScalarProperty Name="modelName" ColumnName="modelName" />
+                <ScalarProperty Name="positionName" ColumnName="positionName" />
+                <ScalarProperty Name="posiId" ColumnName="posiId" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OutcomeQueryView">
+            <EntityTypeMapping TypeName="SteelRepositoryDBModel.OutcomeQueryView">
+              <MappingFragment StoreEntitySet="OutcomeQueryView">
+                <ScalarProperty Name="number" ColumnName="number" />
+                <ScalarProperty Name="unit" ColumnName="unit" />
+                <ScalarProperty Name="recipientsTime" ColumnName="recipientsTime" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="instructions" ColumnName="instructions" />
+                <ScalarProperty Name="unitPrice" ColumnName="unitPrice" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="materialName" ColumnName="materialName" />
+                <ScalarProperty Name="modelName" ColumnName="modelName" />
+                <ScalarProperty Name="categoryName" ColumnName="categoryName" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="OutId" ColumnName="OutId" />
+                <ScalarProperty Name="mfId" ColumnName="mfId" />
+                <ScalarProperty Name="manufacturersName" ColumnName="manufacturersName" />
+                <ScalarProperty Name="codeId" ColumnName="codeId" />
+                <ScalarProperty Name="deparId" ColumnName="deparId" />
+                <ScalarProperty Name="departmentName" ColumnName="departmentName" />
+                <ScalarProperty Name="emploId" ColumnName="emploId" />
+                <ScalarProperty Name="projectName" ColumnName="projectName" />
+                <ScalarProperty Name="positionName" ColumnName="positionName" />
+                <ScalarProperty Name="state" ColumnName="state" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

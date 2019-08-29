@@ -21,7 +21,7 @@ namespace SteelRepository.Controllers
             Employee.NoJudge();
             ViewData["MaterialCode"] = MaterialCode.GetMaterialCodeList();
             ViewData["employee"] = Employee.SelectAll();
-            ViewData["outcome"] = OutCome.GetOutComesDesc();
+            ViewData["outcome"] = OutCome.GetOutComeView();
             ViewData["manufacturer"] = Manufacturer.SelectAll();
             ViewData["department"] = Department.SelectAll();
             return View();
@@ -46,13 +46,13 @@ namespace SteelRepository.Controllers
             int departmentid = Convert.ToInt32(collection["departmentid"]);
             int  employeeid = Convert.ToInt32(collection["employeeid"]);
             ViewData["outcome"] = null;
-            ViewData["outcome"] = OutCome.MulSelectCheckOutCome(begin,end, materialCodeid, employeeid,manufacturerid,departmentid);
+            ViewData["outcome"] = OutCome.MulSelectCheckOutCome(begin, end, materialCodeid, employeeid, manufacturerid, departmentid);
             return View();
         }
         [HttpPost]
-        public JsonResult OutCome_revocation(FormCollection collection)
+        public JsonResult OutCome_revocation(FormCollection collection,string id)
         {
-            int materialCodeid2 = Convert.ToInt32(collection["materialCodeid2"]);
+            int materialCodeid2 = Convert.ToInt32(id);
             return Json(OutCome.OutComeRevocation(materialCodeid2));
         }
         public ActionResult OutCome_revocationlist()

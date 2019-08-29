@@ -41,6 +41,7 @@ namespace SteelRepository.Controllers
         public JsonResult Position_Update(Position position, FormCollection collection)
         {
             po.positionName = position.positionName;
+            po.note = position.note;
             return Json(Position.Update(po));
         }
         [HttpPost]

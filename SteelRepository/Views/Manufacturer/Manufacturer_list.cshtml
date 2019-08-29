@@ -86,13 +86,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row mb-2">
-                            <div class="col-sm-11">
-                                @if (loginEmployee.permissions == 1)
-                                {
-                                    <a href="javascript:ManufacturerAdd()" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle mr-2"></i>添加厂商信息</a>
-                                }
-                               
-                            </div>
+
                             <div class="l-button">
                                 <a href="javascript:export_excel('products-datatable5')" class="side-nav-link">
                                     <i class=" dripicons-export "></i>
@@ -158,6 +152,15 @@
                                     }
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-sm-11">
+                                @if (loginEmployee.permissions == 1)
+                                {
+                                    <a href="javascript:ManufacturerAdd()" class="btn btn-primary"><i class="mdi mdi-plus-circle mr-2"></i>添加厂商信息</a>
+                                }
+                               
+                            </div>
                         </div>
                     </div>
                 </div>

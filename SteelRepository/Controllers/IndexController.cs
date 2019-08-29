@@ -18,7 +18,7 @@ namespace SteelRepository.Controllers
         {
             UseAmountStatisticals.AddTraffic(DateTime.Now);
             ViewData["MaterialCode"] = MaterialCode.GetMaterialCodeList();
-            ViewData["Inventorylist"] = Inventory.SelectAll();
+            ViewData["InventoryViewlist"] = Inventory.InventoryViewSelectAll();
             ViewData["manufacturer"] = Manufacturer.SelectAll();
             ViewData["position"] = Position.SelectAll();
             return View();
@@ -41,8 +41,8 @@ namespace SteelRepository.Controllers
             var nameinput = collection["nameinput"];
             int positionid = Convert.ToInt32(collection["positionid"]);
             int manufacturerid = Convert.ToInt32(collection["manufacturerid"]);
-            ViewData["Inventorylist"] = null;
-            ViewData["Inventorylist"] = Inventory.MulSelectCheckInventory(begin, end, codeinput, nameinput, positionid, manufacturerid);
+            ViewData["InventoryViewlist"] = null;
+            ViewData["InventoryViewlist"] = Inventory.MulSelectCheckInventory(begin, end, codeinput, nameinput, positionid, manufacturerid);
             return View();
         }
 

@@ -2,7 +2,7 @@
     Layout = "~/Views/Index/Index2.cshtml";
 }
 @{
-    List<Models.Inventory> inventorylist = (List<Models.Inventory>)ViewData["Inventorylist"];
+    List<Models.InventoryView> inventorylist = (List<Models.InventoryView>)ViewData["InventoryViewlist"];
     List<Models.MaterialCode> material = (List<Models.MaterialCode>)ViewData["MaterialCode"];
     List<Models.Manufacturer> manufacturers = (List<Models.Manufacturer>)ViewData["manufacturer"];
     List<Models.Position> positions = (List<Models.Position>)ViewData["position"];
@@ -239,26 +239,26 @@
                                         {
                                             if (inventory.amount > 0)
                                             {
-                                                <tr>
-                                                    <td>
-                                                        <div class="custom-control custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                                            <label class="custom-control-label" for="customCheck2">&nbsp;</label>
-                                                        </div>
-                                                    </td>
-                                                    <td class="table-user">@count</td>
-                                                    <th>@Models.Inventory.IncomeIdGetInCome(inventory.incomeId).batch</th>
-                                                    <td>@Models.Inventory.GetMaterCodeName(inventory.incomeId)</td>
-                                                    <td>@Models.Inventory.GetCategoryName(inventory.incomeId).categoryName</td>
-                                                    <td>@Models.Inventory.GetNameName(inventory.incomeId)</td>
-                                                    <td>@Models.Inventory.GetModelName(inventory.incomeId)</td>
-                                                    <td>@inventory.amount</td>
-                                                    <td>@inventory.unit</td>
-                                                    <td>@Models.Inventory.GetPositionName(inventory.positionId)</td>
-                                                    <td>@Models.Inventory.GetMenufactureName(inventory.incomeId).manufacturersName</td>
-                                                    <td>@Models.Inventory.GetEmployeeName(inventory.incomeId)</td>
-                                                    <td>@Models.Inventory.GetInComeTime(inventory.incomeId).ToString("d")</td>
-                                                </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" id="customCheck2">
+                                                    <label class="custom-control-label" for="customCheck2">&nbsp;</label>
+                                                </div>
+                                            </td>
+                                            <td class="table-user">@count</td>
+                                            <th>@inventory.batch</th>
+                                            <td>@inventory.code</td>
+                                            <td>@inventory.categoryName</td>
+                                            <td>@inventory.materialName</td>
+                                            <td>@inventory.modelName</td>
+                                            <td>@inventory.amount</td>
+                                            <td>@inventory.unit</td>
+                                            <td>@inventory.positionName</td>
+                                            <td>@inventory.manufacturersName</td>
+                                            <td>@inventory.name</td>
+                                            <td>@inventory.storageTime.ToString("d")</td>
+                                        </tr>
                                                 count++;
                                             }
                                         }

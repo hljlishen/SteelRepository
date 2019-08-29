@@ -12,7 +12,6 @@ namespace Models
 {
     public partial class Inventory
     {
-        private static IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities());
         private static string str;
         public static Inventory Insert(int incomeId, double amount, string unit, int positionId, IDbInterface dbInterface)
         {
@@ -37,64 +36,100 @@ namespace Models
         }
         public static List<Inventory> SelectAll()
         {
-            return Dbhelper.SelectAll<Inventory>();
+            using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return Dbhelper.SelectAll<Inventory>();
+            }
         }
-
+        public static List<InventoryView> InventoryViewSelectAll()
+        {
+            using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return Dbhelper.SelectAll<InventoryView>();
+            }
+        }
         public static List<Inventory> SelectRemaining()
         {
-            List<Inventory> inventories = new List<Inventory>();
-            foreach (var inv in Dbhelper.Select<Inventory>(p => p.unit == "g" && p.amount <= 20000))
+            using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                inventories.Add(inv);
+                List<Inventory> inventories = new List<Inventory>();
+                foreach (var inv in Dbhelper.Select<Inventory>(p => p.unit == "g" && p.amount <= 20000))
+                {
+                    inventories.Add(inv);
+                }
+                foreach (var inv in Dbhelper.Select<Inventory>(p => p.unit == "kg" && p.amount <= 20))
+                {
+                    inventories.Add(inv);
+                }
+                return inventories;
             }
-            foreach (var inv in Dbhelper.Select<Inventory>(p => p.unit == "kg" && p.amount <= 20))
-            {
-                inventories.Add(inv);
-            }
-            return inventories;
         }
 
         public static string GetMaterCodeName(int incomeId)
         {
-            int  income = Dbhelper.FindId<InCome>(incomeId).codeId;
-            return Dbhelper.FindId<MaterialCode>(income).code;
+            using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                int income = Dbhelper.FindId<InCome>(incomeId).codeId;
+                return Dbhelper.FindId<MaterialCode>(income).code;
+            }
         }
         public static string GetNameName(int incomeId)
         {
-            var nameId = Dbhelper.FindId<MaterialCode>(Dbhelper.FindId<InCome>(incomeId).codeId).materialNameId;
-            return Dbhelper.FindId<Name>(nameId).materialName;
+            using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                var nameId = Dbhelper.FindId<MaterialCode>(Dbhelper.FindId<InCome>(incomeId).codeId).materialNameId;
+                return Dbhelper.FindId<Name>(nameId).materialName;
+            }
         }
         public static string GetModelName(int incomeId)
         {
-            var modelId = Dbhelper.FindId<MaterialCode>(Dbhelper.FindId<InCome>(incomeId).codeId).materialModelId;
-            return Dbhelper.FindId<Model>(modelId).modelName;
+            using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                var modelId = Dbhelper.FindId<MaterialCode>(Dbhelper.FindId<InCome>(incomeId).codeId).materialModelId;
+                return Dbhelper.FindId<Model>(modelId).modelName;
+            }
         }
         public static double GetInComeAmount( int incomeId)
         {
-            var income = Dbhelper.FindId<InCome>(incomeId);
-            return WeightConverter.Convert( income.unit,income.amount, "kg");
+            using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                var income = Dbhelper.FindId<InCome>(incomeId);
+                return WeightConverter.Convert(income.unit, income.amount, "kg");
+            }
         }
         public static double GetOutComeNumber(int InventoryId)
         {
-            double sum = 0;
-            foreach ( var number in Dbhelper.Select<OutCome>(p =>p.inventoryId == InventoryId))
+            using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
             {
+                double sum = 0;
+                foreach (var number in Dbhelper.Select<OutCome>(p => p.inventoryId == InventoryId))
+                {
 
-                sum += WeightConverter.Convert(number.unit,number.number,"kg");
+                    sum += WeightConverter.Convert(number.unit, number.number, "kg");
+                }
+                return sum;
             }
-            return sum;
         }
         public static InCome IncomeIdGetInCome(int incomeId)
         {
-            return Dbhelper.FindId<InCome>(incomeId);
+            using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return Dbhelper.FindId<InCome>(incomeId);
+            }
         }
         public static string GetPositionName( int Positionid)
         {
-            return Dbhelper.FindId<Position>(Positionid).positionName;
+            using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return Dbhelper.FindId<Position>(Positionid).positionName;
+            }
         }
         public static DateTime GetInComeTime(int incomeId)
         {
-            return Dbhelper.FindId<InCome>(incomeId).storageTime;
+            using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return Dbhelper.FindId<InCome>(incomeId).storageTime;
+            }
         }
         public static string NewDateTime()
         {
@@ -102,57 +137,83 @@ namespace Models
         }
         public static Inventory GetInventory(int Inventoryid)
         {
-            return Dbhelper.FindId<Inventory>(Inventoryid);
+            using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return Dbhelper.FindId<Inventory>(Inventoryid);
+            }
+        }
+        public static InventoryView GetInventoryView(int Inventoryid)
+        {
+            using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return Dbhelper.Select<InventoryView>(p => p.InvenId == Inventoryid)[0];
+            }
         }
         public static string GetEmployeeName(int Incomeid)
         {
-            return Dbhelper.FindId<Employee>(IncomeIdGetInCome(Incomeid).operatorId).name;
+            using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return Dbhelper.FindId<Employee>(IncomeIdGetInCome(Incomeid).operatorId).name;
+            }
         }
         public static List<Inventory> GetInventoryIds(string codeinput, string nameinput)
         {
-            List<Inventory> inventorys = new List<Inventory>();
-            List<int> incomeId = new List<int>();
-            foreach (var codeid in MaterialCode.GetMaterialId(codeinput, nameinput))
+            using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                foreach (var income in Dbhelper.Select<InCome>(p => p.codeId == codeid))
+                List<Inventory> inventorys = new List<Inventory>();
+                List<int> incomeId = new List<int>();
+                foreach (var codeid in MaterialCode.GetMaterialId(codeinput, nameinput))
                 {
-                    incomeId.Add(income.id);
+                    foreach (var income in Dbhelper.Select<InCome>(p => p.codeId == codeid))
+                    {
+                        incomeId.Add(income.id);
+                    }
                 }
-            }
-            foreach (var inco in incomeId)
-            {
-                foreach (var inventory in Dbhelper.Select<Inventory>(p => p.incomeId == inco))
+                foreach (var inco in incomeId)
                 {
-                    inventorys.Add(inventory);
+                    foreach (var inventory in Dbhelper.Select<Inventory>(p => p.incomeId == inco))
+                    {
+                        inventorys.Add(inventory);
+                    }
                 }
+                return inventorys;
             }
-            return inventorys;
         }
         public static List<Inventory> GetTimeInventorys(DateTime begin,DateTime end)
         {
-            List<Inventory> invenList = new List<Inventory>();
-            foreach (var time in Dbhelper.Select<InCome>(p => p.storageTime>begin && p.storageTime<end))
+            using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                foreach (var inven in Dbhelper.Select<Inventory>(p => p.incomeId == time.id)) {
-                    invenList.Add(inven);
+                List<Inventory> invenList = new List<Inventory>();
+                foreach (var time in Dbhelper.Select<InCome>(p => p.storageTime > begin && p.storageTime < end))
+                {
+                    foreach (var inven in Dbhelper.Select<Inventory>(p => p.incomeId == time.id))
+                    {
+                        invenList.Add(inven);
+                    }
                 }
+                return invenList;
             }
-            return invenList;
         }
         public static List<Inventory> NameGetInventoryId(string nameinput)
         {
-            List<Inventory> invenlists = new List<Inventory>();
-            foreach (var name in Name.GetNames(nameinput))
+            using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                foreach (var material in Dbhelper.Select<MaterialCode>(p => p.materialNameId == name.id)) {
-                    foreach (var income in Dbhelper.Select<InCome>(p => p.codeId == material.id)) {
-                        foreach (var Inven in Dbhelper.Select<Inventory>(p => p.incomeId == income.id)) {
-                            invenlists.Add(Inven);
+                List<Inventory> invenlists = new List<Inventory>();
+                foreach (var name in Name.GetNames(nameinput))
+                {
+                    foreach (var material in Dbhelper.Select<MaterialCode>(p => p.materialNameId == name.id))
+                    {
+                        foreach (var income in Dbhelper.Select<InCome>(p => p.codeId == material.id))
+                        {
+                            foreach (var Inven in Dbhelper.Select<Inventory>(p => p.incomeId == income.id))
+                            {
+                                invenlists.Add(Inven);
+                            }
                         }
                     }
                 }
+                return invenlists;
             }
-            return invenlists;
         }
         public static Inventory GetInventory(int inventoryId ,IDbInterface helper)
         {
@@ -160,18 +221,21 @@ namespace Models
         }
         public static int NameGetEmployeeid(string employeeName)
         {
-            str = employeeName+" ";
-            string[] str1 = new string[3];
-            for (int i = 0; i < 3; i++)
+            using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                str1[i] = MidStrEx(str, "：", " ");
+                str = employeeName + " ";
+                string[] str1 = new string[3];
+                for (int i = 0; i < 3; i++)
+                {
+                    str1[i] = MidStrEx(str, "：", " ");
+                }
+                var employee = Dbhelper.FindFirst<Employee, string>("number", str1[1]);
+                if (employee == null)
+                {
+                    throw new Exception("请输入正确的领用人信息！！！");
+                }
+                return employee.id;
             }
-            var employee = Dbhelper.FindFirst<Employee,string>("number", str1[1]);
-            if (employee == null)
-            {
-                throw new Exception("请输入正确的领用人信息！！！");
-            }
-            return employee.id;
         }
         public static string MidStrEx(string sourse, string startstr, string endstr)
         {
@@ -197,94 +261,76 @@ namespace Models
         }
         public static Category GetCategoryName(int incomeid)
         {
-            var incom = Dbhelper.FindId<InCome>(incomeid);
-            return Dbhelper.FindId<Category>(incom.categoryId);
+            using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                var incom = Dbhelper.FindId<InCome>(incomeid);
+                return Dbhelper.FindId<Category>(incom.categoryId);
+            }
         }
         public static Manufacturer GetMenufactureName(int InComeid)
         {
-            var income = Dbhelper.FindId<InCome>(InComeid);
-            return Dbhelper.FindId<Manufacturer>(income.menufactureId.Value);
+            using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                var income = Dbhelper.FindId<InCome>(InComeid);
+                return Dbhelper.FindId<Manufacturer>(income.menufactureId.Value);
+            }
         }
-        public static List<Inventory> MulSelectCheckInventory(string begin, string end, string codeinput, string nameinput,int positionid,int manufacturerid)
+        public static List<InventoryView> MulSelectCheckInventory(string begin, string end, string codeinput, string nameinput,int positionid,int manufacturerid)
         {
-            ExpressionBuilder<Inventory> builder = new ExpressionBuilder<Inventory>();
-            ExpressionBuilder<Inventory> builder0 = new ExpressionBuilder<Inventory>();
-            ExpressionBuilder<Inventory> builder1 = new ExpressionBuilder<Inventory>();
-            ExpressionBuilder<Inventory> builder2 = new ExpressionBuilder<Inventory>();
-            ExpressionBuilder<Inventory> builder3 = new ExpressionBuilder<Inventory>();
-            ExpressionBuilder<Inventory> builder4 = new ExpressionBuilder<Inventory>();
-            ExpressionBuilder<Inventory> builder5 = new ExpressionBuilder<Inventory>();
-            List<Inventory> inventorys = new List<Inventory>();
-            if (begin == "" && end == "" && codeinput == "" && nameinput == "" && positionid == 0 && manufacturerid == 0 )
+            using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                return Dbhelper.SelectAll<Inventory>();
-            }
-            if (begin != "")
-            {
-                DateTime begintime = Convert.ToDateTime(begin);
-                var tar = Dbhelper.SqlQuery<Inventory>("select Inventory.* from Inventory, InCome where InCome.storageTime >= '"+begintime+"' and InCome.id = Inventory.incomeId");
-                foreach (var incom in tar)
+                ExpressionBuilder<InventoryView> builder = new ExpressionBuilder<InventoryView>();
+                ExpressionBuilder<InventoryView> beginbuilder = new ExpressionBuilder<InventoryView>();
+                ExpressionBuilder<InventoryView> endbuilder = new ExpressionBuilder<InventoryView>();
+                ExpressionBuilder<InventoryView> codebuilder = new ExpressionBuilder<InventoryView>();
+                ExpressionBuilder<InventoryView> namebuilder = new ExpressionBuilder<InventoryView>();
+                ExpressionBuilder<InventoryView> posibuilder = new ExpressionBuilder<InventoryView>();
+                ExpressionBuilder<InventoryView> manubuilder = new ExpressionBuilder<InventoryView>();
+                if (begin != "")
                 {
-                    builder0.Or(p => p.id == incom.id);
+                    DateTime begintime = Convert.ToDateTime(begin);
+                    beginbuilder.Or(p => p.storageTime >= begintime);
                 }
-            }
-            if (end != "")
-            {
-                DateTime endtime = Convert.ToDateTime(end);
-                var tar = Dbhelper.SqlQuery<Inventory>("select Inventory.* from Inventory, InCome where InCome.storageTime <= '" +endtime+ "' and InCome.id = Inventory.incomeId");
-                foreach (var incom in tar) {
-                    builder1.Or(p => p.id == incom.id);
-                }
-            }
-            if (codeinput != "")
-            {
-                var tar = Dbhelper.SqlQuery<Inventory>("select Inventory.* from Inventory, MaterialCode, InCome where MaterialCode.code = '"+
-                    codeinput+"' and InCome.codeId = MaterialCode.id and Inventory.incomeId = InCome.id");
-                foreach (var inven in tar)
+                if (end != "")
                 {
-                    builder2.Or(p => p.id == inven.id);
+                    DateTime endtime = Convert.ToDateTime(end);
+                        endbuilder.Or(p => p.storageTime <= endtime);
                 }
-            }
-            if (nameinput != "")
-            {
-                var tar = Dbhelper.SqlQuery<Inventory>("select Inventory.* from Inventory, MaterialCode, InCome, Name where MaterialCode.materialNameId = Name.id and name.materialName = '"+
-                    nameinput+"' and InCome.codeId = MaterialCode.id and Inventory.incomeId = InCome.id");
-                foreach (var inven in tar)
+                if (codeinput != "")
                 {
-                    builder3.Or(p => p.id == inven.id);
+                        codebuilder.Or(p => p.code == codeinput);
                 }
-            }
-            if (positionid != 0)
-            { 
-                builder4.Or(p => p.positionId == positionid);
-            }
-            if (manufacturerid != 0)
-            {
-                var tar = Dbhelper.SqlQuery<Inventory>("select Inventory.* from Inventory, InCome where InCome.menufactureId = " +
-                    manufacturerid+"and Inventory.incomeId = InCome.id");
-                foreach (var inven in tar)
+                if (nameinput != "")
                 {
-                    builder5.Or(p => p.id == inven.id);
+                        namebuilder.Or(p => p.materialName == nameinput);
                 }
+                if (positionid != 0)
+                {
+                    posibuilder.Or(p => p.posiId == positionid);
+                }
+                if (manufacturerid != 0)
+                {
+                        manubuilder.Or(p => p.manuId == manufacturerid);
+                }
+                var exptimebegin = beginbuilder.GetExpression();
+                var exptimeend = endbuilder.GetExpression();
+                var expcode = codebuilder.GetExpression();
+                var expname = namebuilder.GetExpression();
+                var expposi = posibuilder.GetExpression();
+                var expman = manubuilder.GetExpression();
+                if (exptimebegin != null) builder.And(exptimebegin);
+                if (exptimeend != null) builder.And(exptimeend);
+                if (expcode != null) builder.And(expcode);
+                if (expname != null) builder.And(expname);
+                if (expposi != null) builder.And(expposi);
+                if (expman != null) builder.And(expman);
+                var exp = builder.GetExpression();
+                if (exp == null)
+                {
+                    return Dbhelper.SelectAll<InventoryView>();
+                }
+                return Dbhelper.Select(exp);
             }
-            var exptimebegin = builder0.GetExpression();
-            var exptimeend = builder1.GetExpression();
-            var expcode = builder2.GetExpression();
-            var expname = builder3.GetExpression();
-            var expposi = builder4.GetExpression();
-            var expman = builder5.GetExpression();
-            if (exptimebegin != null) builder.And(exptimebegin);
-            if (exptimeend != null) builder.And(exptimeend);
-            if (expcode != null) builder.And(expcode);
-            if (expname != null) builder.And(expname);
-            if (expposi != null) builder.And(expposi);
-            if (expman != null) builder.And(expman);
-            var exp = builder.GetExpression();
-            if (exp == null)
-            {
-                return new List<Inventory>();
-            }
-            return Dbhelper.Select(exp);
         }
         public static Dictionary<string, double> StatisticAmount()
         {

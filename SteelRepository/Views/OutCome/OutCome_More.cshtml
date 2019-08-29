@@ -18,9 +18,8 @@
     <link href="~/Content/AdminIndex/css/app.min.css" rel="stylesheet" />
 </head>
 <div style="overflow-x:auto;width:inherit;height:inherit">
-   
         @{
-            Models.OutCome outCome = (Models.OutCome)ViewData["outcome"];
+            Models.OutcomeQueryView outCome = (Models.OutcomeQueryView)ViewData["outcome"];
         }
         <div class="content-page">
             <div class="content">
@@ -37,21 +36,21 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="signin_form">货品编号：</label>
-                                    <input class="form-control" name="name1" type="text" value="@Models.OutCome.GetMaterCodeName(outCome.inventoryId)" readonly="" />
+                                    <input class="form-control" name="name1" type="text" value="@outCome.code" readonly="" />
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="signin_form">货品种类：</label>
-                                    <input class="form-control" name="model" type="text" value="@Models.OutCome.GetCategoryName(outCome.inventoryId).categoryName" readonly="" />
+                                    <input class="form-control" name="model" type="text" value="@outCome.categoryName" readonly="" />
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="signin_form">货品名称：</label>
-                                    <input class="form-control" name="category" type="text" value="@Models.OutCome.GetNameName(outCome.inventoryId)" readonly="" />
+                                    <input class="form-control" name="category" type="text" value="@outCome.materialName" readonly="" />
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="signin_form">货品规格：</label>
-                                    <input class="form-control" name="materialCode" type="text" value="@Models.OutCome.GetModelName(outCome.inventoryId)" readonly="" />
+                                    <input class="form-control" name="materialCode" type="text" value="@outCome.modelName" readonly="" />
                                 </div>
                             </div>
                             <div class="form-row">
@@ -67,7 +66,7 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="signin_form">货品单价（元）：</label>
-                                    <input class="form-control" name="unitPrice" type="text" value="@Models.OutCome.GetInComeunitPrice(outCome.inventoryId)" readonly="" />
+                                    <input class="form-control" name="unitPrice" type="text" value="@outCome.unitPrice" readonly="" />
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="signin_form">货品总价（元）：</label>
@@ -81,17 +80,17 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="signin_form">货品借用人：</label>
-                                    <input class="form-control" name="amount" type="text" value="@Models.OutCome.GetEmployeeName(outCome.borrowerId)" readonly="" />
+                                    <input class="form-control" name="amount" type="text" value="@outCome.name" readonly="" />
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="signin_form">货品出库仓位：</label>
-                                    <input class="form-control" name="menufacture" type="text" value="@Models.OutCome.GetPositionName(outCome.inventoryId)" readonly="" />
+                                    <input class="form-control" name="menufacture" type="text" value="@outCome.positionName" readonly="" />
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="signin_form">出库项目名称：</label>
-                                    <input class="form-control" name="position" type="text" value="@Models.OutCome.GetProjectName(outCome.projectId)" readonly="" />
+                                    <input class="form-control" name="position" type="text" value="@outCome.projectName" readonly="" />
                                 </div>
                             </div>
                             <div class="form-row">
