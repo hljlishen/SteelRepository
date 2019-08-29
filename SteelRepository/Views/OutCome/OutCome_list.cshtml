@@ -2,7 +2,13 @@
 @{
     Layout = "~/Views/AdminIndex/AdminIndex.cshtml";
 }
-
+@{ 
+    Models.Employee loginEmployee = (Models.Employee)ViewData["LoginEmployee"];
+    if (loginEmployee == null)
+    {
+        return;
+    }
+}
     <head>
         <meta charset="utf-8" />
         <title></title>
@@ -89,11 +95,11 @@
                 <div class="page-title-box">
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">货物出库</a></li>
-                            <li class="breadcrumb-item active">货物出库管理</li>
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">材料出入库信息</a></li>
+                            <li class="breadcrumb-item active">材料出库信息管理</li>
                         </ol>
                     </div>
-                    <h4 class="page-title">货物出库管理</h4>
+                    <h4 class="page-title">材料出库信息管理</h4>
                 </div>
             </div>
         </div>

@@ -32,7 +32,6 @@
               });
         });
 
-
         var isTrue = true;
         var isISpecise = true;
         var isIPH = true;
@@ -40,9 +39,9 @@
         var isINumber = true;
         var isICycle = true;
 
-        
+
         function check() {
-            
+
             //类别
             var ISpecise = $("#ISpecise").val();
             var n = /^\s*$/;
@@ -102,7 +101,14 @@
             return isTrue;
         }
 
-        function update() {
+        $(function () {
+        $("#myform").change(function () {
+            $("#myform").data("changed", true);
+        });
+
+    });
+    function update() {
+        if ($("#myform").data("changed")) {
             check();
             if (isTrue) {
                 $.ajax({
@@ -123,7 +129,13 @@
             } else {
                 return;
             }
+        } else {
+            alert("没有修改过！");
         }
+
+
+    }
+
     </script>
 </head>
 <body>

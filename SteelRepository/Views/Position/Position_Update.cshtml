@@ -25,6 +25,9 @@
     <script src="~/Content/Login/js/custom.js"></script>
     <script type="text/javascript">
         var isPosition = true;
+        var isTrue = true;
+        var isDName;
+        var isDTrue;
         function check() {
             var position = $("#position").val();
             var n = /^[\u4E00-\u9FA5A-Za-z0-9]+$/;
@@ -35,11 +38,26 @@
                 document.getElementById("IsPos").style.display = "none";
                 isPosition = true;
             }
-
+            var n2 = $("#position1").val();
+            if (n2 != position) {
+                document.getElementById("button").disabled = false;
+                isDTrue = true;
+            } else {
+                document.getElementById("button").disabled = true;
+                alert("当前内容未改变");
+                isDTrue = false;
+            }
+            if (isDName && isDTrue) {
+                isTrue = true;
+            } else {
+                isTrue = false;
+            }
+            document.getElementById("button").disabled = false;
+            return isTrue;
         }
         function Update() {
             check();
-            if (isPosition) {
+            if (isTrue) {
                 $.ajax({
                     url: "@Url.Action("Position_Update")",
                     type: "post",
@@ -79,7 +97,8 @@
                                 <div class="form-group">
                                     <label for="signin_form">仓库位置：</label>
                                     <label id="IsPos" style="color:#ff0000;display:none;font-size:13px">*仓库位置应不为空</label>
-                                    @Html.TextBox("positionName", position.positionName, new { @class = "form-control", type = "text" ,id = "position"})
+                                    @Html.TextBox("positionName", position.positionName, new { @class = "form-control", type = "text", id = "position" })
+                                    @Html.TextBox("positionName", position.positionName, new { @class = "form-control", type = "hidden", id = "position1" })
                                 </div>
                                     <div class="form-group">
                                         <label for="signin_form">备注：</label>
@@ -93,7 +112,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="signin-footer">
-                                <button type="button" class="btn signin_btn signin_btn_two" data-toggle="modal" data-target=".signin_modal" onclick="Update();">
+                                <button type="button" id="button" class="btn signin_btn signin_btn_two" data-toggle="modal" data-target=".signin_modal" onclick="Update();">
                                     修改
                                 </button>
                             </div>

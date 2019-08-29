@@ -12,7 +12,7 @@
     <title></title>
     <link href="~/Content/AdminIndex/css/app.min.css" rel="stylesheet" />
     <link href="~/Content/AdminIndex/css/icons.min.css" rel="stylesheet" />
-
+    <script src="https://libs.baidu.com/jquery/1.11.3/jquery.min.js"></script>
     <script type="text/javascript">
         var isName = true;
 
@@ -25,7 +25,7 @@
             document.getElementById("departmentName").value = name1 + '--' + name2 + '--' + name3;
             document.getElementById("ChooseDepartment").style.display = "none";
         }
-       
+
          function check() {
             //姓名
             var name = $("#name").val();
@@ -39,8 +39,15 @@
              }
 
         }
-        
-        function update() {
+
+        $(function () {
+        $("#myform :input").change(function () {
+            $("#myform").data("changed", true);
+        });
+
+    });
+    function update() {
+        if ($("#myform").data("changed")) {
             check();
             if (isName) {
                 $.ajax({
@@ -63,8 +70,12 @@
             } else {
                 return;
             }
-            
+        } else {
+            alert("没有修改过！");
         }
+
+
+    }
     </script>
 </head>
 <body>
@@ -79,7 +90,7 @@
                     <h2>修改员工信息</h2>
                     <div class="row">
                         <div class="col-sm-12">
-                            <div class="signin-form">
+                            <div class="signin-form" id="myform">
                                 @using (Html.BeginForm("Employee_update", "Employee", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @role = "form" }))
                                 {
                                 <div class="form-group">
@@ -202,7 +213,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="signin-footer">
-                                <button type="button" class="btn btn-primary" onclick="update();">
+                                <button type="button" id="button" class="btn btn-primary" onclick="update();">
                                     修改
                                 </button>
                             </div>

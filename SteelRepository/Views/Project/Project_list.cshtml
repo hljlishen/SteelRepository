@@ -2,6 +2,13 @@
 @{
     Layout = "~/Views/AdminIndex/AdminIndex.cshtml";
 }
+@{ 
+    Models.Employee loginEmployee = (Models.Employee)ViewData["LoginEmployee"];
+    if (loginEmployee == null)
+    {
+        return;
+    }
+}
     <head>
         <meta charset="utf-8" />
         <title></title>
@@ -74,7 +81,10 @@
                     <div class="card-body">
                         <div class="row mb-2">
                             <div class="col-sm-11">
-                                <a href="javascript:ProjectAdd()" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle mr-2"></i>添加项目信息</a>
+                                @if (loginEmployee.permissions == 1)
+                                {
+                                    <a href="javascript:ProjectAdd()" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle mr-2"></i>添加项目信息</a>
+                                }
                             </div>
                             <div class="l-button">
                                 <a href="javascript:export_excel('products-datatable')" class="side-nav-link">
@@ -100,7 +110,14 @@
                                         <th>项目负责人</th>
                                         <th>统计图</th>
                                         <th>备注</th>
-                                        <th style="width: 75px;">操作</th>
+                                        @if (loginEmployee.permissions == 1)
+                                        {
+                                            <th style="width: 75px;">操作</th>
+                                        }
+                                        else
+                                        {
+                                            <th></th>
+                                        }
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -109,25 +126,32 @@
                                     {
                                         if (project.state.ToString() == "1")
                                         {
-                                            <tr>
-                                                <td>
-                                                    <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                                        <label class="custom-control-label" for="customCheck2">&nbsp;</label>
-                                                    </div>
-                                                </td>
-                                                <td class="table-user">@count</td>
-                                                <td>@project.projectCode</td>
-                                                <td>@project.projectName</td>
-                                                <td>@project.projectCharge</td>
-                                                <td><a href="#" class="text-body font-weight-bold">查看</a> </td>
-                                                <td>@project.projectNote</td>
-                                                <td>
-                                                    <a href="javascript:ProjectDelete(@project.id)" class="action-icon"> <i class="dripicons-trash"></i></a>
-                                                    <a href="javascript:ProjectUpdate(@project.id)" class="action-icon"> <i class="dripicons-pencil"></i></a>
-                                                    @*<a href="javascript:ProjectSelect(@project.id)" class="action-icon"> <i class="mdi mdi-calendar-text-outline"></i></a>*@
-                                                </td>
-                                            </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck2">
+                                                <label class="custom-control-label" for="customCheck2">&nbsp;</label>
+                                            </div>
+                                        </td>
+                                        <td class="table-user">@count</td>
+                                        <td>@project.projectCode</td>
+                                        <td>@project.projectName</td>
+                                        <td>@project.projectCharge</td>
+                                        <td><a href="#" class="text-body font-weight-bold">查看</a> </td>
+                                        <td>@project.projectNote</td>
+                                        @if (loginEmployee.permissions == 1)
+                                        {
+                                            <td>
+                                                <a href="javascript:ProjectDelete(@project.id)" class="action-icon"> <i class="dripicons-trash"></i></a>
+                                                <a href="javascript:ProjectUpdate(@project.id)" class="action-icon"> <i class="dripicons-pencil"></i></a>
+                                                @*<a href="javascript:ProjectSelect(@project.id)" class="action-icon"> <i class="mdi mdi-calendar-text-outline"></i></a>*@
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td></td>
+                                        }
+                                    </tr>
                                         }
                                         count++;
                                     }

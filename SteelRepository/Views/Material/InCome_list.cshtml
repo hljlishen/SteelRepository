@@ -5,6 +5,11 @@
 @{
     List<Models.MaterialCode> material = (List<Models.MaterialCode>)ViewData["MaterialCode"];
     List<Models.Manufacturer> manufacturer = (List<Models.Manufacturer>)ViewData["manufacturer"];
+    Models.Employee loginEmployee = (Models.Employee)ViewData["LoginEmployee"];
+    if (loginEmployee == null)
+    {
+        return;
+    }
     List<Models.InComeView> incomes = (List<Models.InComeView>)ViewData["InComeView"];
 }
     <head>
@@ -87,10 +92,6 @@
             </div>
         </div>
 
-
-
-       
-
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -164,7 +165,10 @@
                     <div class="card-body">
                         <div class="row mb-2">
                             <div class="col-sm-11">
-                                <a href="javascript:InComeAdd()" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle mr-2"></i>添加材料信息</a>
+                                @if (loginEmployee.permissions == 1)
+                                {
+                                    <a href="javascript:InComeAdd()" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle mr-2"></i>添加材料信息</a>
+                                }
                             </div>
                             <div class="l-button">
                                 <a href="javascript:export_excel('products-datatable10')" class="side-nav-link">
@@ -193,8 +197,16 @@
                                         <th>厂商</th>
                                         <th>入库时间</th>
                                         <th>复验时间</th>
-                                        <th>质量报告</th>
-                                        <th>复检报告</th>
+                                        @if (loginEmployee.permissions == 1)
+                                        {
+                                            <th>质量报告</th>
+                                            <th>复检报告</th>
+                                        }
+                                        else
+                                        {
+                                            <th>存放位置</th>
+                                            <th>数量</th>
+                                        }
                                         <th>操作人</th>
                                         <th style="width: 75px;">操作</th>
                                     </tr>

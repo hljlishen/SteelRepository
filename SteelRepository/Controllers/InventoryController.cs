@@ -18,11 +18,13 @@ namespace SteelRepository.Controllers
             ViewData["InventoryViewlist"] = Inventory.InventoryViewSelectAll();
             ViewData["manufacturer"] = Manufacturer.SelectAll();
             ViewData["position"] = Position.SelectAll();
+            ViewData["LoginEmployee"] = IndexController.LoginEmployee();
             return View();
         }
         [HttpPost]
         public ActionResult Inventory_list(FormCollection collection)
         {
+            Employee.NoJudge();
             ViewData["MaterialCode"] = MaterialCode.GetMaterialCodeList();
             ViewData["manufacturer"] = Manufacturer.SelectAll();
             ViewData["position"] = Position.SelectAll();
@@ -38,6 +40,7 @@ namespace SteelRepository.Controllers
         }
         public ActionResult OutCome_add(int id)
         {
+            Employee.NoJudge();
             ViewData["Inventory"] = Inventory.GetInventoryView(id);
             SelectList select = new SelectList(GetUnitList(), "Value", "Text");
             ViewBag.select = select;
@@ -84,6 +87,7 @@ namespace SteelRepository.Controllers
         }
         public ActionResult OutComeEmployee_new()
         {
+            Employee.NoJudge();
             SelectList select = new SelectList(GetPermissionsList(), "Value", "Text");
             SelectList selectState = new SelectList(GetStateList(), "Value", "Text");
             ViewBag.select = select;

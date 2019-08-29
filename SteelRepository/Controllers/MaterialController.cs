@@ -19,6 +19,7 @@ namespace SteelRepository.Controllers
             Employee.NoJudge();
             ViewData["MaterialCode"] = MaterialCode.GetMaterialCodeList();
             ViewData["manufacturer"] = Manufacturer.SelectAll();
+            ViewData["LoginEmployee"] = IndexController.LoginEmployee();
             ViewData["InComeView"] = InCome.GetInComeViewDesc();
             return View();
         }
