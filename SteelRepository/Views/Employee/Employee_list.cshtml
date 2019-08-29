@@ -154,7 +154,7 @@
                                     @{int count = 1; }
                                     @foreach (var employee in Model)
                                     {
-                                        Models.Department dep = Models.Department.GetDepartment((int)employee.departmentId);
+                                        Models.Department dep = Models.Department.GetDepartment(employee.departmentId.Value);
                                         <tr>
                                             <td>
                                                 <div class="custom-control custom-checkbox">
