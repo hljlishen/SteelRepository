@@ -14,40 +14,60 @@
     <link href="~/Content/AdminIndex/css/icons.min.css" rel="stylesheet" />
     <script src="~/Content/AdminIndex/js/app.min.js"></script>
     <script type="text/javascript">
-
         var isTrue = true;
+        var isDName;
+        var isDTrue;
         function check() {
-            var Dname = $("#Dname").val();
+            var Dname1 = $("#Dname").val();
             var n = /^[\u4E00-\u9FA5A-Za-z0-9][\x21-\x7e]+$/;
-            if (!n.test(Dname) || Dname =="") {
-                document.getElementById("Isname").style.display = "";
-                isTrue = false;
-            } else {
+            if (n.test(Dname1) || Dname1 !== "") {
                 document.getElementById("Isname").style.display = "none";
-                isTrue = true;
+                isDName = true;
+            } else {
+                document.getElementById("Isname").style.display = "";
+                isDName = false;
             }
+            var n2 = $("#Dname2").val();
+            if (n2 != Dname1) {
+                document.getElementById("button").disabled = false;
+                isDTrue = true;
+            } else {
+                document.getElementById("button").disabled = true;
+                alert("当前内容未改变");
+                isDTrue = false;
+            }
+            if (isDName && isDTrue) {
+                isTrue = true;
+            } else {
+                isTrue = false;
+            }
+            document.getElementById("button").disabled = false;
+            return isTrue;
         }
+
+
         function Update() {
             check();
-            if (isTrue) {
-                $.ajax({
-                    url: "@Url.Action("Department_Update")",
-                    type: "post",
-                    data: $("form").serialize(),
-                    dataType: "json",
-                    success: function (data) {
-                        data = eval("(" + data + ")");
-                        if (data) {
-                            alert("修改成功");
-                            parent.closeWin();
-                            parent.openFrame("Department_list");
-                        } else {
+                if (isTrue) {
+                    $.ajax({
+                        url: "@Url.Action("Department_Update")",
+                        type: "post",
+                        data: $("form").serialize(),
+                        dataType: "json",
+                        success: function (data) {
+                            data = eval("(" + data + ")");
+                            if (data) {
+                                alert("修改成功");
+                                parent.closeWin();
+                                parent.openFrame("Department_list");
+                            } else {
+                            }
                         }
-                    }
-                });
-            } else {
-                return;
-            }
+                    });
+                } else {
+                    return;
+                }
+
         }
     </script>
 </head>
@@ -65,7 +85,9 @@
                                 <div class="form-group">
                                     <label for="signin_form">部门名称：</label>
                                     <label id="Isname" style="color:#ff0000;display:none;font-size:13px">*部门名称不为空</label>
-                                    @Html.TextBoxFor(m => m.departmentName, new { @class = "form-control", type = "text",id="Dname"  })
+                                    @Html.TextBoxFor(m => m.departmentName, new { @class = "form-control", type = "text", id = "Dname" })
+                                    @Html.TextBoxFor(m => m.departmentName, new { @class = "form-control", type = "hidden", id = "Dname2" })
+
                                 </div>
                                 }
                             </div>
@@ -75,7 +97,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="signin-footer">
-                                <button type="button" class="btn btn-primary" onclick="Update();">
+                                <button type="button" id="button" class="btn btn-primary" onclick="Update();">
                                     修改
                                 </button>
                             </div>

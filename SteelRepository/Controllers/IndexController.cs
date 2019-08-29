@@ -15,6 +15,7 @@ namespace SteelRepository.Controllers
         // GET: Index
         public ActionResult Index()
         {
+            UseAmountStatisticals.AddTraffic(DateTime.Now);
             ViewData["MaterialCode"] = MaterialCode.GetMaterialCodeList();
             ViewData["InventoryViewlist"] = Inventory.InventoryViewSelectAll();
             ViewData["manufacturer"] = Manufacturer.SelectAll();
@@ -104,5 +105,20 @@ namespace SteelRepository.Controllers
         {
             return inComes;
         }
+
+        [HttpPost]
+        //获取图标数据
+        public JsonResult GetWebClickData()
+        {
+            return Json(UseAmountStatisticals.GetWebClickNumber(DateTime.Now));
+        }
+
+        [HttpPost]
+        //获取点击数据
+        public JsonResult GetNowWebClickData()
+        {
+            return Json(UseAmountStatisticals.GetNowWebClickNumber());
+        }
+
     }
 }

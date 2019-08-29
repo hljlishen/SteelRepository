@@ -80,6 +80,7 @@
     <Compile Include="Extentions\OutCome.cs" />
     <Compile Include="Extentions\RecheckReport.cs" />
     <Compile Include="Extentions\RecheckReportImg.cs" />
+    <Compile Include="Extentions\UseAmountStatisticals.cs" />
     <Compile Include="InCome.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -143,6 +144,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Statistics\OutCome.cs" />
+    <Compile Include="UseAmountStatisticals.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="UseAmountStatisticals.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

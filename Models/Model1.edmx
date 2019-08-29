@@ -400,6 +400,8 @@
     [OutcomeQueryView].[state] AS [state]
     FROM [dbo].[OutcomeQueryView] AS [OutcomeQueryView]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+         
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
@@ -692,7 +694,7 @@
           <Property Name="positionName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="state" Type="Int32" />
         </EntityType>
-        <EntityContainer Name="SteelRepositoryDBEntities17" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="SteelRepositoryDBEntities9" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Category" EntityType="Self.Category" />
           <EntitySet Name="Department" EntityType="Self.Department" />
           <EntitySet Name="Employee" EntityType="Self.Employee" />
@@ -714,13 +716,15 @@
           <EntitySet Name="InComeView" EntityType="Self.InComeView" />
           <EntitySet Name="InventoryView" EntityType="Self.InventoryView" />
           <EntitySet Name="OutcomeQueryView" EntityType="Self.OutcomeQueryView" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="SteelRepositoryDBModelStoreContainer" CdmEntityContainer="SteelRepositoryDBEntities17">
+        <EntityContainerMapping StorageEntityContainer="SteelRepositoryDBModelStoreContainer" CdmEntityContainer="SteelRepositoryDBEntities">
           <EntitySetMapping Name="Category">
             <EntityTypeMapping TypeName="SteelRepositoryDBModel.Category">
               <MappingFragment StoreEntitySet="Category">
