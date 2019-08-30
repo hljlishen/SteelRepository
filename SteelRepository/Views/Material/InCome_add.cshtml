@@ -1,4 +1,4 @@
-﻿@model Models.InCome 
+﻿@model Models.InCome
 @{
     Layout = null;
 }
@@ -14,6 +14,7 @@
     <script src="~/Content/AdminIndex/js/app.min.js"></script>
     <link href="~/Content/layui/css/layui.css" rel="stylesheet" media="all"/>
     <script src="~/Content/layui/layui.js" charset="utf-8"></script>
+    <script src="~/Content/jquery-3.3.1.min.js"></script>
     <script type="text/javascript">
         layui.use('laydate', function () {
             var laydate = layui.laydate;
@@ -42,7 +43,7 @@
             ,accept: 'image/*'
             ,multiple: true
             ,auto: false
-            ,choose: function(obj){   
+            ,choose: function(obj){
               var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
               //读取本地文件
               obj.preview(function(index, file, result){
@@ -74,7 +75,7 @@
               });
             }
           });
-             
+
             var demoListView2 = $('#demoList2')
             var recheckView = $('#recheckId')
             ,uploadListIns = upload.render({
@@ -83,7 +84,7 @@
             ,accept: 'image/*'
             ,multiple: true
             ,auto: false
-            ,choose: function(obj){   
+            ,choose: function(obj){
               var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
               //读取本地文件
               obj.preview(function(index, file, result){
@@ -99,7 +100,7 @@
                       , '</tr>'].join(''));
 
                    var div = $(['<input class="form-control" hidden id="recheck'+id2+'" type="text" name="recheck'+id2+'">'].join(''));
-        
+
                 //删除
                 tr.find('.demo-delete').on('click', function(){
                   delete files[index]; //删除对应的文件
@@ -117,6 +118,7 @@
           });
         });
         //验证
+        
         var isTrue = true;
         var isIName = true;
         var isISize = true;
@@ -127,7 +129,6 @@
         var isINumber = true;
         var isICycle = true;
 
-        
         function check() {
             //名称
             var IName = $("#IName").val();
@@ -203,6 +204,8 @@
                 document.getElementById("IsCycle").style.display = "none";
                 isICycle = true;
             }
+            
+
             if (isIName && isISize && isISpecise && isIBH && isIPH && isIper && isINumber && isICycle) {
                 isTrue = true;
             } else {
@@ -210,11 +213,60 @@
             }
             return isTrue;
         }
+        //质量证明
+        //    var clkBool;
+        //    //var clkBool = $("#testList").click;
+        //    function CheckClk() {
+        //        if (clkBool = true) {
+        //            clkBool = true;
+        //            document.getElementById("testList1").style.display = "none";
+        //        } else {
+        //            document.getElementById("testList1").style.display = "";
+        //            clkBool = false;
+        //        }
+        //        return clkBool;
+        //        alert(clkBool);
+        //}
         
+        //质量证明
+        var isJudge;
+        var clickBool = true;
+        function CheckClk() {
+            if (clickBool) {
+                document.getElementById("testList1").style.display = "none";
+                isJudge = true;
+            } else {
+                document.getElementById("testList1").style.display = "";
+                isJudge = false;
+            }
+            return isJudge;
+        }
+            //$("#testList").click(
+            //    function CheckClk() {
+            //        var s = document.form1.testList.value; 
+            //        if (s == "") {
+            //            alert("Please choose a posdetail file.");
+            //            document.getElementById("testList1").style.display = "";
+            //            isJudge = false;
+            //            document.form1.testList.focus();
+            //            return;
+            //        } else {
+            //            document.getElementById("testList1").style.display = "none";
+            //            showLoadingWnd('Uploading,please wait...');
+            //            isJudge = true;
 
+            //        }
+            //        return isJudge;
+            //        //document.form1.submit();
+            //    })
         function add() {
             check();
-            if (isTrue) {
+            CheckClk();
+            alert(isJudge);
+            alert(CheckClk);
+            if (isJudge && isTrue) {
+                //isJudge = true;
+                alert("1");
                 $.ajax({
                     url: "@Url.Action("InCome_add")",
                     type: "post",
@@ -231,9 +283,12 @@
                         }
                     }
                 });
+                //alert(isJudge);
             } else {
+                isJudge = false;
+                alert("2");
                 return;
-            }
+            } 
         }
     </script>
 </head>
@@ -245,7 +300,7 @@
                     <h2 style="text-align:center">添加材料</h2>
                     <div class="row">
                         <div class="col-12">
-                            <div class="signin-form">
+                            <div class="signin-form" name="form1">
                                 @using (Html.BeginForm("InCome_add", "Material", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @role = "form" }))
                                 {
                                     <div class="form-row">
@@ -336,7 +391,8 @@
                                     <div class="form-group col-md-12">
                                         <label for="signin_form">产品质量证明：</label>
                                         <div class="layui-upload">
-                                            <button type="button" class="layui-btn layui-btn-normal" id="testList">选择</button>
+                                            <button type="button" class="layui-btn layui-btn-normal" id="testList" name="testList" onclick="CheckClk()">选择</button>
+                                            <label id="testList1" style="color:#ff0000;display:none;font-size:13px">*需添加产品质量证明</label>
                                             <div class="layui-upload-list">
                                                 <table class="layui-table">
                                                     <thead>
@@ -384,7 +440,7 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <button type="button" class="btn btn-block btn-primary" onclick="add()">添加</button>
+                            <button type="button" id="button" class="btn btn-block btn-primary" onclick="add()">添加</button>
                         </div>
                     </div>
 
