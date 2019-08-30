@@ -114,11 +114,11 @@
                                         <div class="input-group col-md-6">
                                             <label>领用人：</label>
                                             <div class="input-group">
-                                                <input id="employeeName" name="employeeName" list="codelist" style="width:250px;height:40px" class="form-control" placeholder="请选择或输入领用人" />
+                                                <input id="employeeName" name="employeeName" list="codelist" style="width:250px;height:40px" class="form-control" placeholder="请选择或输入领用人"/>
                                                 <datalist id="codelist" name="codelist">
                                                     @foreach (var emp in employee)
                                                     {
-                                                        <option id=@emp.emploId>姓名：@emp.name 工号：@emp.number&nbsp;部门：@emp.departmentName</option>
+                                                    <option id=@emp.emploId >@emp.name&nbsp;工号：@emp.number&nbsp;部门：@emp.departmentName</option>
                                                     }
                                                 </datalist>
                                                 <div class="input-group-append">

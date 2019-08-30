@@ -10,7 +10,6 @@ namespace SteelRepository.Controllers
     public class InventoryController : Controller
     {
         // GET: Inventory
-        //private static Inventory inventorysta;
         private static int invenId;
         public ActionResult Inventory_list()
         {
@@ -24,6 +23,7 @@ namespace SteelRepository.Controllers
         [HttpPost]
         public ActionResult Inventory_list(FormCollection collection)
         {
+            ViewData["LoginEmployee"] = IndexController.LoginEmployee();
             Employee.NoJudge();
             ViewData["LoginEmployee"] = IndexController.LoginEmployee();
             ViewData["MaterialCode"] = MaterialCode.GetMaterialCodeList();
