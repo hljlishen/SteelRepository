@@ -229,44 +229,27 @@
         //}
         
         //质量证明
-        var isJudge;
-        var clickBool = true;
+        var isJudge = false;
+        //var clickBool = false;//clkBool的值为false，则按钮未被点击
         function CheckClk() {
-            if (clickBool) {
-                document.getElementById("testList1").style.display = "none";
-                isJudge = true;
-            } else {
-                document.getElementById("testList1").style.display = "";
-                isJudge = false;
-            }
-            return isJudge;
+           
+                isJudge = !isJudge;
+                //alert(isJudge);
+            
+            //return isJudge;
+            //alert(isJudge);
         }
-            //$("#testList").click(
-            //    function CheckClk() {
-            //        var s = document.form1.testList.value; 
-            //        if (s == "") {
-            //            alert("Please choose a posdetail file.");
-            //            document.getElementById("testList1").style.display = "";
-            //            isJudge = false;
-            //            document.form1.testList.focus();
-            //            return;
-            //        } else {
-            //            document.getElementById("testList1").style.display = "none";
-            //            showLoadingWnd('Uploading,please wait...');
-            //            isJudge = true;
-
-            //        }
-            //        return isJudge;
-            //        //document.form1.submit();
-            //    })
+           
         function add() {
             check();
-            CheckClk();
-            alert(isJudge);
-            alert(CheckClk);
+            if (isJudge == true) {
+                document.getElementById("testList1").style.display = "none";
+                //alert(isJudge);
+            } else {
+                document.getElementById("testList1").style.display = "";
+               
+            }
             if (isJudge && isTrue) {
-                //isJudge = true;
-                alert("1");
                 $.ajax({
                     url: "@Url.Action("InCome_add")",
                     type: "post",
@@ -283,10 +266,8 @@
                         }
                     }
                 });
-                //alert(isJudge);
             } else {
                 isJudge = false;
-                alert("2");
                 return;
             } 
         }
