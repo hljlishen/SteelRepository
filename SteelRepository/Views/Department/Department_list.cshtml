@@ -97,6 +97,29 @@
             });
         }
         }
+
+        function DepartmentDelete2(id) {
+            var flag = confirm("是否要删除信息？");
+        if (flag) {
+            $.ajax({
+                url: "@Url.Action("Department_Delete2")",
+                type: "post",
+                data: {
+                    "id": id
+                },
+                dataType: "json",
+                success: function (data) {
+                    data = eval("(" + data + ")");
+                    if (data) {
+                        alert("删除成功！");
+                        parent.openFrame("Department_list");
+                    } else {
+                        alert("删除失败！该部门下有附属部门");
+                    }
+                }
+            });
+        }
+        }
     </script>
 </head>
 @{ List<Models.Employee> employee = (List<Models.Employee>)ViewData["Employee"];}
@@ -149,7 +172,7 @@
                                                         {
                                                             <div class="layui-btn-group col-md-4">
                                                                 <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" onclick="DepartmentAdd2(@depart.id)"><i class="layui-icon"></i></button>
-                                                                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" onclick="DepartmentDelete(@depart.id)"><i class="layui-icon"></i></button>
+                                                                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" onclick="DepartmentDelete2(@depart.id)"><i class="layui-icon"></i></button>
                                                                 <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" onclick="DepartmentUpdate(@depart.id)"><i class="layui-icon"></i></button>
                                                             </div>
                                                         }
@@ -186,7 +209,7 @@
                                     {
                                         <li class="layui-btn-group col-md-3">
                                             <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" onclick="DepartmentAdd(@department.id)"><i class="layui-icon"></i></button>
-                                            <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" onclick="DepartmentDelete(@department.id)"><i class="layui-icon"></i></button>
+                                            <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" onclick="DepartmentDelete2(@department.id)"><i class="layui-icon"></i></button>
                                             <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" onclick="DepartmentUpdate(@department.id)"><i class="layui-icon"></i></button>
                                         </li>
                                     }

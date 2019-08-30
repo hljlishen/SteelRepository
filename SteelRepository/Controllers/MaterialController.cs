@@ -27,6 +27,7 @@ namespace SteelRepository.Controllers
         [HttpPost]
         public ActionResult InCome_list(FormCollection collection)
         {
+            ViewData["LoginEmployee"] = IndexController.LoginEmployee();
             ViewData["MaterialCode"] = MaterialCode.GetMaterialCodeList();
             ViewData["manufacturer"] = Manufacturer.SelectAll();
             string begin = collection["date"];

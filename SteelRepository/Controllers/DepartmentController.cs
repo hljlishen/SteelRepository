@@ -89,8 +89,13 @@ namespace SteelRepository.Controllers
         [HttpPost]
         public JsonResult Department_Delete(int id)
         {
-            bool fa = Department.Delete(id) == 1;
-            return Json(fa);
+            return Json(Department.Delete(id));
+        }
+
+        [HttpPost]
+        public JsonResult Department_Delete2(int id)
+        {
+            return Json(Department.DeleteChildNodes(id));
         }
     }
 }

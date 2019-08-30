@@ -108,7 +108,9 @@ namespace SteelRepository.Controllers
 
         public JsonResult Employee_delete(int id)
         {
-            return Json(Employee.Delete(id));
+            Employee employee = Employee.FindId(id);
+            employee.state = 4;
+            return Json(Employee.Update(employee));
         }
 
         public ActionResult Employee_information(int id)
