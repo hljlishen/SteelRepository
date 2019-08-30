@@ -25,6 +25,7 @@ namespace SteelRepository.Controllers
         public ActionResult Inventory_list(FormCollection collection)
         {
             Employee.NoJudge();
+            ViewData["LoginEmployee"] = IndexController.LoginEmployee();
             ViewData["MaterialCode"] = MaterialCode.GetMaterialCodeList();
             ViewData["manufacturer"] = Manufacturer.SelectAll();
             ViewData["position"] = Position.SelectAll();

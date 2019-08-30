@@ -35,6 +35,7 @@ namespace SteelRepository.Controllers
         [HttpPost]
         public ActionResult OutCome_list(FormCollection collection)
         {
+            ViewData["LoginEmployee"] = IndexController.LoginEmployee();
             ViewData["MaterialCode"] = MaterialCode.GetMaterialCodeList();
             ViewData["employee"] = Employee.SelectAll();
             ViewData["manufacturer"] = Manufacturer.SelectAll();
