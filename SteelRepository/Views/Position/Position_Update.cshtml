@@ -11,41 +11,50 @@
     <title>修改仓储位置</title>
     <link href="~/Content/AdminIndex/css/icons.min.css" rel="stylesheet" />
     <link href="~/Content/AdminIndex/css/app.min.css" rel="stylesheet" />
+    <script src="~/Content/jquery-3.3.1.min.js"></script>
     <script type="text/javascript">
-        var isPosition = true;
-        var isTrue = true;
-        var isDName;
-        var isDTrue;
+        var isPosition ;
+        //var isTrue = true;
+        //var isDName;
+        //var isDTrue;
         function check() {
             var position = $("#position").val();
             var n = /^[\u4E00-\u9FA5A-Za-z0-9]+$/;
-            if (!n.test(position)|| position == "") {
-                document.getElementById("IsPos").style.display = "";
-                isPosition = false;
-            } else {
+            if (n.test(position)|| position !== "") {
                 document.getElementById("IsPos").style.display = "none";
                 isPosition = true;
-            }
-            var n2 = $("#position1").val();
-            if (n2 != position) {
-                document.getElementById("button").disabled = false;
-                isDTrue = true;
             } else {
-                document.getElementById("button").disabled = true;
-                alert("当前内容未改变");
-                isDTrue = false;
+                document.getElementById("IsPos").style.display = "";
+                isPosition = false;
             }
-            if (isDName && isDTrue) {
-                isTrue = true;
-            } else {
-                isTrue = false;
-            }
-            document.getElementById("button").disabled = false;
-            return isTrue;
+            //var n2 = $("#position1").val();
+            //if (n2 != position) {
+            //    document.getElementById("button").disabled = false;
+            //    isDTrue = true;
+            //} else {
+            //    document.getElementById("button").disabled = true;
+            //    alert("当前内容未改变");
+            //    isDTrue = false;
+            //}
+            //if (isDName && isDTrue) {
+            //    isTrue = true;
+            //} else {
+            //    isTrue = false;
+            //}
+            
+            return isPosition;
         }
+        $(function () {
+        $("#myform :input").change(function () {
+            $("#myform").data("changed", true);
+        });
+
+    });
         function Update() {
+        if ($("#myform").data("changed")) {
+            document.getElementById("button").disabled = false;
             check();
-            if (isTrue) {
+            if (isPosition) {
                 $.ajax({
                     url: "@Url.Action("Position_Update")",
                     type: "post",
@@ -65,7 +74,11 @@
             } else {
                 return;
             }
+        } else {
+            alert("没有修改！");
+
         }
+    }
     </script>
 </head>
 <body>
@@ -79,7 +92,7 @@
                     <h2 style="text-align:center">修改仓库位置</h2>
                     <div class="row">
                         <div class="col-sm-12">
-                            <div class="signin-form">
+                            <div class="signin-form" id="myform">
                                 @using (Html.BeginForm("Position_Update", "Position", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @role = "form" }))
                                 {
                                     <div class="form-group">
@@ -98,7 +111,7 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <button type="button" id="button"class="btn btn-block btn-primary" onclick="Update()">修改</button>
+                            <button type="button" id="button" class="btn btn-block btn-primary" onclick="Update()">修改</button>
                         </div>
                     </div>
                 </div>
