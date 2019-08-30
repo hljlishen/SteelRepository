@@ -24,6 +24,7 @@ namespace SteelRepository.Controllers
             ViewData["outcome"] = OutCome.GetOutComeView();
             ViewData["manufacturer"] = Manufacturer.SelectAll();
             ViewData["department"] = Department.SelectAll();
+            ViewData["Incomebatch"] = InCome.GetInComes();
             return View();
         }
         public ActionResult OutCome_More(int id)
@@ -35,10 +36,12 @@ namespace SteelRepository.Controllers
         [HttpPost]
         public ActionResult OutCome_list(FormCollection collection)
         {
+            ViewData["LoginEmployee"] = IndexController.LoginEmployee();
             ViewData["MaterialCode"] = MaterialCode.GetMaterialCodeList();
             ViewData["employee"] = Employee.SelectAll();
             ViewData["manufacturer"] = Manufacturer.SelectAll();
             ViewData["department"] = Department.SelectAll();
+            ViewData["Incomebatch"] = InCome.GetInComes();
             string begin = collection["date"];
             string end = collection["date1"];
             int materialCodeid = Convert.ToInt32(collection["materialCodeid"]);
@@ -52,17 +55,19 @@ namespace SteelRepository.Controllers
         [HttpPost]
         public JsonResult OutCome_revocation(FormCollection collection,string id)
         {
-            int materialCodeid2 = Convert.ToInt32(id);
-            return Json(OutCome.OutComeRevocation(materialCodeid2));
+            var incomeId = Convert.ToInt32(id);
+            return Json(OutCome.OutComeRevocation(incomeId));
         }
         public ActionResult OutCome_revocationlist()
         {
+            ViewData["LoginEmployee"] = IndexController.LoginEmployee();
             ViewData["MaterialCode"] = MaterialCode.GetMaterialCodeList();
             ViewData["employee"] = Employee.SelectAll();
             ViewData["manufacturer"] = Manufacturer.SelectAll();
             ViewData["department"] = Department.SelectAll();
             ViewData["outcome"] = null;
             ViewData["outcome"] = OutCome.GetRevocationOutComes();
+            ViewData["Incomebatch"] = InCome.GetInComes();
             return View("OutCome_list");
         }
     }

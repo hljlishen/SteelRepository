@@ -1,4 +1,4 @@
-﻿@model List<Models.OutCome>
+﻿@model List<Models.OutcomeQueryView>
 @{
     Layout = "~/Views/AdminIndex/AdminIndex.cshtml";
 }
@@ -33,7 +33,7 @@
         }
 
         function OutComerevocation() {
-            var value = $("#materialCodeid2").val();
+            var value = $("#income").val();
             var flag = confirm("是否要撤销最新一条出库信息？");
             if (flag) {
                 $.ajax({
@@ -87,6 +87,7 @@
     List<Models.OutcomeQueryView> outcome = (List<Models.OutcomeQueryView>)ViewData["outcome"];
     List<Models.Manufacturer> manufacturers = (List<Models.Manufacturer>)ViewData["manufacturer"];
     List<Models.Department> departments = (List<Models.Department>)ViewData["department"];
+    List<Models.InCome> inComebacth = (List<Models.InCome>)ViewData["Incomebatch"];
 }
 <div class="content-page">
     <div class="content">
@@ -261,11 +262,11 @@
                             <div class="row mb-4">
 
                                 <div class="col-sm-2">
-                                    <select id="materialCodeid2" name="materialCodeid2" style="width:240px;height:42px" class="form-control">
-                                        <option value="0">请选择想要撤销的货品编码</option>
-                                        @foreach (var emp in material)
+                                    <select id="income" name="income" style="width:240px;height:42px" class="form-control">
+                                        <option value="0">请选择想要撤销的货品批号</option>
+                                        @foreach (var bacth in inComebacth)
                                         {
-                                            <option value="@emp.id">@emp.code</option>
+                                            <option value="@bacth.id">@bacth.batch</option>
                                         }
                                     </select>
                                 </div>

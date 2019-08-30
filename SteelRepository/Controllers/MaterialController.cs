@@ -20,22 +20,22 @@ namespace SteelRepository.Controllers
             ViewData["MaterialCode"] = MaterialCode.GetMaterialCodeList();
             ViewData["manufacturer"] = Manufacturer.SelectAll();
             ViewData["LoginEmployee"] = IndexController.LoginEmployee();
-            ViewData["InComeView"] = InCome.GetInComeViewDesc();
-            return View();
+            return View(InCome.GetInComeViewDesc());
         }
 
         [HttpPost]
         public ActionResult InCome_list(FormCollection collection)
         {
+            ViewData["LoginEmployee"] = IndexController.LoginEmployee();
             ViewData["MaterialCode"] = MaterialCode.GetMaterialCodeList();
             ViewData["manufacturer"] = Manufacturer.SelectAll();
             string begin = collection["date"];
             string end = collection["date1"];
             int materialCodeid = Convert.ToInt32(collection["materialCodeid"]);
             int manufacturerid = Convert.ToInt32(collection["manufacturerid"]);
-            ViewData["InComeView"] = null;
-            ViewData["InComeView"] = InCome.MulSelectCheckInCome(begin, end, materialCodeid, manufacturerid);
-            return View();
+            //ViewData["InComeView"] = null;
+            //ViewData["InComeView"] = InCome.MulSelectCheckInCome(begin, end, materialCodeid, manufacturerid);
+            return View(InCome.MulSelectCheckInCome(begin, end, materialCodeid, manufacturerid));
         }
 
         public ActionResult InCome_add()
@@ -63,7 +63,7 @@ namespace SteelRepository.Controllers
                 inCome.unitPrice = double.Parse(collection["unitPrice"]);
                 inCome.amount = double.Parse(collection["amount"]);
                 inCome.storageTime = DateTime.Parse(collection["InComeTime"]);
-                inCome.reviewCycle = int.Parse(collection["RecheckCycle"]);
+                inCome.reviewCycle = double.Parse(collection["RecheckCycle"]);
                 InCome.NewInCome(inCome, int.Parse(collection["position"]), collection["materialCode"], collection["name1"], collection["model"], DateTime.Parse(collection["RecheckTime"]), qualityCertification(collection), recheckReport(collection));
                 return Json(true);
             }

@@ -224,12 +224,12 @@ namespace Models
             using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
             {
                 str = employeeName + " ";
-                string[] str1 = new string[3];
-                for (int i = 0; i < 3; i++)
+                string[] str1 = new string[2];
+                for (int i = 0; i < 2; i++)
                 {
                     str1[i] = MidStrEx(str, "：", " ");
                 }
-                var employee = Dbhelper.FindFirst<Employee, string>("number", str1[1]);
+                var employee = Dbhelper.FindFirst<Employee, string>("number", str1[0]);
                 if (employee == null)
                 {
                     throw new Exception("请输入正确的领用人信息！！！");
