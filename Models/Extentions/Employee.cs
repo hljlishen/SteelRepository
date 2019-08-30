@@ -17,7 +17,7 @@ namespace Models
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                return helper.SelectAll<Employee>();
+                return helper.Select<Employee>(p => p.state != 4);
             }
         }
         public static List<EmployeeDepartView> SelectAllDesc()
@@ -25,7 +25,7 @@ namespace Models
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
                 List<EmployeeDepartView> list = new List<EmployeeDepartView>();
-                foreach (var emplo in helper.SqlQuery<EmployeeDepartView>("select EmployeeDepartView.* from EmployeeDepartView order by EmployeeDepartView.emploId desc")) {
+                foreach (var emplo in helper.SqlQuery<EmployeeDepartView>("select EmployeeDepartView.* from EmployeeDepartView, Employee where EmployeeDepartView.emploId = Employee.id and Employee.state != 4 order by EmployeeDepartView.emploId desc")) {
                     list.Add(emplo);
                 }
                 return list;
@@ -36,7 +36,7 @@ namespace Models
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                if(helper.Select<Employee>(p => p.number == employee.number).Count <= 0)
+                if(helper.Select<Employee>(p => p.number == employee.number && p.state != 4).Count <= 0)
                     return helper.Insert(employee);
                 return 0;
             }
@@ -72,7 +72,7 @@ namespace Models
             {
                 foreach (var em in helper.SelectAll<Employee>())
                 {
-                    if (em.number == employee.number && em.password == employee.password)
+                    if (em.number == employee.number && em.password == employee.password && em.state !=4)
                     {
                         isJudge = true;
                         UseAmountStatisticals.AddAdministratorTraffic(DateTime.Now);

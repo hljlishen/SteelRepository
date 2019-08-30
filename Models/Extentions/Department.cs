@@ -38,21 +38,28 @@ namespace Models
                 return helper.Update(department);
             }
         }
-        public static int Delete(int id)
+        public static int Delete(int departmentId)
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                int empioyee = GetEmployee(id).Count();
-                if (empioyee != 0)
-                {
+                if (GetEmployee(departmentId).Count() != 0)
                     return 0;
-                }
-                else { 
-                helper.Delete<Department>(id);
-                    return 1;
-                }
+                else
+                    return helper.Delete<Department>(departmentId);
             }
         }
+
+        public static int DeleteChildNodes(int departmentId)
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                if (helper.Select<Department>(p => p.parentNodeId == departmentId).Count <= 0)
+                    return helper.Delete<Department>(departmentId);
+                else
+                    return 0;
+            }
+        }
+
         public static List<Employee> GetEmployee(int id)
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
