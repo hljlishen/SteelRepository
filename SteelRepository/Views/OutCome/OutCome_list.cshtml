@@ -124,7 +124,7 @@
                                                 <tr>
                                                     <td>
                                                         <label style="width:100%;text-align:left">货品编号查询</label>
-                                                        <select name="materialCodeid" style="width:200px;height:40px" class="form-control">
+                                                        <select name="materialCodeid" style="width:150px;height:40px" class="form-control">
                                                             <option value="0">请选择</option>
                                                             @foreach (var emp in material)
                                                             {
@@ -134,7 +134,7 @@
                                                     </td>
                                                     <td>
                                                         <label style="width:100%;text-align:left">厂商查询</label>
-                                                        <select name="manufacturerid" style="width:200px;height:40px" class="form-control">
+                                                        <select name="manufacturerid" style="width:150px;height:40px" class="form-control">
                                                             <option value="0">请选择</option>
                                                             @foreach (var man in manufacturers)
                                                             {
@@ -144,7 +144,7 @@
                                                     </td>
                                                     <td>
                                                         <label style="width:100%;text-align:left">部门查询</label>
-                                                        <select name="departmentid" style="width:200px;height:40px" class="form-control">
+                                                        <select name="departmentid" style="width:150px;height:40px" class="form-control">
                                                             <option value="0">请选择</option>
                                                             @foreach (var dep in departments)
                                                             {
@@ -154,7 +154,7 @@
                                                     </td>
                                                     <td>
                                                         <label style="width:100%;text-align:left">领用人查询</label>
-                                                        <select name="employeeid" style="width:200px;height:40px" class="form-control">
+                                                        <select name="employeeid" style="width:150px;height:40px" class="form-control">
                                                             <option value="0">请选择</option>
                                                             @foreach (var emp in employee)
                                                             {
@@ -164,16 +164,16 @@
                                                     </td>
                                                     <td>
                                                         <label for="example-date" style="width:100%;text-align:left">开始时间：</label>
-                                                        <input class="form-control" id="test1" type="text" name="date" style="width:200px">
+                                                        <input class="form-control" id="test1" type="text" name="date" style="width:135px">
                                                     </td>
                                                     <td>
                                                         <label for="example-date" style="width:100%;text-align:left">结束时间</label>
-                                                        <input class="form-control" id="test2" type="text" name="date1" style="width:200px">
+                                                        <input class="form-control" id="test2" type="text" name="date1" style="width:135px">
                                                     </td>
 
                                                     <td>
                                                         <div class="button-list">
-                                                            <button type="submit" style="width:60px;height:50px; float:unset" class="btn btn-primary"
+                                                            <button type="submit" style="width:60px;height:50px; float:unset;margin-bottom:3px;" class="btn btn-primary"
                                                                     data-toggle="modal" data-target=".signin_modal">
                                                                 查询
                                                             </button>
@@ -261,8 +261,8 @@
                         {
                             <div class="row mb-4">
 
-                                <div class="col-sm-2">
-                                    <select id="income" name="income" style="width:240px;height:42px" class="form-control">
+                                <div class="col-sm-4">
+                                    <select id="income" name="income" style="width:200px;height:42px" class="form-control">
                                         <option value="0">请选择想要撤销的货品批号</option>
                                         @foreach (var bacth in inComebacth)
                                         {
@@ -271,7 +271,7 @@
                                     </select>
                                 </div>
                                 <div class="col-sm-3">
-                                    <a href="javascript:OutComerevocation()" class="btn btn-danger" style="width:200px;height:42px"><i class="mdi mdi-plus-circle mr-2"></i>撤销</a>
+                                    <a href="javascript:OutComerevocation()" class="btn btn-danger" style="width:150px;height:42px"><i class="mdi mdi-plus-circle mr-2"></i>撤销</a>
                                 </div>
                                 <div class="col-sm-3">
                                     <a href="/OutCome/OutCome_revocationlist" class="btn btn-primary" style="width:150px;height:42px"><i class="mdi mdi-plus-circle mr-2"></i>显示撤销记录</a>
