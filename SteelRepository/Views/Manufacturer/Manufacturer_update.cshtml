@@ -12,6 +12,7 @@
     <link href="~/Content/AdminIndex/css/app.min.css" rel="stylesheet" />
     <link href="~/Content/AdminIndex/css/icons.min.css" rel="stylesheet" />
     <script src="~/Content/AdminIndex/js/app.min.js"></script>
+    <script src="~/Content/jquery-3.3.1.min.js"></script>
     <script type="text/javascript">
         var isTrue = true;
         var ismName1 = false;
@@ -29,7 +30,7 @@
                 document.getElementById("IsmName1").style.display = "";
                 ismName1 = false;
             }
-           
+
             //电话
             var tel1 = $("#tel1").val();
             if (/*!(/^((0\d{2,3}-\d{7,8})|(1[34578]\d{9}))$/.test(tel1))|| */tel1=="") {
@@ -65,7 +66,6 @@
     });
     function update() {
         if ($("#myform").data("changed")) {
-            alert("输入框修改过！")
             check();
             if (isTrue) {
                 $.ajax({
@@ -89,7 +89,7 @@
             }
 
         } else {
-            alert("没有修改过，继续！");
+            alert("没有修改！");
         }
 
 

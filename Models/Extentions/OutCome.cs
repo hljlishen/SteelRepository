@@ -221,12 +221,12 @@ namespace Models
                 return Dbhelper.FindId<Category>(income.categoryId);
             }
         }
-        public static int OutComeRevocation( int materialCodeid2)
+        public static int OutComeRevocation(int incomeid)
         {
             using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
             {
                 List<int> outcomeid = new List<int>();
-                if (materialCodeid2 == 0)
+                if (incomeid == 0)
                 {
                     foreach (var id in SelectAll())
                     {
@@ -235,13 +235,14 @@ namespace Models
                 }
                 else
                 {
-                    var tar = Dbhelper.Select<OutcomeQueryView>(p => p.codeId == materialCodeid2);
-                    foreach (var id2 in tar)
+                    var income = Dbhelper.FindId<InCome>(incomeid);
+                    var invenView = Dbhelper.Select<InventoryView>(p => p.batch == income.batch)[0];
+                    foreach (var id2 in Dbhelper.Select<OutCome>(p => p.inventoryId == invenView.InvenId))
                     {
-                        outcomeid.Add(id2.OutId);
+                        outcomeid.Add(id2.id);
                     }
                 }
-                if (outcomeid.Count == 0) throw new Exception("该货品编号无出库记录！！");
+                if (outcomeid.Count == 0) throw new Exception("该货品批号无出库记录！！");
                 var Maxoutcome = Dbhelper.FindId<OutCome>(outcomeid.Max());
                 var Inventory = Dbhelper.FindId<Inventory>(Maxoutcome.inventoryId);
                 if (Maxoutcome.state < 2)
@@ -317,7 +318,8 @@ namespace Models
                 var exp = builder.GetExpression();
                 if (exp == null)
                 {
-                    return Dbhelper.SelectAll<OutcomeQueryView>();
+                    List<OutcomeQueryView> list2 = Dbhelper.SelectAll<OutcomeQueryView>();
+                    return list2;
                 }
                 else
                     return Dbhelper.Select(exp);
@@ -340,7 +342,8 @@ namespace Models
         {
             using (IDbInterface db = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                return db.SelectAll<OutcomeQueryView>();
+                List<OutcomeQueryView> list1 = db.SelectAll<OutcomeQueryView>();
+                return list1;
             }
         }
     }

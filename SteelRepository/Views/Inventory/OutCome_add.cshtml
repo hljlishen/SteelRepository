@@ -52,11 +52,11 @@
         List<Models.Project> project = (List<Models.Project>)ViewData["project"];
     }
     <section class="signin popup-in">
-        <h2 style="text-align:center">新增出库</h2>
+        <h1 style="text-align:center">新增出库</h1>
+        <div>&nbsp;</div>
         <div class="container">
             <div class="sign-content popup-in-content">
                 <div class="popup-in-txt">
-
                     <div class="row">
                         <div class="col-12">
                             <div class="signin-form">
@@ -118,7 +118,7 @@
                                                 <datalist id="codelist" name="codelist">
                                                     @foreach (var emp in employee)
                                                     {
-                                                        <option id=@emp.emploId>姓名：@emp.name 工号：@emp.number&nbsp;部门：@emp.departmentName</option>
+                                                        <option id=@emp.emploId>@emp.name&nbsp;工号：@emp.number&nbsp;部门：@emp.departmentName</option>
                                                     }
                                                 </datalist>
                                                 <div class="input-group-append">

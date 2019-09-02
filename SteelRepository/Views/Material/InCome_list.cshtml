@@ -1,4 +1,4 @@
-﻿@model List<Models.InCome>
+﻿@model List<Models.InComeView>
 @{
     Layout = "~/Views/AdminIndex/AdminIndex.cshtml";
 }
@@ -10,7 +10,7 @@
     {
         return;
     }
-    List<Models.InComeView> incomes = (List<Models.InComeView>)ViewData["InComeView"];
+    //List<Models.InComeView> incomes = (List<Models.InComeView>)ViewData["InComeView"];
 }
     <head>
         <meta charset="utf-8" />
@@ -170,7 +170,7 @@
                                     <a href="javascript:InComeAdd()" class="btn btn-primary"><i class="mdi mdi-plus-circle mr-2"></i>添加材料信息</a>
                                 }
                             </div>
-                            <div class="l-button">
+                            <div class="l-button" style="margin:10px; margin-left:15px;">
                                 <a href="javascript:export_excel('products-datatable10')" class="side-nav-link">
                                     <i class=" dripicons-export "></i>
                                     <span> 导出Excel </span>
@@ -220,7 +220,7 @@
                                 </thead>
                                 <tbody>
                                     @{ int count = 1;}
-                                    @foreach (var income in incomes)
+                                    @foreach (var income in Model)
                                     {
                                     <tr>
                                         <td>
@@ -237,7 +237,7 @@
                                         <td>@income.batch</td>
                                         <td>@income.manufacturersName</td>
                                         <td>@income.storageTime.ToString("d")</td>
-                                        <td>@income.recheckTime</td>
+                                        <td>@income.recheckTime.ToString("d")</td>
                                         @if (loginEmployee.permissions == 1)
                                         {
                                             <td>
