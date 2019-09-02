@@ -139,7 +139,7 @@
 <body>
     <div class="navbar-custom topnav-navbar">
         <div class="container-fluid">
-            <a href="#" class="topnav-logo">
+            <a href="../Inventory/Inventory_list" class="topnav-logo">
                 <span class="topnav-logo-lg">
                     <img src="~/images/6b0263055f6110e8622111f6d4c7982.png" height="45" />
                     <span style="color:#C2C9D0;font-size:160%">钢材库房管理</span>
@@ -203,10 +203,26 @@
                         <a class="nav-link dropdown-toggle nav-user arrow-none mr-0" data-toggle="dropdown" id="topbar-userdrop" href="#" role="button" aria-haspopup="true"
                            aria-expanded="false">
                             <span>
-                                <span class="account-user-name">登录用户：</span>
-                                <span class="account-position">
-                                    @name
-                                </span>
+                                <span class="account-user-name" style="font-size:100%">登录用户：@name</span>
+                                
+                                @if (permissions == "1")
+                                {
+                                    <span class="account-position" style="font-size:100%">
+                                        等级：一级管理员
+                                    </span>
+                                }
+                                else if (permissions == "2")
+                                {
+                                    <span class="account-position" style="font-size:100%">
+                                        等级：二级管理员
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="account-position" style="font-size:100%">
+                                        等级：三级管理员
+                                    </span>
+                                }
                             </span>
                         </a>
                     </li>
@@ -229,12 +245,12 @@
             <div class="left-side-menu">
                 <div class="leftbar-user">
                     <a href="#">
-                        <span class="leftbar-user-name"> @name </span>
+                        <span class="leftbar-user-name" style="font-size:120%"> @name </span>
                     </a>
                 </div>
                 <ul class="metismenu side-nav">
 
-                    <li class="side-nav-title side-nav-item">导航</li>
+                    <li class="side-nav-title side-nav-item" style="font-size:100%">导航</li>
                     <li class="side-nav-item">
                         <a href="../Inventory/Inventory_list" class="side-nav-link">
                             <i class="mdi mdi-clipboard-text-play-outline"></i>

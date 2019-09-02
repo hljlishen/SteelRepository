@@ -1,4 +1,5 @@
-﻿using Models;
+﻿using DocuSign.eSign.Model;
+using Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -125,6 +126,18 @@ namespace SteelRepository.Controllers
         public static Employee LoginEmployee()
         {
             return empl;
+        }
+
+        public ActionResult Trees()
+        {
+            List<Tree> data = Tree.GetCategoryName();
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult PieChart()
+        {
+            pieChart pieChart = pieChart.GetPieCharts();
+            return Json(pieChart, JsonRequestBehavior.AllowGet);
         }
     }
 }

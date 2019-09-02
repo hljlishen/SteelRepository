@@ -4,6 +4,7 @@
 }
 @{ 
     Models.Employee loginEmployee = (Models.Employee)ViewData["LoginEmployee"];
+    List<Models.Employee> employee = (List<Models.Employee>)ViewData["Employee"];
     if (loginEmployee == null)
     {
             return;
@@ -122,7 +123,6 @@
         }
     </script>
 </head>
-@{ List<Models.Employee> employee = (List<Models.Employee>)ViewData["Employee"];}
 <body>
 
     <div class="content-page">

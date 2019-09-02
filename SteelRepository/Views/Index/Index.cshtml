@@ -280,12 +280,15 @@
                 <div class="col-3">
                     <div class="card">
                         <div class="card-body">
-                            <div class="col-12 tm-block-col">
-                                <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block">
-                                    <div id="tree" class="demo-tree"></div>
+                            <div class="layui-col-md2">
+                                <div class="layui-fluid">
+                                    <div class="layui-card" style="width:auto;">
+                                        <div class="layui-card-body">
+                                            <div id="tree" class="demo-tree-more tm-block-scroll" style="height:100%;"></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -343,7 +346,18 @@
                                     <div id="container" style="height:500%"></div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
 
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="col-12 tm-block-col">
+                                <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block">
+                                    <div id="pieChart" style="height:500%"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -374,7 +388,6 @@
     <script>
         layui.use(['util', 'laydate', 'layer'], function () {
             var util = layui.util
-                , laydate = layui.laydate
                 , layer = layui.layer;
             //固定块
             util.fixbar({
@@ -386,36 +399,6 @@
                         layer.msg('点击小火箭返回顶部！')
                     }
                 }
-            });
-        });
-
-        layui.use(['tree'], function () {
-            var tree = layui.tree
-
-            //手风琴模式
-            tree.render({
-                elem: '#tree'
-                , data: [{
-                    title: '优秀'
-                    , children: [{
-                        title: '80 ~ 90'
-                    }, {
-                        title: '90 ~ 100'
-                    }]
-                }, {
-                    title: '良好'
-                    , children: [{
-                        title: '70 ~ 80'
-                    }, {
-                        title: '60 ~ 70'
-                    }]
-                }, {
-                    title: '要努力奥'
-                    , children: [{
-                        title: '0 ~ 60'
-                    }]
-                }]
-                , accordion: true
             });
         });
     </script>
@@ -468,7 +451,7 @@
         $.ajax({
                 url: "@Url.Action("GetWebClickData")",
                 type: "post",
-                success: function (data) {
+            success: function (data) {
                     if (data) {
                         DataShow(data);
                     } else {
@@ -524,11 +507,92 @@
         if (option && typeof option === "object") {
             myChart.setOption(option, true);
         }
-
     }
 
 
-           
-</script>
+    getTreeData();
 
+    function getTreeData() {
+        layui.use('tree', function () {
+           var tree = layui.tree;
+
+            $.ajax({
+                //async: false,
+                type: "post",
+                url: '@Url.Action("Trees")',
+                datatype: "json",
+                contenttype: "application/json; charset=utf-8",
+                success: function (jdata) {
+                            //手风琴模式
+                            tree.render({
+                                elem: '#tree',
+                                data: jdata,
+                                isopen: true, //false初始关闭，true打开
+                                accordion: true,
+                            });
+                }
+            });
+        });
+    }
+</script>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+
+    $(function () {
+        getData4();
+    });
+    function getData4() {
+        $.ajax({
+            type: 'post',
+            dataType: 'text',
+            url: '@Url.Action("PieChart")',
+            data: {},
+            cache: false,
+            async: true,
+            success: function (data) {
+                var data = eval('(' + data + ')');
+                var data1 = new Array();
+                for (var i = 0; i < data.mapName.length; i++) {
+                    data1[i] = { value: data.mapValue[i], name: data.mapName[i] }
+                }
+                var myChart = echarts.init(document.getElementById('pieChart'));
+
+                // 指定图表的配置项和数据
+                option = {
+                    title: {
+                        text: '库存余量',
+                        x: 'center'
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        left: 'left',
+                        data: data1
+                    },
+                    series: [
+                        {
+                            name: '库存余量 单位：kg',
+                            type: 'pie',
+                            radius: '55%',
+                            center: ['50%', '60%'],
+                            data: data1,
+                            itemStyle: {
+                                emphasis: {
+                                    shadowBlur: 10,
+                                    shadowOffsetX: 0,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                }
+                            }
+                        }
+                    ]
+                };
+                // 使用刚指定的配置项和数据显示图表。
+                myChart.setOption(option);
+            }
+        });
+    }
+</script>
 
