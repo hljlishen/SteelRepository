@@ -131,9 +131,9 @@ namespace Models
                 return Dbhelper.FindId<InCome>(incomeId).storageTime;
             }
         }
-        public static string NewDateTime()
+        public static DateTime NewDateTime()
         {
-            return DateTime.Now.ToLongDateString().ToString();
+            return DateTime.Now;
         }
         public static Inventory GetInventory(int Inventoryid)
         {

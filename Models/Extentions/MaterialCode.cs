@@ -154,5 +154,46 @@ namespace Models
             }
             return codeid;
         }
+
+        public static string GetCode(string name, string model)
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                Name name1 = helper.FindFirst<Name,string>("materialName", name);
+                Model model1 = helper.FindFirst<Model, string>("modelName",model);
+                if (name1 != null && model1 != null)
+                {
+                    MaterialCode code1 = helper.FindFirst<MaterialCode, int>("materialNameId", name1.id);
+                    MaterialCode code2 = helper.FindFirst<MaterialCode, int>("materialModelId", model1.id);
+                    if (code1.id == code2.id)
+                    {
+                        return code1.code;
+                    }
+                }
+                return "";
+            }
+        }
+
+        public static string GetName(string code)
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                MaterialCode materialCode = helper.FindFirst<MaterialCode, string>("code", code);
+                if (materialCode != null)
+                    return helper.FindId<Name>(materialCode.materialNameId).materialName;
+                return "";
+            }
+        }
+
+        public static string GetModel(string code)
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                MaterialCode materialCode = helper.FindFirst<MaterialCode, string>("code", code);
+                if (materialCode != null)
+                    return helper.FindId<Model>(materialCode.materialModelId).modelName;
+                return "";
+            }
+        }
     }
 }

@@ -108,6 +108,45 @@
                     $("#myform").data("changed", true);
                 });
             });
+
+         function nameblur() {
+            var name = $("#IName").val();
+            var model = $("#ISize").val();
+            if (name != "" && model != "") {
+                $.ajax({
+                    url: "@Url.Action("GetCode")",
+                    data:{"name":name,"model":model},
+                    type: "post",
+                    success: function (data) {
+                        $("#IBh").val(data);
+                    }
+                });
+            }
+        }
+
+        function codeblur() {
+            var code = $("#IBh").val();
+            if (code != "") {
+                $.ajax({
+                    url: "@Url.Action("GetName")",
+                    data:"code="+code,
+                    type: "post",
+                    success: function (data) {
+                        $("#IName").val(data);
+                    }
+                });
+
+                $.ajax({
+                    url: "@Url.Action("GetModel")",
+                    data:"code="+code,
+                    type: "post",
+                    success: function (data) {
+                        $("#ISize").val(data);
+                    }
+                });
+            }
+        }
+
     function update() {
         if ($("#myform").data("changed")) {
             check();
@@ -133,8 +172,6 @@
         } else {
             alert("没有修改！");
         }
-
-
     }
     
     </script>
@@ -151,11 +188,11 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label for="signin_form">名称：</label>
-                                        <input class="form-control" name="name1" type="text" value="@inCome.materialName" readonly="" />
+                                        <input class="form-control" name="name1" type="text" value="@inCome.materialName" id="IName" onblur="nameblur()"/>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="signin_form">规格：</label>
-                                        <input class="form-control" name="model" type="text" value="@inCome.modelName" readonly="" />
+                                        <input class="form-control" name="model" type="text" value="@inCome.modelName" id="ISize" onblur="nameblur()"/>
                                     </div>
                                 </div>
                                 <div class="form-row">
@@ -166,7 +203,7 @@
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="signin_form">编号：</label>
-                                        <input class="form-control" name="materialCode" type="text" value="@inCome.code" readonly="" />
+                                        <input class="form-control" name="materialCode" type="text" value="@inCome.code" id="IBh" onblur="codeblur()"/>
                                     </div>
                                 </div>
                                 <div class="form-row">
@@ -176,9 +213,10 @@
                                         <input class="form-control" name="batch" type="text" value="@inCome.batch" id="IPh" />
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label for="signin_form">计量单位：</label>
-                                        @Html.DropDownList("unit", ViewBag.select as SelectList, new { @class = "form-control", id = "example-select" })
+                                        <label for="signin_form">操作人：</label>
+                                        @Html.DropDownList("operator", ViewBag.selectOperator as SelectList, new { @class = "form-control", id = "example-select" })
                                     </div>
+                                    
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
@@ -192,14 +230,15 @@
                                     </div>
                                 </div>
                                 <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label for="signin_form">操作人：</label>
-                                        @Html.DropDownList("operator", ViewBag.selectOperator as SelectList, new { @class = "form-control", id = "example-select" })
-                                    </div>
+
                                     <div class="form-group col-md-6">
                                         <label for="signin_form">数量：</label>
                                         <label id="IsNumber" style="color:#ff0000;display:none;font-size:13px">*不能为空,最多到小数点后两位</label>
                                         <input class="form-control" name="amount" type="text" value="@inCome.amount" id="INumber" />
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="signin_form">计量单位：</label>
+                                        @Html.DropDownList("unit", ViewBag.select as SelectList, new { @class = "form-control", id = "example-select" })
                                     </div>
                                 </div>
                                 <div class="form-row">

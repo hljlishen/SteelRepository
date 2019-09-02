@@ -96,10 +96,10 @@
                   ,'<td>'+ (file.size/1014).toFixed(1) +'kb</td>'
                   ,'<td>'
                     ,'<button class="layui-btn layui-btn-xs layui-btn-danger demo-delete">删除</button>'
-                  ,'</td>'
-                      , '</tr>'].join(''));
+                  ,'</td>' 
+                  , '</tr>'].join(''));
 
-                   var div = $(['<input class="form-control" hidden id="recheck'+id2+'" type="text" name="recheck'+id2+'">'].join(''));
+                   var div = $(['<input class="form-control" id="recheck'+id2+'" type="text" name="recheck'+id2+'">'].join(''));
 
                 //删除
                 tr.find('.demo-delete').on('click', function(){
@@ -224,6 +224,44 @@
             //return isJudge;
             //alert(isJudge);
         }
+
+        function nameblur() {
+            var name = $("#IName").val();
+            var model = $("#ISize").val();
+            if (name != "" && model != "") {
+                $.ajax({
+                    url: "@Url.Action("GetCode")",
+                    data:{"name":name,"model":model},
+                    type: "post",
+                    success: function (data) {
+                        $("#IBh").val(data);
+                    }
+                });
+            }
+        }
+
+        function codeblur() {
+            var code = $("#IBh").val();
+            if (code != "") {
+                $.ajax({
+                    url: "@Url.Action("GetName")",
+                    data:"code="+code,
+                    type: "post",
+                    success: function (data) {
+                        $("#IName").val(data);
+                    }
+                });
+
+                $.ajax({
+                    url: "@Url.Action("GetModel")",
+                    data:"code="+code,
+                    type: "post",
+                    success: function (data) {
+                        $("#ISize").val(data);
+                    }
+                });
+            }
+        }
            
         function add() {
             check();
@@ -274,12 +312,12 @@
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">名称：</label>
                                             <label id="IsName" style="color:#ff0000;display:none;font-size:13px">*名称不能为空</label>
-                                            <input class="form-control" name="name1" type="text" id="IName" />
+                                            <input class="form-control" name="name1" type="text" id="IName" onblur="nameblur()"/>
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">规格：</label>
                                             <label id="IsSize" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
-                                            <input class="form-control" name="model" type="text" id="ISize" />
+                                            <input class="form-control" name="model" type="text" id="ISize" onblur="nameblur()"/>
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -291,7 +329,7 @@
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">编号：</label>
                                             <label id="IsBH" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
-                                            <input class="form-control" name="materialCode" type="text" id="IBh" />
+                                            <input class="form-control" name="materialCode" type="text" id="IBh" onblur="codeblur()"/>
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -301,9 +339,10 @@
                                             <input class="form-control" name="batch" type="text" id="IPh" />
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label for="signin_form">计量单位：</label>
-                                            @Html.DropDownListFor(m => m.unit, ViewBag.select as SelectList, new { @class = "form-control", id = "example-select" })
+                                            <label for="signin_form">操作人：</label>
+                                            @Html.DropDownListFor(m => m.operatorId, ViewBag.selectOperator as SelectList, new { @class = "form-control", id = "example-select" })
                                         </div>
+                                        
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
@@ -318,13 +357,13 @@
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            <label for="signin_form">操作人：</label>
-                                            @Html.DropDownListFor(m => m.operatorId, ViewBag.selectOperator as SelectList, new { @class = "form-control", id = "example-select" })
-                                        </div>
-                                        <div class="form-group col-md-6">
                                             <label for="signin_form">数量：</label>
                                             <label id="IsNumber" style="color:#ff0000;display:none;font-size:13px">*不能为空,数字最多到小数点后两位</label>
                                             <input class="form-control" name="amount" type="text" id="INumber" />
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="signin_form">计量单位：</label>
+                                            @Html.DropDownListFor(m => m.unit, ViewBag.select as SelectList, new { @class = "form-control", id = "example-select" })
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -340,11 +379,11 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">入库时间：</label>
-                                            <input type="text" class="layui-input" id="test1" name="InComeTime" value="@Models.Inventory.NewDateTime()">
+                                            <input type="text" class="layui-input" id="test1" name="InComeTime" value="@Models.Inventory.NewDateTime().ToShortDateString()">
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">复检时间：</label>
-                                            <input type="text" class="layui-input" id="test2" name="RecheckTime" value="@Models.Inventory.NewDateTime()">
+                                            <input type="text" class="layui-input" id="test2" name="RecheckTime" value="@Models.Inventory.NewDateTime().ToShortDateString()">
                                         </div>
                                     </div>
                                     <div class="form-row">
