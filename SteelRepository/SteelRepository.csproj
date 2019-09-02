@@ -279,7 +279,6 @@
     <Content Include="Content\Inventory\js\demo.customers.js" />
     <Content Include="Content\Inventory\js\jquery-3.1.1.js" />
     <Content Include="Content\jquery-3.3.1.min.js" />
-    <Content Include="Content\jquery.js" />
     <Content Include="Content\layui\css\layui.css" />
     <Content Include="Content\layui\css\layui.mobile.css" />
     <Content Include="Content\layui\css\modules\code.css" />

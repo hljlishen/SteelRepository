@@ -99,16 +99,15 @@
             } else {
                 isTrue = false;
             }
-            return isTrue;
+            
         }
 
 
             $(function () {
-        $("#myform :input").change(function () {
-            $("#myform").data("changed", true);
-        });
-
-    });
+                $("#myform :input").change(function () {
+                    $("#myform").data("changed", true);
+                });
+            });
     function update() {
         if ($("#myform").data("changed")) {
             alert("输入框修改过！");
