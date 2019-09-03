@@ -19,7 +19,10 @@ namespace Models
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                return helper.Insert(position);
+                if (helper.Select<Position>(p => p.positionName == position.positionName).Count <= 0)
+                    return helper.Insert(position);
+                else
+                    return 0;
             }
         }
         public static int Update(Position position)

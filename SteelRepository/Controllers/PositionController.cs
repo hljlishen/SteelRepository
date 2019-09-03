@@ -26,10 +26,7 @@ namespace SteelRepository.Controllers
         [HttpPost]
         public JsonResult Position_add(Position position)
         {
-            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
-            {
-                return Json(helper.Insert(position));
-            }
+            return Json(Position.Insert(position));
         }
         public ActionResult Position_Update(int id)
         {

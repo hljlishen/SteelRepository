@@ -453,5 +453,19 @@ namespace SteelRepository.Controllers
             return itemList;
         }
 
+        public ActionResult GetCode(string name,string model)
+        {
+            return Json(MaterialCode.GetCode(name, model));
+        }
+
+        public ActionResult GetName(string code)
+        {
+            return Json(MaterialCode.GetName(code));
+        }
+
+        public ActionResult GetModel(string code)
+        {
+            return Json(MaterialCode.GetModel(code));
+        }
     }
 }

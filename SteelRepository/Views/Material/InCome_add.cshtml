@@ -78,44 +78,44 @@
 
             var demoListView2 = $('#demoList2')
             var recheckView = $('#recheckId')
-                , uploadListIns = upload.render({
-                    elem: '#testList2'
-                    , url: '/upload/'
-                    , accept: 'image/*'
-                    , multiple: true
-                    , auto: false
-                    , choose: function (obj) {
-                        var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
-                        //读取本地文件
-                        obj.preview(function (index, file, result) {
-                            var tr = $(['<tr id="upload-' + index + '">'
-                                , '<td>' + file.name + '</td>'
-                                , '<td>'
-                                , '<img src="' + result + '" alt="' + file.name + '" class="layui-upload-img" width="200px" heigth="200px">'
-                                , '</td>'
-                                , '<td>' + (file.size / 1014).toFixed(1) + 'kb</td>'
-                                , '<td>'
-                                , '<button class="layui-btn layui-btn-xs layui-btn-danger demo-delete">删除</button>'
-                                , '</td>'
-                                , '</tr>'].join(''));
+            ,uploadListIns = upload.render({
+            elem: '#testList2'
+            ,url: '/upload/'
+            ,accept: 'image/*'
+            ,multiple: true
+            ,auto: false
+            ,choose: function(obj){
+              var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
+              //读取本地文件
+              obj.preview(function(index, file, result){
+                  var tr = $(['<tr id="upload-' + index + '">'
+                  ,'<td>'+ file.name +'</td>'
+                  , '<td>'
+                      , '<img src="' + result + '" alt="' + file.name + '" class="layui-upload-img" width="200px" heigth="200px">'
+                      , '</td>'
+                  ,'<td>'+ (file.size/1014).toFixed(1) +'kb</td>'
+                  ,'<td>'
+                    ,'<button class="layui-btn layui-btn-xs layui-btn-danger demo-delete">删除</button>'
+                  ,'</td>' 
+                  , '</tr>'].join(''));
 
-                            var div = $(['<input class="form-control" hidden id="recheck' + id2 + '" type="text" name="recheck' + id2 + '">'].join(''));
-                            
-                            //删除
-                            tr.find('.demo-delete').on('click', function () {
-                                delete files[index]; //删除对应的文件
-                                tr.remove();
-                                div.remove();
-                                uploadListIns.config.elem.next()[0].value = ''; //清空 input file 值，以免删除后出现同名文件不可选
-                            });
-                            recheckView.append(div);
-                            $("#recheck" + id2 + "").val(result);
-                            demoListView2.append(tr);
-                            id2++;
-                            $("#recheckCount").val(id2);
-                        });
-                    }
+                   var div = $(['<input class="form-control" id="recheck'+id2+'" type="text" name="recheck'+id2+'">'].join(''));
+
+                //删除
+                tr.find('.demo-delete').on('click', function(){
+                  delete files[index]; //删除对应的文件
+                    tr.remove();
+                    div.remove();
+                  uploadListIns.config.elem.next()[0].value = ''; //清空 input file 值，以免删除后出现同名文件不可选
                 });
+                  recheckView.append(div);
+                  $("#recheck"+id2+"").val(result);
+                  demoListView2.append(tr);
+                  id2++;
+                  $("#recheckCount").val(id2);
+              });
+            }
+          });
         });
         //验证
 
@@ -236,158 +236,182 @@
         var isJudge = false;
         //var clickBool = false;//clkBool的值为false，则按钮未被点击
         function CheckClk() {
-            ~$('div').find('input').length>0 
-            isJudge = !isJudge;
-            //alert(isJudge);
-
+           
+                isJudge = !isJudge;
+                //alert(isJudge);
+            
             //return isJudge;
             //alert(isJudge);
         }
-        if($("#qualityId"+i).length > 0){//判断input是否存在
-    //input 存在 执行区域
 
+        function nameblur() {
+            var name = $("#IName").val();
+            var model = $("#ISize").val();
+            if (name != "" && model != "") {
+                $.ajax({
+                    url: "@Url.Action("GetCode")",
+                    data:{"name":name,"model":model},
+                    type: "post",
+                    success: function (data) {
+                        $("#IBh").val(data);
+                    }
+                });
+            }
         }
-        
-        //$(function () {
-        //    $("#qualityId").append("<div class='form-group' id='recheckId'></div>");
-        //    $("#button").click(function () {
-        //        var qualityId = $("#qualityId").html();
-        //        if (qualityId == null || qualityId.length == 0) {
-        //            alert("get!");
-        //        }
-        //    });
-        //});
 
-    function add() {
-    check();
-    if (isJudge == true) {
-    document.getElementById("testList1").style.display = "none";
-    } else {
-    document.getElementById("testList1").style.display = "";
+        function codeblur() {
+            var code = $("#IBh").val();
+            if (code != "") {
+                $.ajax({
+                    url: "@Url.Action("GetName")",
+                    data:"code="+code,
+                    type: "post",
+                    success: function (data) {
+                        $("#IName").val(data);
+                    }
+                });
 
-    }
-    if (isJudge && isTrue) {
-    $.ajax({
-    url: "@Url.Action("InCome_add")",
-    type: "post",
-    data: $("form").serialize(),
-    dataType: "json",
-    success: function (data) {
-    data = eval("(" + data + ")");
-    if (data) {
-    alert("添加成功");
-    parent.closeWin2();
-    parent.openFrame("InCome_list");
-    } else {
-    return;
-    }
-    }
-    });
-    } else {
-    isJudge = false;
-    return;
-    }
-    }
+                $.ajax({
+                    url: "@Url.Action("GetModel")",
+                    data:"code="+code,
+                    type: "post",
+                    success: function (data) {
+                        $("#ISize").val(data);
+                    }
+                });
+            }
+        }
+           
+        function add() {
+            check();
+            if (isJudge == true) {
+                document.getElementById("testList1").style.display = "none";
+                //alert(isJudge);
+            } else {
+                document.getElementById("testList1").style.display = "";
+               
+            }
+            if (isJudge && isTrue) {
+                $.ajax({
+                    url: "@Url.Action("InCome_add")",
+                    type: "post",
+                    data: $("form").serialize(),
+                    dataType: "json",
+                    success: function (data) {
+                        data = eval("(" + data + ")");
+                        if (data) {
+                            alert("添加成功");
+                            parent.closeWin2();
+                            parent.openFrame("InCome_list");
+                        } else {
+                            return;
+                        }
+                    }
+                });
+            } else {
+                isJudge = false;
+                return;
+            } 
+        }
     </script>
-    </head>
-    <body>
-        <section class="signin popup-in">
-            <div class="container">
-                <div class="sign-content popup-in-content">
-                    <div class="popup-in-txt">
-                        <h2 style="text-align:center">添加材料</h2>
-                        <div>&nbsp;</div>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="signin-form" name="form1">
-                                    @using (Html.BeginForm("InCome_add", "Material", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @role = "form" }))
-                                    {
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <label for="signin_form">名称：</label>
-                                                <label id="IsName" style="color:#ff0000;display:none;font-size:13px">*名称不能为空</label>
-                                                <input class="form-control" name="name1" type="text" id="IName" />
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="signin_form">规格：</label>
-                                                <label id="IsSize" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
-                                                <input class="form-control" name="model" type="text" id="ISize" />
-                                            </div>
+</head>
+<body>
+    <section class="signin popup-in">
+        <div class="container">
+            <div class="sign-content popup-in-content">
+                <div class="popup-in-txt">
+                    <h2 style="text-align:center">添加材料</h2>
+                    <div>&nbsp;</div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="signin-form" name="form1">
+                                @using (Html.BeginForm("InCome_add", "Material", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @role = "form" }))
+                                {
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="signin_form">名称：</label>
+                                            <label id="IsName" style="color:#ff0000;display:none;font-size:13px">*名称不能为空</label>
+                                            <input class="form-control" name="name1" type="text" id="IName" onblur="nameblur()"/>
                                         </div>
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <label for="signin_form">类别：</label>
-                                                <label id="IsSpecise" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
-                                                <input class="form-control" name="category" type="text" id="ISpecise" />
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="signin_form">编号：</label>
-                                                <label id="IsBH" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
-                                                <input class="form-control" name="materialCode" type="text" id="IBh" />
-                                            </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="signin_form">规格：</label>
+                                            <label id="IsSize" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
+                                            <input class="form-control" name="model" type="text" id="ISize" onblur="nameblur()"/>
                                         </div>
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <label for="signin_form">批号：</label>
-                                                <label id="IsPH" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
-                                                <input class="form-control" name="batch" type="text" id="IPh" />
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="signin_form">计量单位：</label>
-                                                @Html.DropDownListFor(m => m.unit, ViewBag.select as SelectList, new { @class = "form-control", id = "example-select" })
-                                            </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="signin_form">类别：</label>
+                                            <label id="IsSpecise" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
+                                            <input class="form-control" name="category" type="text" id="ISpecise" />
                                         </div>
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <label for="signin_form">单价（元）：</label>
-                                                <label id="IsPer" style="color:#ff0000;display:none;font-size:13px">*不能为空,数字最多到小数点后两位</label>
-                                                <input class="form-control" name="unitPrice" type="text" id="Iper" />
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="signin_form">单价的单位：</label>
-                                                @Html.DropDownListFor(m => m.priceMeasure, ViewBag.selectUnitPrice as SelectList, new { @class = "form-control", id = "example-select" })
-                                            </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="signin_form">编号：</label>
+                                            <label id="IsBH" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
+                                            <input class="form-control" name="materialCode" type="text" id="IBh" onblur="codeblur()"/>
                                         </div>
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <label for="signin_form">操作人：</label>
-                                                @Html.DropDownListFor(m => m.operatorId, ViewBag.selectOperator as SelectList, new { @class = "form-control", id = "example-select" })
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="signin_form">数量：</label>
-                                                <label id="IsNumber" style="color:#ff0000;display:none;font-size:13px">*不能为空,数字最多到小数点后两位</label>
-                                                <input class="form-control" name="amount" type="text" id="INumber" />
-                                            </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="signin_form">批号：</label>
+                                            <label id="IsPH" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
+                                            <input class="form-control" name="batch" type="text" id="IPh" />
                                         </div>
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <label for="signin_form">厂家：</label>
-                                                @Html.DropDownListFor(m => m.menufactureId, ViewBag.selectMenu as SelectList, new { @class = "form-control", id = "example-select" })
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="signin_form">放置位置：</label>
-                                                @Html.DropDownList("position", ViewBag.selectPosition as SelectList, new { @class = "form-control", id = "example-select" })
-                                            </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="signin_form">操作人：</label>
+                                            @Html.DropDownListFor(m => m.operatorId, ViewBag.selectOperator as SelectList, new { @class = "form-control", id = "example-select" })
                                         </div>
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <label for="signin_form">入库时间：</label>
-                                                <label id="IsTest1" style="color:#ff0000;display:none;font-size:13px">*入库时间不能为空</label>
-                                                <input type="text" class="layui-input" id="test1" name="InComeTime" value="@Models.Inventory.NewDateTime()">
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="signin_form">复检时间：</label>
-                                                <label id="IsTest2" style="color:#ff0000;display:none;font-size:13px">*复检时间不能为空</label>
-                                                <input type="text" class="layui-input" id="test2" name="RecheckTime" value="@Models.Inventory.NewDateTime()">
-                                            </div>
+                                        
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="signin_form">单价（元）：</label>
+                                            <label id="IsPer" style="color:#ff0000;display:none;font-size:13px">*不能为空,数字最多到小数点后两位</label>
+                                            <input class="form-control" name="unitPrice" type="text" id="Iper" />
                                         </div>
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <label for="signin_form">复检周期(年)：</label>
-                                                <label id="IsCycle" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
-                                                <input class="form-control" name="RecheckCycle" type="text" id="ICycle" />
-                                            </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="signin_form">单价的单位：</label>
+                                            @Html.DropDownListFor(m => m.priceMeasure, ViewBag.selectUnitPrice as SelectList, new { @class = "form-control", id = "example-select" })
                                         </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="signin_form">数量：</label>
+                                            <label id="IsNumber" style="color:#ff0000;display:none;font-size:13px">*不能为空,数字最多到小数点后两位</label>
+                                            <input class="form-control" name="amount" type="text" id="INumber" />
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="signin_form">计量单位：</label>
+                                            @Html.DropDownListFor(m => m.unit, ViewBag.select as SelectList, new { @class = "form-control", id = "example-select" })
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="signin_form">厂家：</label>
+                                            @Html.DropDownListFor(m => m.menufactureId, ViewBag.selectMenu as SelectList, new { @class = "form-control", id = "example-select" })
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="signin_form">放置位置：</label>
+                                            @Html.DropDownList("position", ViewBag.selectPosition as SelectList, new { @class = "form-control", id = "example-select" })
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="signin_form">入库时间：</label>
+                                            <input type="text" class="layui-input" id="test1" name="InComeTime" value="@Models.Inventory.NewDateTime().ToShortDateString()">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="signin_form">复检时间：</label>
+                                            <input type="text" class="layui-input" id="test2" name="RecheckTime" value="@Models.Inventory.NewDateTime().ToShortDateString()">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="signin_form">复检周期(年)：</label>
+                                            <label id="IsCycle" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
+                                            <input class="form-control" name="RecheckCycle" type="text" id="ICycle" />
+                                        </div>
+                                    </div>
 
                                         <div class="form-group col-md-12">
                                             <label for="signin_form">产品质量证明：</label>

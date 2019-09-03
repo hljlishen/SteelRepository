@@ -28,6 +28,7 @@ namespace SteelRepository.Controllers
         [HttpPost]
         public ActionResult Department_list(int id)
         {
+            ViewData["LoginEmployee"] = IndexController.LoginEmployee();
             ViewData["Employee"] = Employee.Select(id);
             return View(Department.SelectAll());
         }
