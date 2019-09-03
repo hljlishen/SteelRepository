@@ -219,10 +219,21 @@ namespace Models
             }
         }
 
-        public static int Update(InCome inCome)
+        public static int Update(InCome inCome,string name,string model,string code)
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
+                MaterialCode mCode;
+                try
+                {
+                    mCode = MaterialCode.Insert(code, name, model, helper);
+                    helper.Commit();
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+                inCome.codeId = mCode.id;
                 double? kgPrice = 0;
                 double weight = 0;
                 if (BatchIdExist(inCome.batch,inCome.id ,helper)) throw new Exception("批号已存在");
