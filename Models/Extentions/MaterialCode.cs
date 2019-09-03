@@ -178,9 +178,9 @@ namespace Models
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                MaterialCode materialCode = helper.FindFirst<MaterialCode, string>("code", code);
-                if (materialCode != null)
-                    return helper.FindId<Name>(materialCode.materialNameId).materialName;
+                InComeView inComeView = helper.FindFirst<InComeView, string>("code", code);
+                if (inComeView != null)
+                    return inComeView.materialName;
                 return "";
             }
         }
@@ -189,9 +189,9 @@ namespace Models
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                MaterialCode materialCode = helper.FindFirst<MaterialCode, string>("code", code);
-                if (materialCode != null)
-                    return helper.FindId<Model>(materialCode.materialModelId).modelName;
+                InComeView inComeView = helper.FindFirst<InComeView, string>("code", code);
+                if (inComeView != null)
+                    return inComeView.modelName;
                 return "";
             }
         }

@@ -56,17 +56,14 @@ namespace SteelRepository.Controllers
         [HttpPost]
         public JsonResult InCome_add(InCome inCome, FormCollection collection)
         {
-            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
-            {
-                inCome.categoryId = Category.Insert(collection["category"]).id;
-                inCome.batch = collection["batch"];
-                inCome.unitPrice = double.Parse(collection["unitPrice"]);
-                inCome.amount = double.Parse(collection["amount"]);
-                inCome.storageTime = DateTime.Parse(collection["InComeTime"]);
-                inCome.reviewCycle = double.Parse(collection["RecheckCycle"]);
-                InCome.NewInCome(inCome, int.Parse(collection["position"]), collection["materialCode"], collection["name1"], collection["model"], DateTime.Parse(collection["RecheckTime"]), qualityCertification(collection), recheckReport(collection));
-                return Json(true);
-            }
+            inCome.categoryId = Category.Insert(collection["category"]).id;
+            inCome.batch = collection["batch"];
+            inCome.unitPrice = double.Parse(collection["unitPrice"]);
+            inCome.amount = double.Parse(collection["amount"]);
+            inCome.storageTime = DateTime.Parse(collection["InComeTime"]);
+            inCome.reviewCycle = double.Parse(collection["RecheckCycle"]);
+            InCome.NewInCome(inCome, int.Parse(collection["position"]), collection["materialCode"], collection["name1"], collection["model"], DateTime.Parse(collection["RecheckTime"]), qualityCertification(collection), recheckReport(collection));
+            return Json(true);
         }
 
         private List<byte[]> qualityCertification(FormCollection collection)
@@ -123,11 +120,9 @@ namespace SteelRepository.Controllers
             ViewBag.selectOperator = select4;
             SelectList select5 = new SelectList(GetUnitPriceList(id), "Value", "Text");
             ViewBag.selectUnitPrice = select5;
-            InComeView inComeView = InCome.SeleteInComeView(id);
-            ViewData["InComeView"] = inComeView;
             InCome inCome = InCome.Selete(id);
             In = inCome;
-            return View();
+            return View(InCome.SeleteInComeView(id));
         }
 
         public ActionResult InCome_selete(int id)
@@ -137,34 +132,25 @@ namespace SteelRepository.Controllers
         }
 
         [HttpPost]
-        public JsonResult InCome_update(InComeView inCome, FormCollection collection)
+        public JsonResult InCome_update(FormCollection collection)
         {
             InCome UpIncome = new InCome();
             UpIncome.id = In.id;
+            string name = collection["name"];
+            string model = collection["model"];
+            string code = collection["materialCode"];
             UpIncome.categoryId = Category.Insert(collection["category"]).id;
-            UpIncome.codeId = inCome.materId;
             UpIncome.batch = collection["batch"];
-            UpIncome.menufactureId = int.Parse(collection["manufacturer"]);
-            UpIncome.unit = collection["unit"];
-            UpIncome.amount = double.Parse(collection["amount"]);
+            UpIncome.operatorId = int.Parse(collection["operator"]);
             UpIncome.unitPrice = double.Parse(collection["unitPrice"]);
             UpIncome.priceMeasure = collection["priceMeasure"];
+            UpIncome.amount = double.Parse(collection["amount"]);
+            UpIncome.unit = collection["unit"];
+            UpIncome.menufactureId = int.Parse(collection["manufacturer"]);
             UpIncome.storageTime = DateTime.Parse(collection["IncomeText"]);
             UpIncome.operatorId = int.Parse(collection["operator"]);
             UpIncome.reviewCycle = double.Parse(collection["reviewCycle"]);
-            //inCome.id = In.id;
-            //inCome.categoryId = Category.Insert(collection["category"]).id;
-            //inCome.codeId = In.codeId;
-            //inCome.batch = collection["batch"];
-            //inCome.menufactureId = int.Parse(collection["manufacturer"]);
-            //inCome.unit = collection["unit"];
-            //inCome.amount = double.Parse(collection["amount"]);
-            //inCome.unitPrice = double.Parse(collection["unitPrice"]);
-            //inCome.priceMeasure = collection["priceMeasure"];
-            //inCome.storageTime = DateTime.Parse(collection["IncomeText"]);
-            //inCome.operatorId = int.Parse(collection["operator"]);
-            //inCome.reviewCycle = double.Parse(collection["reviewCycle"]);
-            return Json(InCome.Update(UpIncome));
+            return Json(InCome.Update(UpIncome,name,model,code));
         }
 
         public ActionResult QualityReport(int id)

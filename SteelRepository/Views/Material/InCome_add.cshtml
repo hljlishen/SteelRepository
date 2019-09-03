@@ -99,7 +99,7 @@
                   ,'</td>' 
                   , '</tr>'].join(''));
 
-                   var div = $(['<input class="form-control" id="recheck'+id2+'" type="text" name="recheck'+id2+'">'].join(''));
+                   var div = $(['<input class="form-control" hidden id="recheck'+id2+'" type="text" name="recheck'+id2+'">'].join(''));
 
                 //删除
                 tr.find('.demo-delete').on('click', function(){
@@ -128,8 +128,10 @@
         var isIper = true;
         var isINumber = true;
         var isICycle = true;
-        var isItest1 = true;
-        var isItest2 = true;
+        var isQuality = true;
+        var isRecheck = true;
+        var isInComeTime = true;
+        var isRecheckTime = true;
 
         function check() {
             //名称
@@ -206,43 +208,55 @@
                 document.getElementById("IsCycle").style.display = "none";
                 isICycle = true;
             }
-            //入库时间
-            var test1 = $("#test1").val();
-            if (test1 == "") {
-                document.getElementById("IsTest1").style.display = "";
-                isItest1e = false;
+
+            //质量证明
+            var quality = $("#qualityId :input").length;
+            if (quality == 0) {
+                document.getElementById("testlist").style.display = "";
+                isQuality = false;
             } else {
-                document.getElementById("IsTest1").style.display = "none";
-                isItest1 = true;
-            }
-            //复检时间
-            var test2 = $("#test2").val();
-            if (test2 == "") {
-                document.getElementById("IsTest2").style.display = "";
-                isItest2 = false;
-            } else {
-                document.getElementById("IsTest2").style.display = "none";
-                isItest2 = true;
+                document.getElementById("testlist").style.display = "none";
+                isQuality = true;
             }
 
-            if (isIName && isISize && isISpecise && isIBH && isIPH && isIper && isINumber && isICycle && isItest1 && isItest2) {
+            //复检报告
+            var recheck = $("#recheckId :input").length;
+            if (recheck == 0) {
+                document.getElementById("testlist1").style.display = "";
+                isRecheck = false;
+            } else {
+                document.getElementById("testlist1").style.display = "none";
+                isRecheck = true;
+            }
+
+            //入库时间
+            var incometime = $("#test1").val();
+            if (incometime == "") {
+                document.getElementById("inComeTime").style.display = "";
+                isInComeTime = false;
+            } else {
+                document.getElementById("inComeTime").style.display = "none";
+                isInComeTime = true;
+            }
+
+            //复检时间
+            var rechecktime = $("#test2").val();
+            if (rechecktime == "") {
+                document.getElementById("recheckTime").style.display = "";
+                isRecheckTime = false;
+            } else {
+                document.getElementById("recheckTime").style.display = "none";
+                isRecheckTime = true;
+            }
+
+            if (isIName && isISize && isISpecise && isIBH && isIPH && isIper && isINumber && isICycle && isQuality && isRecheck && isInComeTime && isRecheckTime) {
                 isTrue = true;
             } else {
                 isTrue = false;
             }
             return isTrue;
         }
-        //质量证明
-        var isJudge = false;
-        //var clickBool = false;//clkBool的值为false，则按钮未被点击
-        function CheckClk() {
-           
-                isJudge = !isJudge;
-                //alert(isJudge);
-            
-            //return isJudge;
-            //alert(isJudge);
-        }
+        
 
         function nameblur() {
             var name = $("#IName").val();
@@ -253,7 +267,9 @@
                     data:{"name":name,"model":model},
                     type: "post",
                     success: function (data) {
-                        $("#IBh").val(data);
+                        if (data != "") {
+                            $("#IBh").val(data);
+                        }
                     }
                 });
             }
@@ -267,7 +283,9 @@
                     data:"code="+code,
                     type: "post",
                     success: function (data) {
-                        $("#IName").val(data);
+                        if (data != "") {
+                           $("#IName").val(data);
+                        }
                     }
                 });
 
@@ -276,22 +294,18 @@
                     data:"code="+code,
                     type: "post",
                     success: function (data) {
-                        $("#ISize").val(data);
+                        if (data != "") {
+                            $("#ISize").val(data);
+                        }
                     }
                 });
             }
         }
            
         function add() {
+            
             check();
-            if (isJudge == true) {
-                document.getElementById("testList1").style.display = "none";
-                //alert(isJudge);
-            } else {
-                document.getElementById("testList1").style.display = "";
-               
-            }
-            if (isJudge && isTrue) {
+            if (isTrue) {
                 $.ajax({
                     url: "@Url.Action("InCome_add")",
                     type: "post",
@@ -330,7 +344,7 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">名称：</label>
-                                            <label id="IsName" style="color:#ff0000;display:none;font-size:13px">*名称不能为空</label>
+                                            <label id="IsName" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
                                             <input class="form-control" name="name1" type="text" id="IName" onblur="nameblur()"/>
                                         </div>
                                         <div class="form-group col-md-6">
@@ -398,10 +412,12 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">入库时间：</label>
+                                            <label id="inComeTime" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
                                             <input type="text" class="layui-input" id="test1" name="InComeTime" value="@Models.Inventory.NewDateTime().ToShortDateString()">
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">复检时间：</label>
+                                            <label id="recheckTime" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
                                             <input type="text" class="layui-input" id="test2" name="RecheckTime" value="@Models.Inventory.NewDateTime().ToShortDateString()">
                                         </div>
                                     </div>
@@ -413,61 +429,62 @@
                                         </div>
                                     </div>
 
-                                        <div class="form-group col-md-12">
-                                            <label for="signin_form">产品质量证明：</label>
-                                            <div class="layui-upload">
-                                                <button type="button" class="layui-btn layui-btn-normal" id="testList" name="testList" onclick="CheckClk()">选择</button>
-                                                <label id="testList1" style="color:#ff0000;display:none;font-size:13px">*需添加产品质量证明</label>
-                                                <div class="layui-upload-list">
-                                                    <table class="layui-table">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>文件名</th>
-                                                                <th>预览图</th>
-                                                                <th>大小</th>
-                                                                <th>操作</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody id="demoList"></tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="form-group" id="qualityId">
-                                                </div>
+                                    <div class="form-group col-md-12">
+                                        <label for="signin_form">产品质量证明：</label>
+                                        <div class="layui-upload">
+                                            <button type="button" class="layui-btn layui-btn-normal" id="testList" name="testList">选择</button>
+                                            <label id="testlist" style="color:#ff0000;display:none;font-size:13px">*需添加产品质量证明</label>
+                                            <div class="layui-upload-list">
+                                                <table class="layui-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>文件名</th>
+                                                            <th>预览图</th>
+                                                            <th>大小</th>
+                                                            <th>操作</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="demoList"></tbody>
+                                                </table>
                                             </div>
-                                            <input class="form-control" id="qualityCount" name="qualityCount" type="text" hidden>
+                                            <div class="form-group" id="qualityId">
+                                            </div>
                                         </div>
+                                        <input class="form-control" id="qualityCount" name="qualityCount" type="text" hidden>
+                                    </div>
 
-                                        <div class="form-group col-md-12">
-                                            <label for="signin_form">复验结果报告：</label>
-                                            <div class="layui-upload">
-                                                <button type="button" class="layui-btn layui-btn-normal" id="testList2">选择</button>
-                                                <div class="layui-upload-list">
-                                                    <table class="layui-table">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>文件名</th>
-                                                                <th>预览图</th>
-                                                                <th>大小</th>
-                                                                <th>操作</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody id="demoList2"></tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="form-group" id="recheckId">
-                                                </div>
+                                    <div class="form-group col-md-12">
+                                        <label for="signin_form">复验结果报告：</label>
+                                        <div class="layui-upload">
+                                            <button type="button" class="layui-btn layui-btn-normal" id="testList2">选择</button>
+                                            <label id="testlist1" style="color:#ff0000;display:none;font-size:13px">*需添加复检结果报告</label>
+                                            <div class="layui-upload-list">
+                                                <table class="layui-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>文件名</th>
+                                                            <th>预览图</th>
+                                                            <th>大小</th>
+                                                            <th>操作</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="demoList2"></tbody>
+                                                </table>
                                             </div>
-                                            <input class="form-control" id="recheckCount" name="recheckCount" type="text" hidden>
+                                            <div class="form-group" id="recheckId">
+                                            </div>
                                         </div>
-                                    }
-                                </div>
+                                        <input class="form-control" id="recheckCount" name="recheckCount" type="text" hidden>
+                                    </div>
+                                }
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <button type="button" id="button" class="btn btn-block btn-primary" onclick="add()">添加</button>
-                            </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <button type="button" id="button" class="btn btn-block btn-primary" onclick="add()">添加</button>
                         </div>
+                    </div>
 
                     </div>
                 </div>
