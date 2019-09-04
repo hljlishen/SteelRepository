@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Tools;
+using Tools.Statistics;
 
 namespace Models
 {
@@ -338,12 +339,26 @@ namespace Models
             var projectName = db.FindId<Project>(projectId.Value).projectName;
             return projectName;
         }
+
         public static List<OutcomeQueryView> GetOutComeView()
         {
             using (IDbInterface db = new DbHelper(new SteelRepositoryDbEntities()))
             {
                 List<OutcomeQueryView> list1 = db.SelectAll<OutcomeQueryView>();
                 return list1;
+            }
+        }
+
+        public static Dictionary<string, double> StatisticConsumptionAmount(string startString,string endString)
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                DateTime start = Convert.ToDateTime(startString);
+                DateTime end = Convert.ToDateTime(endString);
+                MultipleSeriesStatistics2D<OutCome> statistics2D = new MultipleSeriesStatistics2D<OutCome>(p => p.GetMaterialCode(helper));
+                statistics2D.AddSeries("number", p => WeightConverter.Convert(p.unit, p.number, "kg"));
+                var Sum = statistics2D.GetValues(helper.Select<OutCome>(p => DateTime.Compare(p.recipientsTime, start) > 0 && DateTime.Compare(p.recipientsTime, end) < 0 && p.state != 2));
+                return Sum["number"];
             }
         }
     }

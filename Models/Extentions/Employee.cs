@@ -114,19 +114,8 @@ namespace Models
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                //var Sum = new Dictionary<string, Dictionary<string, double>>();
-                //foreach (var outcome in GetOutComes(employeeId, helper))
-                //{
-                //    int incomeId = Inventory.GetInventory(outcome.inventoryId, helper).incomeId;
-                //    MultipleSeriesStatistics2D<OutCome> statistics2D = new MultipleSeriesStatistics2D<OutCome>(p => p.GetMaterialCode(incomeId, helper));
-                //    statistics2D.AddSeries("price", p => 
-                //    {
-                //        return p.price == null ? 0: p.price.Value;
-                //    });
-                //    Sum = statistics2D.GetValues(helper.Select<OutCome>(p => p.borrowerId == employeeId));
-                //}
                 MultipleSeriesStatistics2D<OutCome> statistics2D = new MultipleSeriesStatistics2D<OutCome>(p => p.GetMaterialCode(helper));
-                statistics2D.AddSeries("price", p => p.price == null ? 0 : p.price.Value/*, StatisticsType.UserDefine, p =>
+                statistics2D.AddSeries("number", p => WeightConverter.Convert(p.unit, p.number, "kg")/*, StatisticsType.UserDefine, p =>
                 {
                     double ret = 1;
                     foreach (var item in p)
@@ -136,7 +125,7 @@ namespace Models
                     return ret;
                 }*/);
                 var Sum = statistics2D.GetValues(helper.Select<OutCome>(p => p.borrowerId == employeeId && p.state !=2));
-                return Sum.Keys.Contains("price") ? Sum["price"] : null;
+                return Sum["number"];
             }
         }
     }

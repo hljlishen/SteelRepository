@@ -35,5 +35,6 @@ namespace Models
         public string projectName { get; set; }
         public string positionName { get; set; }
         public Nullable<int> state { get; set; }
+        public string priceMeasure { get; set; }
     }
 }

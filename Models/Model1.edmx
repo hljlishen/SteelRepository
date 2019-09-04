@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="SteelRepositoryDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="SteelRepositoryDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Category">
           <Key>
             <PropertyRef Name="id" />
@@ -300,6 +300,7 @@
           <Property Name="projectName" Type="varchar(max)" Nullable="false" />
           <Property Name="positionName" Type="nvarchar(max)" Nullable="false" />
           <Property Name="state" Type="int" />
+          <Property Name="priceMeasure" Type="nchar" MaxLength="10" />
         </EntityType>
         <EntityContainer Name="SteelRepositoryDBModelStoreContainer">
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
@@ -397,7 +398,8 @@
     [OutcomeQueryView].[emploId] AS [emploId], 
     [OutcomeQueryView].[projectName] AS [projectName], 
     [OutcomeQueryView].[positionName] AS [positionName], 
-    [OutcomeQueryView].[state] AS [state]
+    [OutcomeQueryView].[state] AS [state], 
+    [OutcomeQueryView].[priceMeasure] AS [priceMeasure]
     FROM [dbo].[OutcomeQueryView] AS [OutcomeQueryView]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
@@ -691,8 +693,9 @@
           <Property Name="projectName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="positionName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="state" Type="Int32" />
+          <Property Name="priceMeasure" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
         </EntityType>
-        <EntityContainer Name="SteelRepositoryDBEntities10" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="SteelRepositoryDBEntities11" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Category" EntityType="Self.Category" />
           <EntitySet Name="Department" EntityType="Self.Department" />
           <EntitySet Name="Employee" EntityType="Self.Employee" />
@@ -720,7 +723,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="SteelRepositoryDBModelStoreContainer" CdmEntityContainer="SteelRepositoryDBEntities10">
+        <EntityContainerMapping StorageEntityContainer="SteelRepositoryDBModelStoreContainer" CdmEntityContainer="SteelRepositoryDBEntities11">
           <EntitySetMapping Name="Category">
             <EntityTypeMapping TypeName="SteelRepositoryDBModel.Category">
               <MappingFragment StoreEntitySet="Category">
@@ -981,6 +984,7 @@
                 <ScalarProperty Name="projectName" ColumnName="projectName" />
                 <ScalarProperty Name="positionName" ColumnName="positionName" />
                 <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="priceMeasure" ColumnName="priceMeasure" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

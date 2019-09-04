@@ -15,7 +15,7 @@ namespace Models
         private static string str;
         public static Inventory Insert(int incomeId, double amount, string unit, int positionId, IDbInterface dbInterface)
         {
-            var inven = new Inventory() { amount = amount, incomeId = incomeId, unit = unit, positionId = positionId , consumptionAmount = amount};
+            var inven = new Inventory() { amount = amount, incomeId = incomeId, unit = unit, positionId = positionId , consumptionAmount = 0};
             dbInterface.Insert(inven, false);
             return inven;
         }
@@ -135,6 +135,14 @@ namespace Models
         {
             return DateTime.Now;
         }
+
+        public static string NewDateMonth()
+        {
+            string year = DateTime.Now.Year.ToString();
+            string month = DateTime.Now.Month.ToString();
+            return year + "-" + month;
+        }
+
         public static Inventory GetInventory(int Inventoryid)
         {
             using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
@@ -223,13 +231,13 @@ namespace Models
         {
             using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                str = employeeName + " ";
-                string[] str1 = new string[2];
-                for (int i = 0; i < 2; i++)
+                str = employeeName + "-";
+                string[] str1 = new string[3];
+                for (int i = 0; i < 3; i++)
                 {
-                    str1[i] = MidStrEx(str, "：", " ");
+                    str1[i] = MidStrEx(str, "：", "-");
                 }
-                var employee = Dbhelper.FindFirst<Employee, string>("number", str1[0]);
+                var employee = Dbhelper.FindFirst<Employee, string>("number", str1[1]);
                 if (employee == null)
                 {
                     throw new Exception("请输入正确的领用人信息！！！");
@@ -338,13 +346,8 @@ namespace Models
             {
                 List<Inventory> inventories = new List<Inventory>();
                 MultipleSeriesStatistics2D<Inventory> statistics2D = new MultipleSeriesStatistics2D<Inventory>(p => p.GetMaterialCode(helper));
-                statistics2D.AddSeries("amount", p => p.amount);
-                foreach (var inv in helper.Select<Inventory>(p => p.amount > 0))
-                {
-                    inv.amount = WeightConverter.Convert(inv.unit,inv.amount,"kg");
-                    inventories.Add(inv);
-                }
-                var Sum = statistics2D.GetValues(inventories);
+                statistics2D.AddSeries("amount",p => WeightConverter.Convert(p.unit, p.amount, "kg"));
+                var Sum = statistics2D.GetValues(helper.Select<Inventory>(p => p.amount > 0));
                 return Sum["amount"];
             }
         }

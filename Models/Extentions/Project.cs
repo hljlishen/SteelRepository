@@ -48,7 +48,7 @@ namespace Models
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
                 MultipleSeriesStatistics2D<OutCome> statistics2D = new MultipleSeriesStatistics2D<OutCome>(p => p.GetMaterialProject(helper));
-                statistics2D.AddSeries("price", p => p.price == null ? 0 : p.price.Value);
+                statistics2D.AddSeries("price", p => p.price == null ? 0 : p.price.Value/10000);
                 var Sum = statistics2D.GetValues(helper.Select<OutCome>(p => p.state != 2));
                 return Sum.Keys.Contains("price") ? Sum["price"] : null;
             }

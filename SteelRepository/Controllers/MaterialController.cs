@@ -282,12 +282,12 @@ namespace SteelRepository.Controllers
             SelectListItem item1 = new SelectListItem()
             {
                 Value = "g",
-                Text = "g"
+                Text = "g /元"
             };
             SelectListItem item2 = new SelectListItem()
             {
                 Value = "kg",
-                Text = "kg"
+                Text = "kg /元"
             };
             itemList.Add(item1);
             itemList.Add(item2);
@@ -302,18 +302,18 @@ namespace SteelRepository.Controllers
             {
 
                 Value = priceMeasure,
-                Text = priceMeasure
+                Text = priceMeasure+" /元"
             };
             itemList.Add(item0);
             SelectListItem item1 = new SelectListItem()
             {
                 Value = "g",
-                Text = "g"
+                Text = "g /元"
             };
             SelectListItem item2 = new SelectListItem()
             {
                 Value = "kg",
-                Text = "kg"
+                Text = "kg /元"
             };
             itemList.Add(item1);
             itemList.Add(item2);

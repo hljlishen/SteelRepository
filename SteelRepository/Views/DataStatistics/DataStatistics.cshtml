@@ -8,8 +8,10 @@
 <head>
     @{
         Dictionary<string, double> keyValuePairs1 = (Dictionary<string, double>)ViewData["amount"];
+        Dictionary<string, double> keyValuePairs2 = (Dictionary<string, double>)ViewData["Time"];
         Dictionary<string, double> keyValuePairs4 = (Dictionary<string, double>)ViewData["project"];
         Dictionary<string, double> keyValuePairs5 = (Dictionary<string, double>)ViewData["consumptionAmount"];
+        string NowTime = (string)ViewData["NowTime"];
     }
     <meta name="viewport" content="width=device-width" />
     <title></title>
@@ -17,6 +19,15 @@
     <script src="~/Content/layui/layui.js"></script>
     <link href="~/Content/layui/css/layui.css" rel="stylesheet" />
     <script type="text/javascript">
+        function query(obj) {
+            var time = $("#test8").val();
+            if (time != "") {
+                document.getElementById("time").style.display = "none";
+                obj.submit();
+            } else {
+                document.getElementById("time").style.display = "";
+            }
+        }
     </script>
 </head>
 <body>
@@ -32,19 +43,16 @@
             <div class="layui-tab">
                 <ul class="layui-tab-title">
                     <li class="layui-this" >库存数据统计图</li>
-                    <li>月度消耗数据统计图</li>
-                    <li>年度消耗数据统计图</li>
+                    <li>月/年度消耗数据统计图</li>
                     <li>项目消耗数据统计图</li>
                     <li>总消耗数据统计图</li>
                 </ul>
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show">
-                        @if (keyValuePairs1 != null)
-                        {
-                            <div id="inventory" style="width:100%;height:600%;">
+                        <div id="inventory" style="width:95%;height:600%;">
 
-                            </div>
-                            <script type="text/javascript">
+                        </div>
+                        <script type="text/javascript">
                             @{
                                 var sData = keyValuePairs1;
                             }
@@ -73,25 +81,48 @@
                                 }]
                             };
                             myChart.setOption(option);
-                            </script>
-                        }
+                        </script>
                     </div>
+                    
                     <div class="layui-tab-item layui-show">
-                        @if (keyValuePairs1 != null)
-                        {
-                            <div id="monthlyConsumption" style="width:100%;height:600%">
-
+                        <form id="form" name="form" method="post" action="/DataStatistics/DataStatistics" style="width:100%">
+                            <div class="layui-form">
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label">年月：</label>
+                                        <label id="time" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" class="layui-input" id="test8" placeholder=" - " name="test8" value="@NowTime">
+                                        </div>
+                                        <input type="button" class="layui-btn layui-btn-primary" onclick="query(this.form)" value="查看"/>
+                                    </div>
+                                </div>
                             </div>
-                            <script type="text/javascript">
+                        </form>
+                        
+                        <div id="monthlyConsumption" style="width:95%;height:600%">
+
+                        </div>
+                        <script type="text/javascript">
+                            layui.use('laydate', function(){
+                                var laydate = layui.laydate;
+                                  //年月范围
+                                  laydate.render({
+                                    elem: '#test8'
+                                    ,type: 'month'
+                                    ,range: true
+                                  });
+                                });
+
                             @{
-                                var sData = keyValuePairs1;
+                                var sData2 = keyValuePairs2;
                             }
-                            var codes = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(sData.Keys.ToArray()));
-                            var values = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(sData.Values.ToArray()));
+                            var codes = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(sData2.Keys.ToArray()));
+                            var values = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(sData2.Values.ToArray()));
                             var myChart = echarts.init(document.getElementById('monthlyConsumption'));
                             var option = {
                                 title: {
-                                    text: '月度消耗数据统计图'
+                                    text: '月/年度消耗数据统计图'
                                 },
                                 tooltip: {},
                                 legend: {
@@ -111,63 +142,18 @@
                                 }]
                             };
                             myChart.setOption(option);
-                            </script>
-                        }
+                        </script>
                     </div>
                     <div class="layui-tab-item layui-show">
-                        @if (keyValuePairs1 != null)
-                        {
-                            <div id="annualConsumption" style="width:100%;height:600%;">
+                        <div id="projectConsumption" style="width:95%;height:600%;">
 
-                            </div>
-                            <script type="text/javascript">
+                        </div>
+                        <script type="text/javascript">
                             @{
-                                var sData = keyValuePairs1;
+                                var sData3 = keyValuePairs4;
                             }
-                            var codes = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(sData.Keys.ToArray()));
-                            var values = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(sData.Values.ToArray()));
-                            var myChart = echarts.init(document.getElementById('annualConsumption'));
-                            var option = {
-                                title: {
-                                    text: '年度消耗数据统计图'
-                                },
-                                tooltip: {},
-                                legend: {
-                                    data: ['编号']
-                                },
-                                xAxis: {
-                                    name: '编号',
-                                    data: codes
-                                },
-                                yAxis: {
-                                    name: '重量（kg）',
-                                },
-                                series: [{
-                                    name: '重量（kg）',
-                                    type: 'bar',
-                                    data: values
-                                }]
-                            };
-                            myChart.setOption(option);
-                            </script>
-                        }
-                        else
-                        {
-                            <div class="layui-tab-item">无数据展示</div>
-                        }
-                    </div>
-                    <div class="layui-tab-item layui-show">
-                        @if (keyValuePairs1 != null)
-                        {
-                            <div id="projectConsumption" style="width:100%;height:600%;">
-
-                            </div>
-                            <script type="text/javascript">
-                            @{
-                                var sData = keyValuePairs4;
-                            }
-                            var codes = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(sData.Keys.ToArray()));
-                            var values = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(sData.Values.ToArray()));
+                            var codes = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(sData3.Keys.ToArray()));
+                            var values = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(sData3.Values.ToArray()));
                             var myChart = echarts.init(document.getElementById('projectConsumption'));
                             var option = {
                                 title: {
@@ -175,37 +161,34 @@
                                 },
                                 tooltip: {},
                                 legend: {
-                                    data: ['项目']
+                                    data: ['项目名']
                                 },
                                 xAxis: {
-                                    name: '项目',
+                                    name: '项目名',
                                     data: codes
                                 },
                                 yAxis: {
-                                    name: '金额（元）',
+                                    name: '金额（万元）',
                                 },
                                 series: [{
-                                    name: '金额（元）',
+                                    name: '金额（万元）',
                                     type: 'bar',
                                     data: values
                                 }]
                             };
                             myChart.setOption(option);
-                            </script>
-                        }
+                        </script>
                     </div>
                     <div class="layui-tab-item layui-show">
-                        @if (keyValuePairs1 != null)
-                        {
-                            <div id="totalConsumption" style="width:100%;height:600%;">
+                        <div id="totalConsumption" style="width:95%;height:600%;">
 
-                            </div>
-                            <script type="text/javascript">
+                        </div>
+                        <script type="text/javascript">
                             @{
-                                var sData = keyValuePairs5;
+                                var sData4 = keyValuePairs5;
                             }
-                            var codes = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(sData.Keys.ToArray()));
-                            var values = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(sData.Values.ToArray()));
+                            var codes = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(sData4.Keys.ToArray()));
+                            var values = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(sData4.Values.ToArray()));
                             var myChart = echarts.init(document.getElementById('totalConsumption'));
                             var option = {
                                 title: {
@@ -229,8 +212,7 @@
                                 }]
                             };
                             myChart.setOption(option);
-                            </script>
-                        }
+                        </script>
                     </div>
                 </div>
             </div>

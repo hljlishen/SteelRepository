@@ -18,27 +18,24 @@
         layui.use('laydate', function () {
             var laydate = layui.laydate;
 
-              laydate.render({
+            laydate.render({
                 elem: '#IncomeText'
                 ,isInitValue: true
-              });
-
-            laydate.render({
-                elem: '#ReckeckText'
-                ,isInitValue: true
-              });
+            });
         });
 
         var isTrue = true;
         var isISpecise = true;
+        var isISName = true;
+        var isISModel = true;
+        var isISCode = true;
         var isIPH = true;
         var isIper = true;
         var isINumber = true;
         var isICycle = true;
-
+        var isIIncomeText = true;
 
         function check() {
-
             //类别
             var ISpecise = $("#ISpecise").val();
             var n = /^\s*$/;
@@ -49,7 +46,36 @@
                 document.getElementById("IsSpecise").style.display = "";
                 isISpecise = false;
             }
-           
+            //名称
+            var ISName = $("#IName").val();
+            var n = /^\s*$/;
+            if (!n.test(ISName)) {
+                document.getElementById("IsName").style.display = "none";
+                isISName = true;
+            } else {
+                document.getElementById("IsName").style.display = "";
+                isISName = false;
+            }
+            //规格
+            var ISModel = $("#ISize").val();
+            var n = /^\s*$/;
+            if (!n.test(ISModel)) {
+                document.getElementById("IsModel").style.display = "none";
+                isISModel = true;
+            } else {
+                document.getElementById("IsModel").style.display = "";
+                isISModel = false;
+            }
+            //编号
+            var IScode = $("#IBh").val();
+            var n = /^\s*$/;
+            if (!n.test(IScode)) {
+                document.getElementById("Iscode").style.display = "none";
+                isISCode = true;
+            } else {
+                document.getElementById("Iscode").style.display = "";
+                isISCode = false;
+            }
             //批号
             var IPh = $("#IPh").val();
             var n = /^\s*$/;
@@ -69,7 +95,6 @@
             } else {
                 document.getElementById("IsPer").style.display = "none";
                 isIper = true;
-
             }
             //数量
             var INumber = $("#INumber").val();
@@ -90,21 +115,21 @@
                 document.getElementById("IsCycle").style.display = "";
                 isICycle = false;
             }
-            if (isISpecise && isIPH && isIper && isINumber && isICycle) {
+            //入库时间
+            var t = $("#IncomeText").val();
+            if (t == "") {
+                document.getElementById("IncomeText1").style.display = "";
+                isIIncomeText = false;
+            } else {
+                document.getElementById("IncomeText1").style.display = "none";
+                isIIncomeText = true;
+            }
+            if (isISpecise && isIPH && isIper && isINumber && isICycle && isIIncomeText && isISName && isISModel && isISCode) {
                 isTrue = true;
             } else {
                 isTrue = false;
             }
-            
         }
-
-
-            $(function () {
-                $("#myform :input").change(function () {
-                    $("#myform").data("changed", true);
-                });
-            });
-
          function nameblur() {
             var name = $("#IName").val();
             var model = $("#ISize").val();
@@ -117,7 +142,7 @@
                         if (data != "") {
                             $("#IBh").val(data);
                         }
-                    } 
+                    }
                 });
             }
         }
@@ -149,33 +174,50 @@
             }
         }
 
-    function update() {
-        if ($("#myform").data("changed")) {
-            check();
-            if (isTrue) {
-                $.ajax({
-                    url: "@Url.Action("InCome_update")",
-                    type: "post",
-                    data: $("form").serialize(),
-                    dataType: "json",
-                    success: function (data) {
-                        data = eval("(" + data + ")");
-                        if (data) {
-                            alert("修改成功");
-                            parent.closeWin2();
-                            parent.openFrame("InCome_list");
-                        } else {
-                        }
-                    }
-                });
-            } else {
-                return;
+        var judjeWd = false;
+        function JudgesubmitForm() {
+            var wd = document.getElementById('IncomeText');//输入框
+            if (wd.value != wd.defaultValue)
+            {
+                judjeWd = true;
             }
-        } else {
-            alert("没有修改！");
         }
-    }
-    
+        $(function () {
+        $("#myform :input").change(function () {
+            $("#myform").data("changed", true);
+        });
+
+        });
+        function Check2() {
+                    check();
+                    if (isTrue) {
+                        $.ajax({
+                            url: "@Url.Action("InCome_update")",
+                            type: "post",
+                            data: $("form").serialize(),
+                            dataType: "json",
+                            success: function (data) {
+                                data = eval("(" + data + ")");
+                                if (data) {
+                                    alert("修改成功");
+                                    parent.closeWin2();
+                                    parent.openFrame("InCome_list");
+                                } else {
+                                }
+                            }
+                        });
+                    } else {
+                        return ;
+                    }
+        }
+        function update() {
+            JudgesubmitForm();
+            if ($("#myform").data("changed") || judjeWd) {
+                Check2();
+            } else {
+                alert("没有修改");
+            }
+        }
     </script>
 </head>
 <body>
@@ -192,10 +234,12 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">名称：</label>
+                                            <label id="IsName" style="color:#ff0000;display:none;font-size:13px">*名称不能为空</label>
                                             <input class="form-control" name="name" type="text" value="@Model.materialName" id="IName" onblur="nameblur()" />
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">规格：</label>
+                                            <label id="IsModel" style="color:#ff0000;display:none;font-size:13px">*规格不能为空</label>
                                             <input class="form-control" name="model" type="text" value="@Model.modelName" id="ISize" onblur="nameblur()" />
                                         </div>
                                     </div>
@@ -207,6 +251,7 @@
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">编号：</label>
+                                            <label id="Iscode" style="color:#ff0000;display:none;font-size:13px">*编号不能为空</label>
                                             <input class="form-control" name="materialCode" type="text" value="@Model.code" id="IBh" onblur="codeblur()" />
                                         </div>
                                     </div>
@@ -234,37 +279,39 @@
                                     </div>
                                     <div class="form-row">
 
-                                    <div class="form-group col-md-6">
-                                        <label for="signin_form">数量：</label>
-                                        <label id="IsNumber" style="color:#ff0000;display:none;font-size:13px">*不能为空,最多到小数点后两位</label>
-                                        <input class="form-control" name="amount" type="text" value="@inCome.amount" id="INumber" />
+                                        <div class="form-group col-md-6">
+                                            <label for="signin_form">数量：</label>
+                                            <label id="IsNumber" style="color:#ff0000;display:none;font-size:13px">*不能为空,最多到小数点后两位</label>
+                                            <input class="form-control" name="amount" type="text" value="@Model.amount" id="INumber" />
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="signin_form">计量单位：</label>
+                                            @Html.DropDownList("unit", ViewBag.select as SelectList, new { @class = "form-control", id = "example-select" })
+                                        </div>
                                     </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="signin_form">计量单位：</label>
-                                        @Html.DropDownList("unit", ViewBag.select as SelectList, new { @class = "form-control", id = "example-select" })
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="signin_form">厂家：</label>
+                                            @Html.DropDownList("manufacturer", ViewBag.selectMenu as SelectList, new { @class = "form-control", id = "example-select" })
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="signin_form">放置位置：</label>
+                                            @Html.DropDownList("position", ViewBag.selectPosition as SelectList, new { @class = "form-control", id = "example-select" })
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label for="signin_form">厂家：</label>
-                                        @Html.DropDownList("manufacturer", ViewBag.selectMenu as SelectList, new { @class = "form-control", id = "example-select" })
+                                    <div class="form-row">
+                                        <div class="layui-inline col-md-6 form-group">
+                                            <label for="signin_form">入库时间:</label>
+                                            <label id="IncomeText1" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
+                                            <input type="text" class="layui-input form-control" id="IncomeText" onclick="JudgesubmitForm()" name="IncomeText" value="@Model.storageTime.ToString("yyyy-MM-dd")">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="signin_form">复检周期：</label>
+                                            <label id="IsCycle" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
+                                            <input type="text" class="form-control" name="reviewCycle" value="@Model.reviewCycle" id="ICycle">
+                                        </div>
                                     </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="signin_form">放置位置：</label>
-                                        @Html.DropDownList("position", ViewBag.selectPosition as SelectList, new { @class = "form-control", id = "example-select" })
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="layui-inline col-md-6 form-group">
-                                        <label for="signin_form">入库时间:</label>
-                                        <input type="text" class="layui-input form-control" id="IncomeText" name="IncomeText" value="@inCome.storageTime.ToString("yyyy-MM-dd")">
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="signin_form">复检周期：</label>
-                                        <label id="IsCycle" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
-                                        <input type="text" class="form-control" name="reviewCycle" value="@inCome.reviewCycle" id="ICycle">
-                                    </div>
-                                </div>
+                                }
                             </div>
                         </div>
                     </div>
@@ -273,7 +320,7 @@
                             <button type="button" class="btn btn-block btn-primary" onclick="update()">修改</button>
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
         </div>
