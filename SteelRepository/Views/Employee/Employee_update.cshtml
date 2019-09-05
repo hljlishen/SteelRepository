@@ -15,9 +15,16 @@
     <script src="~/Content/jquery-3.3.1.min.js"></script>
     <script type="text/javascript">
         var isName = true;
-
+        var judjeWd = false;
         function ChooseDepartment() {
             document.getElementById("ChooseDepartment").style.display = "";
+            var wd = document.getElementById('departmentId');//输入框
+            if (wd.value != wd.defaultValue)
+            {
+                judjeWd = true;
+            }
+
+
         }
 
         function DepartmentSelect(id,name1,name2,name3) {
@@ -40,14 +47,17 @@
 
         }
 
+
+        
+
         $(function () {
         $("#myform :input").change(function () {
             $("#myform").data("changed", true);
         });
+        });
 
-    });
-    function update() {
-        if ($("#myform").data("changed")) {
+        
+        function check2() {
             check();
             if (isName) {
                 $.ajax({
@@ -66,16 +76,18 @@
                         }
                     }
                 });
-
-            } else {
-                return;
             }
-        } else {
-            alert("没有修改！");
+
         }
 
-
-    }
+        function update() {
+                ChooseDepartment();
+                if ($("#myform").data("changed") || judjeWd) {
+                    check2();
+                } else {
+                    alert("没有修改！");
+                }
+            }
     </script>
 </head>
 <body>
@@ -104,7 +116,7 @@
                                             @Html.TextBox("departmentId", employee.departmentId, new { @class = "form-control", type = "text", placeholder = "请选择部门", id = "departmentId", style = "display:none" })
                                             <input class="form-control" placeholder="请选择部门" type="text" id="departmentName" readonly value="@depname">
                                             <div class="input-group-append">
-                                                <button class="btn btn-dark" type="button" onclick="ChooseDepartment()">选择</button>
+                                                <button class="btn btn-dark" id="btn" type="button" onclick="ChooseDepartment()">选择</button>
                                             </div>
                                         </div>
                                         <div class="container-fluid" id="ChooseDepartment" style="display:none">
