@@ -192,13 +192,14 @@
             }
             //批号
             var IPh = $("#IPh").val();
+
             if (IPh == "") {
                 document.getElementById("IsPH").style.display = "";
                 isIPH = false;
             } else {
                 $.ajax({
                     url: "@Url.Action("Batch")",
-                    data:"IPh="+IPh,
+                    data:"batch="+IPh,
                     type: "post",
                     success: function (data) {
                         if (data) {
@@ -299,7 +300,7 @@
             } else {
                     $.ajax({
                     url: "@Url.Action("RecheckOrderNo")",
-                    data:"IRecheckOrderNo="+IRecheckOrderNo,
+                    data:"recheckOrderNo="+IRecheckOrderNo,
                     type: "post",
                     success: function (data) {
                         if (data) {

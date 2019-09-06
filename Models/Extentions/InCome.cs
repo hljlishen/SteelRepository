@@ -126,7 +126,7 @@ namespace Models
             }
         }
 
-        public static InCome NewInCome(InCome inCome, int positionId, string materialCode, string materialName,string recheckBasis,string recheckOrderNo, string materialModel, DateTime RecheckTime, List<byte[]> qualityCertification = null, List<byte[]> recheckReport = null)
+        public static InCome NewInCome(InCome inCome, int positionId, string materialCode, string materialName, string materialModel, string recheckBasis, string recheckOrderNo, DateTime RecheckTime, List<byte[]> qualityCertification = null, List<byte[]> recheckReport = null)
         {
             return NewInCome(recheckBasis, recheckOrderNo, inCome.storageTime, inCome.reviewCycle, inCome.categoryId,inCome.brandCodeId.Value , materialCode, materialName, materialModel, inCome.batch, positionId, inCome.unit, inCome.amount, inCome.operatorId, RecheckTime, inCome.unitPrice, inCome.priceMeasure, inCome.menufactureId, qualityCertification, recheckReport);
         }
@@ -269,7 +269,7 @@ namespace Models
             {
                 var income = helper.FindFirst<InCome, string>("batch", batch);
 
-                return income != null;
+                return income == null;
             }
         }
 

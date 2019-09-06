@@ -102,8 +102,8 @@
                 isIPH = true;
             } else {
                $.ajax({
-                    url: "@Url.Action("Batch")",
-                    data:"IPh="+IPh,
+                    url: "@Url.Action("BatchShutOut")",
+                    data:"batch="+IPh,
                     type: "post",
                     success: function (data) {
                         if (data) {
@@ -214,6 +214,7 @@
                 judjeWd = true;
             }
         }
+
         $(function () {
         $("#myform :input").change(function () {
             $("#myform").data("changed", true);
@@ -242,6 +243,7 @@
                         return ;
                     }
         }
+
         function update() {
             JudgesubmitForm();
             if ($("#myform").data("changed") || judjeWd) {
@@ -250,6 +252,7 @@
                 alert("没有修改");
             }
         }
+
     </script>
 </head>
 <body>

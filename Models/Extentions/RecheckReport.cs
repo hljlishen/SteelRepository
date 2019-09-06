@@ -122,7 +122,7 @@ namespace Models
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                return helper.FindFirst<RecheckReport, string>("recheckOrderNo", recheckOrderNo) != null;
+                return helper.FindFirst<RecheckReport, string>("recheckOrderNo", recheckOrderNo) == null;
             }
         }
     }

@@ -365,8 +365,32 @@ namespace Models
 
         public static int Update(int incomeId, double amount, string unit, int positionId, IDbInterface helper)
         {
-            //helper.FindFirst<Inventory, int>("incomeId")
-            return 1;
+            Inventory inventory = helper.FindFirst<Inventory, int>("incomeId", incomeId);
+            bool isExit = true;
+            foreach (var outcome in helper.SelectAll<OutCome>())
+            {
+                if (outcome.inventoryId == inventory.id && outcome.state == 1)
+                {
+                    isExit = false;
+                    continue;
+                }
+            }
+            if (isExit)
+            {
+                inventory.amount = amount;
+                inventory.unit = unit;
+                inventory.positionId = positionId;
+                return helper.Update(inventory);
+            }
+            try
+            {
+                inventory.positionId = positionId;
+                return helper.Update(inventory);
+            }
+            catch
+            {
+                throw new Exception("已出库，无法更改数量和单位");
+            }
         }
     }
 }
