@@ -43,34 +43,44 @@
         var isICycle = true;
         var isIIncomeText = true;
         var isIBC = true;
+        var isPHExit = false;
 
         function check() {
-            //类别
-            var ISpecise = $("#ISpecise").val();
-            if (ISpecise !="") {
-                document.getElementById("IsSpecise").style.display = "none";
-                isISpecise = true;
-            } else {
-                document.getElementById("IsSpecise").style.display = "";
-                isISpecise = false;
-            }
             //名称
-            var ISName = $("#IName").val();
-            if (ISName !="") {
-                document.getElementById("IsName").style.display = "none";
-                isISName = true;
-            } else {
+            var IName = $("#IName").val();
+            if (IName == "") {
                 document.getElementById("IsName").style.display = "";
-                isISName = false;
+                isIName = false;
+            } else {
+                document.getElementById("IsName").style.display = "none";
+                isIName = true;
             }
             //规格
-            var ISModel = $("#ISize").val();
-            if (ISModel !="") {
-                document.getElementById("IsModel").style.display = "none";
-                isISModel = true;
-            } else {
+            var ISize = $("#ISize").val();
+            if (ISize == "") {
                 document.getElementById("IsModel").style.display = "";
                 isISModel = false;
+            } else {
+                document.getElementById("IsModel").style.display = "none";
+                isISModel = true;
+            }
+            //类别
+            var ISpecise = $("#ISpecise").val();
+            if (ISpecise == "") {
+                document.getElementById("IsSpecise").style.display = "";
+                isISpecise = false;
+            } else {
+                document.getElementById("IsSpecise").style.display = "none";
+                isISpecise = true;
+            }
+            //编号
+            var IBh = $("#IBh").val();
+            if (IBh == "") {
+                document.getElementById("Iscode").style.display = "";
+                isISCode = false;
+            } else {
+                document.getElementById("Iscode").style.display = "none";
+                isISCode = true;
             }
             //牌号
              var IBC = $("#IBC").val();
@@ -81,42 +91,18 @@
                 document.getElementById("IsBC").style.display = "none";
                 isIBC = true;
             }
-            //编号
-            var IScode = $("#IBh").val();
-            if (IScode != "") {
-                document.getElementById("Iscode").style.display = "none";
-                isISCode = true;
-            } else {
-                document.getElementById("Iscode").style.display = "";
-                isISCode = false;
-            }
-            //批号
+             //批号
             var IPh = $("#IPh").val();
-            if (IPh != "") {
-                document.getElementById("IsPH").style.display = "none";
-                isIPH = true;
+            if (IPh == "") {
+                document.getElementById("IsPH").style.display = "";
+                isIPH = false;
             } else {
-               $.ajax({
-                    url: "@Url.Action("BatchShutOut")",
-                    data:"batch="+IPh,
-                    type: "post",
-                    success: function (data) {
-                        if (data) {
-                            isIPH = true;
-                            document.getElementById("IsPH2").style.display = "none";
-                        }
-                        else {
-                            isIPH = false;
-                            document.getElementById("IsPH2").style.display = "";
-                        }
-                    }
-                });
+                isIPH = true;
                 document.getElementById("IsPH").style.display = "none";
             }
             //单价
             var Iper = $("#Iper").val();
             var i =/^([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2}))(\d*\.\d+)$/;
-            //var i = /^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/;
             if (!i.test(Iper)|| Iper == "") {
                 document.getElementById("IsPer").style.display = "";
                 isIper = false;
@@ -126,7 +112,6 @@
             }
             //数量
             var INumber = $("#INumber").val();
-            var i =/^([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2}))(\d*\.\d+)$/;
             if (!i.test(INumber)|| INumber == "") {
                 document.getElementById("IsNumber").style.display = "";
                 isINumber = false;
@@ -152,9 +137,12 @@
                 document.getElementById("IncomeText1").style.display = "none";
                 isIIncomeText = true;
             }
-            if (isISpecise && isIPH && isIper && isINumber && isICycle && isIIncomeText && isISName && isISModel && isISCode && isIBC) {
+
+            ph(IPh);
+            if (isISpecise && isIper && isINumber && isICycle && isIIncomeText && isISName && isISModel && isISCode && isIBC && isIPH && isPHExit) {
                 isTrue = true;
-            } else {
+            }
+            else {
                 isTrue = false;
             }
         }
@@ -202,6 +190,24 @@
             }
         }
 
+        function ph(obj) {
+            $.ajax({
+                    url: "@Url.Action("BatchShutOut")",
+                    data:"batch="+obj,
+                    type: "post",
+                    success: function (data) {
+                        if (data) {
+                            isPHExit = true;
+                            document.getElementById("IsPH2").style.display = "none";
+                        }
+                        else {
+                            isPHExit = false;
+                            document.getElementById("IsPH2").style.display = "";
+                        }
+                    }
+                });
+        }
+
         var judjeWd = false;
         function JudgesubmitForm() {
             var wd = document.getElementById('IncomeText');//输入框
@@ -212,13 +218,13 @@
         }
 
         $(function () {
-        $("#myform :input").change(function () {
-            $("#myform").data("changed", true);
+            $("#myform :input").change(function () {
+                $("#myform").data("changed", true);
+            });
         });
 
-        });
         function Check2() {
-                    check();
+            check();
                     if (isTrue) {
                         $.ajax({
                             url: "@Url.Action("InCome_update")",
@@ -235,8 +241,6 @@
                                 }
                             }
                         });
-                    } else {
-                        return ;
                     }
         }
 
