@@ -43,47 +43,37 @@
         var isICycle = true;
         var isIIncomeText = true;
         var isIBC = true;
-        var isPHExit = false;
 
         function check() {
-            //名称
-            var IName = $("#IName").val();
-            if (IName == "") {
-                document.getElementById("IsName").style.display = "";
-                isIName = false;
-            } else {
-                document.getElementById("IsName").style.display = "none";
-                isIName = true;
-            }
-            //规格
-            var ISize = $("#ISize").val();
-            if (ISize == "") {
-                document.getElementById("IsModel").style.display = "";
-                isISModel = false;
-            } else {
-                document.getElementById("IsModel").style.display = "none";
-                isISModel = true;
-            }
             //类别
-            var ISpecise = $("#ISpecise").val();
-            if (ISpecise == "") {
-                document.getElementById("IsSpecise").style.display = "";
-                isISpecise = false;
-            } else {
+            var ISpecise = $("#ISpecise").val().trim();
+            if (ISpecise !="") {
                 document.getElementById("IsSpecise").style.display = "none";
                 isISpecise = true;
-            }
-            //编号
-            var IBh = $("#IBh").val();
-            if (IBh == "") {
-                document.getElementById("Iscode").style.display = "";
-                isISCode = false;
             } else {
-                document.getElementById("Iscode").style.display = "none";
-                isISCode = true;
+                document.getElementById("IsSpecise").style.display = "";
+                isISpecise = false;
+            }
+            //名称
+            var ISName = $("#IName").val().trim();
+            if (ISName !="") {
+                document.getElementById("IsName").style.display = "none";
+                isISName = true;
+            } else {
+                document.getElementById("IsName").style.display = "";
+                isISName = false;
+            }
+            //规格
+            var ISModel = $("#ISize").val().trim();
+            if (ISModel !="") {
+                document.getElementById("IsModel").style.display = "none";
+                isISModel = true;
+            } else {
+                document.getElementById("IsModel").style.display = "";
+                isISModel = false;
             }
             //牌号
-             var IBC = $("#IBC").val();
+             var IBC = $("#IBC").val().trim();
             if (IBC == "") {
                 document.getElementById("IsBC").style.display = "";
                 isIBC = false;
@@ -91,19 +81,41 @@
                 document.getElementById("IsBC").style.display = "none";
                 isIBC = true;
             }
-             //批号
-            var IPh = $("#IPh").val();
-            if (IPh == "") {
-                document.getElementById("IsPH").style.display = "";
-                isIPH = false;
+            //编号
+            var IScode = $("#IBh").val().trim();
+            if (IScode != "") {
+                document.getElementById("Iscode").style.display = "none";
+                isISCode = true;
             } else {
+                document.getElementById("Iscode").style.display = "";
+                isISCode = false;
+            }
+            //批号
+            var IPh = $("#IPh").val().trim();
+            if (IPh != "") {
+                document.getElementById("IsPH").style.display = "none";
                 isIPH = true;
+            } else {
+               $.ajax({
+                    url: "@Url.Action("BatchShutOut")",
+                    data:"batch="+IPh,
+                    type: "post",
+                    success: function (data) {
+                        if (data) {
+                            isIPH = true;
+                            document.getElementById("IsPH2").style.display = "none";
+                        }
+                        else {
+                            isIPH = false;
+                            document.getElementById("IsPH2").style.display = "";
+                        }
+                    }
+                });
                 document.getElementById("IsPH").style.display = "none";
             }
             //单价
-            var Iper = $("#Iper").val();
-            var i =/^([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2}))(\d*\.\d+)$/;
-            if (!i.test(Iper)|| Iper == "") {
+            var Iper = $("#Iper").val().trim();
+            if (Iper == "") {
                 document.getElementById("IsPer").style.display = "";
                 isIper = false;
             } else {
@@ -111,8 +123,8 @@
                 isIper = true;
             }
             //数量
-            var INumber = $("#INumber").val();
-            if (!i.test(INumber)|| INumber == "") {
+            var INumber = $("#INumber").val().trim();
+            if (INumber == "") {
                 document.getElementById("IsNumber").style.display = "";
                 isINumber = false;
             } else {
@@ -120,7 +132,7 @@
                 isINumber = true;
             }
             //周期
-            var ICycle = $("#ICycle").val();
+            var ICycle = $("#ICycle").val().trim();
             if (ICycle != "") {
                 document.getElementById("IsCycle").style.display = "none";
                 isICycle = true;
@@ -129,7 +141,7 @@
                 isICycle = false;
             }
             //入库时间
-            var t = $("#IncomeText").val();
+            var t = $("#IncomeText").val().trim();
             if (t == "") {
                 document.getElementById("IncomeText1").style.display = "";
                 isIIncomeText = false;
@@ -137,12 +149,9 @@
                 document.getElementById("IncomeText1").style.display = "none";
                 isIIncomeText = true;
             }
-
-            ph(IPh);
-            if (isISpecise && isIper && isINumber && isICycle && isIIncomeText && isISName && isISModel && isISCode && isIBC && isIPH && isPHExit) {
+            if (isISpecise && isIPH && isIper && isINumber && isICycle && isIIncomeText && isISName && isISModel && isISCode && isIBC) {
                 isTrue = true;
-            }
-            else {
+            } else {
                 isTrue = false;
             }
         }
@@ -190,22 +199,11 @@
             }
         }
 
-        function ph(obj) {
-            $.ajax({
-                    url: "@Url.Action("BatchShutOut")",
-                    data:"batch="+obj,
-                    type: "post",
-                    success: function (data) {
-                        if (data) {
-                            isPHExit = true;
-                            document.getElementById("IsPH2").style.display = "none";
-                        }
-                        else {
-                            isPHExit = false;
-                            document.getElementById("IsPH2").style.display = "";
-                        }
-                    }
-                });
+        function clearNoNum(obj) {
+            obj.value = obj.value.replace(/[^\d.]/g, ""); //清除"数字"和"."以外的字符
+            obj.value = obj.value.replace(/^\./g, ""); //验证第一个字符是数字而不是
+            obj.value = obj.value.replace(/\.{2,}/g, "."); //只保留第一个. 清除多余的
+            obj.value = obj.value.replace(".", "$#$").replace(/\./g, "").replace("$#$", ".");
         }
 
         var judjeWd = false;
@@ -218,13 +216,13 @@
         }
 
         $(function () {
-            $("#myform :input").change(function () {
-                $("#myform").data("changed", true);
-            });
+        $("#myform :input").change(function () {
+            $("#myform").data("changed", true);
         });
 
+        });
         function Check2() {
-            check();
+                    check();
                     if (isTrue) {
                         $.ajax({
                             url: "@Url.Action("InCome_update")",
@@ -241,6 +239,8 @@
                                 }
                             }
                         });
+                    } else {
+                        return ;
                     }
         }
 
@@ -338,7 +338,7 @@
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">单价（元）：</label>
                                             <label id="IsPer" style="color:#ff0000;display:none;font-size:13px">*不能为空,最多到小数点后两位</label>
-                                            <input class="form-control" name="unitPrice" type="number" value="@Model.unitPrice" id="Iper" />
+                                            <input class="form-control" name="unitPrice" type="number" value="@Model.unitPrice" id="Iper" onkeyup="clearNoNum(this)" />
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">单价的单位：</label>
@@ -350,7 +350,7 @@
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">数量：</label>
                                             <label id="IsNumber" style="color:#ff0000;display:none;font-size:13px">*不能为空,最多到小数点后两位</label>
-                                            <input class="form-control" name="amount" type="number" value="@Model.amount" id="INumber" />
+                                            <input class="form-control" name="amount" type="number" value="@Model.amount" id="INumber" onkeyup="clearNoNum(this)" />
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">计量单位：</label>
@@ -376,7 +376,7 @@
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">复检周期：</label>
                                             <label id="IsCycle" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
-                                            <input type="text" class="form-control" name="reviewCycle" value="@Model.reviewCycle" id="ICycle">
+                                            <input type="text" class="form-control" name="reviewCycle" value="@Model.reviewCycle" id="ICycle" onkeyup="clearNoNum(this)"/>
                                         </div>
                                     </div>
                                     <div class="form-row">

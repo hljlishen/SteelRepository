@@ -146,7 +146,7 @@
 
         function check() {
             //名称
-            var IName = $("#IName").val();
+            var IName = $("#IName").val().trim();
             if (IName == "") {
                 document.getElementById("IsName").style.display = "";
                 isIName = false;
@@ -155,7 +155,7 @@
                 isIName = true;
             }
             //规格
-            var ISize = $("#ISize").val();
+            var ISize = $("#ISize").val().trim();
             if (ISize == "") {
                 document.getElementById("IsSize").style.display = "";
                 isISize = false;
@@ -164,7 +164,7 @@
                 isISize = true;
             }
             //类别
-            var ISpecise = $("#ISpecise").val();
+            var ISpecise = $("#ISpecise").val().trim();
             if (ISpecise == "") {
                 document.getElementById("IsSpecise").style.display = "";
                 isISpecise = false;
@@ -173,7 +173,7 @@
                 isISpecise = true;
             }
             //编号
-            var IBh = $("#IBh").val();
+            var IBh = $("#IBh").val().trim();
             if (IBh == "") {
                 document.getElementById("IsBH").style.display = "";
                 isIBH = false;
@@ -182,7 +182,7 @@
                 isIBH = true;
             }
             //牌号
-             var IBC = $("#IBC").val();
+             var IBC = $("#IBC").val().trim();
             if (IBC == "") {
                 document.getElementById("IsBC").style.display = "";
                 isIBC = false;
@@ -191,7 +191,7 @@
                 isIBC = true;
             }
             //批号
-            var IPh = $("#IPh").val();
+            var IPh = $("#IPh").val().trim();
 
             if (IPh == "") {
                 document.getElementById("IsPH").style.display = "";
@@ -215,9 +215,8 @@
                 document.getElementById("IsPH").style.display = "none";
             }
             //单价
-            var Iper = $("#Iper").val();
-            var i = /^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/;
-            if (!i.test(Iper) || Iper == "") {
+            var Iper = $("#Iper").val().trim();
+            if (Iper == "") {
                 document.getElementById("IsPer").style.display = "";
                 isIper = false;
             } else {
@@ -226,8 +225,8 @@
 
             }
             //数量
-            var INumber = $("#INumber").val();
-            if (!i.test(INumber) || INumber == "") {
+            var INumber = $("#INumber").val().trim();
+            if (INumber == "") {
                 document.getElementById("IsNumber").style.display = "";
                 isINumber = false;
             } else {
@@ -235,7 +234,7 @@
                 isINumber = true;
             }
             //周期
-            var ICycle = $("#ICycle").val();
+            var ICycle = $("#ICycle").val().trim();
             if (ICycle == "") {
                 document.getElementById("IsCycle").style.display = "";
                 isICycle = false;
@@ -265,7 +264,7 @@
             }
 
             //入库时间
-            var incometime = $("#test1").val();
+            var incometime = $("#test1").val().trim();
             if (incometime == "") {
                 document.getElementById("inComeTime").style.display = "";
                 isInComeTime = false;
@@ -275,7 +274,7 @@
             }
 
             //复检时间
-            var rechecktime = $("#test2").val();
+            var rechecktime = $("#test2").val().trim();
             if (rechecktime == "") {
                 document.getElementById("recheckTime").style.display = "";
                 isRecheckTime = false;
@@ -284,7 +283,7 @@
                 isRecheckTime = true;
             }
             //复检依据
-            var IRecheckBasis = $("#IRecheckBasis").val();
+            var IRecheckBasis = $("#IRecheckBasis").val().trim();
             if (IRecheckBasis == "") {
                 document.getElementById("IsRecheckBasis").style.display = "";
                 isRecheckBasis = false;
@@ -293,7 +292,7 @@
                 isRecheckBasis = true;
             }
             //复检单号
-            var IRecheckOrderNo = $("#IRecheckOrderNo").val();
+            var IRecheckOrderNo = $("#IRecheckOrderNo").val().trim();
             if (IRecheckOrderNo == "") {
                 document.getElementById("IsRecheckOrderNo").style.display = "";
                 isRecheckOrderNo = false;
@@ -325,6 +324,12 @@
             return isTrue;
         }
         
+        function clearNoNum(obj) {
+            obj.value = obj.value.replace(/[^\d.]/g, ""); //清除"数字"和"."以外的字符
+            obj.value = obj.value.replace(/^\./g, ""); //验证第一个字符是数字而不是
+            obj.value = obj.value.replace(/\.{2,}/g, "."); //只保留第一个. 清除多余的
+            obj.value = obj.value.replace(".", "$#$").replace(/\./g, "").replace("$#$", ".");
+        }
 
         function nameblur() {
             var name = $("#IName").val();
@@ -482,8 +487,8 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">单价（元）：</label>
-                                            <label id="IsPer" style="color:#ff0000;display:none;font-size:13px">*不能为空,数字最多到小数点后两位</label>
-                                            <input class="form-control" name="unitPrice" type="text" id="Iper" />
+                                            <label id="IsPer" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
+                                            <input class="form-control" name="unitPrice" type="number" id="Iper" onkeyup="clearNoNum(this)" />
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">单价的单位：</label>
@@ -493,8 +498,8 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">数量：</label>
-                                            <label id="IsNumber" style="color:#ff0000;display:none;font-size:13px">*不能为空,数字最多到小数点后两位</label>
-                                            <input class="form-control" name="amount" type="text" id="INumber" />
+                                            <label id="IsNumber" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
+                                            <input class="form-control" name="amount" type="number" id="INumber" onkeyup="clearNoNum(this)" />
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">计量单位：</label>
@@ -526,8 +531,8 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">复检周期(年)：</label>
-                                            <label id="IsCycle" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
-                                            <input class="form-control" name="RecheckCycle" type="text" id="ICycle" />
+                                            <label id="IsCycle" style="color:#ff0000;display:none;font-size:13px">*不能为空，只能为数字</label>
+                                            <input class="form-control" name="RecheckCycle" type="number" id="ICycle" onkeyup="clearNoNum(this)" />
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">操作人：</label>
