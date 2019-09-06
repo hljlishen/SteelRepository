@@ -19,7 +19,7 @@
         var isPname1 = true;
         function check() {
             //项目令号
-            var pnumber1 = $("#pnumber1").val();
+            var pnumber1 = $("#pnumber1").val().trim();
             if (pnumber1 == "") {
                 document.getElementById("Ispnum1").style.display = "";
                 isPnum1 = false;
@@ -29,7 +29,7 @@
             }
 
             //项目名称
-            var pname1 = $("#pname1").val();
+            var pname1 = $("#pname1").val().trim();
             if (pname1 == "") {
                 document.getElementById("Ispname1").style.display = "";
                 isPname1 = false;

@@ -21,7 +21,7 @@
 
         function check() {
             //名称
-            var mName1 = $("#mName1").val();
+            var mName1 = $("#mName1").val().trim();
             var reg = /^\s*$/;
             if (!reg.test(mName1)) {
                 document.getElementById("IsmName1").style.display = "none";
@@ -32,7 +32,7 @@
             }
 
             //电话
-            var tel1 = $("#tel1").val();
+            var tel1 = $("#tel1").val().trim();
             if (/*!(/^((0\d{2,3}-\d{7,8})|(1[34578]\d{9}))$/.test(tel1))|| */tel1=="") {
                 document.getElementById("IsNum1").style.display = "";
                 isNumber1 = false;
@@ -41,7 +41,7 @@
                 isNumber1 = true;
             }
             //地址
-            var address1 = $("#address1").val();
+            var address1 = $("#address1").val().trim();
             var reg = /^\s*$/;
             if (!reg.test(address1)) {
                 document.getElementById("IsAddress1").style.display = "none";

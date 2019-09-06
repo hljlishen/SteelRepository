@@ -47,8 +47,7 @@
         function check() {
             //类别
             var ISpecise = $("#ISpecise").val();
-            var n = /^\s*$/;
-            if (!n.test(ISpecise)) {
+            if (ISpecise !="") {
                 document.getElementById("IsSpecise").style.display = "none";
                 isISpecise = true;
             } else {
@@ -57,8 +56,7 @@
             }
             //名称
             var ISName = $("#IName").val();
-            var n = /^\s*$/;
-            if (!n.test(ISName)) {
+            if (ISName !="") {
                 document.getElementById("IsName").style.display = "none";
                 isISName = true;
             } else {
@@ -67,8 +65,7 @@
             }
             //规格
             var ISModel = $("#ISize").val();
-            var n = /^\s*$/;
-            if (!n.test(ISModel)) {
+            if (ISModel !="") {
                 document.getElementById("IsModel").style.display = "none";
                 isISModel = true;
             } else {
@@ -86,8 +83,7 @@
             }
             //编号
             var IScode = $("#IBh").val();
-            var n = /^\s*$/;
-            if (!n.test(IScode)) {
+            if (IScode != "") {
                 document.getElementById("Iscode").style.display = "none";
                 isISCode = true;
             } else {
@@ -96,8 +92,7 @@
             }
             //批号
             var IPh = $("#IPh").val();
-            var n = /^\s*$/;
-            if (!n.test(IPh)) {
+            if (IPh != "") {
                 document.getElementById("IsPH").style.display = "none";
                 isIPH = true;
             } else {
@@ -120,7 +115,8 @@
             }
             //单价
             var Iper = $("#Iper").val();
-            var i = /^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/;
+            var i =/^([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2}))(\d*\.\d+)$/;
+            //var i = /^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/;
             if (!i.test(Iper)|| Iper == "") {
                 document.getElementById("IsPer").style.display = "";
                 isIper = false;
@@ -130,7 +126,8 @@
             }
             //数量
             var INumber = $("#INumber").val();
-            if (!i.test(INumber) || INumber == "") {
+            var i =/^([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2}))(\d*\.\d+)$/;
+            if (!i.test(INumber)|| INumber == "") {
                 document.getElementById("IsNumber").style.display = "";
                 isINumber = false;
             } else {
@@ -139,8 +136,7 @@
             }
             //周期
             var ICycle = $("#ICycle").val();
-            var n = /^\s*$/;
-            if (!n.test(ICycle)) {
+            if (ICycle != "") {
                 document.getElementById("IsCycle").style.display = "none";
                 isICycle = true;
             } else {
@@ -338,7 +334,7 @@
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">单价（元）：</label>
                                             <label id="IsPer" style="color:#ff0000;display:none;font-size:13px">*不能为空,最多到小数点后两位</label>
-                                            <input class="form-control" name="unitPrice" type="text" value="@Model.unitPrice" id="Iper" />
+                                            <input class="form-control" name="unitPrice" type="number" value="@Model.unitPrice" id="Iper" />
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">单价的单位：</label>
@@ -350,7 +346,7 @@
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">数量：</label>
                                             <label id="IsNumber" style="color:#ff0000;display:none;font-size:13px">*不能为空,最多到小数点后两位</label>
-                                            <input class="form-control" name="amount" type="text" value="@Model.amount" id="INumber" />
+                                            <input class="form-control" name="amount" type="number" value="@Model.amount" id="INumber" />
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">计量单位：</label>

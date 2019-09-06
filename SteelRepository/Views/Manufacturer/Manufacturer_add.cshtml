@@ -20,7 +20,7 @@
 
         function check() {
             //名称
-            var mName = $("#mName").val();
+            var mName = $("#mName").val().trim();
             if (mName == "") {
                 document.getElementById("IsmName").style.display = "";
                 ismName = false;
@@ -29,7 +29,7 @@
                 ismName = true;
             }
             //电话
-            var tel = document.getElementById('tel').value;
+            var tel = document.getElementById('tel').value.trim();
             if (/*!(/^((0\d{2,3}-\d{7,8})|(1[34578]\d{9}))$/.test(tel))|| */tel=="") {
                 document.getElementById("IsNum").style.display = "";
                 isNum = false;
@@ -39,7 +39,7 @@
             }
 
             //地址
-            var address = $("#address").val();
+            var address = $("#address").val().trim();
             if (address == "") {
                 document.getElementById("IsAddress").style.display = "";
                 isAddress = false;
@@ -103,7 +103,7 @@
                                     <div class="form-group">
                                         <label for="signin_form">联系方式：</label>
                                         <label id="IsNum" style="color:#ff0000;display:none;font-size:13px">*联系方式不为空，请重新填写</label>
-                                        @Html.TextBoxFor(m => m.contact, new { @class = "form-control", type = "text", id = "tel", maxlength = "11" })
+                                        @Html.TextBoxFor(m => m.contact, new { @class = "form-control", type = "text", id = "tel"})
                                     </div>
                                     <div class="form-group">
                                         <label for="signin_form">地址：</label>
