@@ -75,7 +75,7 @@ namespace SteelRepository.Controllers
             var number = double.Parse(collection["number"]);
             var employeeid = Inventory.NameGetEmployeeid(collection["employeeId"]);
             var projectid =Convert.ToInt32(collection["project"]);
-            var ins = collection["instructions"];
+            var ins = collection["instructions"].Trim();
             var unit = inventory.unit;
             if (b) {
                 //try {

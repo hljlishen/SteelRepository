@@ -18,7 +18,7 @@
         var isDName;
         var isDTrue;
         function check() {
-            var Dname1 = $("#Dname").val();
+            var Dname1 = $("#Dname").val().trim();
             var n = /^[\u4E00-\u9FA5A-Za-z0-9][\x21-\x7e]+$/;
             if (n.test(Dname1) || Dname1 !== "") {
                 document.getElementById("Isname").style.display = "none";

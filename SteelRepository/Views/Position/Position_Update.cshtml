@@ -18,7 +18,7 @@
         //var isDName;
         //var isDTrue;
         function check() {
-            var position = $("#position").val();
+            var position = $("#position").val().trim();
             var n = /^[\u4E00-\u9FA5A-Za-z0-9]+$/;
             if (n.test(position)|| position !== "") {
                 document.getElementById("IsPos").style.display = "none";
