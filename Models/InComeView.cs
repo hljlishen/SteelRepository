@@ -32,5 +32,6 @@ namespace Models
         public string manufacturersName { get; set; }
         public System.DateTime recheckTime { get; set; }
         public string positionName { get; set; }
+        public string brandCodeName { get; set; }
     }
 }

@@ -25,6 +25,7 @@ namespace Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<BrandCode> BrandCode { get; set; }
         public virtual DbSet<Category> Category { get; set; }
         public virtual DbSet<Department> Department { get; set; }
         public virtual DbSet<Employee> Employee { get; set; }

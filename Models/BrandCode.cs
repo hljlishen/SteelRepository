@@ -12,12 +12,9 @@ namespace Models
     using System;
     using System.Collections.Generic;
     
-    public partial class RecheckReport
+    public partial class BrandCode
     {
         public int id { get; set; }
-        public System.DateTime recheckTime { get; set; }
-        public int incomeId { get; set; }
-        public string recheckBasis { get; set; }
-        public string recheckOrderNo { get; set; }
+        public string brandCodeName { get; set; }
     }
 }

@@ -362,5 +362,11 @@ namespace Models
                 return Sum["consumptionAmount"];
             }
         }
+
+        public static int Update(int incomeId, double amount, string unit, int positionId, IDbInterface helper)
+        {
+            //helper.FindFirst<Inventory, int>("incomeId")
+            return 1;
+        }
     }
 }

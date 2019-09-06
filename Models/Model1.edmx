@@ -5,6 +5,13 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
       <Schema Namespace="SteelRepositoryDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BrandCode">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="brandCodeName" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
         <EntityType Name="Category">
           <Key>
             <PropertyRef Name="id" />
@@ -38,6 +45,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="brandCodeId" Type="int" />
           <Property Name="categoryId" Type="int" Nullable="false" />
           <Property Name="codeId" Type="int" Nullable="false" />
           <Property Name="batch" Type="nvarchar(max)" Nullable="false" />
@@ -142,6 +150,8 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="recheckTime" Type="datetime" Nullable="false" />
           <Property Name="incomeId" Type="int" Nullable="false" />
+          <Property Name="recheckBasis" Type="nvarchar(max)" />
+          <Property Name="recheckOrderNo" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="RecheckReportImg">
           <Key>
@@ -204,6 +214,7 @@
             <PropertyRef Name="manufacturersName" />
             <PropertyRef Name="recheckTime" />
             <PropertyRef Name="positionName" />
+            <PropertyRef Name="brandCodeName" />
           </Key>
           <Property Name="incoId" Type="int" Nullable="false" />
           <Property Name="batch" Type="nvarchar(max)" Nullable="false" />
@@ -223,6 +234,7 @@
           <Property Name="manufacturersName" Type="nvarchar(max)" Nullable="false" />
           <Property Name="recheckTime" Type="datetime" Nullable="false" />
           <Property Name="positionName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="brandCodeName" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“SteelRepositoryDB.dbo.InventoryView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -303,6 +315,7 @@
           <Property Name="priceMeasure" Type="nchar" MaxLength="10" />
         </EntityType>
         <EntityContainer Name="SteelRepositoryDBModelStoreContainer">
+          <EntitySet Name="BrandCode" EntityType="Self.BrandCode" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
@@ -354,7 +367,8 @@
     [InComeView].[manuId] AS [manuId], 
     [InComeView].[manufacturersName] AS [manufacturersName], 
     [InComeView].[recheckTime] AS [recheckTime], 
-    [InComeView].[positionName] AS [positionName]
+    [InComeView].[positionName] AS [positionName], 
+    [InComeView].[brandCodeName] AS [brandCodeName]
     FROM [dbo].[InComeView] AS [InComeView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="InventoryView" EntityType="Self.InventoryView" store:Type="Views" store:Schema="dbo">
@@ -408,6 +422,13 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SteelRepositoryDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BrandCode">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="brandCodeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
         <EntityType Name="Category">
           <Key>
             <PropertyRef Name="id" />
@@ -441,6 +462,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="brandCodeId" Type="Int32" />
           <Property Name="categoryId" Type="Int32" Nullable="false" />
           <Property Name="codeId" Type="Int32" Nullable="false" />
           <Property Name="batch" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
@@ -545,6 +567,8 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="recheckTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="incomeId" Type="Int32" Nullable="false" />
+          <Property Name="recheckBasis" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="recheckOrderNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="RecheckReportImg">
           <Key>
@@ -601,6 +625,7 @@
             <PropertyRef Name="manufacturersName" />
             <PropertyRef Name="recheckTime" />
             <PropertyRef Name="positionName" />
+            <PropertyRef Name="brandCodeName" />
           </Key>
           <Property Name="incoId" Type="Int32" Nullable="false" />
           <Property Name="batch" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
@@ -620,6 +645,7 @@
           <Property Name="manufacturersName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="recheckTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="positionName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="brandCodeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <EntityType Name="InventoryView">
           <Key>
@@ -695,7 +721,8 @@
           <Property Name="state" Type="Int32" />
           <Property Name="priceMeasure" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
         </EntityType>
-        <EntityContainer Name="SteelRepositoryDBEntities11" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="SteelRepositoryDBEntities13" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BrandCode" EntityType="Self.BrandCode" />
           <EntitySet Name="Category" EntityType="Self.Category" />
           <EntitySet Name="Department" EntityType="Self.Department" />
           <EntitySet Name="Employee" EntityType="Self.Employee" />
@@ -723,7 +750,15 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="SteelRepositoryDBModelStoreContainer" CdmEntityContainer="SteelRepositoryDBEntities11">
+        <EntityContainerMapping StorageEntityContainer="SteelRepositoryDBModelStoreContainer" CdmEntityContainer="SteelRepositoryDBEntities13">
+          <EntitySetMapping Name="BrandCode">
+            <EntityTypeMapping TypeName="SteelRepositoryDBModel.BrandCode">
+              <MappingFragment StoreEntitySet="BrandCode">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="brandCodeName" ColumnName="brandCodeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Category">
             <EntityTypeMapping TypeName="SteelRepositoryDBModel.Category">
               <MappingFragment StoreEntitySet="Category">
@@ -759,6 +794,7 @@
             <EntityTypeMapping TypeName="SteelRepositoryDBModel.InCome">
               <MappingFragment StoreEntitySet="InCome">
                 <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="brandCodeId" ColumnName="brandCodeId" />
                 <ScalarProperty Name="categoryId" ColumnName="categoryId" />
                 <ScalarProperty Name="codeId" ColumnName="codeId" />
                 <ScalarProperty Name="batch" ColumnName="batch" />
@@ -873,6 +909,8 @@
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="recheckTime" ColumnName="recheckTime" />
                 <ScalarProperty Name="incomeId" ColumnName="incomeId" />
+                <ScalarProperty Name="recheckBasis" ColumnName="recheckBasis" />
+                <ScalarProperty Name="recheckOrderNo" ColumnName="recheckOrderNo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -936,6 +974,7 @@
                 <ScalarProperty Name="manufacturersName" ColumnName="manufacturersName" />
                 <ScalarProperty Name="recheckTime" ColumnName="recheckTime" />
                 <ScalarProperty Name="positionName" ColumnName="positionName" />
+                <ScalarProperty Name="brandCodeName" ColumnName="brandCodeName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

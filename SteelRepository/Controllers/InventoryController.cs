@@ -73,7 +73,7 @@ namespace SteelRepository.Controllers
         {
             bool b = DateTime.TryParse(collection["date"], out DateTime begin);
             var number = double.Parse(collection["number"]);
-            var employeeid = Inventory.NameGetEmployeeid(collection["employeeName"]);
+            var employeeid = Inventory.NameGetEmployeeid(collection["employeeId"]);
             var projectid =Convert.ToInt32(collection["project"]);
             var ins = collection["instructions"];
             var unit = inventory.unit;

@@ -7,11 +7,11 @@ namespace Models
 {
     public partial class RecheckReport
     {
-        public static RecheckReport Insert(int incomeId, DateTime dateTime, List<byte[]> imgs)
+        public static RecheckReport Insert(int incomeId, DateTime dateTime, List<byte[]> imgs,string recheckBasis, string recheckOrderNo)
         {
             if (imgs == null)
                 throw new Exception("报告图片不能为空，至少上传一张图片");
-            var report = new RecheckReport() { incomeId = incomeId, recheckTime = dateTime };
+            var report = new RecheckReport() { incomeId = incomeId, recheckTime = dateTime ,recheckBasis = recheckBasis ,recheckOrderNo = recheckOrderNo };
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
                 helper.Insert(report);
@@ -116,6 +116,14 @@ namespace Models
         public static DateTime RecheckReportTime(DateTime dateTime, double storageTime)
         {
             return dateTime.AddDays(storageTime*365);
+        }
+
+        public static bool RecheckOrderNo(string recheckOrderNo)
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return helper.FindFirst<RecheckReport, string>("recheckOrderNo", recheckOrderNo) != null;
+            }
         }
     }
 

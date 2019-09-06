@@ -33,8 +33,6 @@ namespace SteelRepository.Controllers
             string end = collection["date1"];
             int materialCodeid = Convert.ToInt32(collection["materialCodeid"]);
             int manufacturerid = Convert.ToInt32(collection["manufacturerid"]);
-            //ViewData["InComeView"] = null;
-            //ViewData["InComeView"] = InCome.MulSelectCheckInCome(begin, end, materialCodeid, manufacturerid);
             return View(InCome.MulSelectCheckInCome(begin, end, materialCodeid, manufacturerid));
         }
 
@@ -57,12 +55,13 @@ namespace SteelRepository.Controllers
         public JsonResult InCome_add(InCome inCome, FormCollection collection)
         {
             inCome.categoryId = Category.Insert(collection["category"]).id;
+            inCome.brandCodeId = BrandCode.Insert(collection["brandCode"]).id;
             inCome.batch = collection["batch"];
             inCome.unitPrice = double.Parse(collection["unitPrice"]);
             inCome.amount = double.Parse(collection["amount"]);
             inCome.storageTime = DateTime.Parse(collection["InComeTime"]);
             inCome.reviewCycle = double.Parse(collection["RecheckCycle"]);
-            InCome.NewInCome(inCome, int.Parse(collection["position"]), collection["materialCode"], collection["name1"], collection["model"], DateTime.Parse(collection["RecheckTime"]), qualityCertification(collection), recheckReport(collection));
+            InCome.NewInCome(inCome, int.Parse(collection["position"]), collection["materialCode"], collection["name1"], collection["model"], collection["RecheckBasis"],collection["RecheckOrderNo"],DateTime.Parse(collection["RecheckTime"]), qualityCertification(collection), recheckReport(collection));
             return Json(true);
         }
 
@@ -140,6 +139,7 @@ namespace SteelRepository.Controllers
             string model = collection["model"];
             string code = collection["materialCode"];
             UpIncome.categoryId = Category.Insert(collection["category"]).id;
+            UpIncome.brandCodeId = BrandCode.Insert(collection["brandCode"]).id;
             UpIncome.batch = collection["batch"];
             UpIncome.operatorId = int.Parse(collection["operator"]);
             UpIncome.unitPrice = double.Parse(collection["unitPrice"]);
@@ -148,9 +148,8 @@ namespace SteelRepository.Controllers
             UpIncome.unit = collection["unit"];
             UpIncome.menufactureId = int.Parse(collection["manufacturer"]);
             UpIncome.storageTime = DateTime.Parse(collection["IncomeText"]);
-            UpIncome.operatorId = int.Parse(collection["operator"]);
             UpIncome.reviewCycle = double.Parse(collection["reviewCycle"]);
-            return Json(InCome.Update(UpIncome,name,model,code));
+            return Json(InCome.Update(UpIncome,name,model,code,int.Parse(collection["position"])));
         }
 
         public ActionResult QualityReport(int id)
@@ -195,11 +194,13 @@ namespace SteelRepository.Controllers
         public JsonResult RecheckReports(FormCollection collection)
         {
             DelectRecheckReportImg(collection["recheck"]);
+            string recheckBasis = null;
+            string recheckOrderNo = null;
             List<byte[]> byteList = recheckReport(collection);
             if (byteList != null && byteList.Count != 0)
             {
                 DateTime dateTime = DateTime.Parse(collection["RecheckTime"]);
-                RecheckReport.Insert(incomeid, dateTime, byteList);
+                RecheckReport.Insert(incomeid, dateTime, byteList, recheckBasis, recheckOrderNo);
             }
             return Json(true);
         }
@@ -452,6 +453,24 @@ namespace SteelRepository.Controllers
         public ActionResult GetModel(string code)
         {
             return Json(MaterialCode.GetModel(code));
+        }
+
+        public ActionResult RecheckOrderNo(string recheckOrderNo)
+        {
+            return Json(RecheckReport.RecheckOrderNo(recheckOrderNo));
+        }
+
+        public ActionResult Batch(string batch)
+        {
+            return Json(InCome.BatchIdExist(batch));
+        }
+
+        public ActionResult BatchShutOut(string batch)
+        {
+            if (batch == In.batch)
+                return Json(true);
+
+            return Json(InCome.BatchIdExist(batch));
         }
     }
 }

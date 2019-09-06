@@ -15,6 +15,7 @@ namespace Models
     public partial class InCome
     {
         public int id { get; set; }
+        public Nullable<int> brandCodeId { get; set; }
         public int categoryId { get; set; }
         public int codeId { get; set; }
         public string batch { get; set; }

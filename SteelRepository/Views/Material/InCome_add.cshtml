@@ -2,6 +2,14 @@
 @{
     Layout = null;
 }
+@{
+    List<Models.Name> names = Models.Name.SelectAll();
+    List<Models.Model> models = Models.Name.SelectModelAll();
+    List<Models.Category> categories = Models.Name.SelectCategoryAll();
+    List<Models.BrandCode> brandCodes = Models.Name.SelectBrandCodeAll();
+    List<Models.MaterialCode> materialCodes = Models.Name.SelectMaterialCodeAll();
+    List<Models.RecheckReport> recheckReports = Models.Name.SelectRecheckReportAll();
+}
 <!DOCTYPE html>
 <html>
 <head>
@@ -124,6 +132,7 @@
         var isISize = true;
         var isISpecise = true;
         var isIBH = true;
+        var isIBC = true;
         var isIPH = true;
         var isIper = true;
         var isINumber = true;
@@ -132,6 +141,8 @@
         var isRecheck = true;
         var isInComeTime = true;
         var isRecheckTime = true;
+        var isRecheckBasis = true;
+        var isRecheckOrderNo = true;
 
         function check() {
             //名称
@@ -170,14 +181,37 @@
                 document.getElementById("IsBH").style.display = "none";
                 isIBH = true;
             }
+            //牌号
+             var IBC = $("#IBC").val();
+            if (IBC == "") {
+                document.getElementById("IsBC").style.display = "";
+                isIBC = false;
+            } else {
+                document.getElementById("IsBC").style.display = "none";
+                isIBC = true;
+            }
             //批号
             var IPh = $("#IPh").val();
             if (IPh == "") {
                 document.getElementById("IsPH").style.display = "";
                 isIPH = false;
             } else {
+                $.ajax({
+                    url: "@Url.Action("Batch")",
+                    data:"IPh="+IPh,
+                    type: "post",
+                    success: function (data) {
+                        if (data) {
+                            isIPH = true;
+                            document.getElementById("IsPH2").style.display = "none";
+                        }
+                        else {
+                            isIPH = false;
+                            document.getElementById("IsPH2").style.display = "";
+                        }
+                    }
+                });
                 document.getElementById("IsPH").style.display = "none";
-                isIPH = true;
             }
             //单价
             var Iper = $("#Iper").val();
@@ -248,8 +282,41 @@
                 document.getElementById("recheckTime").style.display = "none";
                 isRecheckTime = true;
             }
+            //复检依据
+            var IRecheckBasis = $("#IRecheckBasis").val();
+            if (IRecheckBasis == "") {
+                document.getElementById("IsRecheckBasis").style.display = "";
+                isRecheckBasis = false;
+            } else {
+                document.getElementById("IsRecheckBasis").style.display = "none";
+                isRecheckBasis = true;
+            }
+            //复检单号
+            var IRecheckOrderNo = $("#IRecheckOrderNo").val();
+            if (IRecheckOrderNo == "") {
+                document.getElementById("IsRecheckOrderNo").style.display = "";
+                isRecheckOrderNo = false;
+            } else {
+                    $.ajax({
+                    url: "@Url.Action("RecheckOrderNo")",
+                    data:"IRecheckOrderNo="+IRecheckOrderNo,
+                    type: "post",
+                    success: function (data) {
+                        if (data) {
+                            isRecheckOrderNo = true;
+                            document.getElementById("IsRecheckOrderNo2").style.display = "none";
+                        }
+                        else {
+                            isRecheckOrderNo = false;
+                            document.getElementById("IsRecheckOrderNo2").style.display = "";
+                        }
+                    }
+                });
+                document.getElementById("IsRecheckOrderNo").style.display = "none";
 
-            if (isIName && isISize && isISpecise && isIBH && isIPH && isIper && isINumber && isICycle && isQuality && isRecheck && isInComeTime && isRecheckTime) {
+            }
+
+            if (isIName && isISize && isISpecise && isIBH && isIBC && isIPH && isIper && isINumber && isICycle && isQuality && isRecheck && isInComeTime && isRecheckTime) {
                 isTrue = true;
             } else {
                 isTrue = false;
@@ -345,37 +412,71 @@
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">名称：</label>
                                             <label id="IsName" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
-                                            <input class="form-control" name="name1" type="text" id="IName" onblur="nameblur()"/>
+                                            <input class="form-control" name="name1" type="text" id="IName" list="namelist" onblur="nameblur()" />
+                                            <datalist id="namelist">
+                                                @foreach (var name in names)
+                                                {
+                                                    <option>@name.materialName</option>
+                                                }
+                                            </datalist>
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">规格：</label>
                                             <label id="IsSize" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
-                                            <input class="form-control" name="model" type="text" id="ISize" onblur="nameblur()"/>
+                                            <input class="form-control" name="model" type="text" id="ISize" list="modellist" onblur="nameblur()" />
+                                            <datalist id="modellist">
+                                                @foreach (var mo in models)
+                                                {
+                                                    <option>@mo.modelName</option>
+                                                }
+                                            </datalist>
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">类别：</label>
                                             <label id="IsSpecise" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
-                                            <input class="form-control" name="category" type="text" id="ISpecise" />
+                                            <input class="form-control" name="category" type="text" id="ISpecise" list="categorylist" />
+                                            <datalist id="categorylist">
+                                                @foreach (var categorie in categories)
+                                                {
+                                                    <option>@categorie.categoryName</option>
+                                                }
+                                            </datalist>
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label for="signin_form">编号：</label>
-                                            <label id="IsBH" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
-                                            <input class="form-control" name="materialCode" type="text" id="IBh" onblur="codeblur()"/>
+                                            <label for="signin_form">牌号：</label>
+                                            <label id="IsBC" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
+                                            <input class="form-control" name="brandCode" type="text" id="IBC" list="brandCodelist"/>
+                                            <datalist id="brandCodelist">
+                                                @foreach (var brandCode in brandCodes)
+                                                {
+                                                    <option>@brandCode.brandCodeName</option>
+                                                }
+                                            </datalist>
                                         </div>
+
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            <label for="signin_form">批号：</label>
-                                            <label id="IsPH" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
-                                            <input class="form-control" name="batch" type="text" id="IPh" />
+                                            <label for="signin_form">编号：</label>
+                                            <label id="IsBH" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
+                                            <input class="form-control" name="materialCode" type="text" id="IBh" onblur="codeblur()" list="materialCodelist"  />
+                                            <datalist id="materialCodelist">
+                                                @foreach (var materialCode in materialCodes)
+                                                {
+                                                    <option>@materialCode.code</option>
+                                                }
+                                            </datalist>
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label for="signin_form">操作人：</label>
-                                            @Html.DropDownListFor(m => m.operatorId, ViewBag.selectOperator as SelectList, new { @class = "form-control", id = "example-select" })
+                                            <label for="signin_form">批号：</label>
+                                            <label id="IsPH" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
+                                            <label id="IsPH2" style="color:#ff0000;display:none;font-size:13px">*批号已存在</label>
+                                            <input class="form-control" name="batch" type="text" id="IPh" />
                                         </div>
-                                        
+
+
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
@@ -413,12 +514,12 @@
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">入库时间：</label>
                                             <label id="inComeTime" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
-                                            <input type="text" class="layui-input" id="test1" name="InComeTime" value="@Models.Inventory.NewDateTime().ToShortDateString()">
+                                            <input type="text" class="layui-input" id="test1" name="InComeTime" value="@Models.Inventory.NewDateTime().ToString("yyyy-MM-dd")">
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">复检时间：</label>
                                             <label id="recheckTime" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
-                                            <input type="text" class="layui-input" id="test2" name="RecheckTime" value="@Models.Inventory.NewDateTime().ToShortDateString()">
+                                            <input type="text" class="layui-input" id="test2" name="RecheckTime" value="@Models.Inventory.NewDateTime().ToString("yyyy-MM-dd")">
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -426,6 +527,29 @@
                                             <label for="signin_form">复检周期(年)：</label>
                                             <label id="IsCycle" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
                                             <input class="form-control" name="RecheckCycle" type="text" id="ICycle" />
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="signin_form">操作人：</label>
+                                            @Html.DropDownListFor(m => m.operatorId, ViewBag.selectOperator as SelectList, new { @class = "form-control", id = "example-select" })
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="signin_form">复检依据：</label>
+                                            <label id="IsRecheckBasis" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
+                                            <input class="form-control" name="RecheckBasis" type="text" id="IRecheckBasis" />
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="signin_form">复检单号：</label>
+                                            <label id="IsRecheckOrderNo" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
+                                            <label id="IsRecheckOrderNo2" style="color:#ff0000;display:none;font-size:13px">*复检单号已存在</label>
+                                            <input class="form-control" name="RecheckOrderNo" type="text" id="IRecheckOrderNo" list="recheckOrderNolist" />
+                                            <datalist id="recheckOrderNolist">
+                                                @foreach (var recheckReport in recheckReports)
+                                                {
+                                                    <option>@recheckReport.recheckBasis</option>
+                                                }
+                                            </datalist>
                                         </div>
                                     </div>
 

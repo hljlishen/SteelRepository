@@ -42,7 +42,7 @@
             function InComeAdd() {
                 var url = "InCome_add";
                 var width = "100%";
-                var height = "750px";
+                var height = "800px";
                 parent.OpenWin2(url, width, height);
             }
 
@@ -170,7 +170,7 @@
                                 }
                             </div>
                             <div class="l-button" style="margin:10px; margin-left:15px;">
-                                <a href="javascript:export_excel('products-datatable10')" class="side-nav-link">
+                                <a href="javascript:export_excel('products-datatable11')" class="side-nav-link">
                                     <i class=" dripicons-export "></i>
                                     <span> 导出Excel </span>
                                 </a>
@@ -178,7 +178,7 @@
                         </div>
 
                         <div class="table-responsive">
-                            <table class="table table-centered table-striped dt-responsive nowrap w-100" id="products-datatable10">
+                            <table class="table table-centered table-striped dt-responsive nowrap w-100" id="products-datatable11">
                                 <thead>
                                     <tr>
                                         <th style="width: 10px;">
@@ -192,6 +192,7 @@
                                         <th>规格</th>
                                         <th>类别</th>
                                         <th>编号</th>
+                                        <th>牌号</th>
                                         <th>批号</th>
                                         <th>厂商</th>
                                         <th>入库时间</th>
@@ -233,6 +234,7 @@
                                         <td>@income.modelName</td>
                                         <td>@income.categoryName</td>
                                         <td>@income.code</td>
+                                        <td>@income.brandCodeName</td>
                                         <td>@income.batch</td>
                                         <td>@income.manufacturersName</td>
                                         <td>@income.storageTime.ToString("d")</td>

@@ -126,12 +126,12 @@ namespace Models
             }
         }
 
-        public static InCome NewInCome(InCome inCome, int positionId, string materialCode, string materialName, string materialModel, DateTime RecheckTime, List<byte[]> qualityCertification = null, List<byte[]> recheckReport = null)
+        public static InCome NewInCome(InCome inCome, int positionId, string materialCode, string materialName,string recheckBasis,string recheckOrderNo, string materialModel, DateTime RecheckTime, List<byte[]> qualityCertification = null, List<byte[]> recheckReport = null)
         {
-            return NewInCome(inCome.storageTime, inCome.reviewCycle, inCome.categoryId, materialCode, materialName, materialModel, inCome.batch, positionId, inCome.unit, inCome.amount, inCome.operatorId, RecheckTime, inCome.unitPrice, inCome.priceMeasure, inCome.menufactureId, qualityCertification, recheckReport);
+            return NewInCome(recheckBasis, recheckOrderNo, inCome.storageTime, inCome.reviewCycle, inCome.categoryId,inCome.brandCodeId.Value , materialCode, materialName, materialModel, inCome.batch, positionId, inCome.unit, inCome.amount, inCome.operatorId, RecheckTime, inCome.unitPrice, inCome.priceMeasure, inCome.menufactureId, qualityCertification, recheckReport);
         }
 
-        public static InCome NewInCome(DateTime dateTime, double recheckCycle, int categoryId, string materialCode, string materialName, string materialModel, string batch, int positionId, string measure, double amount, int operatorId, DateTime RecheckTime, double? price = null, string priceMeasure = "kg", int? menufactureId = null, List<byte[]> qualityCertification = null, List<byte[]> recheckReport = null)
+        public static InCome NewInCome(string recheckBasis,string recheckOrderNo,DateTime dateTime, double recheckCycle, int categoryId, int brandCodeId, string materialCode, string materialName, string materialModel, string batch, int positionId, string measure, double amount, int operatorId, DateTime RecheckTime, double? price = null, string priceMeasure = "kg", int? menufactureId = null, List<byte[]> qualityCertification = null, List<byte[]> recheckReport = null)
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
@@ -149,7 +149,7 @@ namespace Models
                 if (BatchIdExist(batch, helper)) throw new Exception("批号已存在");
 
                 //写入入库
-                var income = new InCome() { categoryId = categoryId, batch = batch, codeId = mCode.id, unit = measure, amount = amount, operatorId = operatorId, unitPrice = price, menufactureId = menufactureId, storageTime = dateTime, priceMeasure = priceMeasure ,reviewCycle=recheckCycle};
+                var income = new InCome() { categoryId = categoryId, brandCodeId = brandCodeId, batch = batch, codeId = mCode.id, unit = measure, amount = amount, operatorId = operatorId, unitPrice = price, menufactureId = menufactureId, storageTime = dateTime, priceMeasure = priceMeasure ,reviewCycle=recheckCycle};
                 helper.Insert(income);
 
                 //写入质量报告图片
@@ -164,7 +164,7 @@ namespace Models
                 //写入复检报告图片
                 if (recheckReport != null)
                 {
-                    RecheckReport.Insert(income.id, RecheckTime, recheckReport);
+                    RecheckReport.Insert(income.id, RecheckTime, recheckReport, recheckBasis, recheckOrderNo);
                 }
                 //写入库存;
                 var inventory = Inventory.Insert(income.id, amount, measure, positionId, helper);
@@ -219,7 +219,7 @@ namespace Models
             }
         }
 
-        public static int Update(InCome inCome,string name,string model,string code)
+        public static int Update(InCome inCome,string name,string model,string code,int positionId)
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
@@ -236,7 +236,6 @@ namespace Models
                 inCome.codeId = mCode.id;
                 double? kgPrice = 0;
                 double weight = 0;
-                if (BatchIdExist(inCome.batch,inCome.id ,helper)) throw new Exception("批号已存在");
                 //修改单价
                 foreach (var outcome in OutCome.InComeIdSelect(inCome.id, helper))
                 {
@@ -251,6 +250,8 @@ namespace Models
                     outcome.price = kgPrice * weight;
                     helper.Update(outcome); 
                 }
+                //修改库存
+                var inventory = Inventory.Update(inCome.id, inCome.amount, inCome.unit, positionId, helper);
                 return helper.Update(inCome);
             }
         }
@@ -262,16 +263,14 @@ namespace Models
             return income != null;
         }
 
-        public static bool BatchIdExist(string batch,int incomeId ,IDbInterface helper)
+        public static bool BatchIdExist(string batch)
         {
-            var income = helper.FindFirst<InCome, string>("batch", batch);
-            if (income != null)
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                if (income.id != incomeId)
-                    return true;
+                var income = helper.FindFirst<InCome, string>("batch", batch);
+
+                return income != null;
             }
-            
-            return false;
         }
 
         public static List<InCome> GetInComes()

@@ -17,10 +17,13 @@ namespace Models
                 List<Tree> listTree = new List<Tree>();
                 foreach (var category in helper.SelectAll<Category>())
                 {
-                    Tree tree = new Tree();
-                    tree.title = category.categoryName;
-                    tree.children = GetMateialName(helper,category);
-                    listTree.Add(tree);
+                    if (category != null)
+                    {
+                        Tree tree = new Tree();
+                        tree.title = category.categoryName;
+                        tree.children = GetMateialName(helper, category);
+                        listTree.Add(tree);
+                    }
                 }
                 return listTree;
             }
@@ -29,13 +32,28 @@ namespace Models
         private static List<Tree> GetMateialName(IDbInterface helper,Category category)
         {
             List<Tree> listTree2 = new List<Tree>();
+            List<MaterialCode> materialcode = new List<MaterialCode>();
             foreach (var income in helper.Select<InCome>(p => p.categoryId == category.id))
             {
                 Tree tree = new Tree();
-                int materialNameId = helper.FindId<MaterialCode>(income.codeId).materialNameId;
-                tree.title = helper.FindId<Name>(materialNameId).materialName;
-                tree.children = GetModelName(materialNameId, helper);
-                listTree2.Add(tree);
+                bool isSame = true;
+                MaterialCode materialCode = helper.FindId<MaterialCode>(income.codeId);
+                foreach (var mc in materialcode)
+                {
+                    if (mc.materialNameId == materialCode.materialNameId)
+                    {
+                        isSame = false;
+                        continue;
+                    }
+                }
+                if (isSame)
+                {
+                    materialcode.Add(materialCode);
+                    int materialNameId = materialCode.materialNameId;
+                    tree.title = helper.FindId<Name>(materialNameId).materialName;
+                    tree.children = GetModelName(materialNameId, helper);
+                    listTree2.Add(tree);
+                }
             }
             return listTree2;
         }
