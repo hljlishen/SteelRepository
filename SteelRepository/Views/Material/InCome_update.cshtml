@@ -111,7 +111,7 @@
                         }
                     }
                 });
-                document.getElementById("IsPH").style.display = "none";
+                document.getElementById("IsPH").style.display = "";
             }
             //单价
             var Iper = $("#Iper").val().trim();
@@ -206,6 +206,7 @@
             obj.value = obj.value.replace(".", "$#$").replace(/\./g, "").replace("$#$", ".");
         }
 
+
         var judjeWd = false;
         function JudgesubmitForm() {
             var wd = document.getElementById('IncomeText');//输入框
@@ -218,6 +219,7 @@
         $(function () {
         $("#myform :input").change(function () {
             $("#myform").data("changed", true);
+             document.getElementById("button").disabled = false;
         });
 
         });
@@ -249,7 +251,8 @@
             if ($("#myform").data("changed") || judjeWd) {
                 Check2();
             } else {
-                alert("没有修改");
+                document.getElementById("button").disabled = true;
+                //alert("没有修改");
             }
         }
 
@@ -337,7 +340,7 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">单价（元）：</label>
-                                            <label id="IsPer" style="color:#ff0000;display:none;font-size:13px">*不能为空,最多到小数点后两位</label>
+                                            <label id="IsPer" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
                                             <input class="form-control" name="unitPrice" type="number" value="@Model.unitPrice" id="Iper" onkeyup="clearNoNum(this)" />
                                         </div>
                                         <div class="form-group col-md-6">
@@ -349,7 +352,7 @@
 
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">数量：</label>
-                                            <label id="IsNumber" style="color:#ff0000;display:none;font-size:13px">*不能为空,最多到小数点后两位</label>
+                                            <label id="IsNumber" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
                                             <input class="form-control" name="amount" type="number" value="@Model.amount" id="INumber" onkeyup="clearNoNum(this)" />
                                         </div>
                                         <div class="form-group col-md-6">
@@ -391,7 +394,7 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <button type="button" class="btn btn-block btn-primary" onclick="update()">修改</button>
+                            <button type="button" id="button" class="btn btn-block btn-primary" onclick="update()">修改</button>
                         </div>
                     </div>
 

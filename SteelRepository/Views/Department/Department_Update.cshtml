@@ -19,8 +19,8 @@
         var isDTrue;
         function check() {
             var Dname1 = $("#Dname").val().trim();
-            var n = /^[\u4E00-\u9FA5A-Za-z0-9][\x21-\x7e]+$/;
-            if (n.test(Dname1) || Dname1 !== "") {
+            //var n = /^[\u4E00-\u9FA5A-Za-z0-9][\x21-\x7e]+$/;
+            if (Dname1 !== "") {
                 document.getElementById("Isname").style.display = "none";
                 isDName = true;
             } else {
@@ -29,11 +29,12 @@
             }
             var n2 = $("#Dname2").val();
             if (n2 != Dname1) {
-                document.getElementById("button").disabled = false;
                 isDTrue = true;
+                document.getElementById("button").style.backgroundColor = "#727CF5";
             } else {
                 document.getElementById("button").disabled = true;
-                alert("当前内容未改变");
+                document.getElementById("button").style.backgroundColor = "#A2A8F8";
+                //alert("当前内容未改变");
                 isDTrue = false;
             }
             if (isDName && isDTrue) {
@@ -42,6 +43,7 @@
                 isTrue = false;
             }
             document.getElementById("button").disabled = false;
+            
             return isTrue;
         }
 

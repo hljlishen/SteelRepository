@@ -15,9 +15,8 @@
     <script type="text/javascript">
         var isPosition = true;
         function check() {
-            var position = $("#position").val();
-            var n = /^[\u4E00-\u9FA5A-Za-z0-9]+$/;
-            if (!n.test(position)|| position == "") {
+            var position = $("#position").val().trim();
+            if (position == "") {
                 document.getElementById("IsPos").style.display = "";
                 isPosition = false;
             } else {

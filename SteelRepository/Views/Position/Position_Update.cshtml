@@ -47,6 +47,7 @@
         $(function () {
         $("#myform :input").change(function () {
             $("#myform").data("changed", true);
+            document.getElementById("button").disabled = false;
         });
 
     });
@@ -75,7 +76,8 @@
                 return;
             }
         } else {
-            alert("没有修改！");
+            document.getElementById("button").disabled = true;
+            //alert("没有修改！");
 
         }
     }
