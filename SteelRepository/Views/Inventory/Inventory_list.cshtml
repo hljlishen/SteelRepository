@@ -162,7 +162,7 @@
                                     <div class="col-12">
                                         <div class="page-title-center row">
                                             <div class="l-button" style="margin-left:15px;margin-bottom:5px;">
-                                                <a href="javascript:export_excel('products-datatable3')" class="side-nav-link">
+                                                <a href="javascript:export_excel('products-datatable14')" class="side-nav-link">
                                                     <i class=" dripicons-export "></i>
                                                     <span> 导出Excel </span>
                                                 </a>
@@ -172,7 +172,7 @@
                                 </div>
                             </div>
                             <div class="table-responsive">
-                                <table class="table table-centered table-striped dt-responsive nowrap w-100" id="products-datatable3" style="width:auto;height:auto">
+                                <table class="table table-centered table-striped dt-responsive nowrap w-100" id="products-datatable14" style="width:auto;height:auto">
                                     <thead>
                                         <tr>
                                             <th style="width: 20px;">
@@ -183,6 +183,7 @@
                                             </th>
                                             <th>编号</th>
                                             <th>批号</th>
+                                            <th>牌号</th>
                                             <th>货品编号</th>
                                             <th>货品种类</th>
                                             <th>货品名称</th>
@@ -209,36 +210,37 @@
                                         {
                                             if (inventory.amount > 0)
                                             {
-                                                <tr>
-                                                    <td>
-                                                        <div class="custom-control custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                                            <label class="custom-control-label" for="customCheck2">&nbsp;</label>
-                                                        </div>
-                                                    </td>
-                                                    <td class="table-user">@count</td>
-                                                    <th>@inventory.batch</th>
-                                                    <td>@inventory.code</td>
-                                                    <td>@inventory.categoryName</td>
-                                                    <td>@inventory.materialName</td>
-                                                    <td>@inventory.modelName</td>
-                                                    <td>@inventory.amount</td>
-                                                    <td>@inventory.unit</td>
-                                                    <td>@inventory.positionName</td>
-                                                    <td>@inventory.manufacturersName</td>
-                                                    <td>@inventory.name</td>
-                                                    <td>@inventory.storageTime.ToString("yyyy-MM-dd")</td>
-                                                    @if (loginEmployee.permissions == 1)
-                                                    {
-                                                        <td>
-                                                            <a href="javascript:OutComeAdd(@inventory.InvenId)" class="action-icon"> <i class="dripicons-export "></i></a>
-                                                        </td>
-                                                    }
-                                                    else
-                                                    {
-                                                        <td></td>
-                                                    }
-                                                </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" id="customCheck2">
+                                                    <label class="custom-control-label" for="customCheck2">&nbsp;</label>
+                                                </div>
+                                            </td>
+                                            <td class="table-user">@count</td>
+                                            <th>@inventory.batch</th>
+                                            <th>@inventory.brandCodeName</th>
+                                            <td>@inventory.code</td>
+                                            <td>@inventory.categoryName</td>
+                                            <td>@inventory.materialName</td>
+                                            <td>@inventory.modelName</td>
+                                            <td>@inventory.amount</td>
+                                            <td>@inventory.unit</td>
+                                            <td>@inventory.positionName</td>
+                                            <td>@inventory.manufacturersName</td>
+                                            <td>@inventory.name</td>
+                                            <td>@inventory.storageTime.ToString("yyyy-MM-dd")</td>
+                                            @if (loginEmployee.permissions == 1)
+                                            {
+                                                <td>
+                                                    <a href="javascript:OutComeAdd(@inventory.InvenId)" class="action-icon"> <i class="dripicons-export "></i></a>
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td></td>
+                                            }
+                                        </tr>
                                                 count++;
                                             }
                                         }

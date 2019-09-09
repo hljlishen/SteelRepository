@@ -55,6 +55,16 @@
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
+                                    <label for="signin_form">牌号：</label>
+                                    <input class="form-control" name="brandCodeName" type="text" value="@outCome.brandCodeName" readonly="" />
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="signin_form">货品借用人：</label>
+                                    <input class="form-control" name="amount" type="text" value="@outCome.name" readonly="" />
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
                                     <label for="signin_form">货品出库数量：</label>
                                     <input class="form-control" name="batch" type="text" value="@outCome.number" readonly="" />
                                 </div>
@@ -86,21 +96,17 @@
                                 
                             </div>
                             <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="signin_form">货品借用人：</label>
-                                    <input class="form-control" name="amount" type="text" value="@outCome.name" readonly="" />
-                                </div>
+                                
                                 <div class="form-group col-md-6">
                                     <label for="signin_form">货品出库仓位：</label>
                                     <input class="form-control" name="menufacture" type="text" value="@outCome.positionName" readonly="" />
                                 </div>
-                                
-                            </div>
-                            <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="signin_form">出库项目名称：</label>
                                     <input class="form-control" name="position" type="text" value="@outCome.projectName" readonly="" />
                                 </div>
+                            </div>
+                            <div class="form-row">
                                 <div class="layui-inline col-md-6 form-group">
                                     <label for="signin_form">备注:</label>
                                     <textarea id="instructions" name="instructions" style=" width: 99%; height: 90px" readonly="">@outCome.instructions</textarea>

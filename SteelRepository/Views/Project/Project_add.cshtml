@@ -58,13 +58,13 @@
                             alert("添加成功");
                             parent.closeWin();
                             parent.openFrame("Project_list");
-                        } else {
+                        }
+                        else {
+                            document.getElementById("Ispnum2").style.display = "";
                         }
                     }
                 });
-            } else {
-                return;
-            }
+            } 
         }
     </script>
 </head>
@@ -79,11 +79,12 @@
                             <div class="signin-form">
                                 @using (Html.BeginForm("Project_add", "Project", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @role = "form" }))
                                 {
-                                    <div class="form-group">
-                                        <label for="signin_form">项目令号：</label>
-                                        <label id="Ispnum" style="color:#ff0000;display:none;font-size:13px">*项目令号不能为空，请重新输入</label>
-                                        @Html.TextBoxFor(m => m.projectCode, new { @class = "form-control", type = "text", id = "pnumber" })
-                                    </div>
+                                <div class="form-group">
+                                    <label for="signin_form">项目令号：</label>
+                                    <label id="Ispnum" style="color:#ff0000;display:none;font-size:13px">*项目令号不能为空，请重新输入</label>
+                                    <label id="Ispnum2" style="color:#ff0000;display:none;font-size:13px">*项目令号已存在，请重新输入</label>
+                                    @Html.TextBoxFor(m => m.projectCode, new { @class = "form-control", type = "text", id = "pnumber" })
+                                </div>
                                     <div class="form-group">
                                         <label for="signin_form">项目名称：</label>
                                         <label id="Ispname" style="color:#ff0000;display:none;font-size:13px">*项目名称不能为空，请重新输入</label>

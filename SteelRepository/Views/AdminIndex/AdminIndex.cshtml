@@ -135,6 +135,10 @@
     </script>
 </head>
 <body>
+    @if (IsLogin == false)
+    {
+        <meta http-equiv="refresh" content="0;url=../Index/Index">
+    }
     <div class="navbar-custom topnav-navbar">
         <div class="container-fluid">
             <a href="../Inventory/Inventory_list" class="topnav-logo">
@@ -151,14 +155,14 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated dropdown-lg" aria-labelledby="topbar-notifydrop">
                         @*<div class="dropdown-item noti-title">
-                            <h5 class="m-0">
-                                <span class="float-right">
-                                    <a href="javascript:void(0);" class="text-dark">
-                                        <small></small>
-                                    </a>
-                                </span>
-                            </h5>
-                        </div>*@
+                                <h5 class="m-0">
+                                    <span class="float-right">
+                                        <a href="javascript:void(0);" class="text-dark">
+                                            <small></small>
+                                        </a>
+                                    </span>
+                                </h5>
+                            </div>*@
                         <div class="slimscroll" style="max-height: 230px;">
                             <a href="javascript:AdminInventory()" class="dropdown-item notify-item" id="Onclick1">
                                 <div class="notify-icon bg-primary">
@@ -202,7 +206,7 @@
                            aria-expanded="false">
                             <span>
                                 <span class="account-user-name" style="font-size:100%">登录用户：@name</span>
-                                
+
                                 @if (permissions == "1")
                                 {
                                     <span class="account-position" style="font-size:100%">
@@ -231,10 +235,6 @@
                     </li>
                 }
             </ul>
-            @if (IsLogin == false)
-            {
-                <meta http-equiv="refresh" content="0;url=../Index/Index">
-            }
         </div>
     </div>
 
@@ -273,7 +273,6 @@
                                 <li>
                                     <a href="../Employee/Employee_list">员工信息管理</a>
                                 </li>
-
                             }
                             <li>
                                 <a href="../Employee/Employee_information?id=@id">个人信息</a>
@@ -394,12 +393,11 @@
     <script src="~/Content/AdminIndex/js/vendor/dataTables.bootstrap4.js"></script>
     <script src="~/Content/AdminIndex/js/vendor/dataTables.responsive.min.js"></script>
     <script src="~/Content/AdminIndex/js/vendor/dataTables.checkboxes.min.js"></script>
-    <script charset="utf-8" src="~/Content/AdminIndex/js/pages/demo.customers.js"></script>
-    <script src="~/Content/AdminIndex/js/pages/customers2.js"></script>
-    <script src="~/Content/OutCome/js/demo.customers.js"></script>
-    <script src="~/Content/Inventory/js/demo.customers.js"></script>
-    <script src="~/Content/AdminIndex/js/demo.customers4.js"></script>
-    <script src="~/Content/AdminIndex/js/demo.customers5.js"></script>
+    <script src="~/Content/AdminIndex/js/Index/demo.customers14.js"></script>
+    <script src="~/Content/AdminIndex/js/Index/demo.customers4.js"></script>
+    <script src="~/Content/AdminIndex/js/Index/demo.customers5.js"></script>
+    <script src="~/Content/AdminIndex/js/Index/demo.customers6.js"></script>
+    <script src="~/Content/AdminIndex/js/Index/demo.customers7.js"></script>
     <script type="text/javascript">
 
     </script>

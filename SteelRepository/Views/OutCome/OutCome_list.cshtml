@@ -97,6 +97,9 @@
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="javascript: void(0);">材料出入库信息</a></li>
+                            <li>
+                                <span class="dripicons-chevron-right"></span>
+                            </li>
                             <li class="breadcrumb-item active">材料出库信息管理</li>
                         </ol>
                     </div>
@@ -195,13 +198,13 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="l-button" style="float:right">
-                            <a href="javascript:export_excel('products-datatable3')" class="side-nav-link">
+                            <a href="javascript:export_excel('products-datatable14')" class="side-nav-link">
                                 <i class=" dripicons-export"></i>
                                 <span> 导出Excel </span>
                             </a>
                         </div>
                         <div class="table-responsive">
-                            <table class="table table-centered table-striped dt-responsive nowrap w-100" id="products-datatable3" style="width:auto;height:auto">
+                            <table class="table table-centered table-striped dt-responsive nowrap w-100" id="products-datatable14" style="width:auto;height:auto">
                                 <thead>
                                     <tr>
                                         <th style="width: 20px;">
@@ -213,7 +216,8 @@
                                         <th style="width: 50px;">详情</th>
                                         <th>编号</th>
                                         <th>货品编号</th>
-                                        <th>货品种类</th>
+                                        <th>牌号</th>
+                                        <th>货品类别</th>
                                         <th>货品名称</th>
                                         <th>货品规格</th>
                                         <th>货品出库数量</th>
@@ -229,29 +233,30 @@
                                     @{int count = 1; }
                                     @foreach (var outComes in outcome)
                                     {
-                                        <tr>
-                                            <td>
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                                    <label class="custom-control-label" for="customCheck2">&nbsp;</label>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <a href="javascript:OutComeMore(@outComes.OutId)" class="action-icon"> <i class=" dripicons-blog"></i></a>
-                                            </td>
-                                            <td class="table-user">@count</td>
-                                            <td>@outComes.code</td>
-                                            <td>@outComes.categoryName</td>
-                                            <td>@outComes.materialName</td>
-                                            <td>@outComes.modelName</td>
-                                            <td>@outComes.number</td>
-                                            <td>@outComes.unit</td>
-                                            <td>@outComes.unitPrice</td>
-                                            <td>@outComes.price</td>
-                                            <td>@outComes.recipientsTime.ToString("d")</td>
-                                            <td>@outComes.name</td>
-                                            <td style="word-wrap:break-word">@outComes.instructions</td>
-                                        </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck2">
+                                                <label class="custom-control-label" for="customCheck2">&nbsp;</label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <a href="javascript:OutComeMore(@outComes.OutId)" class="action-icon"> <i class=" dripicons-blog"></i></a>
+                                        </td>
+                                        <td class="table-user">@count</td>
+                                        <td>@outComes.code</td>
+                                        <td>@outComes.brandCodeName</td>
+                                        <td>@outComes.categoryName</td>
+                                        <td>@outComes.materialName</td>
+                                        <td>@outComes.modelName</td>
+                                        <td>@outComes.number</td>
+                                        <td>@outComes.unit</td>
+                                        <td>@outComes.unitPrice</td>
+                                        <td>@outComes.price</td>
+                                        <td>@outComes.recipientsTime.ToString("d")</td>
+                                        <td>@outComes.name</td>
+                                        <td style="word-wrap:break-word">@outComes.instructions</td>
+                                    </tr>
                                         count++;
                                     }
                                 </tbody>

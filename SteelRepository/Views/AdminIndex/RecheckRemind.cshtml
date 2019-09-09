@@ -1,4 +1,4 @@
-﻿@model List<Models.InCome>
+﻿@model List<Models.InComeView>
 @{
     Layout = "~/Views/AdminIndex/Index1.cshtml";
 }
@@ -31,13 +31,13 @@
             <div class="card">
                 <div class="card-body">
                     <div class="l-button">
-                        <a href="javascript:export_excel('products-datatable9')" class="side-nav-link">
+                        <a href="javascript:export_excel('products-datatable10')" class="side-nav-link">
                             <i class=" dripicons-export "></i>
                             <span> 导出Excel </span>
                         </a>
                     </div>
                     <div class="table-responsive">
-                        <table class="table table-centered table-striped dt-responsive nowrap w-100" id="products-datatable9">
+                        <table class="table table-centered table-striped dt-responsive nowrap w-100" id="products-datatable10">
                             <thead>
                                 <tr>
                                     <th style="width: 20px;">
@@ -52,6 +52,7 @@
                                     <th>材料规格</th>
                                     <th>材料类别</th>
                                     <th>批号</th>
+                                    <th>牌号</th>
                                     <th>存放位置</th>
                                     <th>复检时间</th>
                                     <th>复检周期(年)</th>
@@ -71,12 +72,13 @@
                                                 </div>
                                             </td>
                                             <td>@count</td>
-                                            <td>@Models.InCome.GetMaterialCode(inc.codeId).code</td>
-                                            <td>@inc.GetName(inc.codeId).materialName</td>
-                                            <td>@inc.GetModel(inc.codeId).modelName</td>
-                                            <td>@inc.GetCategory().categoryName</td>
+                                            <td>@inc.code</td>
+                                            <td>@inc.name</td>
+                                            <td>@inc.modelName</td>
+                                            <td>@inc.categoryName</td>
                                             <td>@inc.batch</td>
-                                            <td>@inc.GetPosition(inc.codeId).positionName</td>
+                                            <td>@inc.brandCodeName</td>
+                                            <td>@inc.positionName</td>
                                             <td style="color:#ff0000">@inc.storageTime.ToString("d")</td>
                                             <td>@inc.reviewCycle</td>
                                         </tr>

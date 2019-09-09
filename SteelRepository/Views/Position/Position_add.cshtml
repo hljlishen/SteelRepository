@@ -40,12 +40,10 @@
                             parent.closeWin();
                             parent.openFrame("Position_list");
                         } else {
-                            alert("仓库位置名称已存在");
+                            document.getElementById("IsPos2").style.display = "";
                         }
                     }
                 });
-            } else {
-                return;
             }
         }
     </script>
@@ -61,11 +59,12 @@
                             <div class="signin-form">
                                 @using (Html.BeginForm("Position_add", "Position", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @role = "form" }))
                                 {
-                                    <div class="form-group">
-                                        <label for="signin_form">仓库位置：</label>
-                                        <label id="IsPos" style="color:#ff0000;display:none;font-size:13px">*仓库位置不能为空，请重新输入</label>
-                                        @Html.TextBoxFor(m => m.positionName, new { @class = "form-control", type = "text", id = "position" })
-                                    </div>
+                                <div class="form-group">
+                                    <label for="signin_form">仓库位置：</label>
+                                    <label id="IsPos" style="color:#ff0000;display:none;font-size:13px">*仓库位置不能为空，请重新输入</label>
+                                    <label id="IsPos2" style="color:#ff0000;display:none;font-size:13px">*仓库位置已存在，请重新输入</label>
+                                    @Html.TextBoxFor(m => m.positionName, new { @class = "form-control", type = "text", id = "position" })
+                                </div>
                                     <div class="form-group">
                                         <label for="signin_form">备注：</label>
                                         @Html.TextBoxFor(m => m.note, new { @class = "form-control", type = "text" })

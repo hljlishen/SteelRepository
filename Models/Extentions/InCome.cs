@@ -280,6 +280,15 @@ namespace Models
                 return helper.SelectAll<InCome>();
             }
         }
+
+        public static List<InComeView> GetInComesView()
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return helper.SelectAll<InComeView>();
+            }
+        }
+
         public static List<InComeView> GetInComeViewDesc()
         {
             List<InComeView> liDesc = new List<InComeView>();
@@ -329,12 +338,12 @@ namespace Models
             return inComes;
         }
 
-        public static List<InCome> SelectRemind()
+        public static List<InComeView> SelectRemind()
         {
-            List<InCome> inComes = new List<InCome>();
-            foreach (var inc in GetInComes())
+            List<InComeView> inComes = new List<InComeView>();
+            foreach (var inc in GetInComesView())
             {
-                string datetime = RecheckReport.GetMaxDate(RecheckReport.GetRecheckReports(inc.id), inc.reviewCycle);
+                string datetime = RecheckReport.GetMaxDate(RecheckReport.GetRecheckReports(inc.incoId), inc.reviewCycle);
                 if (datetime != "未添加复检报告")
                 {
                     DateTime d1 = Convert.ToDateTime(datetime);

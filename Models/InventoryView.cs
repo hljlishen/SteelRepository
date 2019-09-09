@@ -29,5 +29,6 @@ namespace Models
         public string positionName { get; set; }
         public int posiId { get; set; }
         public string name { get; set; }
+        public string brandCodeName { get; set; }
     }
 }

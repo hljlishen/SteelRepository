@@ -132,7 +132,6 @@
                     <div class="page-title-box">
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="javascript: void(0);">部门信息</a></li>
                                 <li class="breadcrumb-item active">部门信息管理</li>
                             </ol>
                         </div>
@@ -154,9 +153,9 @@
                                 {
                                     <li class="side-nav-item col-md-9">
                                         <a href="javascript: void(0);" class="side-nav-link">
-                                            <i class="dripicons-scale"></i>@*公司图标*@
+                                            <i class="mdi mdi-alpha-m-box"></i>
                                             <span>@department.departmentName</span>
-                                            <span class=""></span>
+                                            <span class="menu-arrow"><span class="dripicons-chevron-right"></span></span>
                                         </a>
                                         <ul class="side-nav-second-level " aria-expanded="false">
                                             @foreach (var depart in Model)
@@ -165,32 +164,30 @@
                                                 {
                                                     <li class="side-nav-item form-row">
                                                         <a href="javascript: void(0);" class="col-md-8">
-                                                            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="dripicons-scale"></i>@depart.departmentName</span>
-                                                            <span class="menu-arrow"></span>
+                                                            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="mdi mdi-alpha-d-box"></i>@depart.departmentName</span>
+                                                            <span class="menu-arrow"><span class="dripicons-chevron-right"></span></span>
                                                         </a>
                                                         @if (loginEmployee.permissions == 1)
                                                         {
-                                                            <div class="layui-btn-group col-md-4">
+                                                            <div class="layui-btn-group col-md-3">
                                                                 <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" onclick="DepartmentAdd2(@depart.id)"><i class="layui-icon"></i></button>
                                                                 <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" onclick="DepartmentDelete2(@depart.id)"><i class="layui-icon"></i></button>
                                                                 <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" onclick="DepartmentUpdate(@depart.id)"><i class="layui-icon"></i></button>
                                                             </div>
                                                         }
 
-                                                        <ul class="side-nav-second-level" aria-expanded="false">
+                                                        <ul class="side-nav-second-level form-row col-md-8" aria-expanded="false">
                                                             @foreach (var dep in Model)
                                                             {
                                                                 if (dep.parentNodeId == depart.id)
                                                                 {
-                                                                    <li class="form-row">
-                                                                        <form method="post" action="/Department/Department_list">
-                                                                            <a href="javascript:EmployeeSelect(@dep.id);">
-                                                                                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="dripicons-scale"></i>@dep.departmentName</span>
-                                                                            </a>
-                                                                        </form>
+                                                                    <li class="side-nav-item form-row">
+                                                                        <a href="javascript:EmployeeSelect(@dep.id);" class="col-md-8">
+                                                                            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="mdi mdi-alpha-g-box"></i>@dep.departmentName</span>
+                                                                        </a>
                                                                         @if (loginEmployee.permissions == 1)
                                                                         {
-                                                                            <div class="layui-btn-group">
+                                                                            <div class="layui-btn-group col-md-3">
                                                                                 <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" onclick="DepartmentDelete(@dep.id)"><i class="layui-icon"></i></button>
                                                                                 <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" onclick="DepartmentUpdate(@dep.id)"><i class="layui-icon"></i></button>
                                                                             </div>
@@ -207,7 +204,7 @@
 
                                     if (loginEmployee.permissions == 1)
                                     {
-                                        <li class="layui-btn-group col-md-3">
+                                        <li class="layui-btn-group col-md-2">
                                             <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" onclick="DepartmentAdd(@department.id)"><i class="layui-icon"></i></button>
                                             <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" onclick="DepartmentDelete2(@department.id)"><i class="layui-icon"></i></button>
                                             <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" onclick="DepartmentUpdate(@department.id)"><i class="layui-icon"></i></button>

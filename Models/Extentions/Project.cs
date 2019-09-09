@@ -22,7 +22,7 @@ namespace Models
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                if(helper.Select<Project>(p => p.projectCode == project.projectCode).Count <= 0)
+                if(helper.Select<Project>(p => p.projectCode == project.projectCode && p.state == 1).Count <= 0)
                     return helper.Insert(project);
                 return 0;
             }
@@ -31,7 +31,7 @@ namespace Models
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                return helper.SelectAll<Project>();
+                return helper.Select<Project>(p => p.state != 2);
             }
         }
 

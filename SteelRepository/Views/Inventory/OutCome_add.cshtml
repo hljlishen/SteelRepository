@@ -105,8 +105,8 @@
                                             @Html.TextBox("CodeName", inventory.code, new { @readonly = "readonly", @class = "form-control", type = "text" })
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label for="example-date">出库时间：</label>
-                                            @Html.TextBox("date", Models.Inventory.NewDateTime().ToString("yyyy-MM-dd"), new { @readonly = "readonly", @class = "form-control", type = "text" })
+                                            <label for="signin_form">牌号：</label>
+                                            @Html.TextBox("brandCodeName", inventory.brandCodeName, new { @readonly = "readonly", @class = "form-control", type = "text" })
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -135,6 +135,12 @@
                                                     <option value="@pro.id">令号：@pro.projectCode 名称：@pro.projectName </option>
                                                 }
                                             </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="example-date">出库时间：</label>
+                                            @Html.TextBox("date", Models.Inventory.NewDateTime().ToString("yyyy-MM-dd"), new { @readonly = "readonly", @class = "form-control", type = "text" })
                                         </div>
                                     </div>
                                     <label>领用人：</label>
