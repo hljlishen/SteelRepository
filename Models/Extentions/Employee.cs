@@ -25,7 +25,7 @@ namespace Models
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
                 List<EmployeeDepartView> list = new List<EmployeeDepartView>();
-                foreach (var emplo in helper.SqlQuery<EmployeeDepartView>("select EmployeeDepartView.* from EmployeeDepartView, Employee where EmployeeDepartView.emploId = Employee.id and Employee.state != 4 order by EmployeeDepartView.emploId desc")) {
+                foreach (var emplo in helper.SqlQuery<EmployeeDepartView>("select EmployeeDepartView.* from EmployeeDepartView, Employee where EmployeeDepartView.emploId = Employee.id and Employee.state != 4 and order by EmployeeDepartView.emploId desc")) {
                     list.Add(emplo);
                 }
                 return list;

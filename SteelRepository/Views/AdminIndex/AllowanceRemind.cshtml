@@ -1,4 +1,4 @@
-﻿@model List<Models.Inventory>
+﻿@model List<Models.InventoryView>
 @{ 
      Layout = "~/Views/AdminIndex/Index1.cshtml";
 }
@@ -31,13 +31,13 @@
             <div class="card">
                 <div class="card-body">
                     <div class="l-button">
-                        <a href="javascript:export_excel('products-datatable9')" class="side-nav-link">
+                        <a href="javascript:export_excel('products-datatable10')" class="side-nav-link">
                             <i class=" dripicons-export "></i>
                             <span> 导出Excel </span>
                         </a>
                     </div>
                     <div class="table-responsive" id="myDiv">
-                        <table class="table table-centered table-striped dt-responsive nowrap w-100" id="products-datatable9">
+                        <table class="table table-centered table-striped dt-responsive nowrap w-100" id="products-datatable10">
                             <thead>
                                 <tr>
                                     <th style="width: 20px;">
@@ -51,6 +51,7 @@
                                     <th>材料名称</th>
                                     <th>材料规格</th>
                                     <th>材料类别</th>
+                                    <th>牌号</th>
                                     <th>批号</th>
                                     <th>存放位置</th>
                                     <th>剩余量</th>
@@ -71,12 +72,13 @@
                                                 </div>
                                             </td>
                                             <td>@count</td>
-                                            <td>@Models.Inventory.GetMaterCodeName(inv.incomeId)</td>
-                                            <td>@Models.Inventory.GetNameName(inv.incomeId)</td>
-                                            <td>@Models.Inventory.GetModelName(inv.incomeId)</td>
-                                            <td>@Models.Inventory.GetCategoryName(inv.incomeId).categoryName</td>
-                                            <td>@Models.Inventory.IncomeIdGetInCome(inv.incomeId).batch</td>
-                                            <td>@Models.Inventory.GetPositionName(inv.positionId)</td>
+                                            <td>@inv.code</td>
+                                            <td>@inv.name</td>
+                                            <td>@inv.modelName</td>
+                                            <td>@inv.categoryName</td>
+                                            <td>@inv.brandCodeName</td>
+                                            <td>@inv.batch</td>
+                                            <td>@inv.positionName</td>
                                             <td style="color:#ff0000">@inv.amount</td>
                                             <td>@inv.unit</td>
                                         </tr>

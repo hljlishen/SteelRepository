@@ -217,10 +217,11 @@
     <Content Include="Content\AdminIndex\css\vendor\simplemde.min.css" />
     <Content Include="Content\AdminIndex\css\vendor\summernote-bs4.css" />
     <Content Include="Content\AdminIndex\js\app.min.js" />
-    <Content Include="Content\AdminIndex\js\customers9.js" />
-    <Content Include="Content\AdminIndex\js\demo.customers12.js" />
-    <Content Include="Content\AdminIndex\js\demo.customers5.js" />
-    <Content Include="Content\AdminIndex\js\pages\customers2.js" />
+    <Content Include="Content\AdminIndex\js\Index\demo.customers10.js" />
+    <Content Include="Content\AdminIndex\js\Index\demo.customers13.js" />
+    <Content Include="Content\AdminIndex\js\Index\demo.customers7.js" />
+    <Content Include="Content\AdminIndex\js\Index\demo.customers6.js" />
+    <Content Include="Content\AdminIndex\js\Index\demo.customers5.js" />
     <Content Include="Content\AdminIndex\js\pages\demo.apex-area.js" />
     <Content Include="Content\AdminIndex\js\pages\demo.apex-bar.js" />
     <Content Include="Content\AdminIndex\js\pages\demo.apex-bubble.js" />
@@ -294,7 +295,6 @@
     <Content Include="Content\ECharts\echarts.min.js" />
     <Content Include="Content\Excel\Excel.js" />
     <Content Include="Content\img.css" />
-    <Content Include="Content\Inventory\js\demo.customers.js" />
     <Content Include="Content\Inventory\js\jquery-3.1.1.js" />
     <Content Include="Content\jquery-1.6.2.min.js" />
     <Content Include="Content\jquery-3.3.1.min.js" />
@@ -335,8 +335,7 @@
     <Content Include="Content\Login\css\animate.css" />
     <Content Include="Content\OutCome\css\app.min.css" />
     <Content Include="Content\OutCome\js\app.min.js" />
-    <Content Include="Content\OutCome\js\demo.customers.js" />
-    <Content Include="Content\OutCome\js\JavaScript.js" />
+    <Content Include="Content\AdminIndex\js\Index\demo.customers14.js" />
     <Content Include="Content\Position\css\app.min.css" />
     <Content Include="Content\Login\css\bootsnav.css" />
     <Content Include="Content\Login\css\bootstrap.min.css" />
@@ -356,7 +355,7 @@
     <Content Include="Content\Position\js\britecharts.min.js" />
     <Content Include="Content\Position\js\d3.min.js" />
     <Content Include="Content\Position\js\demo.britechart1.js" />
-    <Content Include="Content\AdminIndex\js\demo.customers4.js" />
+    <Content Include="Content\AdminIndex\js\Index\demo.customers4.js" />
     <Content Include="Content\Position\js\echarts.min.js" />
     <Content Include="Content\text\css\app.min.css" />
     <Content Include="Content\text\css\simplemde.min.css" />

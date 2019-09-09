@@ -48,16 +48,16 @@ namespace Models
                 return Dbhelper.SelectAll<InventoryView>();
             }
         }
-        public static List<Inventory> SelectRemaining()
+        public static List<InventoryView> SelectRemaining()
         {
             using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                List<Inventory> inventories = new List<Inventory>();
-                foreach (var inv in Dbhelper.Select<Inventory>(p => p.unit == "g" && p.amount <= 20000))
+                List<InventoryView> inventories = new List<InventoryView>();
+                foreach (var inv in Dbhelper.Select<InventoryView>(p => p.unit == "g" && p.amount <= 20000))
                 {
                     inventories.Add(inv);
                 }
-                foreach (var inv in Dbhelper.Select<Inventory>(p => p.unit == "kg" && p.amount <= 20))
+                foreach (var inv in Dbhelper.Select<InventoryView>(p => p.unit == "kg" && p.amount <= 20))
                 {
                     inventories.Add(inv);
                 }

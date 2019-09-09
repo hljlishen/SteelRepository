@@ -11,8 +11,8 @@ namespace SteelRepository.Controllers
     public class IndexController : Controller
     {
         private static string adminname;
-        private static List<Inventory> inventories;
-        private static List<InCome> inComes;
+        private static List<InventoryView> inventories;
+        private static List<InComeView> inComes;
         private static Employee empl;
         // GET: Index
         public ActionResult Index()
@@ -99,12 +99,12 @@ namespace SteelRepository.Controllers
             return adminname;
         }
 
-        public static List<Inventory> Remind()
+        public static List<InventoryView> Remind()
         {
             return inventories;
         }
 
-        public static List<InCome> Recheck()
+        public static List<InComeView> Recheck()
         {
             return inComes;
         }

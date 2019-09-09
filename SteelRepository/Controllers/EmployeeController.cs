@@ -97,6 +97,7 @@ namespace SteelRepository.Controllers
             employee.id = em.id;
             employee.number = em.number;
             employee.password = em.password;
+            Session["name"] = employee.name;
             return Json(Employee.Update(employee));
         }
 
@@ -130,6 +131,7 @@ namespace SteelRepository.Controllers
             employee.permissions = em.permissions;
             employee.state = em.state;
             employee.departmentId = em.departmentId;
+            Session["name"] = employee.name;
             return Json(Employee.Update(employee));
         }
 

@@ -36,5 +36,6 @@ namespace Models
         public string positionName { get; set; }
         public Nullable<int> state { get; set; }
         public string priceMeasure { get; set; }
+        public string brandCodeName { get; set; }
     }
 }
