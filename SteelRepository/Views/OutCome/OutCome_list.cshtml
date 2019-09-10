@@ -3,11 +3,7 @@
     Layout = "~/Views/AdminIndex/AdminIndex.cshtml";
 }
 @{ 
-    Models.Employee loginEmployee = (Models.Employee)ViewData["LoginEmployee"];
-    if (loginEmployee == null)
-    {
-        return;
-    }
+    int permissions = (int)ViewData["permissions"];
 }
     <head>
         <meta charset="utf-8" />
@@ -262,7 +258,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        @if (loginEmployee.permissions == 1)
+                        @if (permissions == 1)
                         {
                             <div class="row mb-4">
 

@@ -16,7 +16,7 @@ namespace SteelRepository.Controllers
         public ActionResult Position_list()
         {
             Employee.NoJudge();
-            ViewData["LoginEmployee"] = IndexController.LoginEmployee();
+            ViewData["permissions"] = Session["permissions"];
             return View(Position.SelectAll());
         }
         public ActionResult Position_add()

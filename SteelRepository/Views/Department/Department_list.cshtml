@@ -3,12 +3,9 @@
     Layout = "~/Views/AdminIndex/AdminIndex.cshtml";
 }
 @{ 
-    Models.Employee loginEmployee = (Models.Employee)ViewData["LoginEmployee"];
+   int permissions = (int)ViewData["permissions"];
     List<Models.Employee> employee = (List<Models.Employee>)ViewData["Employee"];
-    if (loginEmployee == null)
-    {
-            return;
-    }
+
 }
 <!DOCTYPE html>
 <html lang="zh">
@@ -167,7 +164,7 @@
                                                             <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="mdi mdi-alpha-d-box"></i>@depart.departmentName</span>
                                                             <span class="menu-arrow"><span class="dripicons-chevron-right"></span></span>
                                                         </a>
-                                                        @if (loginEmployee.permissions == 1)
+                                                        @if (permissions == 1)
                                                         {
                                                             <div class="layui-btn-group col-md-3">
                                                                 <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" onclick="DepartmentAdd2(@depart.id)"><i class="layui-icon"></i></button>
@@ -185,7 +182,7 @@
                                                                         <a href="javascript:EmployeeSelect(@dep.id);" class="col-md-8">
                                                                             <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="mdi mdi-alpha-g-box"></i>@dep.departmentName</span>
                                                                         </a>
-                                                                        @if (loginEmployee.permissions == 1)
+                                                                        @if (permissions == 1)
                                                                         {
                                                                             <div class="layui-btn-group col-md-3">
                                                                                 <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" onclick="DepartmentDelete(@dep.id)"><i class="layui-icon"></i></button>
@@ -202,7 +199,7 @@
                                         </ul>
                                     </li>
 
-                                    if (loginEmployee.permissions == 1)
+                                    if (permissions == 1)
                                     {
                                         <li class="layui-btn-group col-md-2">
                                             <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" onclick="DepartmentAdd(@department.id)"><i class="layui-icon"></i></button>

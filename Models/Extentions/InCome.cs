@@ -289,6 +289,14 @@ namespace Models
             }
         }
 
+        public static InComeView GetInComesView(int incomeId)
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return helper.Select<InComeView>(p => p.incoId == incomeId)[0];
+            }
+        }
+
         public static List<InComeView> GetInComeViewDesc()
         {
             List<InComeView> liDesc = new List<InComeView>();

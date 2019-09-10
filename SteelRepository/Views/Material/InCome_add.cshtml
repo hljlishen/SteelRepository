@@ -23,6 +23,8 @@
     <link href="~/Content/layui/css/layui.css" rel="stylesheet" media="all" />
     <script src="~/Content/layui/layui.js" charset="utf-8"></script>
     <script src="~/Content/jquery-3.3.1.min.js"></script>
+    <link href="~/Content/image/preview.css" rel="stylesheet" />
+    <script src="~/Content/image/preview.js"></script>
     <script type="text/javascript">
         layui.use('laydate', function () {
             var laydate = layui.laydate;
@@ -104,7 +106,7 @@
                   ,'<td>'+ (file.size/1014).toFixed(1) +'kb</td>'
                   ,'<td>'
                     ,'<button class="layui-btn layui-btn-xs layui-btn-danger demo-delete">删除</button>'
-                  ,'</td>' 
+                  ,'</td>'
                   , '</tr>'].join(''));
 
                    var div = $(['<input class="form-control" hidden id="recheck'+id2+'" type="text" name="recheck'+id2+'">'].join(''));
@@ -323,7 +325,7 @@
             }
             return isTrue;
         }
-        
+
         function clearNoNum(obj) {
             obj.value = obj.value.replace(/[^\d.]/g, ""); //清除"数字"和"."以外的字符
             obj.value = obj.value.replace(/^\./g, ""); //验证第一个字符是数字而不是
@@ -374,9 +376,9 @@
                 });
             }
         }
-           
+
         function add() {
-            
+
             check();
             if (isTrue) {
                 $.ajax({
@@ -398,9 +400,21 @@
             } else {
                 isJudge = false;
                 return;
-            } 
+            }
         }
     </script>
+
+    <style type="text/css">
+        #wrap img {
+            vertical-align: top;
+            cursor: pointer;
+        }
+
+         #wrap2 img {
+            vertical-align: top;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
     <section class="signin popup-in">
@@ -453,7 +467,7 @@
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">牌号：</label>
                                             <label id="IsBC" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
-                                            <input class="form-control" name="brandCode" type="text" id="IBC" list="brandCodelist"/>
+                                            <input class="form-control" name="brandCode" type="text" id="IBC" list="brandCodelist" />
                                             <datalist id="brandCodelist">
                                                 @foreach (var brandCode in brandCodes)
                                                 {
@@ -467,7 +481,7 @@
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">编号：</label>
                                             <label id="IsBH" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
-                                            <input class="form-control" name="materialCode" type="text" id="IBh" onblur="codeblur()" list="materialCodelist"  />
+                                            <input class="form-control" name="materialCode" type="text" id="IBh" onblur="codeblur()" list="materialCodelist" />
                                             <datalist id="materialCodelist">
                                                 @foreach (var materialCode in materialCodes)
                                                 {
@@ -553,7 +567,7 @@
                                             <datalist id="recheckOrderNolist">
                                                 @foreach (var recheckReport in recheckReports)
                                                 {
-                                                    <option>@recheckReport.recheckBasis</option>
+                                                    <option>@recheckReport.recheckOrderNo</option>
                                                 }
                                             </datalist>
                                         </div>
@@ -561,10 +575,11 @@
 
                                     <div class="form-group col-md-12">
                                         <label for="signin_form">产品质量证明：</label>
+                                        <label for="signin_form">(点击图片查看)</label>
                                         <div class="layui-upload">
                                             <button type="button" class="layui-btn layui-btn-normal" id="testList" name="testList">选择</button>
                                             <label id="testlist" style="color:#ff0000;display:none;font-size:13px">*需添加产品质量证明</label>
-                                            <div class="layui-upload-list">
+                                            <div class="layui-upload-list" id="wrap">
                                                 <table class="layui-table">
                                                     <thead>
                                                         <tr>
@@ -585,10 +600,11 @@
 
                                     <div class="form-group col-md-12">
                                         <label for="signin_form">复验结果报告：</label>
+                                        <label for="signin_form">(点击图片查看)</label>
                                         <div class="layui-upload">
                                             <button type="button" class="layui-btn layui-btn-normal" id="testList2">选择</button>
                                             <label id="testlist1" style="color:#ff0000;display:none;font-size:13px">*需添加复检结果报告</label>
-                                            <div class="layui-upload-list">
+                                            <div class="layui-upload-list" id="wrap2">
                                                 <table class="layui-table">
                                                     <thead>
                                                         <tr>
@@ -615,10 +631,18 @@
                             <button type="button" id="button" class="btn btn-block btn-primary" onclick="add()">添加</button>
                         </div>
                     </div>
-
-                    </div>
                 </div>
             </div>
-        </section>
-    </body>
+        </div>
+    </section>
+    <script>
+        var preview = new Preview({
+            imgWrap: 'wrap' // 指定该容器里的图片点击预览
+        })
+
+     var preview = new Preview({
+            imgWrap: 'wrap2' // 指定该容器里的图片点击预览
+        })
+    </script>
+</body>
 </html>

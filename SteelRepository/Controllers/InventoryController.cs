@@ -17,15 +17,14 @@ namespace SteelRepository.Controllers
             ViewData["InventoryViewlist"] = Inventory.InventoryViewSelectAll();
             ViewData["manufacturer"] = Manufacturer.SelectAll();
             ViewData["position"] = Position.SelectAll();
-            ViewData["LoginEmployee"] = IndexController.LoginEmployee();
+            ViewData["permissions"] = Session["permissions"];
             return View();
         }
         [HttpPost]
         public ActionResult Inventory_list(FormCollection collection)
         {
-            ViewData["LoginEmployee"] = IndexController.LoginEmployee();
+            ViewData["permissions"] = Session["permissions"];
             Employee.NoJudge();
-            ViewData["LoginEmployee"] = IndexController.LoginEmployee();
             ViewData["MaterialCode"] = MaterialCode.GetMaterialCodeList();
             ViewData["manufacturer"] = Manufacturer.SelectAll();
             ViewData["position"] = Position.SelectAll();

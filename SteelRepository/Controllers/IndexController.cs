@@ -13,7 +13,6 @@ namespace SteelRepository.Controllers
         private static string adminname;
         private static List<InventoryView> inventories;
         private static List<InComeView> inComes;
-        private static Employee empl;
         // GET: Index
         public ActionResult Index()
         {
@@ -57,7 +56,6 @@ namespace SteelRepository.Controllers
         {
             bool IsLogin = false;
             Employee e = Employee.Login(employee);
-            empl = e;
             if (e != null)
             {
                 IsLogin = true;
@@ -121,11 +119,6 @@ namespace SteelRepository.Controllers
         public JsonResult GetNowWebClickData()
         {
             return Json(UseAmountStatisticals.GetNowWebClickNumber());
-        }
-
-        public static Employee LoginEmployee()
-        {
-            return empl;
         }
 
         public ActionResult Trees()

@@ -151,6 +151,9 @@
     <Compile Include="RecheckReportImg.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="RecheckReportImgView.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Statistics\OutCome.cs" />
     <Compile Include="UseAmountStatisticals.cs">
       <DependentUpon>Model1.tt</DependentUpon>

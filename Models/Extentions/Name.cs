@@ -68,9 +68,8 @@ namespace Models
 
         public static List<RecheckReport> SelectRecheckReportAll()
         {
-            List<RecheckReport> recheckReports = Dbhelper.SelectAll<RecheckReport>();
             List<RecheckReport> recheckReports1 = new List<RecheckReport>();
-            foreach (var rr in recheckReports)
+            foreach (var rr in Dbhelper.SelectAll<RecheckReport>())
             {
                 if (recheckReports1 == null)
                 {

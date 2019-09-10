@@ -47,5 +47,6 @@ namespace Models
         public virtual DbSet<InComeView> InComeView { get; set; }
         public virtual DbSet<InventoryView> InventoryView { get; set; }
         public virtual DbSet<OutcomeQueryView> OutcomeQueryView { get; set; }
+        public virtual DbSet<RecheckReportImgView> RecheckReportImgView { get; set; }
     }
 }

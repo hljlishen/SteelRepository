@@ -318,6 +318,22 @@
           <Property Name="priceMeasure" Type="nchar" MaxLength="10" />
           <Property Name="brandCodeName" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“SteelRepositoryDB.dbo.RecheckReportImgView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="RecheckReportImgView">
+          <Key>
+            <PropertyRef Name="img" />
+            <PropertyRef Name="reportId" />
+            <PropertyRef Name="recheckTime" />
+            <PropertyRef Name="incomeId" />
+          </Key>
+          <Property Name="img" Type="varbinary(max)" Nullable="false" />
+          <Property Name="reportId" Type="int" Nullable="false" />
+          <Property Name="recheckTime" Type="datetime" Nullable="false" />
+          <Property Name="recheckBasis" Type="nvarchar(max)" />
+          <Property Name="incomeId" Type="int" Nullable="false" />
+          <Property Name="recheckOrderNo" Type="nvarchar(max)" />
+        </EntityType>
         <EntityContainer Name="SteelRepositoryDBModelStoreContainer">
           <EntitySet Name="BrandCode" EntityType="Self.BrandCode" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
@@ -421,6 +437,16 @@
     [OutcomeQueryView].[priceMeasure] AS [priceMeasure], 
     [OutcomeQueryView].[brandCodeName] AS [brandCodeName]
     FROM [dbo].[OutcomeQueryView] AS [OutcomeQueryView]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="RecheckReportImgView" EntityType="Self.RecheckReportImgView" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [RecheckReportImgView].[img] AS [img], 
+    [RecheckReportImgView].[reportId] AS [reportId], 
+    [RecheckReportImgView].[recheckTime] AS [recheckTime], 
+    [RecheckReportImgView].[recheckBasis] AS [recheckBasis], 
+    [RecheckReportImgView].[incomeId] AS [incomeId], 
+    [RecheckReportImgView].[recheckOrderNo] AS [recheckOrderNo]
+    FROM [dbo].[RecheckReportImgView] AS [RecheckReportImgView]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
       </Schema>
@@ -731,7 +757,21 @@
           <Property Name="priceMeasure" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="brandCodeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
-        <EntityContainer Name="SteelRepositoryDBEntities16" annotation:LazyLoadingEnabled="true">
+        <EntityType Name="RecheckReportImgView">
+          <Key>
+            <PropertyRef Name="img" />
+            <PropertyRef Name="reportId" />
+            <PropertyRef Name="recheckTime" />
+            <PropertyRef Name="incomeId" />
+          </Key>
+          <Property Name="img" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="reportId" Type="Int32" Nullable="false" />
+          <Property Name="recheckTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="recheckBasis" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="incomeId" Type="Int32" Nullable="false" />
+          <Property Name="recheckOrderNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityContainer Name="SteelRepositoryDBEntities18" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="BrandCode" EntityType="Self.BrandCode" />
           <EntitySet Name="Category" EntityType="Self.Category" />
           <EntitySet Name="Department" EntityType="Self.Department" />
@@ -754,13 +794,14 @@
           <EntitySet Name="InComeView" EntityType="Self.InComeView" />
           <EntitySet Name="InventoryView" EntityType="Self.InventoryView" />
           <EntitySet Name="OutcomeQueryView" EntityType="Self.OutcomeQueryView" />
+          <EntitySet Name="RecheckReportImgView" EntityType="Self.RecheckReportImgView" />
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="SteelRepositoryDBModelStoreContainer" CdmEntityContainer="SteelRepositoryDBEntities16">
+        <EntityContainerMapping StorageEntityContainer="SteelRepositoryDBModelStoreContainer" CdmEntityContainer="SteelRepositoryDBEntities18">
           <EntitySetMapping Name="BrandCode">
             <EntityTypeMapping TypeName="SteelRepositoryDBModel.BrandCode">
               <MappingFragment StoreEntitySet="BrandCode">
@@ -1036,6 +1077,18 @@
                 <ScalarProperty Name="state" ColumnName="state" />
                 <ScalarProperty Name="priceMeasure" ColumnName="priceMeasure" />
                 <ScalarProperty Name="brandCodeName" ColumnName="brandCodeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RecheckReportImgView">
+            <EntityTypeMapping TypeName="SteelRepositoryDBModel.RecheckReportImgView">
+              <MappingFragment StoreEntitySet="RecheckReportImgView">
+                <ScalarProperty Name="img" ColumnName="img" />
+                <ScalarProperty Name="reportId" ColumnName="reportId" />
+                <ScalarProperty Name="recheckTime" ColumnName="recheckTime" />
+                <ScalarProperty Name="recheckBasis" ColumnName="recheckBasis" />
+                <ScalarProperty Name="incomeId" ColumnName="incomeId" />
+                <ScalarProperty Name="recheckOrderNo" ColumnName="recheckOrderNo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

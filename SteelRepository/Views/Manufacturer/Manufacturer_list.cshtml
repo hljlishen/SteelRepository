@@ -3,11 +3,7 @@
     Layout = "~/Views/AdminIndex/AdminIndex.cshtml";
 }
 @{ 
-    Models.Employee loginEmployee = (Models.Employee)ViewData["LoginEmployee"];
-    if (loginEmployee == null)
-    {
-        return;
-    }
+    int permissions = (int)ViewData["permissions"];
 }
     <head>
         <meta charset="utf-8" />
@@ -87,7 +83,7 @@
                     <div class="card-body">
                         <div class="row mb-2">
                             <div class="col-sm-11">
-                                @if (loginEmployee.permissions == 1)
+                                @if (permissions == 1)
                                 {
                                     <a href="javascript:ManufacturerAdd()" class="btn btn-primary"><i class="mdi mdi-plus-circle mr-2"></i>添加厂商信息</a>
                                 }
@@ -115,7 +111,7 @@
                                         <th>厂商名称</th>
                                         <th>联系方式</th>
                                         <th>地址</th>
-                                        @if (loginEmployee.permissions == 1)
+                                        @if (permissions == 1)
                                         {
                                             <th style="width: 75px;">操作</th>
                                         }
@@ -142,7 +138,7 @@
                                         <td>@manufacturer.manufacturersName</td>
                                         <td>@manufacturer.contact</td>
                                         <td>@manufacturer.address</td>
-                                        @if (loginEmployee.permissions == 1)
+                                        @if (permissions == 1)
                                         {
                                             <td>
                                                 <a href="javascript:ManufacturerDelete(@manufacturer.id);" class="action-icon"> <i class="dripicons-trash"></i></a>

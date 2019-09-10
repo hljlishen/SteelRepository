@@ -2,6 +2,9 @@
 @{
     Layout = null;
 }
+@{ 
+    string code = (string)ViewData["code"];
+}
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,6 +17,8 @@
     <script src="~/Content/AdminIndex/js/app.min.js"></script>
     <link href="~/Content/layui/css/layui.css" rel="stylesheet" media="all" />
     <script src="~/Content/layui/layui.js" charset="utf-8"></script>
+    <link href="~/Content/image/preview.css" rel="stylesheet" />
+    <script src="~/Content/image/preview.js"></script>
     <script type="text/javascript">
         layui.use('upload', function(){
                 var $ = layui.jquery
@@ -69,7 +74,6 @@
         }
 
 
-
         function update() {
             $.ajax({
                 url: "@Url.Action("QualityReport")",
@@ -88,13 +92,25 @@
             });
         }
     </script>
+
+    <style type="text/css">
+        #wrap img {
+            vertical-align: top;
+            cursor: pointer;
+        }
+
+        #wrap2 img {
+            vertical-align: top;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
     <section class="signin popup-in">
         <div class="container">
             <div class="sign-content popup-in-content">
                 <div class="popup-in-txt">
-                    <h2 style="text-align:center">修改质量报告</h2>
+                    <h2 style="text-align:center">质量报告</h2>
                     <div class="row">
                         <div class="col-12">
                             <div class="signin-form">
@@ -102,8 +118,9 @@
                                 {
                                 <div class="form-group col-md-12">
                                     <label for="signin_form">产品质量证明：</label>
+                                    <label for="signin_form">(点击图片查看)</label>
                                     <div class="layui-upload">
-                                        <div class="layui-upload-list">
+                                        <div class="layui-upload-list" id="wrap">
                                             <table class="layui-table" id="table">
                                                 <thead>
                                                     <tr>
@@ -112,16 +129,18 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                    @{ int count = 1;}
                                                     @foreach (var img in Model)
                                                     {
                                                         <tr>
                                                             <th>
-                                                                <img src="data:image/jpeg;base64,@Convert.ToBase64String(img.img)" class="layui-upload-img">
+                                                                <img src="data:image/jpeg;base64,@Convert.ToBase64String(img.img)" class="layui-upload-img" id="img @count">
                                                             </th>
                                                             <th>
                                                                 <button class="layui-btn layui-btn-xs layui-btn-danger" onclick="delect(this,@img.id)">删除</button>
                                                             </th>
                                                         </tr>
+                                                        count++;
                                                     }
                                                 </tbody>
                                             </table>
@@ -130,8 +149,8 @@
                                     <input class="form-control" id="quality" name="quality" type="text" hidden>
                                     <br />
                                     <div class="layui-upload">
-                                        <button type="button" class="layui-btn layui-btn-normal" id="testList">添加</button>
-                                        <div class="layui-upload-list">
+                                        <button type="button" class="layui-btn layui-btn-normal" id="testList">添加新图</button>
+                                        <div class="layui-upload-list" id="wrap2">
                                             <table class="layui-table">
                                                 <thead>
                                                     <tr>
@@ -155,14 +174,21 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <button type="button" class="btn btn-block btn-primary" onclick="update()">修改</button>
+                            <button type="button" class="btn btn-block btn-primary" onclick="update()">提交</button>
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>
     </section>
+    <script>
+        var preview = new Preview({
+            imgWrap: 'wrap' // 指定该容器里的图片点击预览
+        })
+
+        var preview = new Preview({
+            imgWrap: 'wrap2' // 指定该容器里的图片点击预览
+        })
+    </script>
 </body>
 </html>

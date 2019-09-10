@@ -19,14 +19,14 @@ namespace SteelRepository.Controllers
             Employee.NoJudge();
             ViewData["MaterialCode"] = MaterialCode.GetMaterialCodeList();
             ViewData["manufacturer"] = Manufacturer.SelectAll();
-            ViewData["LoginEmployee"] = IndexController.LoginEmployee();
+            ViewData["permissions"] = Session["permissions"];
             return View(InCome.GetInComeViewDesc());
         }
 
         [HttpPost]
         public ActionResult InCome_list(FormCollection collection)
         {
-            ViewData["LoginEmployee"] = IndexController.LoginEmployee();
+            ViewData["permissions"] = Session["permissions"];
             ViewData["MaterialCode"] = MaterialCode.GetMaterialCodeList();
             ViewData["manufacturer"] = Manufacturer.SelectAll();
             string begin = collection["date"];
@@ -155,6 +155,7 @@ namespace SteelRepository.Controllers
         public ActionResult QualityReport(int id)
         {
             incomeid = id;
+            ViewData["code"] = InCome.GetInComesView(id).code;
             List<QualityCertificationReportImg> quality = QualityCertificationReportImg.GetQualityCertificationReportImg(id);
             if (quality != null)
                 return View(quality);
@@ -179,26 +180,18 @@ namespace SteelRepository.Controllers
         public ActionResult RecheckReports(int id)
         {
             incomeid = id;
-            List<RecheckReportImg> recheckReportImgs = new List<RecheckReportImg>();
-            foreach (var recheck in RecheckReport.GetRecheckReports(id))
-            {
-                foreach (var recheckImg in RecheckReportImg.GetRecheckReportImgs(recheck.id))
-                {
-                    recheckReportImgs.Add(recheckImg);
-                }
-            }
-            return View(recheckReportImgs);
+            return View(RecheckReportImg.GetRecheckReportImgViews(id));
         }
 
         [HttpPost]
         public JsonResult RecheckReports(FormCollection collection)
         {
             DelectRecheckReportImg(collection["recheck"]);
-            string recheckBasis = null;
-            string recheckOrderNo = null;
             List<byte[]> byteList = recheckReport(collection);
             if (byteList != null && byteList.Count != 0)
             {
+                string recheckBasis = collection["RecheckBasis"];
+                string recheckOrderNo = collection["RecheckOrderNo"];
                 DateTime dateTime = DateTime.Parse(collection["RecheckTime"]);
                 RecheckReport.Insert(incomeid, dateTime, byteList, recheckBasis, recheckOrderNo);
             }

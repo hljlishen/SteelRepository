@@ -1,4 +1,4 @@
-﻿@model List<Models.RecheckReportImg>
+﻿@model List<Models.RecheckReportImgView>
 @{
     Layout = null;
 }
@@ -14,6 +14,8 @@
     <script src="~/Content/AdminIndex/js/app.min.js"></script>
     <link href="~/Content/layui/css/layui.css" rel="stylesheet" media="all" />
     <script src="~/Content/layui/layui.js" charset="utf-8"></script>
+    <link href="~/Content/image/preview.css" rel="stylesheet" />
+    <script src="~/Content/image/preview.js"></script>
     <script type="text/javascript">
         layui.use('laydate', function () {
             var laydate = layui.laydate;
@@ -36,7 +38,7 @@
             ,accept: 'image/*'
             ,multiple: true
             ,auto: false
-            ,choose: function(obj){   
+            ,choose: function(obj){
               var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
               //读取本地文件
               obj.preview(function(index, file, result){
@@ -52,7 +54,7 @@
                       , '</tr>'].join(''));
 
                    var div = $(['<input class="form-control" hidden id="recheck'+id2+'" type="text" name="recheck'+id2+'">'].join(''));
-        
+
                 //删除
                 tr.find('.demo-delete').on('click', function(){
                   delete files[index]; //删除对应的文件
@@ -95,13 +97,25 @@
             });
         }
     </script>
+
+    <style type="text/css">
+        #wrap img {
+            vertical-align: top;
+            cursor: pointer;
+        }
+
+        #wrap2 img {
+            vertical-align: top;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
     <section class="signin popup-in">
         <div class="container">
             <div class="sign-content popup-in-content">
                 <div class="popup-in-txt">
-                    <h2 style="text-align:center">修改复检报告</h2>
+                    <h2 style="text-align:center">复检报告</h2>
                     <div class="row">
                         <div class="col-12">
                             <div class="signin-form">
@@ -110,7 +124,7 @@
                                     <div class="form-group col-md-12">
                                         <label for="signin_form">复验结果报告：</label>
                                         <div class="layui-upload">
-                                            <div class="layui-upload-list">
+                                            <div class="layui-upload-list" id="wrap">
                                                 <table class="layui-table">
                                                     <thead>
                                                         <tr>
@@ -120,16 +134,33 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
+                                                        @{ string recheckOrderNo = "";}
                                                         @foreach (var recheck in Model)
                                                         {
+                                                            if (recheckOrderNo != recheck.recheckOrderNo)
+                                                            {
+                                                                <tr>
+                                                                    <th>
+                                                                        <label for="signin_form">复检单号：</label>
+                                                                        <input class="form-control" type="text" value="@recheck.recheckOrderNo" />
+                                                                    </th>
+                                                                    <th>
+                                                                        <label for="signin_form">复检依据：</label>
+                                                                        <input class="form-control" type="text" value="@recheck.recheckBasis" />
+                                                                    </th>
+                                                                    <th>
+                                                                        <button class="layui-btn layui-btn-xs layui-btn-danger demo-delete" onclick="delect(this,@recheck.reportId)">修改</button>
+                                                                    </th>
+                                                                </tr>
+                                                                recheckOrderNo = recheck.recheckOrderNo;
+                                                            }
                                                             <tr>
                                                                 <th>
                                                                     <img src="data:image/jpeg;base64,@Convert.ToBase64String(recheck.img)" class="layui-upload-img" data-src="data:image/jpeg;base64,@Convert.ToBase64String(recheck.img)" width="200" heigth="200px">
                                                                 </th>
-                                                                <th>@Models.RecheckReport.GetRecheckReport(recheck.reportId).recheckTime.ToString("d")</th>
+                                                                <th>@recheck.recheckTime.ToString("d")</th>
                                                                 <th>
-                                                                    <button class="layui-btn layui-btn-xs layui-btn-danger demo-delete" onclick="delect(this,@recheck.id)">删除</button>
-                                                                    <button class="layui-btn layui-btn-xs layui-btn-danger demo-delete">查看</button>
+                                                                    <button class="layui-btn layui-btn-xs layui-btn-danger demo-delete" onclick="delect(this,@recheck.reportId)">删除</button>
                                                                 </th>
                                                             </tr>
                                                         }
@@ -139,8 +170,8 @@
                                         </div>
                                         <input class="form-control" id="recheck" name="recheck" type="text" hidden>
                                         <div class="layui-upload">
-                                            <button type="button" class="layui-btn layui-btn-normal" id="testList2">选择</button>
-                                            <div class="layui-upload-list">
+                                            <button type="button" class="layui-btn layui-btn-normal" id="testList2">添加新图</button>
+                                            <div class="layui-upload-list" id="wrap2">
                                                 <table class="layui-table">
                                                     <thead>
                                                         <tr>
@@ -160,7 +191,26 @@
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label for="signin_form">复检时间：</label>
-                                                <input type="text" class="layui-input" id="test2" name="RecheckTime">
+                                                <input type="text" class="layui-input" id="test2" name="RecheckTime" value="@Models.Inventory.NewDateTime().ToString("yyyy-MM-dd")">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="signin_form">复检依据：</label>
+                                                <label id="IsRecheckBasis" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
+                                                <input class="form-control" name="RecheckBasis" type="text" id="IRecheckBasis" />
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="signin_form">复检单号：</label>
+                                                <label id="IsRecheckOrderNo" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
+                                                <label id="IsRecheckOrderNo2" style="color:#ff0000;display:none;font-size:13px">*复检单号已存在</label>
+                                                <input class="form-control" name="RecheckOrderNo" type="text" id="IRecheckOrderNo" list="recheckOrderNolist" />
+                                                <datalist id="recheckOrderNolist">
+                                                    @foreach (var recheckReport in Model)
+                                                    {
+                                                        <option>@recheckReport.recheckOrderNo</option>
+                                                    }
+                                                </datalist>
                                             </div>
                                         </div>
                                     </div>
@@ -170,7 +220,7 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <button type="button" class="btn btn-block btn-primary" onclick="update()">修改</button>
+                            <button type="button" class="btn btn-block btn-primary" onclick="update()">提交</button>
                         </div>
                     </div>
 
@@ -178,5 +228,14 @@
             </div>
         </div>
     </section>
+    <script>
+        var preview = new Preview({
+            imgWrap: 'wrap' // 指定该容器里的图片点击预览
+        })
+
+        var preview = new Preview({
+            imgWrap: 'wrap2' // 指定该容器里的图片点击预览
+        })
+    </script>
 </body>
 </html>

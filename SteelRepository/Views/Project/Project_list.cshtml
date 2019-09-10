@@ -3,11 +3,7 @@
     Layout = "~/Views/AdminIndex/AdminIndex.cshtml";
 }
 @{ 
-    Models.Employee loginEmployee = (Models.Employee)ViewData["LoginEmployee"];
-    if (loginEmployee == null)
-    {
-        return;
-    }
+    int permissions = (int)ViewData["permissions"];
 }
     <head>
         <meta charset="utf-8" />
@@ -80,7 +76,7 @@
                     <div class="card-body">
                         <div class="row mb-2">
                             <div class="col-sm-11">
-                                @if (loginEmployee.permissions == 1)
+                                @if (permissions == 1)
                                 {
                                     <a href="javascript:ProjectAdd()" class="btn btn-primary"><i class="mdi mdi-plus-circle mr-2"></i>添加项目信息</a>
                                 }
@@ -108,13 +104,13 @@
                                         <th>项目名称</th>
                                         <th>项目负责人</th>
                                         <th>备注</th>
-                                        @if (loginEmployee.permissions == 1)
+                                        @if (permissions == 1)
                                         {
                                             <th style="width: 75px;">操作</th>
                                         }
                                         else
                                         {
-                                            <th></th>
+                                            <th style="width: 1px;"></th>
                                         }
                                     </tr>
                                 </thead>
@@ -136,7 +132,7 @@
                                         <td>@project.projectName</td>
                                         <td>@project.projectCharge</td>
                                         <td>@project.projectNote</td>
-                                        @if (loginEmployee.permissions == 1)
+                                        @if (permissions == 1)
                                         {
                                             <td>
                                                 <a href="javascript:ProjectDelete(@project.id)" class="action-icon"> <i class="dripicons-trash"></i></a>

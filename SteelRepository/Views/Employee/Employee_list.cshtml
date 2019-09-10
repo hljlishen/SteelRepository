@@ -3,11 +3,7 @@
     Layout = "~/Views/AdminIndex/AdminIndex.cshtml";
 }
 @{ 
-    Models.Employee loginEmployee = (Models.Employee)ViewData["LoginEmployee"];
-    if (loginEmployee == null)
-    {
-            return;
-    }
+    int permissions = (int)ViewData["permissions"];
 }
 <head>
     <meta charset="utf-8" />
@@ -114,7 +110,7 @@
                     <div class="card-body">
                         <div class="row mb-2">
                             <div class="col-sm-11">
-                                @if (loginEmployee.permissions == 1)
+                                @if (permissions == 1)
                                 {
                                     <a href="javascript:EmployeeAdd()" class="btn btn-primary"><i class="mdi mdi-plus-circle mr-2"></i>添加员工信息</a>
                                 }
@@ -143,13 +139,13 @@
                                         <th>所属部门</th>
                                         <th>权限</th>
                                         <th>状态</th>
-                                        @if (loginEmployee.permissions == 1)
+                                        @if (permissions == 1)
                                         {
-                                            <th style="width: 75px;">操作</th>
+                                            <th>操作</th>
                                         }
                                         else
                                         {
-                                            <th></th>
+                                            <th style="width: 1px;"></th>
                                         }
                                     </tr>
                                 </thead>
@@ -201,7 +197,7 @@
                                             {
                                                 <td>未通过审核</td>
                                             }
-                                            @if (loginEmployee.permissions == 1)
+                                            @if (permissions == 1)
                                             {
                                                 if (employee.state.ToString() == "1" || employee.state.ToString() == "2")
                                                 {

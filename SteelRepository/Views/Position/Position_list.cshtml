@@ -3,11 +3,7 @@
     Layout = "~/Views/AdminIndex/AdminIndex.cshtml";
 }
 @{ 
-    Models.Employee loginEmployee = (Models.Employee)ViewData["LoginEmployee"];
-    if (loginEmployee == null)
-    {
-        return;
-    }
+    int permissions = (int)ViewData["permissions"];
 }
     <head>
         <meta charset="utf-8" />
@@ -84,7 +80,7 @@
                     <div class="card-body">
                         <div class="row mb-2">
                             <div class="col-sm-11">
-                                @if (loginEmployee.permissions == 1)
+                                @if (permissions == 1)
                                 {
                                     <a href="javascript:PositionAdd()" class="btn btn-primary"><i class="mdi mdi-plus-circle mr-2"></i>添加仓库位置</a>
                                 }
@@ -109,7 +105,7 @@
                                             <th>编号</th>
                                             <th>位置信息</th>
                                             <th>备注</th>
-                                            @if (loginEmployee.permissions == 1)
+                                            @if (permissions == 1)
                                             {
                                                 <th style="width: 125px;">操作</th>
                                             }
@@ -133,7 +129,7 @@
                                             <td class="table-user">@count</td>
                                             <td>@position.positionName</td>
                                             <td>@position.note</td>
-                                            @if (loginEmployee.permissions == 1)
+                                            @if (permissions == 1)
                                             {
                                                 <td>
                                                     <a href="javascript:PositionDelete(@position.id);" class="action-icon"> <i class="dripicons-trash"></i></a>

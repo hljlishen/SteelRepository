@@ -19,7 +19,7 @@ namespace SteelRepository.Controllers
         // GET: Department
         public ActionResult Department_list()
         {
-            ViewData["LoginEmployee"] = IndexController.LoginEmployee();
+            ViewData["permissions"] = Session["permissions"];
             Employee.NoJudge();
             ViewData["Employee"] = Employee.SelectAll();
             return View(Department.SelectAll());
@@ -28,7 +28,7 @@ namespace SteelRepository.Controllers
         [HttpPost]
         public ActionResult Department_list(int id)
         {
-            ViewData["LoginEmployee"] = IndexController.LoginEmployee();
+            ViewData["permissions"] = Session["permissions"];
             ViewData["Employee"] = Employee.Select(id);
             return View(Department.SelectAll());
         }

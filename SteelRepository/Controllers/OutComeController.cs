@@ -17,7 +17,7 @@ namespace SteelRepository.Controllers
         // GET: OutCome
         public ActionResult OutCome_list()
         {
-            ViewData["LoginEmployee"] = IndexController.LoginEmployee();
+            ViewData["permissions"] = Session["permissions"];
             Employee.NoJudge();
             ViewData["MaterialCode"] = MaterialCode.GetMaterialCodeList();
             ViewData["employee"] = Employee.SelectAll();
@@ -36,7 +36,7 @@ namespace SteelRepository.Controllers
         [HttpPost]
         public ActionResult OutCome_list(FormCollection collection)
         {
-            ViewData["LoginEmployee"] = IndexController.LoginEmployee();
+            ViewData["permissions"] = Session["permissions"];
             ViewData["MaterialCode"] = MaterialCode.GetMaterialCodeList();
             ViewData["employee"] = Employee.SelectAll();
             ViewData["manufacturer"] = Manufacturer.SelectAll();
@@ -60,7 +60,7 @@ namespace SteelRepository.Controllers
         }
         public ActionResult OutCome_revocationlist()
         {
-            ViewData["LoginEmployee"] = IndexController.LoginEmployee();
+            ViewData["permissions"] = Session["permissions"];
             ViewData["MaterialCode"] = MaterialCode.GetMaterialCodeList();
             ViewData["employee"] = Employee.SelectAll();
             ViewData["manufacturer"] = Manufacturer.SelectAll();

@@ -28,5 +28,19 @@ namespace Models
                 return helper.Delete<RecheckReportImg>(recheckImgId);
             }
         }
+
+        public static List<RecheckReportImgView> GetRecheckReportImgViews(int incomeId)
+        {
+            List<RecheckReportImgView> listDesc = new List<RecheckReportImgView>();
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                var ret = helper.SqlQuery<RecheckReportImgView>("select RecheckReportImgView.* from RecheckReportImgView where RecheckReportImgView.incomeId = "+incomeId+" order by RecheckReportImgView.recheckOrderNo desc");
+                foreach (var rriv in ret)
+                {
+                    listDesc.Add(rriv);
+                }
+                return listDesc;
+            }
+        }
     }
 }

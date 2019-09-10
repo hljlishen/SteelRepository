@@ -13,7 +13,7 @@ namespace SteelRepository.Controllers
         // GET: Project
         public ActionResult Project_list()
         {
-            ViewData["LoginEmployee"] = IndexController.LoginEmployee();
+            ViewData["permissions"] = Session["permissions"];
             Employee.NoJudge();
             return View(Project.SelectAll());
         }

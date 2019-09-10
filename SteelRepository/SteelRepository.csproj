@@ -294,6 +294,8 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\ECharts\echarts.min.js" />
     <Content Include="Content\Excel\Excel.js" />
+    <Content Include="Content\image\preview.css" />
+    <Content Include="Content\image\preview.js" />
     <Content Include="Content\img.css" />
     <Content Include="Content\Inventory\js\jquery-3.1.1.js" />
     <Content Include="Content\jquery-1.6.2.min.js" />
