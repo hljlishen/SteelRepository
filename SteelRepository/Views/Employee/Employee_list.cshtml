@@ -3,7 +3,15 @@
     Layout = "~/Views/AdminIndex/AdminIndex.cshtml";
 }
 @{ 
-    int permissions = (int)ViewData["permissions"];
+    int permissions = 0;
+    if (ViewData["permissions"] == null)
+    {
+        permissions = 3;
+    }
+    else
+    {
+       permissions = (int)ViewData["permissions"];
+    }
 }
 <head>
     <meta charset="utf-8" />

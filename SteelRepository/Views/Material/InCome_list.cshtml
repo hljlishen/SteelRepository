@@ -5,7 +5,15 @@
 @{
     List<Models.MaterialCode> material = (List<Models.MaterialCode>)ViewData["MaterialCode"];
     List<Models.Manufacturer> manufacturer = (List<Models.Manufacturer>)ViewData["manufacturer"];
-    int permissions = (int)ViewData["permissions"];
+    int permissions = 0;
+    if (ViewData["permissions"] == null)
+    {
+        permissions = 3;
+    }
+    else
+    {
+        permissions = (int)ViewData["permissions"];
+    }
 }
     <head>
         <meta charset="utf-8" />
