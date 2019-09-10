@@ -231,7 +231,8 @@ namespace Models
                 }
                 catch (Exception e)
                 {
-                    throw e;
+                    return 0;
+                    //throw e;
                 }
                 inCome.codeId = mCode.id;
                 double? kgPrice = 0;

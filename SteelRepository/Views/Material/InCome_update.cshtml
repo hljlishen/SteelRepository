@@ -92,9 +92,9 @@
             }
             //批号
             var IPh = $("#IPh").val().trim();
-            if (IPh != "") {
-                document.getElementById("IsPH").style.display = "none";
-                isIPH = true;
+            if (IPh == "") {
+                document.getElementById("IsPH").style.display = "";
+                isIPH = false;
             } else {
                $.ajax({
                     url: "@Url.Action("BatchShutOut")",
@@ -111,7 +111,7 @@
                         }
                     }
                 });
-                document.getElementById("IsPH").style.display = "none";
+                //document.getElementById("IsPH").style.display = "";
             }
             //单价
             var Iper = $("#Iper").val().trim();
@@ -133,6 +133,7 @@
             }
             //周期
             var ICycle = $("#ICycle").val().trim();
+            //var i = /^[1-9][0-9]{0,2}(?:,?[0-9]{3})*(?:\.[0-9]{1,2})?$/;
             if (ICycle != "") {
                 document.getElementById("IsCycle").style.display = "none";
                 isICycle = true;
@@ -199,12 +200,19 @@
             }
         }
 
-        function clearNoNum(obj) {
-            obj.value = obj.value.replace(/[^\d.]/g, ""); //清除"数字"和"."以外的字符
-            obj.value = obj.value.replace(/^\./g, ""); //验证第一个字符是数字而不是
-            obj.value = obj.value.replace(/\.{2,}/g, "."); //只保留第一个. 清除多余的
-            obj.value = obj.value.replace(".", "$#$").replace(/\./g, "").replace("$#$", ".");
-        }
+        //function clearNoNum(obj) {
+        //    obj.value = obj.value.replace(/[^\d.]/g, ""); //清除"数字"和"."以外的字符
+        //    obj.value = obj.value.replace(/^\./g, ""); //验证第一个字符是数字而不是
+        //    obj.value = obj.value.replace(/\.{2,}/g, "."); //只保留第一个. 清除多余的
+        //    obj.value = obj.value.replace(".", "$#$").replace(/\./g, "").replace("$#$", ".");
+        //}
+        $(function () {
+        $("#myform :input").change(function () {
+            $("#myform").data("changed", true);
+             //document.getElementById("button").disabled = false;
+        });
+
+        });
 
         var judjeWd = false;
         function JudgesubmitForm() {
@@ -215,12 +223,7 @@
             }
         }
 
-        $(function () {
-        $("#myform :input").change(function () {
-            $("#myform").data("changed", true);
-        });
-
-        });
+        
         function Check2() {
                     check();
                     if (isTrue) {
@@ -236,6 +239,7 @@
                                     parent.closeWin2();
                                     parent.openFrame("InCome_list");
                                 } else {
+                                    alert("修改失败");
                                 }
                             }
                         });
@@ -249,6 +253,8 @@
             if ($("#myform").data("changed") || judjeWd) {
                 Check2();
             } else {
+                //document.getElementById("button").disabled = true;
+                //document.getElementById("button").style.backgroundColor = "#A2A8F8";
                 alert("没有修改");
             }
         }
@@ -337,8 +343,8 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">单价（元）：</label>
-                                            <label id="IsPer" style="color:#ff0000;display:none;font-size:13px">*不能为空,最多到小数点后两位</label>
-                                            <input class="form-control" name="unitPrice" type="number" value="@Model.unitPrice" id="Iper" onkeyup="clearNoNum(this)" />
+                                            <label id="IsPer" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
+                                            <input class="form-control" name="unitPrice" type="number" value="@Model.unitPrice" id="Iper" @*onkeyup="clearNoNum(this)"*@ />
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">单价的单位：</label>
@@ -349,8 +355,8 @@
 
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">数量：</label>
-                                            <label id="IsNumber" style="color:#ff0000;display:none;font-size:13px">*不能为空,最多到小数点后两位</label>
-                                            <input class="form-control" name="amount" type="number" value="@Model.amount" id="INumber" onkeyup="clearNoNum(this)" />
+                                            <label id="IsNumber" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
+                                            <input class="form-control" name="amount" type="number" value="@Model.amount" id="INumber" @*onkeyup="clearNoNum(this)"*@ />
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">计量单位：</label>
@@ -376,7 +382,7 @@
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">复检周期：</label>
                                             <label id="IsCycle" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
-                                            <input type="text" class="form-control" name="reviewCycle" value="@Model.reviewCycle" id="ICycle" onkeyup="clearNoNum(this)"/>
+                                            <input type="text" class="form-control" name="reviewCycle" value="@Model.reviewCycle" id="ICycle" @*onkeyup="clearNoNum(this)"*@/>
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -391,7 +397,7 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <button type="button" class="btn btn-block btn-primary" onclick="update()">修改</button>
+                            <button type="button" id="button" class="btn btn-block btn-primary" onclick="update()">修改</button>
                         </div>
                     </div>
 

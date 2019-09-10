@@ -14,25 +14,53 @@
     <script src="~/Content/AdminIndex/js/app.min.js"></script>
     <link href="~/Content/layui/css/layui.css" rel="stylesheet" media="all" />
     <script type="text/javascript">
+        var isNum;
+        function check() {
+            var num = $("#num").val().trim();
+           //var n = /^[1-9][0-9]{0,2}(?:,?[0-9]{3})*(?:\.[0-9]{1,2})?$/;
+            if (/*!n.test(num) ||*/ num == "") {
+                document.getElementById("num1").style.display = "";
+                isNum = false;
+            } else {
+                document.getElementById("num1").style.display = "none";
+                isNum = true;
+                
+            }
+            
+
+        }
+
+        function clearNoNum(obj) {
+            obj.value = obj.value.replace(/[^\d.]/g, ""); //清除"数字"和"."以外的字符
+            obj.value = obj.value.replace(/^\./g, ""); //验证第一个字符是数字而不是
+            obj.value = obj.value.replace(/\.{2,}/g, "."); //只保留第一个. 清除多余的
+            obj.value = obj.value.replace(".", "$#$").replace(/\./g, "").replace("$#$", ".");
+        }
+
         function add() {
-            $.ajax({
-                url: "@Url.Action("OutCome_add")",
-                type: "post",
-                data: $("form").serialize(),
-                dataType: "json",
-                success: function (data) {
-                    data = eval("(" + data + ")");
-                    if (data) {
-                        alert("出库成功");
-                        parent.closeWin2();
-                        parent.openFrame("Inventory_list");
-                    } else {
-                        alert("出库失败");
-                        parent.closeWin2();
-                        parent.openFrame("Inventory_list");
+            check();
+            if (isNum) {
+                $.ajax({
+                    url: "@Url.Action("OutCome_add")",
+                    type: "post",
+                    data: $("form").serialize(),
+                    dataType: "json",
+                    success: function (data) {
+                        data = eval("(" + data + ")");
+                        if (data) {
+                            alert("出库成功");
+                            parent.closeWin2();
+                            parent.openFrame("Inventory_list");
+                        } else {
+                            alert("出库失败");
+                            parent.closeWin2();
+                            parent.openFrame("Inventory_list");
+                        }
                     }
-                }
-            });
+                });
+            } else {
+
+            }
         }
         function EmployeeAdd() {
             var url = "OutComeEmployee_new";
@@ -84,7 +112,8 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">出库数量：</label>
-                                            @Html.TextBox("number", inventory.amount, new { @class = "form-control", type = "number" })
+                                            <label id="num1" style="color:#ff0000;display:none;font-size:13px">*输入格式有误，请重新输入！</label>
+                                            @Html.TextBox("number", inventory.amount, new { @class = "form-control", type = "number", id = "num", onkeyup = "clearNoNum(this)" })
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">货品单位：</label>
@@ -115,11 +144,12 @@
                                         </div>
                                     </div>
                                     <label>领用人：</label>
+                                    <label id="People" style="color:#ff0000;display:none;font-size:13px">*请选择领用人</label>
                                     <div class="form-row">
                                         <div class="layui-form-item">
                                             <div class="layui-inline">
-                                                <div class="layui-input-inline" style="width:350px;height:50px">
-                                                    <select id="employeeId" name="employeeId" lay-verify="required" lay-search="">
+                                                <div class="layui-input-inline" style="width:350px;height:50px" id="people">
+                                                    <select id="employeeId" name="employeeId" lay-verify="required" lay-search="" >
                                                         <option value="">直接选择或搜索选择</option>
                                                         @foreach (var emp in employee)
                                                         {
@@ -127,6 +157,7 @@
                                                         }
                                                     </select>
                                                 </div>
+
                                                 <div class="layui-input-inline" style="width:80px;height:40px">
                                                     <button class="btn btn-dark" type="button" onclick="EmployeeAdd()" style="height:40px;width:70px">新增</button>
                                                 </div>

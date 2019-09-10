@@ -41,17 +41,19 @@
                 isTrue = true;
             else {
                 isTrue = false;
+                
             }
-
+            
             return isTrue;
         }
 
-            $(function () {
-        $("#myform :input").change(function () {
-            $("#myform").data("changed", true);
+        $(function () {
+            $("#myform :input").change(function () {
+                $("#myform").data("changed", true);
+                document.getElementById("button").disabled = false;
+            });
         });
 
-    });
     function update() {
         if ($("#myform").data("changed")) {
             check();
@@ -77,7 +79,8 @@
             }
 
         } else {
-            alert("没有修改！");
+            document.getElementById("button").disabled = true;
+            //alert("没有修改！");
         }
 
 
@@ -119,7 +122,7 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <button type="button" class="btn btn-block btn-primary" onclick="update()">修改</button>
+                            <button type="button" id="button" class="btn btn-block btn-primary" onclick="update()">修改</button>
                         </div>
                     </div>
                 </div>
