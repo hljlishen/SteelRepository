@@ -22,17 +22,14 @@
             if (wd.value != wd.defaultValue)
             {
                 judjeWd = true;
+                
             }
-
-
         }
-
         function DepartmentSelect(id,name1,name2,name3) {
             document.getElementById("departmentId").value = id;
             document.getElementById("departmentName").value = name1 + '--' + name2 + '--' + name3;
             document.getElementById("ChooseDepartment").style.display = "none";
         }
-
          function check() {
             //姓名
             var name = $("#name").val();
@@ -46,17 +43,12 @@
              }
              
         }
-
-
         
-
         $(function () {
         $("#myform :input").change(function () {
             $("#myform").data("changed", true);
-            document.getElementById("button").disabled = false;
         });
         });
-
         
         function check2() {
             check();
@@ -78,18 +70,19 @@
                     }
                 });
             }
-
         }
-
         function update() {
             ChooseDepartment();
-                if ($("#myform").data("changed") || judjeWd) {
-                    check2();
-                } else {
-                    document.getElementById("button").disabled = true;
-                    //alert("没有修改！");
-                }
+            if ($("#myform").data("changed") || judjeWd) {
+                
+                check2();
+            } else {
+                document.getElementById("button").disabled = true;
+                document.getElementById("button").style.backgroundColor = "#A2A8F8";
+                //alert("没有修改！");
             }
+            document.getElementById("button").disabled = false;
+        }
     </script>
 </head>
 <body>
@@ -225,7 +218,7 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <button id="button" type="button" class="btn btn-block btn-primary" onclick="update()">修改</button>
+                            <button type="button" id="button" class="btn btn-block btn-primary" onclick="update()">修改</button>
                         </div>
                     </div>
                 </div>
