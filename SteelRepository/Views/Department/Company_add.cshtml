@@ -15,9 +15,9 @@
     <script type="text/javascript">
         var isName = true;
         function check() {
-            var name = $("#name").val();
-            var n = /^[\u4E00-\u9FA5A-Za-z0-9]+$/;
-            if (!n.test(name) || name == "") {
+            var name = $("#name").val().trim();
+            //var n = /^[\u4E00-\u9FA5A-Za-z0-9]+$/;
+            if (name == "") {
                 document.getElementById("Isname").style.display = "";
                 isName = false;
             } else {
