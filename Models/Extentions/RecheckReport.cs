@@ -125,6 +125,27 @@ namespace Models
                 return helper.FindFirst<RecheckReport, string>("recheckOrderNo", recheckOrderNo) == null;
             }
         }
+
+        public static bool NoIncomeIdRecheckOrderNo(string recheckOrderNo, int incomeId)
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                foreach (var recheckReport in helper.Select<RecheckReport>(p => p.incomeId != incomeId))
+                {
+                    if (recheckReport.recheckOrderNo == recheckOrderNo)
+                        return false;
+                }
+                return true;
+            }
+        }
+
+        public static int Update(RecheckReport recheck)
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return helper.Update(recheck);
+            }
+        }
     }
 
     internal class RecheckReportComparer : IComparer<RecheckReport>

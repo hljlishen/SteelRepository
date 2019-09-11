@@ -1,0 +1,98 @@
+﻿@model Models.RecheckReport
+@{
+    Layout = null;
+}
+@{
+    int id = 0;
+    if (ViewData["id"] != null)
+    {
+        id = (int)ViewData["id"];
+    }
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+    <link href="~/Content/AdminIndex/css/app.min.css" rel="stylesheet" />
+    <link href="~/Content/AdminIndex/css/icons.min.css" rel="stylesheet" />
+    <script src="~/Content/AdminIndex/js/app.min.js"></script>
+    <script type="text/javascript">
+        var IsRecheckOrderNo = true;
+
+        function recheckOrderNoBlur(id) {
+            document.getElementById("IsRecheckOrderNo").style.display = "none";
+            var recheckOrderNo = $("#recheckOrderNo").val();
+            if (recheckOrderNo != "") {
+                $.ajax({
+                    url: "@Url.Action("IsRecheckOrderNo")",
+                    data: {"recheckOrderNo":recheckOrderNo,"incomeId":id},
+                    type: "post",
+                    success: function (data) {
+                        if (!data) {
+                            document.getElementById("IsRecheckOrderNo").style.display = "";
+                        }
+                    }
+                });
+            }
+        }
+
+        function update() {
+            if (IsRecheckOrderNo) {
+                $.ajax({
+                    url: "@Url.Action("RecheckReports_update")",
+                    type: "post",
+                    data: $("form").serialize(),
+                    dataType: "json",
+                    success: function (data) {
+                        data = eval("(" + data + ")");
+                        if (data) {
+                            alert("修改成功");
+                            parent.closeWin2();
+                            parent.openFrame("RecheckReports?id="+@id);
+                        }
+                    }
+                });
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="sign-content popup-in-content">
+            <div class="popup-in-txt">
+                <h2 style="text-align:center">修改复检信息</h2>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="signin-form">
+                            @using (Html.BeginForm("RecheckReports_update", "Material", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @role = "form" }))
+                            {
+                                <div class="form-group">
+                                    <label for="signin_form">复检单号：</label>
+                                    <label id="IsRecheckOrderNo" style="color:#ff0000;display:none;font-size:13px">*复检单号已存在</label>
+                                    <input class="form-control" type="text" name="recheckOrderNo" id="recheckOrderNo" value="@Model.recheckOrderNo" onblur="recheckOrderNoBlur('@Model.incomeId')" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="signin_form">复检依据：</label>
+                                    <input class="form-control" type="text" name="recheckBasis" id="recheckBasis" value="@Model.recheckBasis" />
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="signin-footer">
+                            <button type="button" class="btn btn-primary" onclick="update();">
+                                修改
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

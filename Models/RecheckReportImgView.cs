@@ -20,5 +20,6 @@ namespace Models
         public string recheckBasis { get; set; }
         public int incomeId { get; set; }
         public string recheckOrderNo { get; set; }
+        public int id { get; set; }
     }
 }

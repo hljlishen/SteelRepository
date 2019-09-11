@@ -1,6 +1,13 @@
-﻿@model List<Models.RecheckReportImgView>
+﻿ @model List<Models.RecheckReportImgView>
 @{
-    Layout = null;
+    Layout = "~/Views/AdminIndex/AdminIndex.cshtml";
+}
+@{ 
+    int id = 0;
+    if (ViewData["id"] != null)
+    {
+        id = (int)ViewData["id"];
+    }
 }
 <!DOCTYPE html>
 <html>
@@ -79,6 +86,13 @@
             $("#recheck").val($("#recheck").val()+id+",")
         }
 
+        function updateImg(id) {
+            var url = "RecheckReports_update?id="+id;
+            var width = "100%";
+            var height = "300px";
+            parent.OpenWin(url, width, height); 
+        }
+
         function update() {
             $.ajax({
                 url: "@Url.Action("RecheckReports")",
@@ -89,9 +103,7 @@
                     data = eval("(" + data + ")");
                     if (data) {
                         alert("修改成功");
-                        parent.closeWin2();
-                        parent.openFrame("InCome_list");
-                    } else {
+                        parent.openFrame("RecheckReports?id="+@id);
                     }
                 }
             });
@@ -111,123 +123,136 @@
     </style>
 </head>
 <body>
-    <section class="signin popup-in">
-        <div class="container">
-            <div class="sign-content popup-in-content">
-                <div class="popup-in-txt">
-                    <h2 style="text-align:center">复检报告</h2>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="signin-form">
-                                @using (Html.BeginForm("RecheckReports", "Material", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @role = "form" }))
-                                {
-                                    <div class="form-group col-md-12">
-                                        <label for="signin_form">复验结果报告：</label>
-                                        <div class="layui-upload">
-                                            <div class="layui-upload-list" id="wrap">
-                                                <table class="layui-table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>预览图</th>
-                                                            <th>复检时间</th>
-                                                            <th>操作</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @{ string recheckOrderNo = "";}
-                                                        @foreach (var recheck in Model)
+    <div class="content-page">
+        <div class="content">
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box">
+                        <div class="page-title-right">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item"><a href="javascript: void(0);">材料出入库信息</a></li>
+                                <li>
+                                    <span class="dripicons-chevron-right"></span>
+                                </li>
+                                <li class="breadcrumb-item"><a href="javascript: void(0);">材料入库信息管理</a></li>
+                                <li>
+                                    <span class="dripicons-chevron-right"></span>
+                                </li>
+                                <li class="breadcrumb-item active">复检报告</li>
+                            </ol>
+                        </div>
+                        <h4 class="page-title">复检报告</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="signin-form">
+                        @using (Html.BeginForm("RecheckReports", "Material", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @role = "form" }))
+                        {
+                            <div class="form-group form-row">
+                                <div class="layui-upload col-md-6">
+                                    <label for="signin_form">复验结果报告：</label>
+                                    <label for="signin_form">(点击图片查看)</label>
+                                    <div class="layui-upload">
+                                        <div class="layui-upload-list" id="wrap">
+                                            <table class="layui-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>预览图</th>
+                                                        <th>复检依据</th>
+                                                        <th>复检时间</th>
+                                                        <th>操作</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @{ string recheckOrderNo = "";}
+                                                    @foreach (var recheck in Model)
+                                                    {
+                                                        if (recheckOrderNo != recheck.recheckOrderNo)
                                                         {
-                                                            if (recheckOrderNo != recheck.recheckOrderNo)
-                                                            {
-                                                                <tr>
-                                                                    <th>
-                                                                        <label for="signin_form">复检单号：</label>
-                                                                        <input class="form-control" type="text" value="@recheck.recheckOrderNo" />
-                                                                    </th>
-                                                                    <th>
-                                                                        <label for="signin_form">复检依据：</label>
-                                                                        <input class="form-control" type="text" value="@recheck.recheckBasis" />
-                                                                    </th>
-                                                                    <th>
-                                                                        <button class="layui-btn layui-btn-xs layui-btn-danger demo-delete" onclick="delect(this,@recheck.reportId)">修改</button>
-                                                                    </th>
-                                                                </tr>
-                                                                recheckOrderNo = recheck.recheckOrderNo;
-                                                            }
                                                             <tr>
                                                                 <th>
-                                                                    <img src="data:image/jpeg;base64,@Convert.ToBase64String(recheck.img)" class="layui-upload-img" data-src="data:image/jpeg;base64,@Convert.ToBase64String(recheck.img)" width="200" heigth="200px">
-                                                                </th>
-                                                                <th>@recheck.recheckTime.ToString("d")</th>
-                                                                <th>
-                                                                    <button class="layui-btn layui-btn-xs layui-btn-danger demo-delete" onclick="delect(this,@recheck.reportId)">删除</button>
+                                                                    <label for="signin_form">复检单号：</label>
+                                                                    <label for="signin_form">@recheck.recheckOrderNo</label>
                                                                 </th>
                                                             </tr>
+                                                            recheckOrderNo = recheck.recheckOrderNo;
                                                         }
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                        <input class="form-control" id="recheck" name="recheck" type="text" hidden>
-                                        <div class="layui-upload">
-                                            <button type="button" class="layui-btn layui-btn-normal" id="testList2">添加新图</button>
-                                            <div class="layui-upload-list" id="wrap2">
-                                                <table class="layui-table">
-                                                    <thead>
                                                         <tr>
-                                                            <th>文件名</th>
-                                                            <th>预览图</th>
-                                                            <th>大小</th>
-                                                            <th>操作</th>
+                                                            <th>
+                                                                <img src="data:image/jpeg;base64,@Convert.ToBase64String(recheck.img)" class="layui-upload-img" data-src="data:image/jpeg;base64,@Convert.ToBase64String(recheck.img)" width="200" heigth="200px">
+                                                            </th>
+                                                            <th>@recheck.recheckBasis</th>
+                                                            <th>@recheck.recheckTime.ToString("d")</th>
+                                                            <th>
+                                                                <button class="layui-btn layui-btn-xs layui-btn-danger demo-delete" onclick="delect(this,@recheck.id)">删除</button>
+                                                                <input type="button" class="layui-btn layui-btn-xs layui-btn-danger demo-delete" onclick="updateImg('@recheck.reportId')" value="修改" />
+                                                            </th>
                                                         </tr>
-                                                    </thead>
-                                                    <tbody id="demoList2"></tbody>
-                                                </table>
-                                            </div>
-                                            <div class="form-group" id="recheckId">
-                                            </div>
-                                        </div>
-                                        <input class="form-control" id="recheckCount" name="recheckCount" type="text" hidden>
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <label for="signin_form">复检时间：</label>
-                                                <input type="text" class="layui-input" id="test2" name="RecheckTime" value="@Models.Inventory.NewDateTime().ToString("yyyy-MM-dd")">
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="signin_form">复检依据：</label>
-                                                <label id="IsRecheckBasis" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
-                                                <input class="form-control" name="RecheckBasis" type="text" id="IRecheckBasis" />
-                                            </div>
-                                        </div>
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <label for="signin_form">复检单号：</label>
-                                                <label id="IsRecheckOrderNo" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
-                                                <label id="IsRecheckOrderNo2" style="color:#ff0000;display:none;font-size:13px">*复检单号已存在</label>
-                                                <input class="form-control" name="RecheckOrderNo" type="text" id="IRecheckOrderNo" list="recheckOrderNolist" />
-                                                <datalist id="recheckOrderNolist">
-                                                    @foreach (var recheckReport in Model)
-                                                    {
-                                                        <option>@recheckReport.recheckOrderNo</option>
                                                     }
-                                                </datalist>
-                                            </div>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
-                                }
+                                    <input class="form-control" id="recheck" name="recheck" type="text" hidden>
+                                </div>
+                                
+                                <div class="layui-upload col-md-6">
+                                    <div class="form-row col-md-12">
+                                        <div class="form-group col-md-6">
+                                            <label for="signin_form">复检时间：</label>
+                                            <input type="text" class="layui-input" id="test2" name="RecheckTime" value="@Models.Inventory.NewDateTime().ToString("yyyy-MM-dd")">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="signin_form">复检依据：</label>
+                                            <label id="IsRecheckBasis" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
+                                            <input class="form-control" name="RecheckBasis" type="text" id="IRecheckBasis" />
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="signin_form">复检单号：</label>
+                                            <label id="IsRecheckOrderNo" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
+                                            <label id="IsRecheckOrderNo2" style="color:#ff0000;display:none;font-size:13px">*复检单号已存在</label>
+                                            <input class="form-control" name="RecheckOrderNo" type="text" id="IRecheckOrderNo" list="recheckOrderNolist" />
+                                            <datalist id="recheckOrderNolist">
+                                                @foreach (var recheckReport in Model)
+                                                {
+                                                    <option>@recheckReport.recheckOrderNo</option>
+                                                }
+                                            </datalist>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="layui-btn layui-btn-normal" id="testList2">添加新图</button>
+                                    <div class="layui-upload-list" id="wrap2">
+                                        <table class="layui-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>文件名</th>
+                                                    <th>预览图</th>
+                                                    <th>大小</th>
+                                                    <th>操作</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="demoList2"></tbody>
+                                        </table>
+                                    </div>
+                                    <div class="form-group" id="recheckId">
+                                    </div>
+                                    <input class="form-control" id="recheckCount" name="recheckCount" type="text" hidden>
+                                </div>
                             </div>
-                        </div>
+                        }
                     </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <button type="button" class="btn btn-block btn-primary" onclick="update()">提交</button>
-                        </div>
-                    </div>
-
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <button type="button" class="btn btn-block btn-primary" onclick="update()">提交</button>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+
     <script>
         var preview = new Preview({
             imgWrap: 'wrap' // 指定该容器里的图片点击预览

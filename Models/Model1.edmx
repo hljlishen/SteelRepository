@@ -326,6 +326,7 @@
             <PropertyRef Name="reportId" />
             <PropertyRef Name="recheckTime" />
             <PropertyRef Name="incomeId" />
+            <PropertyRef Name="id" />
           </Key>
           <Property Name="img" Type="varbinary(max)" Nullable="false" />
           <Property Name="reportId" Type="int" Nullable="false" />
@@ -333,6 +334,7 @@
           <Property Name="recheckBasis" Type="nvarchar(max)" />
           <Property Name="incomeId" Type="int" Nullable="false" />
           <Property Name="recheckOrderNo" Type="nvarchar(max)" />
+          <Property Name="id" Type="int" Nullable="false" />
         </EntityType>
         <EntityContainer Name="SteelRepositoryDBModelStoreContainer">
           <EntitySet Name="BrandCode" EntityType="Self.BrandCode" Schema="dbo" store:Type="Tables" />
@@ -445,7 +447,8 @@
     [RecheckReportImgView].[recheckTime] AS [recheckTime], 
     [RecheckReportImgView].[recheckBasis] AS [recheckBasis], 
     [RecheckReportImgView].[incomeId] AS [incomeId], 
-    [RecheckReportImgView].[recheckOrderNo] AS [recheckOrderNo]
+    [RecheckReportImgView].[recheckOrderNo] AS [recheckOrderNo], 
+    [RecheckReportImgView].[id] AS [id]
     FROM [dbo].[RecheckReportImgView] AS [RecheckReportImgView]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
@@ -763,6 +766,7 @@
             <PropertyRef Name="reportId" />
             <PropertyRef Name="recheckTime" />
             <PropertyRef Name="incomeId" />
+            <PropertyRef Name="id" />
           </Key>
           <Property Name="img" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
           <Property Name="reportId" Type="Int32" Nullable="false" />
@@ -770,8 +774,9 @@
           <Property Name="recheckBasis" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="incomeId" Type="Int32" Nullable="false" />
           <Property Name="recheckOrderNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="id" Type="Int32" Nullable="false" />
         </EntityType>
-        <EntityContainer Name="SteelRepositoryDBEntities18" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="SteelRepositoryDBEntities20" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="BrandCode" EntityType="Self.BrandCode" />
           <EntitySet Name="Category" EntityType="Self.Category" />
           <EntitySet Name="Department" EntityType="Self.Department" />
@@ -801,7 +806,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="SteelRepositoryDBModelStoreContainer" CdmEntityContainer="SteelRepositoryDBEntities18">
+        <EntityContainerMapping StorageEntityContainer="SteelRepositoryDBModelStoreContainer" CdmEntityContainer="SteelRepositoryDBEntities20">
           <EntitySetMapping Name="BrandCode">
             <EntityTypeMapping TypeName="SteelRepositoryDBModel.BrandCode">
               <MappingFragment StoreEntitySet="BrandCode">
@@ -1089,6 +1094,7 @@
                 <ScalarProperty Name="recheckBasis" ColumnName="recheckBasis" />
                 <ScalarProperty Name="incomeId" ColumnName="incomeId" />
                 <ScalarProperty Name="recheckOrderNo" ColumnName="recheckOrderNo" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

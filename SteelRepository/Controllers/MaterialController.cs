@@ -13,6 +13,7 @@ namespace SteelRepository.Controllers
     {
         private static InCome In;
         private static int incomeid;
+        private static RecheckReport recheck;
         // GET: Material
         public ActionResult InCome_list()
         {
@@ -156,6 +157,7 @@ namespace SteelRepository.Controllers
         {
             incomeid = id;
             ViewData["code"] = InCome.GetInComesView(id).code;
+            ViewData["id"] = id;
             List<QualityCertificationReportImg> quality = QualityCertificationReportImg.GetQualityCertificationReportImg(id);
             if (quality != null)
                 return View(quality);
@@ -180,6 +182,7 @@ namespace SteelRepository.Controllers
         public ActionResult RecheckReports(int id)
         {
             incomeid = id;
+            ViewData["id"] = id;
             return View(RecheckReportImg.GetRecheckReportImgViews(id));
         }
 
@@ -464,6 +467,26 @@ namespace SteelRepository.Controllers
                 return Json(true);
 
             return Json(InCome.BatchIdExist(batch));
+        }
+
+        public ActionResult RecheckReports_update(int id)
+        {
+            ViewData["id"] = incomeid;
+            recheck = RecheckReport.GetRecheckReport(id);
+            return View(recheck);
+        }
+
+        [HttpPost]
+        public JsonResult RecheckReports_update(FormCollection collection)
+        {
+            recheck.recheckOrderNo = collection["recheckOrderNo"];
+            recheck.recheckBasis = collection["recheckBasis"];
+            return Json(RecheckReport.Update(recheck));
+        }
+
+        public ActionResult IsRecheckOrderNo(string recheckOrderNo, int incomeId)
+        {
+            return Json(RecheckReport.NoIncomeIdRecheckOrderNo(recheckOrderNo,incomeId));
         }
     }
 }
