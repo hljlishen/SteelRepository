@@ -17,19 +17,14 @@ namespace SteelRepository.Controllers
         private static Department depar;
         private static int departmentId;
         // GET: Department
-        public ActionResult Department_list()
-        {
-            ViewData["permissions"] = Session["permissions"];
-            Employee.NoJudge();
-            ViewData["Employee"] = Employee.SelectAll();
-            return View(Department.SelectAll());
-        }
-
-        [HttpPost]
         public ActionResult Department_list(int id)
         {
             ViewData["permissions"] = Session["permissions"];
-            ViewData["Employee"] = Employee.Select(id);
+            Employee.NoJudge();
+            if (id == -1)
+                ViewData["Employee"] = Employee.SelectAll();
+            else
+                ViewData["Employee"] = Employee.Select(id);
             return View(Department.SelectAll());
         }
 

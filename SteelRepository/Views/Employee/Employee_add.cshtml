@@ -154,7 +154,8 @@
                                         <input class="form-control" placeholder="请输入密码" id="rePwd" type="password">
                                     </div>
                                     <div class="form-group mb-3">
-                                        <label>所属部门：</label>
+                                        <label for="signin_form" class="label">所属部门：</label>
+                                        <label for="signin_form" class="label">（请选择3级部门）</label>
                                         <label id="IsDep" style="color:#ff0000;display:none;font-size:13px">*部门不能为空</label>
                                         <div class="input-group">
                                             @Html.TextBoxFor(m => m.departmentId, new { @class = "form-control", type = "text", placeholder = "请选择部门", id = "departmentId", style = "display:none" })
@@ -179,7 +180,7 @@
                                                         {
                                                             <li class="side-nav-item col-md-12">
                                                                 <a href="javascript: void(0);" class="side-nav-link" style="text-align:left">
-                                                                    <i class="mdi mdi-alpha-m-box"></i>
+                                                                    <i class="dripicons-scale"></i>
                                                                     <span>@department.departmentName</span>
                                                                     <span class="menu-arrow"></span>
                                                                 </a>
@@ -190,7 +191,7 @@
                                                                         {
                                                                             <li class="side-nav-item form-row">
                                                                                 <a href="javascript: void(0);" class="col-md-7">
-                                                                                    <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="mdi mdi-alpha-d-box"></i>@depart.departmentName</span>
+                                                                                    <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="dripicons-scale"></i>@depart.departmentName</span>
                                                                                     <span class="menu-arrow"></span>
                                                                                 </a>
                                                                                 <ul class="side-nav-second-level" aria-expanded="false">
@@ -200,7 +201,7 @@
                                                                                         {
                                                                                             <li class="form-row">
                                                                                                 <a href="javascript:DepartmentSelect(@dep.id,'@department.departmentName','@depart.departmentName','@dep.departmentName')">
-                                                                                                    <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="mdi mdi-alpha-g-box"></i>@dep.departmentName</span>
+                                                                                                    <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="dripicons-scale"></i>@dep.departmentName</span>
                                                                                                 </a>
                                                                                             </li>
                                                                                         }

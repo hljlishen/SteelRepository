@@ -43,7 +43,6 @@
             var $ = layui.jquery
                 , upload = layui.upload;
             var id = 0;
-            var id2 = 0;
 
             var demoListView = $('#demoList')
             var qualityView = $('#qualityId')
@@ -64,12 +63,12 @@
                                 , '</td>'
                                 , '<td>' + (file.size / 1014).toFixed(1) + 'kb</td>'
                                 , '<td>'
-                                , '<button class="layui-btn layui-btn-xs layui-btn-danger demo-delete">删除</button>'
+                                , '<button class="layui-btn layui-btn-xs layui-btn-danger demo-delete1">删除</button>'
                                 , '</td>'
                                 , '</tr>'].join(''));
                             var div = $(['<input class="form-control" hidden id="quality' + id + '" type="text" name="quality' + id + '">'].join(''));
                             //删除
-                            tr.find('.demo-delete').on('click', function () {
+                            tr.find('.demo-delete1').on('click', function () {
                                 delete files[index]; //删除对应的文件
                                 tr.remove();
                                 div.remove();
@@ -85,6 +84,13 @@
                         });
                     }
                 });
+        });
+
+
+        layui.use('upload', function () {
+            var $ = layui.jquery
+                , upload = layui.upload;
+            var id2 = 0;
 
             var demoListView2 = $('#demoList2')
             var recheckView = $('#recheckId')
@@ -345,6 +351,9 @@
                         if (data != "") {
                             $("#IBh").val(data);
                         }
+                        else {
+                            $("#IBh").val(data);
+                        }
                     }
                 });
             }
@@ -359,7 +368,10 @@
                     type: "post",
                     success: function (data) {
                         if (data != "") {
-                           $("#IName").val(data);
+                            $("#IName").val(data);
+                        }
+                        else {
+                            $("#IName").val(data);
                         }
                     }
                 });
@@ -370,6 +382,9 @@
                     type: "post",
                     success: function (data) {
                         if (data != "") {
+                            $("#ISize").val(data);
+                        }
+                        else {
                             $("#ISize").val(data);
                         }
                     }

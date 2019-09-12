@@ -21,7 +21,10 @@ namespace Models
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                return helper.Insert(manufacturer);
+                if (helper.Select<Manufacturer>(p => p.manufacturersName == manufacturer.manufacturersName).Count <= 0)
+                    return helper.Insert(manufacturer);
+                else
+                    return 0;
             }
         }
         
