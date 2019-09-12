@@ -78,22 +78,34 @@
             tbody.removeChild(tr);
             $("#quality").val($("#quality").val()+id+",")
         }
-
+        function check() { 
+            var recheck = $("#recheckId :input").length;
+            if (recheck == 0) {
+                document.getElementById("istestList2").style.display = "";
+                isRecheck = false;
+            } else {
+                document.getElementById("istestList2").style.display = "none";
+                isRecheck = true;
+            }
+            }
 
         function update() {
-            $.ajax({
-                url: "@Url.Action("QualityReport")",
-                type: "post",
-                data: $("form").serialize(),
-                dataType: "json",
-                success: function (data) {
-                    data = eval("(" + data + ")");
-                    if (data) {
-                        alert("修改成功");
-                        parent.openFrame("QualityReport?id="+@id);
+            check();
+            if (isRecheck) {
+                $.ajax({
+                    url: "@Url.Action("QualityReport")",
+                    type: "post",
+                    data: $("form").serialize(),
+                    dataType: "json",
+                    success: function (data) {
+                        data = eval("(" + data + ")");
+                        if (data) {
+                            alert("修改成功");
+                            parent.openFrame("QualityReport?id=" +@id);
+                        }
                     }
-                }
-            });
+                });
+            } else { }
         }
     </script>
 
@@ -139,7 +151,7 @@
                         @using (Html.BeginForm("QualityReport", "Material", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @role = "form" }))
                         {
                         <div class="form-group form-row">
-                            <div class="layui-upload col-md-6">
+                            <div class="layui-upload col-md-6" style="overflow-y:scroll;overflow-x:hidden;height:640px;width:40%">
                                 <label for="signin_form">产品质量证明：</label>
                                 <label for="signin_form">(点击图片查看)</label>
                                 <div class="layui-upload">
@@ -174,6 +186,7 @@
                             
                             <div class="layui-upload col-md-6">
                                 <button type="button" class="layui-btn layui-btn-normal" id="testList">添加新图</button>
+                                <label id="istestList2" style="color:#ff0000;display:none;font-size:13px">*需添加新图片</label>
                                 <div class="layui-upload-list" id="wrap2">
                                     <table class="layui-table">
                                         <thead>
