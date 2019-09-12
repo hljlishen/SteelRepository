@@ -90,23 +90,77 @@
             var url = "RecheckReports_update?id="+id;
             var width = "100%";
             var height = "300px";
-            parent.OpenWin(url, width, height); 
+            parent.OpenWin(url, width, height);
+        }
+
+        var isTrue;
+        var IsTest2;
+        var IsIRecheckBasis;
+        var IsIRecheckOrderNo;
+        var isRecheck;
+        function check() {
+            //复检时间
+            var test2 = $("#test2").val().trim();
+            if (test2 !== "") {
+                document.getElementById("Istest2").style.display = "none";
+                IsTest2 = true;
+            } else {
+                document.getElementById("Istest2").style.display = "";
+                IsTest2 = false;
+            }
+            //复检依据
+            var IRecheckBasis = $("#IRecheckBasis").val().trim();
+            if (IRecheckBasis !== "") {
+                document.getElementById("IsRecheckBasis").style.display = "none";
+                IsIRecheckBasis = true;
+            } else {
+                document.getElementById("IsRecheckBasis").style.display = "";
+                IsIRecheckBasis = false;
+            }
+            //复检单号
+            var IRecheckOrderNo = $("#IRecheckOrderNo").val().trim();
+            if (IRecheckOrderNo !== "") {
+                document.getElementById("IsRecheckOrderNo").style.display = "none";
+                IsIRecheckOrderNo = true;
+            } else {
+                document.getElementById("IsRecheckOrderNo").style.display = "";
+                IsIRecheckOrderNo = false;
+            }
+            //添加图片
+            var recheck = $("#recheckId :input").length;
+            if (recheck == 0) {
+                document.getElementById("istestList2").style.display = "";
+                isRecheck = false;
+            } else {
+                document.getElementById("istestList2").style.display = "none";
+                isRecheck = true;
+            }
+            if (IsTest2 && IsIRecheckBasis && IsIRecheckOrderNo && isRecheck) {
+                isTrue = true;
+            } else {
+                isTrue = false;
+            }
         }
 
         function update() {
-            $.ajax({
-                url: "@Url.Action("RecheckReports")",
-                type: "post",
-                data: $("form").serialize(),
-                dataType: "json",
-                success: function (data) {
-                    data = eval("(" + data + ")");
-                    if (data) {
-                        alert("修改成功");
-                        parent.openFrame("RecheckReports?id="+@id);
+            check();
+            if (isTrue) {
+                $.ajax({
+                    url: "@Url.Action("RecheckReports")",
+                    type: "post",
+                    data: $("form").serialize(),
+                    dataType: "json",
+                    success: function (data) {
+                        data = eval("(" + data + ")");
+                        if (data) {
+                            alert("修改成功");
+                            parent.openFrame("RecheckReports?id=" +@id);
+                        }
                     }
-                }
-            });
+                });
+            } else {
+
+            }
         }
     </script>
 
@@ -140,18 +194,21 @@
                                 </li>
                                 <li class="breadcrumb-item active">复检报告</li>
                             </ol>
+                            
                         </div>
+                        @*<div class="page-title-box" style="height:80px;width:100%;background-color:aquamarine;position:fixed;">HHH</div>*@
                         <h4 class="page-title">复检报告</h4>
                     </div>
                 </div>
             </div>
+            
             <div class="row">
                 <div class="col-12">
                     <div class="signin-form">
                         @using (Html.BeginForm("RecheckReports", "Material", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @role = "form" }))
                         {
                             <div class="form-group form-row">
-                                <div class="layui-upload col-md-6">
+                                <div class="layui-upload col-md-6" style="overflow-y:scroll;overflow-x:hidden;height:640px;width:40%">
                                     <label for="signin_form">复验结果报告：</label>
                                     <label for="signin_form">(点击图片查看)</label>
                                     <div class="layui-upload">
@@ -198,10 +255,11 @@
                                     <input class="form-control" id="recheck" name="recheck" type="text" hidden>
                                 </div>
                                 
-                                <div class="layui-upload col-md-6">
+                                <div class="layui-upload col-md-6" style="overflow-y:scroll;overflow-x:hidden;height:640px;width:40%">
                                     <div class="form-row col-md-12">
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">复检时间：</label>
+                                            <label id="Istest2" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
                                             <input type="text" class="layui-input" id="test2" name="RecheckTime" value="@Models.Inventory.NewDateTime().ToString("yyyy-MM-dd")">
                                         </div>
                                         <div class="form-group col-md-6">
@@ -223,6 +281,7 @@
                                         </div>
                                     </div>
                                     <button type="button" class="layui-btn layui-btn-normal" id="testList2">添加新图</button>
+                                    <label id="istestList2" style="color:#ff0000;display:none;font-size:13px">*需添加新图片</label>
                                     <div class="layui-upload-list" id="wrap2">
                                         <table class="layui-table">
                                             <thead>

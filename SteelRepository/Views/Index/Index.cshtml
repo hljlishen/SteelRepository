@@ -75,14 +75,14 @@
 
     </script>
 </head>
-<body>
-    <div class="layui-card" style="margin-top:10px;">
+<body style="background-color:#F5F5F5">
+    <div class="layui-card">
         <div class="layui-card-body" style="background-color:#2F4056;height:80px;">
             <div class="nav">
                 <div class="left navbar-left">
-                    <ul class="layui-nav layui-bg-cyan  ">
+                    <ul class="layui-nav layui-bg-cyan ">
                         <li class="layui-nav-item">
-                            <a href="javascript:AdminIndex()"><img src="~/images/6b0263055f6110e8622111f6d4c7982.png" height="70" />钢料库管理系统</a>
+                            <a href="javascript:AdminIndex()" style="color:#FEFEFE;font-size:160%"><img src="~/images/6b0263055f6110e8622111f6d4c7982.png" height="60"/>钢料库管理系统</a>
                         </li>
                         <li class="layui-nav-item layui-this">库存信息</li>
                         <li class="layui-nav-item"><a href="#projectPho">图表展示</a></li>
@@ -127,7 +127,7 @@
                                                     <tr>
                                                         <td>
                                                             <label style="width:100%;text-align:left">货品编号查询</label>
-                                                            <input id="codeinput" name="codeinput" list="codelist" style="width:200px;height:40px" class="form-control" placeholder="请选择或输入编号" />
+                                                            <input id="codeinput" name="codeinput" list="codelist" class="form-control col-md-8" placeholder="请选择或输入编号" />
                                                             <datalist id="codelist">
                                                                 @foreach (var emp in material)
                                                                 {
@@ -137,7 +137,7 @@
                                                         </td>
                                                         <td>
                                                             <label style="width:100%;text-align:left">材料名称查询</label>
-                                                            <input id="nameinput" name="nameinput" list="namelist" style="width:200px;height:40px" class="form-control" placeholder="请选择或输入名称" />
+                                                            <input id="nameinput" name="nameinput" list="namelist" class="form-control col-md-8" placeholder="请选择或输入名称" />
                                                             <datalist id="namelist">
                                                                 @foreach (var name in names)
                                                                 {
@@ -145,9 +145,9 @@
                                                                 }
                                                             </datalist>
                                                         </td>
-                                                        <td>
+                                                        <td >
                                                             <label style="width:100%;text-align:left">厂商查询</label>
-                                                            <select name="manufacturerid" style="width:200px;height:40px" class="form-control">
+                                                            <select name="manufacturerid" class="form-control col-md-8">
                                                                 <option value="0">请选择</option>
                                                                 @foreach (var man in manufacturers)
                                                                 {
@@ -157,7 +157,7 @@
                                                         </td>
                                                         <td>
                                                             <label style="width:100%;text-align:left">仓位查询</label>
-                                                            <select name="positionid" style="width:200px;height:40px" class="form-control">
+                                                            <select name="positionid" class="form-control col-md-8">
                                                                 <option value="0">请选择</option>
                                                                 @foreach (var posi in positions)
                                                                 {
@@ -167,11 +167,11 @@
                                                         </td>
                                                         <td>
                                                             <label for="example-date" style="width:100%;text-align:left">开始时间：</label>
-                                                            <input class="form-control" id="test1" type="text" name="date" style="width:200px">
+                                                            <input class="form-control col-md-8" id="test1" type="text" name="date" >
                                                         </td>
-                                                        <td>
+                                                        <td >
                                                             <label for="example-date" style="width:100%;text-align:left">结束时间</label>
-                                                            <input class="form-control" id="test2" type="text" name="date1" style="width:180px">
+                                                            <input class="form-control col-md-8" id="test2" type="text" name="date1" >
                                                         </td>
                                                         <td>
                                                             <div class="button-list">

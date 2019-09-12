@@ -18,6 +18,7 @@
     <link href="~/Content/AdminIndex/css/app.min.css" rel="stylesheet" />
     <link href="~/Content/AdminIndex/css/icons.min.css" rel="stylesheet" />
     <script src="~/Content/AdminIndex/js/app.min.js"></script>
+    <script src="~/Content/jquery-3.3.1.min.js"></script>
     <script type="text/javascript">
         var IsRecheckOrderNo = true;
 
@@ -37,23 +38,67 @@
                 });
             }
         }
+        var isTrue;
+        var IsRecheckOrderNo1;
+        var IsrecheckBasis;
+        function check() {
+            //复检单号
+            var recheckOrderNo = $("#recheckOrderNo").val().trim();
+            if (recheckOrderNo !== "") {
+                document.getElementById("recheckOrderNo1").style.display = "none";
+                IsRecheckOrderNo1 = true;
+            } else {
+                document.getElementById("recheckOrderNo1").style.display = "";
+                IsRecheckOrderNo1 = false;
+            }
+            //复检依据
+            var recheckBasis = $("#recheckBasis").val().trim();
+            if (recheckBasis !== "") {
+                document.getElementById("recheckBasis1").style.display = "none";
+                IsrecheckBasis = true;
+            } else {
+                document.getElementById("recheckBasis1").style.display = "";
+                IsrecheckBasis = false;
+            }
+            if (IsRecheckOrderNo1 && IsrecheckBasis) {
+                isTrue = true;
+            } else {
+                isTrue = false;
+            }
+        }
+
+
+        $(function () {
+        $("#myform :input").change(function () {
+            $("#myform").data("changed", true);
+            document.getElementById("button").disabled = false;
+        });
+        });
 
         function update() {
-            if (IsRecheckOrderNo) {
-                $.ajax({
-                    url: "@Url.Action("RecheckReports_update")",
-                    type: "post",
-                    data: $("form").serialize(),
-                    dataType: "json",
-                    success: function (data) {
-                        data = eval("(" + data + ")");
-                        if (data) {
-                            alert("修改成功");
-                            parent.closeWin2();
-                            parent.openFrame("RecheckReports?id="+@id);
-                        }
+            if ($("#myform").data("changed")) {
+                check();
+                if (isTrue) {
+                    if (IsRecheckOrderNo) {
+                        $.ajax({
+                            url: "@Url.Action("RecheckReports_update")",
+                            type: "post",
+                            data: $("form").serialize(),
+                            dataType: "json",
+                            success: function (data) {
+                                data = eval("(" + data + ")");
+                                if (data) {
+                                    alert("修改成功");
+                                    parent.closeWin2();
+                                    parent.openFrame("RecheckReports?id=" +@id);
+                                }
+                            }
+                        });
                     }
-                });
+                }
+            } else {
+                document.getElementById("button").disabled = true;
+                //alert("没有修改！");
             }
         }
     </script>
@@ -65,18 +110,20 @@
                 <h2 style="text-align:center">修改复检信息</h2>
                 <div class="row">
                     <div class="col-sm-12">
-                        <div class="signin-form">
+                        <div class="signin-form" id="myform">
                             @using (Html.BeginForm("RecheckReports_update", "Material", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @role = "form" }))
                             {
-                                <div class="form-group">
-                                    <label for="signin_form">复检单号：</label>
-                                    <label id="IsRecheckOrderNo" style="color:#ff0000;display:none;font-size:13px">*复检单号已存在</label>
-                                    <input class="form-control" type="text" name="recheckOrderNo" id="recheckOrderNo" value="@Model.recheckOrderNo" onblur="recheckOrderNoBlur('@Model.incomeId')" />
-                                </div>
-                                <div class="form-group">
-                                    <label for="signin_form">复检依据：</label>
-                                    <input class="form-control" type="text" name="recheckBasis" id="recheckBasis" value="@Model.recheckBasis" />
-                                </div>
+                            <div class="form-group">
+                                <label for="signin_form">复检单号：</label>
+                                <label id="recheckOrderNo1" style="color:#ff0000;display:none;font-size:13px">*复检单号不为空</label>
+                                <label id="IsRecheckOrderNo" style="color:#ff0000;display:none;font-size:13px">*复检单号已存在</label>
+                                <input class="form-control" type="text" name="recheckOrderNo" id="recheckOrderNo" value="@Model.recheckOrderNo" onblur="recheckOrderNoBlur('@Model.incomeId')" />
+                            </div>
+                            <div class="form-group">
+                                <label for="signin_form">复检依据：</label>
+                                <label id="recheckBasis1" style="color:#ff0000;display:none;font-size:13px">*复检依据不为空</label>
+                                <input class="form-control" type="text" name="recheckBasis" id="recheckBasis" value="@Model.recheckBasis" />
+                            </div>
                             }
                         </div>
                     </div>
@@ -85,7 +132,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="signin-footer">
-                            <button type="button" class="btn btn-primary" onclick="update();">
+                            <button type="button" id="button" class="btn btn-primary" onclick="update();">
                                 修改
                             </button>
                         </div>
