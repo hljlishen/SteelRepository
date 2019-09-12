@@ -203,7 +203,6 @@
                                         <th>批号</th>
                                         <th>厂商</th>
                                         <th>入库时间</th>
-                                        <th>复验时间</th>
                                         @if (permissions == 1)
                                         {
                                             <th>质量报告</th>
@@ -245,7 +244,6 @@
                                         <td>@income.batch</td>
                                         <td>@income.manufacturersName</td>
                                         <td>@income.storageTime.ToString("d")</td>
-                                        <td>@income.recheckTime.ToString("d")</td>
                                         @if (permissions == 1)
                                         {
                                             <td>

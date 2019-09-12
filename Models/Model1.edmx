@@ -212,7 +212,6 @@
             <PropertyRef Name="name" />
             <PropertyRef Name="manuId" />
             <PropertyRef Name="manufacturersName" />
-            <PropertyRef Name="recheckTime" />
             <PropertyRef Name="positionName" />
             <PropertyRef Name="brandCodeName" />
           </Key>
@@ -232,7 +231,6 @@
           <Property Name="name" Type="nvarchar(max)" Nullable="false" />
           <Property Name="manuId" Type="int" Nullable="false" />
           <Property Name="manufacturersName" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="recheckTime" Type="datetime" Nullable="false" />
           <Property Name="positionName" Type="nvarchar(max)" Nullable="false" />
           <Property Name="brandCodeName" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
@@ -388,7 +386,6 @@
     [InComeView].[name] AS [name], 
     [InComeView].[manuId] AS [manuId], 
     [InComeView].[manufacturersName] AS [manufacturersName], 
-    [InComeView].[recheckTime] AS [recheckTime], 
     [InComeView].[positionName] AS [positionName], 
     [InComeView].[brandCodeName] AS [brandCodeName]
     FROM [dbo].[InComeView] AS [InComeView]</DefiningQuery>
@@ -658,7 +655,6 @@
             <PropertyRef Name="name" />
             <PropertyRef Name="manuId" />
             <PropertyRef Name="manufacturersName" />
-            <PropertyRef Name="recheckTime" />
             <PropertyRef Name="positionName" />
             <PropertyRef Name="brandCodeName" />
           </Key>
@@ -678,7 +674,6 @@
           <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="manuId" Type="Int32" Nullable="false" />
           <Property Name="manufacturersName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="recheckTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="positionName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="brandCodeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
@@ -776,7 +771,7 @@
           <Property Name="recheckOrderNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="id" Type="Int32" Nullable="false" />
         </EntityType>
-        <EntityContainer Name="SteelRepositoryDBEntities20" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="SteelRepositoryDBEntities21" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="BrandCode" EntityType="Self.BrandCode" />
           <EntitySet Name="Category" EntityType="Self.Category" />
           <EntitySet Name="Department" EntityType="Self.Department" />
@@ -806,7 +801,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="SteelRepositoryDBModelStoreContainer" CdmEntityContainer="SteelRepositoryDBEntities20">
+        <EntityContainerMapping StorageEntityContainer="SteelRepositoryDBModelStoreContainer" CdmEntityContainer="SteelRepositoryDBEntities21">
           <EntitySetMapping Name="BrandCode">
             <EntityTypeMapping TypeName="SteelRepositoryDBModel.BrandCode">
               <MappingFragment StoreEntitySet="BrandCode">
@@ -1028,7 +1023,6 @@
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="manuId" ColumnName="manuId" />
                 <ScalarProperty Name="manufacturersName" ColumnName="manufacturersName" />
-                <ScalarProperty Name="recheckTime" ColumnName="recheckTime" />
                 <ScalarProperty Name="positionName" ColumnName="positionName" />
                 <ScalarProperty Name="brandCodeName" ColumnName="brandCodeName" />
               </MappingFragment>
