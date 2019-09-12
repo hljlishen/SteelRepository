@@ -104,6 +104,10 @@
         }
         }
 
+        function EmployeeSelect(id) {
+            parent.openFrame("Department_list?id="+id);
+        }
+
         function DepartmentDelete2(id) {
             var flag = confirm("是否要删除信息？");
         if (flag) {
@@ -147,7 +151,7 @@
 
             <div class="container-fluid">
                 <div class="wrapper">
-                    <div class="card col-md-8">
+                    <div class="card col-md-7">
                         <div class="leftbar-user" style="text-align:left">
                             <a href="javascript:CompanyAdd()" class="btn btn-primary"><i class="mdi mdi-plus-circle mr-2"></i>添加公司</a>
                         </div>
@@ -221,7 +225,7 @@
                     </div>
                     <div class="col-sm-1"></div>
 
-                    <div class="card col-md-4">
+                    <div class="card col-md-5">
                         <div div class="card-body ">
                             <div class="table-responsive ">
 
@@ -230,6 +234,7 @@
                                         <tr>
                                             <th>编号</th>
                                             <th>姓名</th>
+                                            <th>账号</th>
                                             <th>状态</th>
                                         </tr>
                                     </thead>
@@ -240,6 +245,7 @@
                                             <tr>
                                                 <td>@count</td>
                                                 <td>@e.name</td>
+                                                <td>@e.number</td>
                                                 @if (e.state == 1)
                                                 {
                                                     <td>在职</td>

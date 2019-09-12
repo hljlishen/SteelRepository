@@ -65,7 +65,7 @@ namespace Models
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
 
-                return helper.Select<Employee>(p => p.departmentId == id);
+                return helper.Select<Employee>(p => p.departmentId == id && p.state != 4);
             }
         }
     }

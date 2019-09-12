@@ -107,6 +107,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="signin_form">所属部门：</label>
+                                        <label for="signin_form" class="label">（请选择3级部门）</label>
                                         <div class="input-group">
                                             @Html.TextBox("departmentId", employee.departmentId, new { @class = "form-control", type = "text", placeholder = "请选择部门", id = "departmentId", style = "display:none" })
                                             <input class="form-control" placeholder="请选择部门" type="text" id="departmentName" readonly value="@depname">
