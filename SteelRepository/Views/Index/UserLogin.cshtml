@@ -31,10 +31,16 @@
                 }
             });
         }
-
+        function on_return(){
+            if (window.event.keyCode == 13) {
+                if (document.all('sub') != null) {
+                    document.all('sub').click();
+                }
+            }
+        }
     </script>
 </head>
-<body>
+<body onkeydown="on_return();">
     <section class="signin popup-in">
         <div class="container">
             <div class="sign-content popup-in-content">
@@ -60,7 +66,7 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <button type="button" class="btn btn-block btn-primary" onclick="Login()">登录</button>
+                            <button type="button" id="sub" class="btn btn-block btn-primary" onclick="Login()">登录</button>
                         </div>
                     </div>
                 </div>
