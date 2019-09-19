@@ -39,7 +39,9 @@ namespace Models
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                return helper.Update(project);
+                if (helper.Select<Project>(p => p.projectCode == project.projectCode && p.state == 1 && p.id != project.id).Count <= 0)
+                    return helper.Update(project);
+                return 0;
             }
         }
 

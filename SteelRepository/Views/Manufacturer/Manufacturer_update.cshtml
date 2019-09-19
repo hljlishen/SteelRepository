@@ -80,13 +80,12 @@
                             alert("修改成功");
                             parent.closeWin();
                             parent.openFrame("Manufacturer_list");
-                        } else {
-                            return;
+                        }
+                        else {
+                            document.getElementById("IsmName2").style.display = "";
                         }
                     }
                 });
-            } else {
-                return;
             }
 
         } else {
@@ -116,6 +115,7 @@
                                     <div class="form-group">
                                         <label for="signin_form">厂商名称：</label>
                                         <label id="IsmName1" style="color:#ff0000;display:none;font-size:13px">*名称不能为空，请重新填写</label>
+                                        <label id="IsmName2" style="color:#ff0000;display:none;font-size:13px">*厂商已存在，请重新输入</label>
                                         <div class="input-group">
                                             @Html.TextBox("manufacturersName", manufacturer.manufacturersName, new { @class = "form-control", type = "text", id = "mName1" })
                                         </div>

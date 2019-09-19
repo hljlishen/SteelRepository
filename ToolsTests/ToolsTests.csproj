@@ -63,12 +63,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Tools\Tools.csproj">
-      <Project>{03265640-DF59-435B-9370-86E7F34F9DAD}</Project>
-      <Name>Tools</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

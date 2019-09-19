@@ -126,6 +126,14 @@ namespace Models
             }
         }
 
+        public static bool RecheckOrderNo(string recheckOrderNo,int incomeId)
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return helper.Select<RecheckReport>(p => p.incomeId != incomeId && p.recheckOrderNo == recheckOrderNo).Count <= 0;
+            }
+        }
+
         public static bool NoIncomeIdRecheckOrderNo(string recheckOrderNo, int incomeId)
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))

@@ -78,12 +78,14 @@
             }
           });
         });
-
+        var isDelect;
+        var isUpdateImg;
         function delect(obj,id) {
             var tr=obj.parentNode.parentNode;
 	    	var tbody=tr.parentNode;
             tbody.removeChild(tr);
-            $("#recheck").val($("#recheck").val()+id+",")
+            $("#recheck").val($("#recheck").val() + id + ",")
+            isDelect = true;
         }
 
         function updateImg(id) {
@@ -91,6 +93,7 @@
             var width = "100%";
             var height = "300px";
             parent.OpenWin(url, width, height);
+            isUpdateImg = true;
         }
 
         var isTrue;
@@ -101,7 +104,7 @@
         function check() {
             //复检时间
             var test2 = $("#test2").val().trim();
-            if (test2 !== "") {
+            if (test2 != "") {
                 document.getElementById("Istest2").style.display = "none";
                 IsTest2 = true;
             } else {
@@ -110,7 +113,7 @@
             }
             //复检依据
             var IRecheckBasis = $("#IRecheckBasis").val().trim();
-            if (IRecheckBasis !== "") {
+            if (IRecheckBasis != "") {
                 document.getElementById("IsRecheckBasis").style.display = "none";
                 IsIRecheckBasis = true;
             } else {
@@ -119,9 +122,23 @@
             }
             //复检单号
             var IRecheckOrderNo = $("#IRecheckOrderNo").val().trim();
-            if (IRecheckOrderNo !== "") {
+            if (IRecheckOrderNo != "") {
+                $.ajax({
+                    url: "@Url.Action("RecheckOrderNo2")",
+                    data:"recheckOrderNo="+IRecheckOrderNo,
+                    type: "post",
+                    success: function (data) {
+                        if (data) {
+                            IsIRecheckOrderNo = true;
+                            document.getElementById("IsRecheckOrderNo2").style.display = "none";
+                        }
+                        else {
+                            IsIRecheckOrderNo = false;
+                            document.getElementById("IsRecheckOrderNo2").style.display = "";
+                        }
+                    }
+                });
                 document.getElementById("IsRecheckOrderNo").style.display = "none";
-                IsIRecheckOrderNo = true;
             } else {
                 document.getElementById("IsRecheckOrderNo").style.display = "";
                 IsIRecheckOrderNo = false;
@@ -135,6 +152,9 @@
                 document.getElementById("istestList2").style.display = "none";
                 isRecheck = true;
             }
+
+
+
             if (IsTest2 && IsIRecheckBasis && IsIRecheckOrderNo && isRecheck) {
                 isTrue = true;
             } else {
@@ -144,7 +164,7 @@
 
         function update() {
             check();
-            if (isTrue) {
+            if (isTrue || isDelect || isUpdateImg) {
                 $.ajax({
                     url: "@Url.Action("RecheckReports")",
                     type: "post",

@@ -48,11 +48,14 @@ namespace Models
                 return helper.SelectAll<Manufacturer>();
             }
         }
-        public static int Update( Manufacturer manufacturer)
+        public static int Update(Manufacturer manufacturer)
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                return helper.Update(manufacturer);
+                if (helper.Select<Manufacturer>(p => p.manufacturersName == manufacturer.manufacturersName && p.id != manufacturer.id).Count <= 0)
+                    return helper.Update(manufacturer);
+                else
+                    return 0;
             }
         }
     }

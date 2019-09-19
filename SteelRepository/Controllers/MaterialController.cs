@@ -1,10 +1,6 @@
-﻿using DbInterface;
-using DbService;
-using Models;
+﻿using Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace SteelRepository.Controllers
@@ -454,6 +450,11 @@ namespace SteelRepository.Controllers
         public ActionResult RecheckOrderNo(string recheckOrderNo)
         {
             return Json(RecheckReport.RecheckOrderNo(recheckOrderNo));
+        }
+
+        public ActionResult RecheckOrderNo2(string recheckOrderNo)
+        {
+            return Json(RecheckReport.RecheckOrderNo(recheckOrderNo, incomeid));
         }
 
         public ActionResult Batch(string batch)

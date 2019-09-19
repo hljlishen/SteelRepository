@@ -58,10 +58,6 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="EPPlus, Version=4.5.3.2, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Bin\EPPlus.dll</HintPath>
-    </Reference>
     <Reference Include="Json.Net, Version=1.0.16.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Json.Net.1.0.16\lib\netstandard2.0\Json.Net.dll</HintPath>
     </Reference>
@@ -390,6 +386,7 @@
     <Content Include="Content\layui\font\iconfont.ttf" />
     <Content Include="Content\layui\font\iconfont.woff" />
     <Content Include="Content\layui\font\iconfont.woff2" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -457,7 +454,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\layui\images\" />
-    <Folder Include="Models\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
@@ -474,25 +470,13 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DbInterface\DbInterface.csproj">
-      <Project>{8e906888-a84f-4e8f-87ff-9def75f4a0de}</Project>
-      <Name>DbInterface</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DbService\DbService.csproj">
-      <Project>{d00339bf-68ac-48dc-abeb-6c4183b9c515}</Project>
-      <Name>DbService</Name>
-    </ProjectReference>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Models\Models.csproj">
       <Project>{34996854-836E-4AEE-B03B-145B0E07F605}</Project>
       <Name>Models</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Tools\Tools.csproj">
-      <Project>{03265640-df59-435b-9370-86e7f34f9dad}</Project>
-      <Name>Tools</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

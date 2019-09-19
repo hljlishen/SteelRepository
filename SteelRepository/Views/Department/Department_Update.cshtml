@@ -19,7 +19,6 @@
         var isDTrue;
         function check() {
             var Dname1 = $("#Dname").val().trim();
-            //var n = /^[\u4E00-\u9FA5A-Za-z0-9][\x21-\x7e]+$/;
             if (Dname1 !== "") {
                 document.getElementById("Isname").style.display = "none";
                 isDName = true;
@@ -34,7 +33,6 @@
             } else {
                 document.getElementById("button").disabled = true;
                 document.getElementById("button").style.backgroundColor = "#A2A8F8";
-                //alert("当前内容未改变");
                 isDTrue = false;
             }
             if (isDName && isDTrue) {
@@ -43,7 +41,7 @@
                 isTrue = false;
             }
             document.getElementById("button").disabled = false;
-            
+
             return isTrue;
         }
 
@@ -61,15 +59,12 @@
                             if (data) {
                                 alert("修改成功");
                                 parent.closeWin();
-                                parent.openFrame("Department_list");
+                                parent.openFrame("Department_list?id="+"-1");
                             } else {
                             }
                         }
                     });
-                } else {
-                    return;
                 }
-
         }
     </script>
 </head>

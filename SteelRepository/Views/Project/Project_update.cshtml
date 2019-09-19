@@ -17,15 +17,17 @@
         var isTrue = true;
         var isPnum1 = true;
         var isPname1 = true;
+
         function check() {
             //项目令号
             var pnumber1 = $("#pnumber1").val().trim();
             if (pnumber1 == "") {
                 document.getElementById("Ispnum1").style.display = "";
                 isPnum1 = false;
-            } else {
-                document.getElementById("Ispnum1").style.display = "none";
+            }
+            else {
                 isPnum1 = true;
+                document.getElementById("Ispnum1").style.display = "none";
             }
 
             //项目名称
@@ -37,14 +39,13 @@
                 document.getElementById("Ispname1").style.display = "none";
                 isPname1 = true;
             }
-            if (isPnum1 && isPname1)
+
+            if (isPnum1 && isPname1) {
                 isTrue = true;
+            }
             else {
                 isTrue = false;
-                
             }
-            
-            return isTrue;
         }
 
         $(function () {
@@ -69,21 +70,17 @@
                             alert("修改成功");
                             parent.closeWin();
                             parent.openFrame("Project_list");
-                        } else {
-                            return;
+                        }
+                        else {
+                            document.getElementById("Ispnum2").style.display = "";
                         }
                     }
                 });
-            } else {
-                return;
             }
-
         } else {
             document.getElementById("button").disabled = true;
             //alert("没有修改！");
         }
-
-
     }
     </script>
 </head>
@@ -101,6 +98,7 @@
                                     <div class="form-group">
                                         <label for="signin_form">项目令号：</label>
                                         <label id="Ispnum1" style="color:#ff0000;display:none;font-size:13px">*项目令号不能为空，请重新输入</label>
+                                        <label id="Ispnum2" style="color:#ff0000;display:none;font-size:13px">*项目令号已存在，请重新输入</label>
                                         @Html.TextBoxFor(m => m.projectCode, new { @class = "form-control", type = "text", id = "pnumber1" })
                                     </div>
                                     <div class="form-group">

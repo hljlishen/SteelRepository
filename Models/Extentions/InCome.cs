@@ -236,19 +236,18 @@ namespace Models
                 }
                 inCome.codeId = mCode.id;
                 double? kgPrice = 0;
-                double weight = 0;
                 //修改单价
                 foreach (var outcome in OutCome.InComeIdSelect(inCome.id, helper))
                 {
-                    if (inCome.priceMeasure == "g         ")
-                        kgPrice = inCome.unitPrice * 1000;
-                    else
-                        kgPrice = inCome.unitPrice;
-                    if (outcome.unit == "g")
-                        weight = outcome.number * 1000;
-                    else
-                        weight = outcome.number;
-                    outcome.price = kgPrice * weight;
+                    if (inCome.priceMeasure == "g         " && outcome.unit == "g")
+                        kgPrice = outcome.number / inCome.unitPrice;
+                    else if (inCome.priceMeasure == "kg        " && outcome.unit == "g")
+                        kgPrice = outcome.number / (inCome.unitPrice * 1000);
+                    else if (inCome.priceMeasure == "kg        " && outcome.unit == "kg")
+                        kgPrice = outcome.number / inCome.unitPrice;
+                    else if(inCome.priceMeasure == "g         " && outcome.unit == "kg")
+                        kgPrice = outcome.number * 1000 / inCome.unitPrice;
+                    outcome.price = kgPrice;
                     helper.Update(outcome); 
                 }
                 //修改库存

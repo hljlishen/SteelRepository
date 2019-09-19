@@ -52,14 +52,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DbInterface\DbInterface.csproj">
-      <Project>{8e906888-a84f-4e8f-87ff-9def75f4a0de}</Project>
-      <Name>DbInterface</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DbInterface\DbInterface.csproj">
+      <Project>{8E906888-A84F-4E8F-87FF-9DEF75F4A0DE}</Project>
+      <Name>DbInterface</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

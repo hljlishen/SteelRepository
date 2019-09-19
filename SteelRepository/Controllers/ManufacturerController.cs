@@ -1,10 +1,4 @@
-﻿using DbInterface;
-using DbService;
-using Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Models;
 using System.Web.Mvc;
 
 namespace SteelRepository.Controllers
@@ -68,7 +62,6 @@ namespace SteelRepository.Controllers
         [HttpPost]
         public JsonResult Manufacturer_information(Manufacturer manufacturer)
         {
-
             manufacturer.id = mf.id;
             return Json(Manufacturer.Update(manufacturer));
         }

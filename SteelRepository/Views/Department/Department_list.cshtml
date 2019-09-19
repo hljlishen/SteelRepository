@@ -13,7 +13,6 @@
        permissions = (int)ViewData["permissions"];
     }
     List<Models.Employee> employee = (List<Models.Employee>)ViewData["Employee"];
-
 }
 <!DOCTYPE html>
 <html lang="zh">
@@ -95,7 +94,7 @@
                     data = eval("(" + data + ")");
                     if (data) {
                         alert("删除成功！");
-                        parent.openFrame("Department_list");
+                        parent.openFrame("Department_list?id="+"-1");
                     } else {
                         alert("删除失败！该部门下还有在职人员");
                     }
@@ -122,7 +121,7 @@
                     data = eval("(" + data + ")");
                     if (data) {
                         alert("删除成功！");
-                        parent.openFrame("Department_list");
+                        parent.openFrame("Department_list?id="+"-1");
                     } else {
                         alert("删除失败！该部门下有附属部门");
                     }

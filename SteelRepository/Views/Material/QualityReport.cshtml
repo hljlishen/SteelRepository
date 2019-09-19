@@ -71,15 +71,16 @@
             }
             });
         });
-
+        var isDelete;
         function delect(obj,id) {
             var tr=obj.parentNode.parentNode;
 	    	var tbody=tr.parentNode;
             tbody.removeChild(tr);
-            $("#quality").val($("#quality").val()+id+",")
+            $("#quality").val($("#quality").val() + id + ",")
+            isDelete = true;
         }
         function check() { 
-            var recheck = $("#recheckId :input").length;
+            var recheck = $("#qualityId :input").length;
             if (recheck == 0) {
                 document.getElementById("istestList2").style.display = "";
                 isRecheck = false;
@@ -91,7 +92,7 @@
 
         function update() {
             check();
-            if (isRecheck) {
+            if (isRecheck || isDelete) {
                 $.ajax({
                     url: "@Url.Action("QualityReport")",
                     type: "post",

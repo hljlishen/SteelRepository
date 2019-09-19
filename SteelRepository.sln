@@ -1,23 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.329
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29020.237
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteelRepository", "SteelRepository\SteelRepository.csproj", "{33CA0658-EB2F-4F42-AB7F-D122D0047A9F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbInterface", "DbInterface\DbInterface.csproj", "{8E906888-A84F-4E8F-87FF-9DEF75F4A0DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools", "Tools\Tools.csproj", "{03265640-DF59-435B-9370-86E7F34F9DAD}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToolsTests", "ToolsTests\ToolsTests.csproj", "{6FF4B0E8-B2C2-40EF-889E-C98B7B707C4E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbService", "DbService\DbService.csproj", "{D00339BF-68AC-48DC-ABEB-6C4183B9C515}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbServiceTests", "DbServiceTests\DbServiceTests.csproj", "{EC213DCA-5621-4C69-B358-E30E17A082D5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{34996854-836E-4AEE-B03B-145B0E07F605}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelsTests", "ModelsTests\ModelsTests.csproj", "{47B55799-9136-4A26-9EF4-94A04A910E66}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools", "Tools\Tools.csproj", "{03265640-DF59-435B-9370-86E7F34F9DAD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,30 +27,18 @@ Global
 		{8E906888-A84F-4E8F-87FF-9DEF75F4A0DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E906888-A84F-4E8F-87FF-9DEF75F4A0DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E906888-A84F-4E8F-87FF-9DEF75F4A0DE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{03265640-DF59-435B-9370-86E7F34F9DAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{03265640-DF59-435B-9370-86E7F34F9DAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{03265640-DF59-435B-9370-86E7F34F9DAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{03265640-DF59-435B-9370-86E7F34F9DAD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6FF4B0E8-B2C2-40EF-889E-C98B7B707C4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6FF4B0E8-B2C2-40EF-889E-C98B7B707C4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6FF4B0E8-B2C2-40EF-889E-C98B7B707C4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6FF4B0E8-B2C2-40EF-889E-C98B7B707C4E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D00339BF-68AC-48DC-ABEB-6C4183B9C515}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D00339BF-68AC-48DC-ABEB-6C4183B9C515}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D00339BF-68AC-48DC-ABEB-6C4183B9C515}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D00339BF-68AC-48DC-ABEB-6C4183B9C515}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EC213DCA-5621-4C69-B358-E30E17A082D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EC213DCA-5621-4C69-B358-E30E17A082D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EC213DCA-5621-4C69-B358-E30E17A082D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EC213DCA-5621-4C69-B358-E30E17A082D5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{34996854-836E-4AEE-B03B-145B0E07F605}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{34996854-836E-4AEE-B03B-145B0E07F605}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34996854-836E-4AEE-B03B-145B0E07F605}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34996854-836E-4AEE-B03B-145B0E07F605}.Release|Any CPU.Build.0 = Release|Any CPU
-		{47B55799-9136-4A26-9EF4-94A04A910E66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{47B55799-9136-4A26-9EF4-94A04A910E66}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{47B55799-9136-4A26-9EF4-94A04A910E66}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{47B55799-9136-4A26-9EF4-94A04A910E66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03265640-DF59-435B-9370-86E7F34F9DAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03265640-DF59-435B-9370-86E7F34F9DAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03265640-DF59-435B-9370-86E7F34F9DAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03265640-DF59-435B-9370-86E7F34F9DAD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

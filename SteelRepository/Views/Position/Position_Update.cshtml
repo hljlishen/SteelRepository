@@ -20,7 +20,7 @@
         function check() {
             var position = $("#position").val().trim();
             var n = /^[\u4E00-\u9FA5A-Za-z0-9]+$/;
-            if (n.test(position)|| position !== "") {
+            if (n.test(position) || position !== "") {
                 document.getElementById("IsPos").style.display = "none";
                 isPosition = true;
             } else {
@@ -49,7 +49,6 @@
             $("#myform").data("changed", true);
             document.getElementById("button").disabled = false;
         });
-
     });
         function Update() {
         if ($("#myform").data("changed")) {
@@ -67,13 +66,12 @@
                             alert("修改成功");
                             parent.closeWin();
                             parent.openFrame("Position_list");
-                        } else {
-                            return;
+                        }
+                        else {
+                            document.getElementById("IsPos2").style.display = "";
                         }
                     }
                 });
-            } else {
-                return;
             }
         } else {
             document.getElementById("button").disabled = true;
@@ -100,8 +98,8 @@
                                     <div class="form-group">
                                         <label for="signin_form">仓库位置：</label>
                                         <label id="IsPos" style="color:#ff0000;display:none;font-size:13px">*仓库位置应不为空</label>
+                                        <label id="IsPos2" style="color:#ff0000;display:none;font-size:13px">*仓库位置已存在，请重新输入</label>
                                         @Html.TextBox("positionName", position.positionName, new { @class = "form-control", type = "text", id = "position" })
-                                        @Html.TextBox("positionName", position.positionName, new { @class = "form-control", type = "hidden", id = "position1" })
                                     </div>
                                     <div class="form-group">
                                         <label for="signin_form">备注：</label>

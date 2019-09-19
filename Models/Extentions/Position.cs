@@ -29,7 +29,10 @@ namespace Models
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                return helper.Update(position);
+                if (helper.Select<Position>(p => p.positionName == position.positionName && p.id != position.id).Count <= 0)
+                    return helper.Update(position);
+                else
+                    return 0;
             }
         }
         public static List<Position> SelectAll()
