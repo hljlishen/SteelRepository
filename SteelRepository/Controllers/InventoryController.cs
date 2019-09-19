@@ -55,13 +55,13 @@ namespace SteelRepository.Controllers
             List<SelectListItem> itemList = new List<SelectListItem>();
             SelectListItem item1 = new SelectListItem()
             {
-                Value = "g",
-                Text = "g"
+                Value = "kg",
+                Text = "kg"
             };
             SelectListItem item2 = new SelectListItem()
             {
-                Value = "kg",
-                Text = "kg"
+                Value = "g",
+                Text = "g"
             };
             itemList.Add(item1);
             itemList.Add(item2);
