@@ -55,5 +55,9 @@ namespace SteelRepository.Controllers
         {
             return View();
         }
+        public ActionResult projectCodeExist(string pnumber)
+        {
+            return Json(Project.ProjectCodeExist(pnumber));
+        }
     }
 }

@@ -13,63 +13,7 @@
     <link href="~/Content/AdminIndex/css/icons.min.css" rel="stylesheet" />
     <script src="~/Content/AdminIndex/js/app.min.js"></script>
     <link href="~/Content/layui/css/layui.css" rel="stylesheet" media="all" />
-    <script type="text/javascript">
-        var isNum;
-        function check() {
-            var num = $("#num").val().trim();
-           //var n = /^[1-9][0-9]{0,2}(?:,?[0-9]{3})*(?:\.[0-9]{1,2})?$/;
-            if (/*!n.test(num) ||*/ num == "") {
-                document.getElementById("num1").style.display = "";
-                isNum = false;
-            } else {
-                document.getElementById("num1").style.display = "none";
-                isNum = true;
-                
-            }
-            
-
-        }
-
-        function clearNoNum(obj) {
-            obj.value = obj.value.replace(/[^\d.]/g, ""); //清除"数字"和"."以外的字符
-            obj.value = obj.value.replace(/^\./g, ""); //验证第一个字符是数字而不是
-            obj.value = obj.value.replace(/\.{2,}/g, "."); //只保留第一个. 清除多余的
-            obj.value = obj.value.replace(".", "$#$").replace(/\./g, "").replace("$#$", ".");
-        }
-
-        function add() {
-            check();
-            if (isNum) {
-                $.ajax({
-                    url: "@Url.Action("OutCome_add")",
-                    type: "post",
-                    data: $("form").serialize(),
-                    dataType: "json",
-                    success: function (data) {
-                        data = eval("(" + data + ")");
-                        if (data) {
-                            alert("出库成功");
-                            parent.closeWin2();
-                            parent.openFrame("Inventory_list");
-                        } else {
-                            alert("出库失败");
-                            parent.closeWin2();
-                            parent.openFrame("Inventory_list");
-                        }
-                    }
-                });
-            } else {
-
-            }
-        }
-        function EmployeeAdd() {
-            var url = "OutComeEmployee_new";
-            var width = "100%";
-            var height = "700px";
-            parent.closeWin2();
-            parent.OpenWin(url, width, height);
-        }
-    </script>
+   
 </head>
 <body>
     @{
@@ -113,10 +57,11 @@
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">出库数量：</label>
                                             <label id="num1" style="color:#ff0000;display:none;font-size:13px">*输入格式有误，请重新输入！</label>
+                                            <label id="num2" style="color:#ff0000;display:none;font-size:13px">*出库量大于库存量，请重新键入！</label>
                                             @Html.TextBox("number", inventory.amount, new { @class = "form-control", type = "number", id = "num", onkeyup = "clearNoNum(this)" })
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label for="signin_form">货品单位：</label>
+                                            <label for="signin_form">材料单位：</label>
                                             @Html.DropDownListFor(m => m.unit, ViewBag.select as SelectList, new { @class = "form-control", id = "example-select" })
                                         </div>
                                     </div>
@@ -128,20 +73,31 @@
                                             </div>
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label for="signin_form">项目令号：</label>
-                                            <select class="form-control" name="project">
-                                                @foreach (var pro in project)
-                                                {
-                                                    <option value="@pro.id">令号：@pro.projectCode 名称：@pro.projectName </option>
-                                                }
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
                                             <label for="example-date">出库时间：</label>
                                             @Html.TextBox("date", Models.Inventory.NewDateTime().ToString("yyyy-MM-dd"), new { @readonly = "readonly", @class = "form-control", type = "text" })
                                         </div>
+                                    </div>
+                                    <label for="signin_form">项目令号：</label>
+                                    <label id="Project" style="color:#ff0000;display:none;font-size:13px">*请选择出库项目令号</label>
+                                    <div class="form-row">
+                                        <div class="layui-form-item">
+                                            <div class="layui-inline">
+                                                <div class="layui-input-inline" style="width:350px;height:50px" id="people">
+                                                    <select id="project" name="project" lay-verify="required" lay-search="">
+                                                        <option value="">直接选择或搜索选择</option>
+                                                        @foreach (var pro in project)
+                                                        {
+                                                            <option value="@pro.id">令号：@pro.projectCode-名称：@pro.projectName </option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                                <div class="layui-input-inline" style="width:80px;height:40px">
+                                                    <button class="btn btn-dark" type="button" onclick="ProjectAdd()" style="height:40px;width:70px">新增</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <label style="height:16px">&nbsp;</label>
+
                                     </div>
                                     <label>领用人：</label>
                                     <label id="People" style="color:#ff0000;display:none;font-size:13px">*请选择领用人</label>
@@ -149,11 +105,11 @@
                                         <div class="layui-form-item">
                                             <div class="layui-inline">
                                                 <div class="layui-input-inline" style="width:350px;height:50px" id="people">
-                                                    <select id="employeeId" name="employeeId" lay-verify="required" lay-search="" >
+                                                    <select id="employeeId" name="employeeId" lay-verify="required" lay-search="">
                                                         <option value="">直接选择或搜索选择</option>
                                                         @foreach (var emp in employee)
                                                         {
-                                                            <option id=@emp.emploId>姓名：@emp.name-工号：@emp.number-部门：@emp.departmentName</option>
+                                                            <option value=@emp.emploId>姓名：@emp.name-工号：@emp.number-部门：@emp.departmentName</option>
                                                         }
                                                     </select>
                                                 </div>
@@ -207,6 +163,120 @@
                 return false;
             });
         });
+    </script>
+    <script type="text/javascript">
+        var isNum;
+        var isName;
+        var isNameem;
+        function check() {
+            var num = $("#num").val().trim();
+            var unit = $("#example-select").val().trim();
+           //var n = /^[1-9][0-9]{0,2}(?:,?[0-9]{3})*(?:\.[0-9]{1,2})?$/;
+            if (/*!n.test(num) ||*/ num == "") {
+                document.getElementById("num1").style.display = "";
+                isNum = false;
+            } else {
+                $.post("/Inventory/NumberExist", { "number": num, "unit": unit}, function (data) {
+                    if (data.userExsit) {
+                        isNum = true;
+                    } else {
+                        isNum = false;
+                        alert(data.msg);
+                    }
+                }, "json");
+
+                document.getElementById("num1").style.display = "none";
+
+            }
+            var project = $("#project").val().trim();
+            if (project == "") {
+                document.getElementById("Project").style.display = "";
+                isName = false;
+            } else {
+                document.getElementById("Project").style.display = "none";
+                isName = true;
+            }
+            var employee = $("#employeeId").val().trim();
+            if (employee == "") {
+                document.getElementById("People").style.display = "";
+                isNameem = false;
+            } else {
+                document.getElementById("People").style.display = "none";
+                isNameem = true;
+            }
+            if (isNum && isName && isNameem) {
+                isNum = true;
+            } else {
+                isNum = false;
+            }
+        }
+
+        function clearNoNum(obj) {
+            obj.value = obj.value.replace(/[^\d.]/g, ""); //清除"数字"和"."以外的字符
+            obj.value = obj.value.replace(/^\./g, ""); //验证第一个字符是数字而不是
+            obj.value = obj.value.replace(/\.{2,}/g, "."); //只保留第一个. 清除多余的
+            obj.value = obj.value.replace(".", "$#$").replace(/\./g, "").replace("$#$", ".");
+        }
+
+        function add() {
+            check();
+            if (isNum) {
+                $.ajax({
+                    url: "@Url.Action("OutCome_add")",
+                    type: "post",
+                    data: $("form").serialize(),
+                    dataType: "json",
+                    success: function (data) {
+                        data = eval("(" + data + ")");
+                        if (data) {
+                            alert("出库成功");
+                            parent.closeWin2();
+                            parent.openFrame("Inventory_list");
+                        } else {
+                            alert("出库失败");
+                            parent.closeWin2();
+                            parent.openFrame("Inventory_list");
+                        }
+                    }
+                });
+            } else {
+
+            }
+        }
+        function ProjectAdd() {
+            var url = "OutComeProject_add";
+            var width = "100%";
+            var height = "700px";
+            parent.closeWin2();
+            parent.OpenWin(url, width, height);
+        }
+        function EmployeeAdd() {
+            var url = "OutComeEmployee_new";
+            var width = "100%";
+            var height = "700px";
+            parent.closeWin2();
+            parent.OpenWin(url, width, height);
+        }
+        //$(function () {
+        //    var num = $("#num").val().trim();
+        //    alert("blur");
+        //    $("#num").blur(function () {
+        //        if (num != "") {
+        //            $.post("/Inventory/NumberExist", { "number": num }, function (data) {
+        //                if (data.userExsit) {
+        //                    isNum = true;
+        //                    document.getElementById("num2").style.display = "none";
+        //                } else {
+        //                    isNum = false;
+        //                    document.getElementById("s_usernamedepar").style.color = "red";
+        //                    document.getElementById("s_usernamedepar").innerHTML = data.msg;
+        //                    document.getElementById("num2").style.display = "";
+        //                }
+        //            }, "json");
+        //        }
+        //    });
+        //});
+
     </script>
 </body>
 </html>

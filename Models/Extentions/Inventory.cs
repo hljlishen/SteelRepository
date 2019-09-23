@@ -227,46 +227,6 @@ namespace Models
         {
             return helper.FindId<Inventory>(inventoryId);
         }
-        public static int NameGetEmployeeid(string employeeName)
-        {
-            using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
-            {
-                str = employeeName + "-";
-                string[] str1 = new string[3];
-                for (int i = 0; i < 3; i++)
-                {
-                    str1[i] = MidStrEx(str, "：", "-");
-                }
-                var employee = Dbhelper.FindFirst<Employee, string>("number", str1[1]);
-                if (employee == null)
-                {
-                    throw new Exception("请输入正确的领用人信息！！！");
-                }
-                return employee.id;
-            }
-        }
-        public static string MidStrEx(string sourse, string startstr, string endstr)
-        {
-            string result = string.Empty;
-            int startindex, endindex;
-            try
-            {
-                startindex = sourse.IndexOf(startstr);
-                if (startindex == -1)
-                    return result;
-                string tmpstr = sourse.Substring(startindex + startstr.Length);
-                str = tmpstr;
-                endindex = tmpstr.IndexOf(endstr);
-                if (endindex == -1)
-                    return result;
-                result = tmpstr.Remove(endindex);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-            return result;
-        }
         public static Category GetCategoryName(int incomeid)
         {
             using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
@@ -391,6 +351,23 @@ namespace Models
             {
                 throw new Exception("已出库，无法更改数量和单位");
             }
+        }
+        public static Dictionary<string, object> numberExist(string number,string unit,int invenId) {
+            Dictionary<string, object> pairs = new Dictionary<string, object>();
+            var num = double.Parse(number);
+            double Num= WeightConverter.Convert(unit, num, "kg");
+            double Num2 = WeightConverter.Convert(GetInventory(invenId).unit, GetInventory(invenId).amount, "kg");
+            if (Num > Num2)
+            {
+                pairs.Add("userExsit", false);
+                pairs.Add("msg", "出库量大于库存量，请重新键入！");
+            }
+            else
+            {
+                pairs.Add("userExsit", true);
+                pairs.Add("msg", "");
+            }
+            return pairs;
         }
     }
 }

@@ -23,8 +23,22 @@
                 document.getElementById("Ispnum").style.display = "";
                 isPnum = false;
             } else {
+                $.ajax({
+                    url: "@Url.Action("projectCodeExist")",
+                    data: "pnumber=" + pnumber,
+                    type: "post",
+                    success: function (data) {
+                        if (data) {
+                            isPnum = true;
+                            document.getElementById("Ispnum2").style.display = "none";
+                        }
+                        else {
+                            isPnum = false;
+                            document.getElementById("Ispnum2").style.display = "";
+                        }
+                    }
+                });
                 document.getElementById("Ispnum").style.display = "none";
-                isPnum = true;
             }
             
             //项目名称

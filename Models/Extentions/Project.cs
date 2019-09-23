@@ -34,6 +34,17 @@ namespace Models
                 return helper.Select<Project>(p => p.state != 2);
             }
         }
+        public static List<Project> SelectDescAll() {
+                using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+                {
+                    List<Project> list = new List<Project>();
+                    foreach (var project in helper.SqlQuery<Project>("select Project.* from Project where Project.state != 2 order by Project.id desc"))
+                    {
+                        list.Add(project);
+                    }
+                    return list;
+                }
+        }
 
         public static int Update(Project project)
         {
@@ -53,6 +64,14 @@ namespace Models
                 statistics2D.AddSeries("price", p => p.price == null ? 0 : p.price.Value/10000);
                 var Sum = statistics2D.GetValues(helper.Select<OutCome>(p => p.state != 2));
                 return Sum.Keys.Contains("price") ? Sum["price"] : null;
+            }
+        }
+        public static bool ProjectCodeExist(string pnumber) {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                var project = helper.FindFirst<Project, string>("projectCode", pnumber);
+
+                return project == null;
             }
         }
     }

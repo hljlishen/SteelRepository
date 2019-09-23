@@ -57,6 +57,7 @@ namespace SteelRepository.Controllers
             inCome.unitPrice = double.Parse(collection["unitPrice"]);
             inCome.amount = double.Parse(collection["amount"]);
             inCome.storageTime = DateTime.Parse(collection["InComeTime"]);
+            var a = collection["RecheckCycle"];
             inCome.reviewCycle = double.Parse(collection["RecheckCycle"]);
             InCome.NewInCome(inCome, int.Parse(collection["position"]), collection["materialCode"], collection["name1"], collection["model"], collection["RecheckBasis"],collection["RecheckOrderNo"],DateTime.Parse(collection["RecheckTime"]), qualityCertification(collection), recheckReport(collection));
             return Json(true);

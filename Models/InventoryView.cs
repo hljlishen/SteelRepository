@@ -30,5 +30,6 @@ namespace Models
         public int posiId { get; set; }
         public string name { get; set; }
         public string brandCodeName { get; set; }
+        public int incomeId { get; set; }
     }
 }

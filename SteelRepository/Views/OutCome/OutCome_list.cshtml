@@ -91,7 +91,8 @@
     List<Models.OutcomeQueryView> outcome = (List<Models.OutcomeQueryView>)ViewData["outcome"];
     List<Models.Manufacturer> manufacturers = (List<Models.Manufacturer>)ViewData["manufacturer"];
     List<Models.Department> departments = (List<Models.Department>)ViewData["department"];
-    List<Models.InCome> inComebacth = (List<Models.InCome>)ViewData["Incomebatch"];
+    List<Models.InCome> IncomeBacth = (List<Models.InCome>)ViewData["Income"];
+    int a = (int)ViewData["a"];
 }
 <div class="content-page">
     <div class="content">
@@ -130,8 +131,8 @@
                                             <table contenteditable="inherit" style="width:100%;text-align:center">
                                                 <tr>
                                                     <td>
-                                                        <label style="width:100%;text-align:left">货品编号查询</label>
-                                                        <select name="materialCodeid" style="width:142px;height:40px" class="form-control">
+                                                        <label style="width:100%;text-align:left">材料编号查询</label>
+                                                        <select name="materialCodeid" class="form-control col-sm-11">
                                                             <option value="0">请选择</option>
                                                             @foreach (var emp in material)
                                                             {
@@ -141,7 +142,7 @@
                                                     </td>
                                                     <td>
                                                         <label style="width:100%;text-align:left">厂商查询</label>
-                                                        <select name="manufacturerid" style="width:142px;height:40px" class="form-control">
+                                                        <select name="manufacturerid" class="form-control col-sm-11">
                                                             <option value="0">请选择</option>
                                                             @foreach (var man in manufacturers)
                                                             {
@@ -151,7 +152,7 @@
                                                     </td>
                                                     <td>
                                                         <label style="width:100%;text-align:left">部门查询</label>
-                                                        <select name="departmentid" style="width:142px;height:40px" class="form-control">
+                                                        <select name="departmentid" class="form-control col-sm-11">
                                                             <option value="0">请选择</option>
                                                             @foreach (var dep in departments)
                                                             {
@@ -161,7 +162,7 @@
                                                     </td>
                                                     <td>
                                                         <label style="width:100%;text-align:left">领用人查询</label>
-                                                        <select name="employeeid" style="width:142px;height:40px" class="form-control">
+                                                        <select name="employeeid" class="form-control col-sm-11">
                                                             <option value="0">请选择</option>
                                                             @foreach (var emp in employee)
                                                             {
@@ -171,11 +172,11 @@
                                                     </td>
                                                     <td>
                                                         <label for="example-date" style="width:100%;text-align:left">开始时间：</label>
-                                                        <input class="form-control" id="test1" type="text" name="date" style="width:142px">
+                                                        <input class="form-control col-sm-11" id="test1" type="text" name="date">
                                                     </td>
                                                     <td>
                                                         <label for="example-date" style="width:100%;text-align:left">结束时间</label>
-                                                        <input class="form-control" id="test2" type="text" name="date1" style="width:142px">
+                                                        <input class="form-control col-sm-11" id="test2" type="text" name="date1">
                                                     </td>
 
                                                     <td>
@@ -208,7 +209,7 @@
                             </a>
                         </div>
                         <div class="table-responsive">
-                            <table class="table table-centered table-striped dt-responsive nowrap w-100" id="products-datatable14" style="width:auto;height:auto">
+                            <table class="table table-centered table-striped dt-responsive nowrap w-100" id="products-datatable15" style="width:auto;height:auto">
                                 <thead>
                                     <tr>
                                         <th style="width: 20px;">
@@ -219,17 +220,18 @@
                                         </th>
                                         <th style="width: 50px;">详情</th>
                                         <th>编号</th>
-                                        <th>货品编号</th>
+                                        <th>材料编号</th>
                                         <th>牌号</th>
-                                        <th>货品类别</th>
-                                        <th>货品名称</th>
-                                        <th>货品规格</th>
-                                        <th>货品出库数量</th>
-                                        <th>货品单位</th>
-                                        <th>货品单价</th>
-                                        <th>货品总价</th>
-                                        <th>货品出库时间</th>
-                                        <th>货品借用人</th>
+                                        <th>批号</th>
+                                        <th>材料类别</th>
+                                        <th>材料名称</th>
+                                        <th>材料规格</th>
+                                        <th>材料出库数量</th>
+                                        <th>材料单位</th>
+                                        <th>材料单价</th>
+                                        <th>材料总价</th>
+                                        <th>材料出库时间</th>
+                                        <th>领用人</th>
                                         <th>备注</th>
                                     </tr>
                                 </thead>
@@ -237,31 +239,70 @@
                                     @{int count = 1; }
                                     @foreach (var outComes in outcome)
                                     {
-                                    <tr>
-                                        <td>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                                <label class="custom-control-label" for="customCheck2">&nbsp;</label>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <a href="javascript:OutComeMore(@outComes.OutId)" class="action-icon"> <i class=" dripicons-blog"></i></a>
-                                        </td>
-                                        <td class="table-user">@count</td>
-                                        <td>@outComes.code</td>
-                                        <td>@outComes.brandCodeName</td>
-                                        <td>@outComes.categoryName</td>
-                                        <td>@outComes.materialName</td>
-                                        <td>@outComes.modelName</td>
-                                        <td>@outComes.number</td>
-                                        <td>@outComes.unit</td>
-                                        <td>@outComes.unitPrice</td>
-                                        <td>@outComes.price</td>
-                                        <td>@outComes.recipientsTime.ToString("d")</td>
-                                        <td>@outComes.name</td>
-                                        <td style="word-wrap:break-word">@outComes.instructions</td>
-                                    </tr>
-                                        count++;
+                                        if (a == 1)
+                                        {
+                                            if (outComes.state != 2)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input" id="customCheck2">
+                                                            <label class="custom-control-label" for="customCheck2">&nbsp;</label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <a href="javascript:OutComeMore(@outComes.OutId)" class="action-icon"> <i class=" dripicons-blog"></i></a>
+                                                    </td>
+                                                    <td class="table-user">@count</td>
+                                                    <td>@outComes.code</td>
+                                                    <td>@outComes.brandCodeName</td>
+                                                    <td>@outComes.batch</td>
+                                                    <td>@outComes.categoryName</td>
+                                                    <td>@outComes.materialName</td>
+                                                    <td>@outComes.modelName</td>
+                                                    <td>@outComes.number</td>
+                                                    <td>@outComes.unit</td>
+                                                    <td>@outComes.unitPrice</td>
+                                                    <td>@outComes.price</td>
+                                                    <td>@outComes.recipientsTime.ToString("yyyy-MM-dd")</td>
+                                                    <td>@outComes.name</td>
+                                                    <td style="word-wrap:break-word">@outComes.instructions</td>
+                                                </tr>
+                                                count++;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (outComes.state == 2)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input" id="customCheck2">
+                                                            <label class="custom-control-label" for="customCheck2">&nbsp;</label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <a href="javascript:OutComeMore(@outComes.OutId)" class="action-icon"> <i class=" dripicons-blog"></i></a>
+                                                    </td>
+                                                    <td class="table-user">@count</td>
+                                                    <td>@outComes.code</td>
+                                                    <td>@outComes.brandCodeName</td>
+                                                    <td>@outComes.batch</td>
+                                                    <td>@outComes.categoryName</td>
+                                                    <td>@outComes.materialName</td>
+                                                    <td>@outComes.modelName</td>
+                                                    <td>@outComes.number</td>
+                                                    <td>@outComes.unit</td>
+                                                    <td>@outComes.unitPrice</td>
+                                                    <td>@outComes.price</td>
+                                                    <td>@outComes.recipientsTime.ToString("yyyy-MM-dd")</td>
+                                                    <td>@outComes.name</td>
+                                                    <td style="word-wrap:break-word">@outComes.instructions</td>
+                                                </tr>
+                                                count++;
+                                            }
+                                        }
                                     }
                                 </tbody>
                             </table>
@@ -273,7 +314,7 @@
                                 <div class="col-sm-4">
                                     <select id="income" name="income" style="width:200px;height:42px" class="form-control">
                                         <option value="0">请选择想要撤销的货品批号</option>
-                                        @foreach (var bacth in inComebacth)
+                                        @foreach (var bacth in IncomeBacth)
                                         {
                                             <option value="@bacth.id">@bacth.batch</option>
                                         }
@@ -287,7 +328,6 @@
                                 </div>
                             </div>
                         }
-
                     </div>
                 </div>
             </div>
