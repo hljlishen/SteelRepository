@@ -58,7 +58,7 @@
             }
 
             function InComeSelete(id) {
-                var url = "InCome_selete?id=" + id;
+                var url = "InCome_selete?id=" + id +"&id2=" + 1;
                 var width = "100%";
                 var height = "750px";
                 parent.OpenWin2(url, width, height);
@@ -118,7 +118,7 @@
                                                 <tr>
                                                     <td>
                                                         <label style="width:100%;text-align:left">厂商查询</label>
-                                                        <select name="manufacturerid" style="width:200px;height:40px" class="form-control">
+                                                        <select name="manufacturerid" class="form-control col-md-10">
                                                             <option value="0">请选择</option>
                                                             @foreach (var man in manufacturer)
                                                             {
@@ -128,7 +128,7 @@
                                                     </td>
                                                     <td>
                                                         <label style="width:100%;text-align:left">货品编号查询</label>
-                                                        <select name="materialCodeid" style="width:200px;height:40px" class="form-control">
+                                                        <select name="materialCodeid" class="form-control col-md-10">
                                                             <option value="0">请选择</option>
                                                             @foreach (var emp in material)
                                                             {
@@ -138,11 +138,11 @@
                                                     </td>
                                                     <td>
                                                         <label for="example-date" style="width:100%;text-align:left">开始时间：</label>
-                                                        <input class="form-control" id="test1" type="text" name="date" style="width:200px">
+                                                        <input class="form-control col-md-10" id="test1" type="text" name="date">
                                                     </td>
                                                     <td>
                                                         <label for="example-date" style="width:100%;text-align:left">结束时间</label>
-                                                        <input class="form-control" id="test2" type="text" name="date1" style="width:200px">
+                                                        <input class="form-control col-md-10" id="test2" type="text" name="date1">
                                                     </td>
                                                     <td>
                                                         <div class="button-list">
@@ -185,7 +185,7 @@
                         </div>
 
                         <div class="table-responsive">
-                            <table class="table table-centered table-striped dt-responsive nowrap w-100" id="products-datatable14">
+                            <table class="table table-centered table-striped dt-responsive nowrap w-100" id="products-datatable13">
                                 <thead>
                                     <tr>
                                         <th style="width: 10px;">

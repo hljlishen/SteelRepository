@@ -14,7 +14,10 @@
     <script src="~/Content/AdminIndex/js/app.min.js"></script>
     <link href="~/Content/layui/css/layui.css" rel="stylesheet" media="all" />
     <script src="~/Content/layui/layui.js" charset="utf-8"></script>
-    @{ Models.InComeView inCome = (Models.InComeView)ViewData["InComeView"];}
+    @{ Models.InComeView inCome = (Models.InComeView)ViewData["InComeView"];
+        int id2 = (int)ViewData["id2"];
+        double Amount = (double)ViewData["InventoryAmount"];
+        }
     <script type="text/javascript">
        
     </script>
@@ -69,11 +72,17 @@
                                     </div>
                                 </div>
                                 <div class="form-row">
-
+                                    @if(id2 == 1) { 
                                     <div class="form-group col-md-6">
                                         <label for="signin_form">数量：</label>
                                         <input class="form-control" name="amount" type="text" value="@inCome.amount" disabled="disabled" />
                                     </div>
+                                    }else {
+                                    <div class="form-group col-md-6">
+                                        <label for="signin_form">数量：</label>
+                                        <input class="form-control" name="amount" type="text" value="@Amount" disabled="disabled" />
+                                    </div>
+                                    }
                                     <div class="form-group col-md-6">
                                         <label for="signin_form">计量单位：</label>
                                         <input class="form-control" name="unit" type="text" value="@inCome.unit" disabled="disabled" />

@@ -1,0 +1,145 @@
+﻿@model Models.Project
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    @{ 
+        int id1 = (int)ViewData["OutComeId"];
+    }
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+    <link href="~/Content/AdminIndex/css/app.min.css" rel="stylesheet" />
+    <link href="~/Content/AdminIndex/css/icons.min.css" rel="stylesheet" />
+    <script src="~/Content/AdminIndex/js/app.min.js"></script>
+    <script type="text/javascript">
+        var isTrue = true;
+        var isPnum = true;
+        var isPname = true;
+        function check() {
+            //项目令号
+            var pnumber = $("#pnumber").val().trim();
+            if (pnumber == "") {
+                document.getElementById("Ispnum").style.display = "";
+                isPnum = false;
+            } else {
+                $.ajax({
+                    url: "@Url.Action("../Project/projectCodeExist")",
+                    data: "pnumber=" + pnumber,
+                    type: "post",
+                    success: function (data) {
+                        if (data) {
+                            isPnum = true;
+                            document.getElementById("Ispnum2").style.display = "none";
+                        }
+                        else {
+                            isPnum = false;
+                            document.getElementById("Ispnum2").style.display = "";
+                        }
+                    }
+                });
+                document.getElementById("Ispnum").style.display = "none";
+            }
+
+            //项目名称
+            var pname = $("#pname").val().trim();
+            if (pname == "") {
+                document.getElementById("Ispname").style.display = "";
+                isPname = false;
+            } else {
+                document.getElementById("Ispname").style.display = "none";
+                isPname = true;
+            }
+            if (isPnum && isPname)
+                isTrue = true;
+            else {
+                isTrue = false;
+            }
+
+            return isTrue;
+        }
+        function add() {
+            check();
+            if (isTrue) {
+                $.ajax({
+                    url: "@Url.Action("OutComeProject_add")",
+                    type: "post",
+                    data: $("form").serialize(),
+                    dataType: "json",
+                    success: function (data) {
+                        data = eval("(" + data + ")");
+                        if (data) {
+                            alert("添加成功");
+                            parent.closeWin();
+                            Add();
+                        }
+                        else {
+                            document.getElementById("Ispnum2").style.display = "";
+                        }
+                    }
+                });
+            }
+        }
+         function Add() {
+            var url = "OutCome_add?id=" +@id1;
+            var width = "100%";
+            var height = "700px";
+            parent.OpenWin2(url, width, height);
+        }
+
+        function OpenWin2(url, width, height) {
+            var frame = "<iframe width='" + width + "' height='" + height + "' onscroll='true' style='border: 0px;' src='" + url + "'></iframe>";
+            $("#myModalBody2").html(frame);
+            $("#myModal2").modal("show");
+        }
+    </script>
+</head>
+<body>
+    <section class="signin popup-in">
+        <div class="container">
+            <div class="sign-content popup-in-content">
+                <div class="popup-in-txt">
+                    <h2 style="text-align:center">添加项目</h2>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="signin-form">
+                                @using (Html.BeginForm("Project_add", "Project", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @role = "form" }))
+                                {
+                                    <div class="form-group">
+                                        <label for="signin_form">项目令号：</label>
+                                        <label id="Ispnum" style="color:#ff0000;display:none;font-size:13px">*项目令号不能为空，请重新输入</label>
+                                        <label id="Ispnum2" style="color:#ff0000;display:none;font-size:13px">*项目令号已存在，请重新输入</label>
+                                        @Html.TextBoxFor(m => m.projectCode, new { @class = "form-control", type = "text", id = "pnumber" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="signin_form">项目名称：</label>
+                                        <label id="Ispname" style="color:#ff0000;display:none;font-size:13px">*项目名称不能为空，请重新输入</label>
+                                        @Html.TextBoxFor(m => m.projectName, new { @class = "form-control", type = "text", id = "pname" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="signin_form">负责人：</label>
+                                        @Html.TextBoxFor(m => m.projectCharge, new { @class = "form-control", type = "text" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="signin_form">备注：</label>
+                                        @Html.TextBoxFor(m => m.projectNote, new { @class = "form-control", type = "text" })
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <button type="button" class="btn btn-block btn-primary" onclick="add()">添加</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

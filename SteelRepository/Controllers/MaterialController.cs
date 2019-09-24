@@ -57,6 +57,7 @@ namespace SteelRepository.Controllers
             inCome.unitPrice = double.Parse(collection["unitPrice"]);
             inCome.amount = double.Parse(collection["amount"]);
             inCome.storageTime = DateTime.Parse(collection["InComeTime"]);
+            var a = collection["RecheckCycle"];
             inCome.reviewCycle = double.Parse(collection["RecheckCycle"]);
             InCome.NewInCome(inCome, int.Parse(collection["position"]), collection["materialCode"], collection["name1"], collection["model"], collection["RecheckBasis"],collection["RecheckOrderNo"],DateTime.Parse(collection["RecheckTime"]), qualityCertification(collection), recheckReport(collection));
             return Json(true);
@@ -116,20 +117,24 @@ namespace SteelRepository.Controllers
             ViewBag.selectOperator = select4;
             SelectList select5 = new SelectList(GetUnitPriceList(id), "Value", "Text");
             ViewBag.selectUnitPrice = select5;
+            ViewData["OutQty"] = InCome.OutQty(id, InCome.GetInCome(id).unit);
             InCome inCome = InCome.Selete(id);
             In = inCome;
             return View(InCome.SeleteInComeView(id));
         }
 
-        public ActionResult InCome_selete(int id)
+        public ActionResult InCome_selete(int id,int id2)
         {
+            ViewData["id2"] = id2;
             ViewData["InComeView"] = InCome.SeleteInComeView(id);
+            ViewData["InventoryAmount"]= InCome.GetInventoryAmount(id);
             return View();
         }
 
         [HttpPost]
         public JsonResult InCome_update(FormCollection collection)
         {
+
             InCome UpIncome = new InCome();
             UpIncome.id = In.id;
             string name = collection["name"];
@@ -146,7 +151,8 @@ namespace SteelRepository.Controllers
             UpIncome.menufactureId = int.Parse(collection["manufacturer"]);
             UpIncome.storageTime = DateTime.Parse(collection["IncomeText"]);
             UpIncome.reviewCycle = double.Parse(collection["reviewCycle"]);
-            return Json(InCome.Update(UpIncome,name,model,code,int.Parse(collection["position"])));
+            //ViewData["OutQty"] = InCome.OutQty(UpIncome.id,UpIncome.unit);
+            return Json(InCome.Update(UpIncome, name, model, code, int.Parse(collection["position"])));
         }
 
         public ActionResult QualityReport(int id)
@@ -196,7 +202,6 @@ namespace SteelRepository.Controllers
             }
             return Json(true);
         }
-
         private void DelectRecheckReportImg(string imgIds)
         {
             if (imgIds != null)
@@ -489,5 +494,9 @@ namespace SteelRepository.Controllers
         {
             return Json(RecheckReport.NoIncomeIdRecheckOrderNo(recheckOrderNo,incomeId));
         }
+        //public ActionResult NumberExist(string number,string unit)
+        //{
+        //    return Json(InCome.numberExist(number,unit,In.id));
+        //}
     }
 }

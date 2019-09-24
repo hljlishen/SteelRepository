@@ -231,28 +231,48 @@ namespace Models
                 }
                 catch (Exception e)
                 {
-                    return 0;
+                    return -2;
                     //throw e;
                 }
                 inCome.codeId = mCode.id;
                 double? kgPrice = 0;
-                //修改单价
+                //修改库存
+                try {
+                    var inventory = Inventory.Update(inCome.id, inCome.amount, inCome.unit, positionId, helper);
+                }
+                catch (Exception ex) {
+                    return -3;
+                    //throw ex;
+                }
+                //修改出库总价
                 foreach (var outcome in OutCome.InComeIdSelect(inCome.id, helper))
                 {
                     if (inCome.priceMeasure == "g         " && outcome.unit == "g")
-                        kgPrice = outcome.number / inCome.unitPrice;
+                        kgPrice = outcome.number*inCome.unitPrice;
                     else if (inCome.priceMeasure == "kg        " && outcome.unit == "g")
-                        kgPrice = outcome.number / (inCome.unitPrice * 1000);
+                        kgPrice = outcome.number * (inCome.unitPrice / 1000.0);
                     else if (inCome.priceMeasure == "kg        " && outcome.unit == "kg")
-                        kgPrice = outcome.number / inCome.unitPrice;
+                        kgPrice = outcome.number * inCome.unitPrice;
                     else if(inCome.priceMeasure == "g         " && outcome.unit == "kg")
-                        kgPrice = outcome.number * 1000 / inCome.unitPrice;
+                        kgPrice = outcome.number * 1000 * inCome.unitPrice;
                     outcome.price = kgPrice;
                     helper.Update(outcome); 
                 }
-                //修改库存
-                var inventory = Inventory.Update(inCome.id, inCome.amount, inCome.unit, positionId, helper);
+                
                 return helper.Update(inCome);
+            }
+        }
+        public static  string OutQty(int IncomeId,string unit)
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                double Sum = 0;
+                foreach (var outCome in helper.SelectAll<OutcomeQueryView>()) {
+                    if (outCome.incoId == IncomeId && outCome.state == 1) { 
+                    Sum += WeightConverter.Convert(outCome.unit,outCome.number,unit);
+                    }
+                }
+                return "(出库总量为" + Sum +" "+ unit+")";
             }
         }
 
@@ -391,6 +411,12 @@ namespace Models
                 var exp = builder.GetExpression();
                 if (exp == null) return Dbhelper.SelectAll<InComeView>();
                 return Dbhelper.Select(exp);
+            }
+        }
+        public static double GetInventoryAmount(int InComeId) {
+            using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return Dbhelper.FindFirst<Inventory, int>("incomeId", InComeId).amount;
             }
         }
     }

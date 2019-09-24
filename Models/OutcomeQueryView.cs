@@ -37,5 +37,7 @@ namespace Models
         public Nullable<int> state { get; set; }
         public string priceMeasure { get; set; }
         public string brandCodeName { get; set; }
+        public string batch { get; set; }
+        public int incoId { get; set; }
     }
 }

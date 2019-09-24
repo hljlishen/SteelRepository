@@ -24,7 +24,7 @@ namespace SteelRepository.Controllers
             ViewData["outcome"] = OutCome.GetOutComeView();
             ViewData["manufacturer"] = Manufacturer.SelectAll();
             ViewData["department"] = Department.SelectAll();
-            ViewData["Incomebatch"] = InCome.GetInComes();
+            ViewData["Income"] = InCome.GetInComes();
             return View();
         }
         public ActionResult OutCome_More(int id)
@@ -41,7 +41,7 @@ namespace SteelRepository.Controllers
             ViewData["employee"] = Employee.SelectAll();
             ViewData["manufacturer"] = Manufacturer.SelectAll();
             ViewData["department"] = Department.SelectAll();
-            ViewData["Incomebatch"] = InCome.GetInComes();
+            ViewData["Income"] = InCome.GetInComes();
             string begin = collection["date"];
             string end = collection["date1"];
             int materialCodeid = Convert.ToInt32(collection["materialCodeid"]);
@@ -53,10 +53,9 @@ namespace SteelRepository.Controllers
             return View();
         }
         [HttpPost]
-        public JsonResult OutCome_revocation(FormCollection collection,string id)
+        public JsonResult OutCome_revocation(FormCollection collection,string batch)
         {
-            var incomeId = Convert.ToInt32(id);
-            return Json(OutCome.OutComeRevocation(incomeId));
+            return Json(OutCome.OutComeRevocation(batch));
         }
         public ActionResult OutCome_revocationlist()
         {
@@ -65,9 +64,9 @@ namespace SteelRepository.Controllers
             ViewData["employee"] = Employee.SelectAll();
             ViewData["manufacturer"] = Manufacturer.SelectAll();
             ViewData["department"] = Department.SelectAll();
+            ViewData["Income"] = InCome.GetInComes();
             ViewData["outcome"] = null;
             ViewData["outcome"] = OutCome.GetRevocationOutComes();
-            ViewData["Incomebatch"] = InCome.GetInComes();
             return View("OutCome_list");
         }
     }

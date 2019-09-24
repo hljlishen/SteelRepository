@@ -12,7 +12,7 @@ namespace Models
     {
         //public static IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities());
         public static List<OutCome> comes = new List<OutCome>();
-        public static OutCome NewOutCome(DateTime dateTime, int inventoryId, double amount, string measure, int borrowerId, int? projectId = null, string instructions = "")
+        public static int NewOutCome(DateTime dateTime, int inventoryId, double amount, string measure, int borrowerId, int? projectId = null, string instructions = "")
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
             {
@@ -29,7 +29,7 @@ namespace Models
 
                 //判断出库数量是否合法
                 double outcomeAmout = WeightConverter.Convert(measure, amount, inventory.unit);
-                if (outcomeAmout > inventory.amount) throw new Exception($"出库数量:{outcomeAmout},大于库存:{inventory.amount}");
+                if (outcomeAmout > inventory.amount) return 0 /*throw new Exception($"出库数量:{outcomeAmout},大于库存:{inventory.amount}")*/;
 
                 //计算价格
                 double? outcomePrice;
@@ -47,20 +47,19 @@ namespace Models
                 var state1 = 1;
                 var outcome = new OutCome() { borrowerId = borrowerId, number = amount, unit = measure, inventoryId = inventoryId, projectId = projectId, recipientsTime = dateTime, instructions = instructions, price = outcomePrice,state = state1 };
                 helper.Insert(outcome, false);
-                helper.Commit();
 
-                return outcome;
+                return helper.Commit();
             }
         }
 
         public static List<OutCome> InComeIdSelect(int inComeId, IDbInterface helper)
         {
-            var inventory = helper.Select<Inventory>(p => p.incomeId == inComeId);
-            int inventoryId = 0;
-            foreach (var inv in inventory)
-            {
-                inventoryId = inv.id;
-            }
+            var inventoryId = helper.Select<Inventory>(p => p.incomeId == inComeId)[0].id;
+            //int inventoryId = 0;
+            //foreach (var inv in inventory)
+            //{
+            //    inventoryId = inv.id;
+            //}
             return helper.Select<OutCome>(p => p.inventoryId == inventoryId);
         }
         public static List<OutCome> SelectAll()
@@ -222,12 +221,13 @@ namespace Models
                 return Dbhelper.FindId<Category>(income.categoryId);
             }
         }
-        public static int OutComeRevocation(int incomeid)
+        public static int OutComeRevocation(string  batch)
         {
             using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
             {
+                var incomeid = Dbhelper.FindFirst<InCome, string>("batch", batch);
                 List<int> outcomeid = new List<int>();
-                if (incomeid == 0)
+                if (incomeid == null)
                 {
                     foreach (var id in SelectAll())
                     {
@@ -236,14 +236,13 @@ namespace Models
                 }
                 else
                 {
-                    var income = Dbhelper.FindId<InCome>(incomeid);
-                    var invenView = Dbhelper.Select<InventoryView>(p => p.batch == income.batch)[0];
+                    var invenView = Dbhelper.Select<InventoryView>(p => p.batch == batch)[0];
                     foreach (var id2 in Dbhelper.Select<OutCome>(p => p.inventoryId == invenView.InvenId))
                     {
                         outcomeid.Add(id2.id);
                     }
                 }
-                if (outcomeid.Count == 0) throw new Exception("该货品批号无出库记录！！");
+                if (outcomeid.Count == 0) return -2;/*throw new Exception("该货品批号无出库记录！！")*/;
                 var Maxoutcome = Dbhelper.FindId<OutCome>(outcomeid.Max());
                 var Inventory = Dbhelper.FindId<Inventory>(Maxoutcome.inventoryId);
                 if (Maxoutcome.state < 2)
@@ -257,7 +256,8 @@ namespace Models
                     Dbhelper.Update(Inventory, false);
                     return Dbhelper.Commit();
                 }
-                throw new Exception("该货品的最后一条出库记录处于撤销状态，不能再执行本次操作！！");
+                return -3;
+                //throw new Exception("该货品的最后一条出库记录处于撤销状态，不能再执行本次操作！！");
             }
         }
         public static List<OutcomeQueryView> GetRevocationOutComes()
@@ -278,6 +278,8 @@ namespace Models
                 ExpressionBuilder<OutcomeQueryView> Manbuilder = new ExpressionBuilder<OutcomeQueryView>();
                 ExpressionBuilder<OutcomeQueryView> deparbuilder = new ExpressionBuilder<OutcomeQueryView>();
                 ExpressionBuilder<OutcomeQueryView> emplobuilder = new ExpressionBuilder<OutcomeQueryView>();
+                ExpressionBuilder<OutcomeQueryView> statebuilder = new ExpressionBuilder<OutcomeQueryView>();
+
                 if (begin != "")
                 {
                     DateTime begintime = Convert.ToDateTime(begin);
@@ -304,26 +306,22 @@ namespace Models
                 {
                     emplobuilder.Or(p => p.emploId == employeeid);
                 }
+                statebuilder.Or(p => p.state !=2);
                 var exptimebegin = beginbuilder.GetExpression();
                 var exptimeend = endbuilder.GetExpression();
                 var expcode = Codebuilder.GetExpression();
                 var expman = Manbuilder.GetExpression();
                 var dapar = deparbuilder.GetExpression();
                 var emplo = emplobuilder.GetExpression();
+                var state = statebuilder.GetExpression();
                 if (exptimebegin != null) builder.And(exptimebegin);
                 if (exptimeend != null) builder.And(exptimeend);
                 if (expcode != null) builder.And(expcode);
                 if (emplo != null) builder.And(emplo);
                 if (dapar != null) builder.And(dapar);
                 if (expman != null) builder.And(expman);
-                var exp = builder.GetExpression();
-                if (exp == null)
-                {
-                    List<OutcomeQueryView> list2 = Dbhelper.SelectAll<OutcomeQueryView>();
-                    return list2;
-                }
-                else
-                    return Dbhelper.Select(exp);
+                builder.And(state);
+                return Dbhelper.Select(builder.GetExpression());
             }
         }
         public string GetMaterialCode(IDbInterface db)
@@ -344,8 +342,7 @@ namespace Models
         {
             using (IDbInterface db = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                List<OutcomeQueryView> list1 = db.SelectAll<OutcomeQueryView>();
-                return list1;
+                return db.Select<OutcomeQueryView>(p => p.state !=2);
             }
         }
 

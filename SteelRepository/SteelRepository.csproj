@@ -215,6 +215,7 @@
     <Content Include="Content\AdminIndex\js\app.min.js" />
     <Content Include="Content\AdminIndex\js\Index\demo.customers10.js" />
     <Content Include="Content\AdminIndex\js\Index\demo.customers13.js" />
+    <Content Include="Content\AdminIndex\js\Index\demo.customers15.js" />
     <Content Include="Content\AdminIndex\js\Index\demo.customers7.js" />
     <Content Include="Content\AdminIndex\js\Index\demo.customers6.js" />
     <Content Include="Content\AdminIndex\js\Index\demo.customers5.js" />
@@ -450,6 +451,7 @@
     <Content Include="Views\AdminIndex\Index1.cshtml" />
     <Content Include="Views\Index\Index2.cshtml" />
     <Content Include="Views\Material\RecheckReports_update.cshtml" />
+    <Content Include="Views\Inventory\OutComeProject_add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

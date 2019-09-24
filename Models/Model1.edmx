@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="SteelRepositoryDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="SteelRepositoryDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="BrandCode">
           <Key>
             <PropertyRef Name="id" />
@@ -252,6 +252,7 @@
             <PropertyRef Name="posiId" />
             <PropertyRef Name="name" />
             <PropertyRef Name="brandCodeName" />
+            <PropertyRef Name="incomeId" />
           </Key>
           <Property Name="storageTime" Type="datetime" Nullable="false" />
           <Property Name="batch" Type="nvarchar(max)" Nullable="false" />
@@ -269,6 +270,7 @@
           <Property Name="posiId" Type="int" Nullable="false" />
           <Property Name="name" Type="nvarchar(max)" Nullable="false" />
           <Property Name="brandCodeName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="incomeId" Type="int" Nullable="false" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“SteelRepositoryDB.dbo.OutcomeQueryView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -291,6 +293,8 @@
             <PropertyRef Name="projectName" />
             <PropertyRef Name="positionName" />
             <PropertyRef Name="brandCodeName" />
+            <PropertyRef Name="batch" />
+            <PropertyRef Name="incoId" />
           </Key>
           <Property Name="number" Type="float" Nullable="false" />
           <Property Name="unit" Type="nvarchar(max)" Nullable="false" />
@@ -315,6 +319,8 @@
           <Property Name="state" Type="int" />
           <Property Name="priceMeasure" Type="nchar" MaxLength="10" />
           <Property Name="brandCodeName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="batch" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="incoId" Type="int" Nullable="false" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“SteelRepositoryDB.dbo.RecheckReportImgView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -407,7 +413,8 @@
     [InventoryView].[positionName] AS [positionName], 
     [InventoryView].[posiId] AS [posiId], 
     [InventoryView].[name] AS [name], 
-    [InventoryView].[brandCodeName] AS [brandCodeName]
+    [InventoryView].[brandCodeName] AS [brandCodeName], 
+    [InventoryView].[incomeId] AS [incomeId]
     FROM [dbo].[InventoryView] AS [InventoryView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="OutcomeQueryView" EntityType="Self.OutcomeQueryView" store:Type="Views" store:Schema="dbo">
@@ -434,7 +441,9 @@
     [OutcomeQueryView].[positionName] AS [positionName], 
     [OutcomeQueryView].[state] AS [state], 
     [OutcomeQueryView].[priceMeasure] AS [priceMeasure], 
-    [OutcomeQueryView].[brandCodeName] AS [brandCodeName]
+    [OutcomeQueryView].[brandCodeName] AS [brandCodeName], 
+    [OutcomeQueryView].[batch] AS [batch], 
+    [OutcomeQueryView].[incoId] AS [incoId]
     FROM [dbo].[OutcomeQueryView] AS [OutcomeQueryView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="RecheckReportImgView" EntityType="Self.RecheckReportImgView" store:Type="Views" store:Schema="dbo">
@@ -693,6 +702,7 @@
             <PropertyRef Name="posiId" />
             <PropertyRef Name="name" />
             <PropertyRef Name="brandCodeName" />
+            <PropertyRef Name="incomeId" />
           </Key>
           <Property Name="storageTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="batch" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
@@ -710,6 +720,7 @@
           <Property Name="posiId" Type="Int32" Nullable="false" />
           <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="brandCodeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="incomeId" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="OutcomeQueryView">
           <Key>
@@ -730,6 +741,8 @@
             <PropertyRef Name="projectName" />
             <PropertyRef Name="positionName" />
             <PropertyRef Name="brandCodeName" />
+            <PropertyRef Name="batch" />
+            <PropertyRef Name="incoId" />
           </Key>
           <Property Name="number" Type="Double" Nullable="false" />
           <Property Name="unit" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
@@ -754,6 +767,8 @@
           <Property Name="state" Type="Int32" />
           <Property Name="priceMeasure" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="brandCodeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="batch" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="incoId" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="RecheckReportImgView">
           <Key>
@@ -771,7 +786,7 @@
           <Property Name="recheckOrderNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="id" Type="Int32" Nullable="false" />
         </EntityType>
-        <EntityContainer Name="SteelRepositoryDBEntities21" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="SteelRepositoryDBEntities25" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="BrandCode" EntityType="Self.BrandCode" />
           <EntitySet Name="Category" EntityType="Self.Category" />
           <EntitySet Name="Department" EntityType="Self.Department" />
@@ -801,7 +816,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="SteelRepositoryDBModelStoreContainer" CdmEntityContainer="SteelRepositoryDBEntities21">
+        <EntityContainerMapping StorageEntityContainer="SteelRepositoryDBModelStoreContainer" CdmEntityContainer="SteelRepositoryDBEntities25">
           <EntitySetMapping Name="BrandCode">
             <EntityTypeMapping TypeName="SteelRepositoryDBModel.BrandCode">
               <MappingFragment StoreEntitySet="BrandCode">
@@ -1047,6 +1062,7 @@
                 <ScalarProperty Name="posiId" ColumnName="posiId" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="brandCodeName" ColumnName="brandCodeName" />
+                <ScalarProperty Name="incomeId" ColumnName="incomeId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1076,6 +1092,8 @@
                 <ScalarProperty Name="state" ColumnName="state" />
                 <ScalarProperty Name="priceMeasure" ColumnName="priceMeasure" />
                 <ScalarProperty Name="brandCodeName" ColumnName="brandCodeName" />
+                <ScalarProperty Name="batch" ColumnName="batch" />
+                <ScalarProperty Name="incoId" ColumnName="incoId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

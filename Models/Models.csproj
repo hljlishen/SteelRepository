@@ -184,6 +184,7 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
+    <Content Include="SteelRepository-mu.sql" />
     <Content Include="SteelRepository.sql" />
   </ItemGroup>
   <ItemGroup>

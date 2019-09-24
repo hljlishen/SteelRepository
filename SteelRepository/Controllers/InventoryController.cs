@@ -46,7 +46,7 @@ namespace SteelRepository.Controllers
             ViewBag.select = select;
             ViewData["employee"] = Employee.SelectAllDesc();
             ViewData["name"] = IndexController.adminName();
-            ViewData["project"] = Project.SelectAll();
+            ViewData["project"] = Project.SelectDescAll();
             invenId = id;
             return View();
         }
@@ -70,20 +70,16 @@ namespace SteelRepository.Controllers
         [HttpPost]
         public JsonResult OutCome_add(Inventory inventory, FormCollection collection)
         {
-            bool b = DateTime.TryParse(collection["date"], out DateTime begin);
+            Employee employee = new Employee();
+            Project project = new Project();
+            DateTime begin = DateTime.Parse(collection["date"]);
             var number = double.Parse(collection["number"]);
-            var employeeid = Inventory.NameGetEmployeeid(collection["employeeId"]);
-            var projectid =Convert.ToInt32(collection["project"]);
+            var Employeeid = int.Parse(collection["employeeId"]);
+            var Projectid = int.Parse(collection["project"]);
             var ins = collection["instructions"].Trim();
             var unit = inventory.unit;
-            if (b) {
-                //try {
-                var newOutcome = OutCome.NewOutCome(begin, invenId, number, unit, employeeid, projectid, ins);
-                //}
-
-                return Json(1);
-            }else 
-            return Json(0);
+            return Json(OutCome.NewOutCome(begin, invenId, number, unit, Employeeid, Projectid, ins));
+           
         }
         public ActionResult OutComeEmployee_new()
         {
@@ -144,6 +140,23 @@ namespace SteelRepository.Controllers
             itemList.Add(item0);
             itemList.Add(item1);
             return itemList;
+        }
+        public ActionResult OutComeProject_add()
+        {
+            ViewData["OutComeId"] = invenId;
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult OutComeProject_add(Project project)
+        {
+            ViewData["OutComeId"] = invenId;
+            project.state = 1;
+            return Json(Project.Insert(project));
+        }
+        public ActionResult NumberExist(string number,string unit)
+        {
+            return Json(Inventory.numberExist(number,unit,invenId));
         }
     }
 }

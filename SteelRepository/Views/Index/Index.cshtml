@@ -127,7 +127,7 @@
                                                     <tr>
                                                         <td>
                                                             <label style="width:100%;text-align:left">货品编号查询</label>
-                                                            <input id="codeinput" name="codeinput" list="codelist" class="form-control col-md-8" placeholder="请选择或输入编号" />
+                                                            <input id="codeinput" name="codeinput" list="codelist" class="form-control col-md-10" placeholder="请选择或输入编号" />
                                                             <datalist id="codelist">
                                                                 @foreach (var emp in material)
                                                                 {
@@ -137,7 +137,7 @@
                                                         </td>
                                                         <td>
                                                             <label style="width:100%;text-align:left">材料名称查询</label>
-                                                            <input id="nameinput" name="nameinput" list="namelist" class="form-control col-md-8" placeholder="请选择或输入名称" />
+                                                            <input id="nameinput" name="nameinput" list="namelist" class="form-control col-md-10" placeholder="请选择或输入名称" />
                                                             <datalist id="namelist">
                                                                 @foreach (var name in names)
                                                                 {
@@ -147,7 +147,7 @@
                                                         </td>
                                                         <td >
                                                             <label style="width:100%;text-align:left">厂商查询</label>
-                                                            <select name="manufacturerid" class="form-control col-md-8">
+                                                            <select name="manufacturerid" class="form-control col-sm-11">
                                                                 <option value="0">请选择</option>
                                                                 @foreach (var man in manufacturers)
                                                                 {
@@ -157,7 +157,7 @@
                                                         </td>
                                                         <td>
                                                             <label style="width:100%;text-align:left">仓位查询</label>
-                                                            <select name="positionid" class="form-control col-md-8">
+                                                            <select name="positionid" class="form-control col-md-10">
                                                                 <option value="0">请选择</option>
                                                                 @foreach (var posi in positions)
                                                                 {
@@ -167,11 +167,11 @@
                                                         </td>
                                                         <td>
                                                             <label for="example-date" style="width:100%;text-align:left">开始时间：</label>
-                                                            <input class="form-control col-md-8" id="test1" type="text" name="date" >
+                                                            <input class="form-control col-md-10" id="test1" type="text" name="date" >
                                                         </td>
                                                         <td >
                                                             <label for="example-date" style="width:100%;text-align:left">结束时间</label>
-                                                            <input class="form-control col-md-8" id="test2" type="text" name="date1" >
+                                                            <input class="form-control col-md-10" id="test2" type="text" name="date1" >
                                                         </td>
                                                         <td>
                                                             <div class="button-list">
@@ -288,6 +288,18 @@
                         <div class="col-6">
                             <div class="card">
                                 <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="page-title-center row">
+                                                <div class="l-button" style="margin-left:15px;margin-bottom:5px;">
+                                                    <a href="javascript:export_excel('products-datatable13')" class="side-nav-link">
+                                                        <i class=" dripicons-export "></i>
+                                                        <span> 导出Excel </span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="col-12 tm-block-col">
                                         <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block">
                                             <div id="pieChart" style="height:500%"></div>
