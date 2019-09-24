@@ -264,7 +264,16 @@ namespace Models
         {
             using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                return Dbhelper.Select<OutcomeQueryView>(p => p.state == 2);
+                List<OutcomeQueryView> outcomes = new List<OutcomeQueryView>();
+                var OutComes = Dbhelper.SqlQuery<OutcomeQueryView>("select OutcomeQueryView.* from OutcomeQueryView " +
+                    "where OutcomeQueryView.state = 2" +
+                    " order by OutcomeQueryView.OutId desc");
+                foreach (var outcome in OutComes)
+                {
+                    outcomes.Add(outcome);
+                }
+                return outcomes;
+                //return Dbhelper.Select<OutcomeQueryView>(p => p.state == 2);
             }
         }
         public static List<OutcomeQueryView> MulSelectCheckOutCome(string begin,string end, int MaterCodeid, int employeeid,int manufacturerid,int departmentid)
@@ -279,6 +288,9 @@ namespace Models
                 ExpressionBuilder<OutcomeQueryView> deparbuilder = new ExpressionBuilder<OutcomeQueryView>();
                 ExpressionBuilder<OutcomeQueryView> emplobuilder = new ExpressionBuilder<OutcomeQueryView>();
                 ExpressionBuilder<OutcomeQueryView> statebuilder = new ExpressionBuilder<OutcomeQueryView>();
+                if (begin == "" && end == "" && MaterCodeid == 0 && employeeid == 0 && manufacturerid == 0 && departmentid == 0) {
+                    return GetOutComeView();
+                }
 
                 if (begin != "")
                 {
@@ -342,7 +354,17 @@ namespace Models
         {
             using (IDbInterface db = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                return db.Select<OutcomeQueryView>(p => p.state !=2);
+                List<OutcomeQueryView> outcomes = new List<OutcomeQueryView>();
+                var OutComes = db.SqlQuery<OutcomeQueryView>("select OutcomeQueryView.* from OutcomeQueryView " +
+                    "where OutcomeQueryView.state != 2" +
+                    " order by OutcomeQueryView.OutId desc");
+                foreach (var outcome in OutComes)
+                {
+                    outcomes.Add(outcome);
+                }
+                return outcomes;
+                //return db.Select<OutcomeQueryView>(p => p.state !=2);
+
             }
         }
 

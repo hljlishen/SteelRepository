@@ -409,7 +409,7 @@ namespace Models
                 if (manufacturerid != 0)
                     builder.And(p => p.manuId == manufacturerid);
                 var exp = builder.GetExpression();
-                if (exp == null) return Dbhelper.SelectAll<InComeView>();
+                if (exp == null) return GetInComeViewDesc();
                 return Dbhelper.Select(exp);
             }
         }

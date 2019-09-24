@@ -44,7 +44,16 @@ namespace Models
         {
             using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                return Dbhelper.SelectAll<InventoryView>();
+                List<InventoryView> inventorys = new List<InventoryView>();
+                var Inventorys = Dbhelper.SqlQuery<InventoryView>("select InventoryView.* " +
+                    "from InventoryView " +
+                    "order by InventoryView.storageTime desc");
+                foreach (var inventory in Inventorys)
+                {
+                    inventorys.Add(inventory);
+                }
+                return inventorys;
+                //return Dbhelper.SelectAll<InventoryView>();
             }
         }
         public static List<InventoryView> SelectRemaining()
@@ -294,7 +303,7 @@ namespace Models
                 var exp = builder.GetExpression();
                 if (exp == null)
                 {
-                    return Dbhelper.SelectAll<InventoryView>();
+                    return InventoryViewSelectAll();
                 }
                 return Dbhelper.Select(exp);
             }
