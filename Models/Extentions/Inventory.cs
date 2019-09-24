@@ -381,7 +381,7 @@ namespace Models
             }
             return pairs;
         }
-        public static Dictionary<string, object> numberExist(string number,string unit,int invenId) {
+        public static Dictionary<string, object> NumberExist(string number,string unit,int invenId) {
             Dictionary<string, object> pairs = new Dictionary<string, object>();
             var num = double.Parse(number);
             double Num= WeightConverter.Convert(unit, num, "kg");
