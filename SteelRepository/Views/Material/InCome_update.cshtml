@@ -9,6 +9,7 @@
     List<Models.BrandCode> brandCodes = Models.Name.SelectBrandCodeAll();
     List<Models.MaterialCode> materialCodes = Models.Name.SelectMaterialCodeAll();
     List<Models.RecheckReport> recheckReports = Models.Name.SelectRecheckReportAll();
+    string OutQty = (string)ViewData["OutQty"];
 }
 <!DOCTYPE html>
 
@@ -32,7 +33,7 @@
             });
         });
 
-        var isTrue = true;
+        var isTrue = false;
         var isISpecise = true;
         var isISName = true;
         var isISModel = true;
@@ -43,7 +44,6 @@
         var isICycle = true;
         var isIIncomeText = true;
         var isIBC = true;
-
         function check() {
             //类别
             var ISpecise = $("#ISpecise").val().trim();
@@ -124,16 +124,24 @@
             }
             //数量
             var INumber = $("#INumber").val().trim();
+            var Unit = $("#unit").val().trim();
             if (INumber == "") {
                 document.getElementById("IsNumber").style.display = "";
                 isINumber = false;
             } else {
                 document.getElementById("IsNumber").style.display = "none";
-                isINumber = true;
+                //$.get("NumberExist", { "number": INumber, "unit": Unit }, function (data) {
+                //    if (data.userExsit) {
+                //        isINumber = true;
+
+                //    } else {
+                //        alert(data.msg);
+                //        isINumber = false;
+                //    }
+                //}, "json");
             }
             //周期
             var ICycle = $("#ICycle").val().trim();
-            //var i = /^[1-9][0-9]{0,2}(?:,?[0-9]{3})*(?:\.[0-9]{1,2})?$/;
             if (ICycle != "") {
                 document.getElementById("IsCycle").style.display = "none";
                 isICycle = true;
@@ -150,12 +158,13 @@
                 document.getElementById("IncomeText1").style.display = "none";
                 isIIncomeText = true;
             }
+            
             if (isISpecise && isIPH && isIper && isINumber && isICycle && isIIncomeText && isISName && isISModel && isISCode && isIBC) {
                 isTrue = true;
             } else {
                 isTrue = false;
             }
-        }
+        } 
          function nameblur() {
             var name = $("#IName").val();
             var model = $("#ISize").val();
@@ -222,30 +231,59 @@
                 judjeWd = true;
             }
         }
+        @*function NumberExist() {
+            var INumber = $("#INumber").val().trim();
+            var Unit = $("#unit").val().trim();
+            @*$.ajax({
+                url: "@Url.Action("NumberExist")",
+                data: { "number": INumber, "unit": Unit },
+                type: "post",
+                dataType: "json",
+                success: function (data) {*@
+            @*$.get("NumberExist", { "number": INumber, "unit": Unit }, function (data) {
+                if (data.userExsit) {
+                    return true;
 
-        
+                } else {
+                    alert(data.msg);
+                    return false;
+                }
+            },"json");
+        }*@
         function Check2() {
-                    check();
-                    if (isTrue) {
-                        $.ajax({
-                            url: "@Url.Action("InCome_update")",
-                            type: "post",
-                            data: $("form").serialize(),
-                            dataType: "json",
-                            success: function (data) {
-                                data = eval("(" + data + ")");
-                                if (data) {
-                                    alert("修改成功");
+            check();
+            if (isTrue) {
+                    $.ajax({
+                        url: "@Url.Action("InCome_update")",
+                        type: "post",
+                        data: $("form").serialize(),
+                        dataType: "json",
+                        success: function (data) {
+                            data = eval("(" + data + ")");
+                            switch (data) {
+                                case 0: alert("修改失败！");
+                                    break;
+                                case -2: alert("材料信息更改有误，请重新键入！");
+                                    break;
+                                case -3: alert("更改入库数量小于出库量，请重新键入！");
+                                    break;
+                                default: alert("修改成功！");
                                     parent.closeWin2();
                                     parent.openFrame("InCome_list");
-                                } else {
-                                    alert("修改失败");
-                                }
+                                    break;
                             }
-                        });
-                    } else {
-                        return ;
-                    }
+                            //if (data) {
+                            //    alert("修改成功");
+                            //    parent.closeWin2();
+                            //    parent.openFrame("InCome_list");
+                            //} else {
+                            //    alert("修改失败！");
+                            //}
+                        }
+                    });
+            } else {
+                return;
+            }
         }
 
         function update() {
@@ -253,8 +291,6 @@
             if ($("#myform").data("changed") || judjeWd) {
                 Check2();
             } else {
-                //document.getElementById("button").disabled = true;
-                //document.getElementById("button").style.backgroundColor = "#A2A8F8";
                 alert("没有修改");
             }
         }
@@ -360,7 +396,7 @@
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="signin_form">计量单位：</label>
-                                            @Html.DropDownList("unit", ViewBag.select as SelectList, new { @class = "form-control", id = "example-select" })
+                                            @Html.DropDownList("unit", ViewBag.select as SelectList, new { @class = "form-control", id = "unit" })
                                         </div>
                                     </div>
                                     <div class="form-row">

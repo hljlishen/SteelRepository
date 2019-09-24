@@ -290,7 +290,21 @@
                 document.getElementById("recheckTime").style.display = "none";
                 isRecheckTime = true;
             }
-            //复检依据
+
+            if (isIName && isISize && isISpecise && isIBH && isIBC && isIPH && isIper && isINumber && isICycle /*&& isQuality && isRecheck*/ && isInComeTime && isRecheckTime) {
+                isTrue = true;
+            } else {
+                isTrue = false;
+            }
+            return isTrue;
+        }
+        $(function () {
+            $("#testList2").click(function () {
+                $("#fujian").show();
+            });
+        });
+
+        function check2() {
             var IRecheckBasis = $("#IRecheckBasis").val().trim();
             if (IRecheckBasis == "") {
                 document.getElementById("IsRecheckBasis").style.display = "";
@@ -323,13 +337,29 @@
                 document.getElementById("IsRecheckOrderNo").style.display = "none";
 
             }
-
-            if (isIName && isISize && isISpecise && isIBH && isIBC && isIPH && isIper && isINumber && isICycle /*&& isQuality && isRecheck*/ && isInComeTime && isRecheckTime) {
-                isTrue = true;
+            if (isRecheckBasis && isRecheckOrderNo) {
+                ischeck2 = true;
             } else {
-                isTrue = false;
+                ischeck2 = false;
             }
-            return isTrue;
+            return ischeck2;
+
+        }
+        //判断复检报告是否有内容
+        var ischeck2;
+        var ischeck;
+        function Ch() {
+            var recheck = $("#recheckId :input").length;
+            if (recheck == 0) {
+                ischeck = true;
+            } else {
+                check2();
+                if (isTrue && ischeck2) {
+                    ischeck = true;
+                } else {
+                    ischeck = false;
+                }
+            }
         }
 
         function clearNoNum(obj) {
@@ -383,11 +413,13 @@
             }
         }
 
-        function add() {
 
+        function add() {
             check();
             if (isTrue) {
-                $.ajax({
+                Ch();
+                if (ischeck) {
+                    $.ajax({
                     url: "@Url.Action("InCome_add")",
                     type: "post",
                     data: $("form").serialize(),
@@ -401,13 +433,15 @@
                         } else {
                             return;
                         }
+                        }
+                    });
                     }
-                });
             } else {
                 isJudge = false;
                 return;
             }
         }
+       
     </script>
 
     <style type="text/css">
@@ -415,8 +449,7 @@
             vertical-align: top;
             cursor: pointer;
         }
-
-         #wrap2 img {
+        #wrap2 img {
             vertical-align: top;
             cursor: pointer;
         }
@@ -559,32 +592,32 @@
                                             @Html.DropDownListFor(m => m.operatorId, ViewBag.selectOperator as SelectList, new { @class = "form-control", id = "example-select" })
                                         </div>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            <label for="signin_form">复检依据：</label>
-                                            <label id="IsRecheckBasis" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
-                                            <input class="form-control" name="RecheckBasis" type="text" id="IRecheckBasis" />
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="signin_form">复检单号：</label>
-                                            <label id="IsRecheckOrderNo" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
-                                            <label id="IsRecheckOrderNo2" style="color:#ff0000;display:none;font-size:13px">*复检单号已存在</label>
-                                            <input class="form-control" name="RecheckOrderNo" type="text" id="IRecheckOrderNo" list="recheckOrderNolist" />
-                                            <datalist id="recheckOrderNolist">
-                                                @foreach (var recheckReport in recheckReports)
-                                                {
-                                                    <option>@recheckReport.recheckOrderNo</option>
-                                                }
-                                            </datalist>
-                                        </div>
-                                    </div>
+                                    @*<div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="signin_form">复检依据：</label>
+                                                <label id="IsRecheckBasis" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
+                                                <input class="form-control" name="RecheckBasis" type="text" id="IRecheckBasis" />
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="signin_form">复检单号：</label>
+                                                <label id="IsRecheckOrderNo" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
+                                                <label id="IsRecheckOrderNo2" style="color:#ff0000;display:none;font-size:13px">*复检单号已存在</label>
+                                                <input class="form-control" name="RecheckOrderNo" type="text" id="IRecheckOrderNo" list="recheckOrderNolist" />
+                                                <datalist id="recheckOrderNolist">
+                                                    @foreach (var recheckReport in recheckReports)
+                                                    {
+                                                        <option>@recheckReport.recheckOrderNo</option>
+                                                    }
+                                                </datalist>
+                                            </div>
+                                        </div>*@
 
                                     <div class="form-group col-md-12">
                                         <label for="signin_form">产品质量证明：</label>
                                         <label for="signin_form">(点击图片查看)</label>
                                         <div class="layui-upload">
                                             <button type="button" class="layui-btn layui-btn-normal" id="testList" name="testList">选择</button>
-                                            <label id="testlist" style="color:#ff0000;display:none;font-size:13px">*需添加产品质量证明</label>
+                                            @*<label id="testlist" style="color:#ff0000;display:none;font-size:13px">*需添加产品质量证明</label>*@
                                             <div class="layui-upload-list" id="wrap">
                                                 <table class="layui-table">
                                                     <thead>
@@ -609,7 +642,6 @@
                                         <label for="signin_form">(点击图片查看)</label>
                                         <div class="layui-upload">
                                             <button type="button" class="layui-btn layui-btn-normal" id="testList2">选择</button>
-                                            <label id="testlist1" style="color:#ff0000;display:none;font-size:13px">*需添加复检结果报告</label>
                                             <div class="layui-upload-list" id="wrap2">
                                                 <table class="layui-table">
                                                     <thead>
@@ -627,6 +659,25 @@
                                             </div>
                                         </div>
                                         <input class="form-control" id="recheckCount" name="recheckCount" type="text" hidden>
+                                    </div>
+                                    <div class="form-row" id="fujian" style="display:none">
+                                        <div class="form-group col-md-6">
+                                            <label for="signin_form">复检依据：</label>
+                                            <label id="IsRecheckBasis" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
+                                            <input class="form-control" name="RecheckBasis" type="text" id="IRecheckBasis" />
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="signin_form">复检单号：</label>
+                                            <label id="IsRecheckOrderNo" style="color:#ff0000;display:none;font-size:13px">*不能为空</label>
+                                            <label id="IsRecheckOrderNo2" style="color:#ff0000;display:none;font-size:13px">*复检单号已存在</label>
+                                            <input class="form-control" name="RecheckOrderNo" type="text" id="IRecheckOrderNo" list="recheckOrderNolist" />
+                                            <datalist id="recheckOrderNolist">
+                                                @foreach (var recheckReport in recheckReports)
+                                                {
+                                                    <option>@recheckReport.recheckOrderNo</option>
+                                                }
+                                            </datalist>
+                                        </div>
                                     </div>
                                 }
                             </div>
@@ -646,7 +697,7 @@
             imgWrap: 'wrap' // 指定该容器里的图片点击预览
         })
 
-     var preview = new Preview({
+        var preview = new Preview({
             imgWrap: 'wrap2' // 指定该容器里的图片点击预览
         })
     </script>

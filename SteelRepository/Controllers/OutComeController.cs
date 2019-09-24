@@ -57,8 +57,6 @@ namespace SteelRepository.Controllers
             ViewData["manufacturer"] = Manufacturer.SelectAll();
             ViewData["department"] = Department.SelectAll();
             ViewData["Income"] = InCome.GetInComes();
-            a = 1;
-            ViewData["a"] = a;
             string begin = collection["date"];
             string end = collection["date1"];
             int materialCodeid = Convert.ToInt32(collection["materialCodeid"]);
@@ -73,8 +71,7 @@ namespace SteelRepository.Controllers
         [HttpPost]
         public JsonResult OutCome_revocation(string id)
         {
-            var incomeId = Convert.ToInt32(id);
-            return Json(OutCome.OutComeRevocation(incomeId));
+            return Json(OutCome.OutComeRevocation(batch));
         }
 
         public ActionResult OutCome_revocationlist()
@@ -87,8 +84,6 @@ namespace SteelRepository.Controllers
             ViewData["Income"] = InCome.GetInComes();
             ViewData["outcome"] = null;
             ViewData["outcome"] = OutCome.GetRevocationOutComes();
-            a = 2;
-            ViewData["a"] = a;
             return View("OutCome_list");
         }
     }

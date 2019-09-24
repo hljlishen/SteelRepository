@@ -12,7 +12,6 @@ namespace Models
 {
     public partial class Inventory
     {
-        private static string str;
         public static Inventory Insert(int incomeId, double amount, string unit, int positionId, IDbInterface dbInterface)
         {
             var inven = new Inventory() { amount = amount, incomeId = incomeId, unit = unit, positionId = positionId , consumptionAmount = 0};
@@ -326,33 +325,63 @@ namespace Models
         public static int Update(int incomeId, double amount, string unit, int positionId, IDbInterface helper)
         {
             Inventory inventory = helper.FindFirst<Inventory, int>("incomeId", incomeId);
-            bool isExit = true;
+            //bool isExit = true;
+            double Sum = 0;
             foreach (var outcome in helper.SelectAll<OutCome>())
             {
                 if (outcome.inventoryId == inventory.id && outcome.state == 1)
                 {
-                    isExit = false;
-                    continue;
+                    //isExit = false;
+                    //continue;
+                    Sum += WeightConverter.Convert(outcome.unit, outcome.number, unit);
                 }
             }
-            if (isExit)
+            inventory.amount = amount - Sum;
+            if (inventory.amount >= 0)
             {
-                inventory.amount = amount;
                 inventory.unit = unit;
                 inventory.positionId = positionId;
                 return helper.Update(inventory);
             }
-            try
-            {
-                inventory.positionId = positionId;
-                return helper.Update(inventory);
+            else {
+                throw new Exception("更改入库数量小于出库量，请重新键入！(出库量为："+Sum+unit+")");
             }
-            catch
-            {
-                throw new Exception("已出库，无法更改数量和单位");
-            }
+          
+            //if (isExit)
+            //{
+            //    inventory.amount = amount;
+            //    inventory.unit = unit;
+            //    inventory.positionId = positionId;
+            //    return helper.Update(inventory);
+            //}
+            //try
+            //{
+            //    inventory.positionId = positionId;
+            //    return helper.Update(inventory);
+            //}
+            //catch
+            //{
+            //    throw new Exception("已出库，无法更改数量和单位");
+            //}
         }
         public static Dictionary<string, object> numberExist(string number,string unit,int invenId) {
+            Dictionary<string, object> pairs = new Dictionary<string, object>();
+            var num = double.Parse(number);
+            double Num= WeightConverter.Convert(unit, num, "kg");
+            double Num2 = WeightConverter.Convert(GetInventory(invenId).unit, GetInventory(invenId).amount, "kg");
+            if (Num > Num2)
+            {
+                pairs.Add("userExsit", false);
+                pairs.Add("msg", "出库量大于库存量，请重新键入！");
+            }
+            else
+            {
+                pairs.Add("userExsit", true);
+                pairs.Add("msg", "");
+            }
+            return pairs;
+        }
+        public static Dictionary<string, object> NumberExist(string number,string unit,int invenId) {
             Dictionary<string, object> pairs = new Dictionary<string, object>();
             var num = double.Parse(number);
             double Num= WeightConverter.Convert(unit, num, "kg");
