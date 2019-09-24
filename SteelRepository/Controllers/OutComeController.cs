@@ -69,7 +69,7 @@ namespace SteelRepository.Controllers
         }
 
         [HttpPost]
-        public JsonResult OutCome_revocation(string id)
+        public JsonResult OutCome_revocation(string batch)
         {
             return Json(OutCome.OutComeRevocation(batch));
         }
