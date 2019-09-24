@@ -7,7 +7,7 @@
 <html>
 <head>
     @{
-        var em = (Models.Employee)ViewData["Employee"];
+        var em = (Models.EmployeeDepartView)ViewData["Employee"];
         Dictionary<string, double> keyValuePairs = (Dictionary<string, double>)ViewData["Dictionary"];
     }
     <meta name="viewport" content="width=device-width" />
@@ -78,7 +78,7 @@
                         if (data) {
                             alert("修改成功");
                             parent.closeWin();
-                            parent.openFrame("Employee_information?id=" +@em.id);
+                            parent.openFrame("Employee_information?id=" +@em.emploId);
                         } else {
                         }
                     }
@@ -145,7 +145,7 @@
                                 <div class="form-group row mb-3">
                                     <label class="col-3 col-form-label">所属部门：</label>
                                     <div class="col-9">
-                                        <input type="text" class="form-control" readonly value="@Models.Department.GetDepartment(em.departmentId.Value).departmentName" name="departmentId">
+                                        <input type="text" class="form-control" readonly value="@em.dep1-@em.dep2-@em.dep3" name="departmentId">
                                     </div>
                                 </div>
                                 <div class="form-group row mb-3">

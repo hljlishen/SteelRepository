@@ -14,10 +14,15 @@ namespace Models
     
     public partial class EmployeeDepartView
     {
-        public string departmentName { get; set; }
+        public string dep3 { get; set; }
         public int emploId { get; set; }
         public string name { get; set; }
         public string number { get; set; }
         public Nullable<int> departmentId { get; set; }
+        public string dep2 { get; set; }
+        public string password { get; set; }
+        public int permissions { get; set; }
+        public Nullable<int> state { get; set; }
+        public string dep1 { get; set; }
     }
 }

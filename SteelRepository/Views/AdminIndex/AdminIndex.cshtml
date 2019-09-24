@@ -143,7 +143,7 @@
         <div class="container-fluid">
             <a href="../Inventory/Inventory_list" class="topnav-logo">
                 <span class="topnav-logo-lg">
-                    @*<img src="~/images/6b0263055f6110e8622111f6d4c7982.png" style="width:45px;height:45px;"/>*@
+                    <img src="~/images/6b0263055f6110e8622111f6d4c7982.png" style="width:45px;height:45px;"/>
                     <span style="color:#C2C9D0;font-size:160%">钢材库房管理</span>
                 </span>
             </a>
@@ -154,15 +154,6 @@
                         <span class="noti-icon-badge"></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated dropdown-lg" aria-labelledby="topbar-notifydrop">
-                        @*<div class="dropdown-item noti-title">
-                                <h5 class="m-0">
-                                    <span class="float-right">
-                                        <a href="javascript:void(0);" class="text-dark">
-                                            <small></small>
-                                        </a>
-                                    </span>
-                                </h5>
-                            </div>*@
                         <div class="slimscroll" style="max-height: 230px;">
                             <a href="javascript:AdminInventory()" class="dropdown-item notify-item" id="Onclick1">
                                 <div class="notify-icon bg-primary">
@@ -271,15 +262,15 @@
                             <span class="menu-arrow"><span class="dripicons-chevron-right"></span></span>
                         </a>
                         <ul class="side-nav-second-level" aria-expanded="false">
+                            <li>
+                                <a href="../Employee/Employee_information?id=@id">个人信息</a>
+                            </li>
                             @if (permissions != "3")
                             {
                                 <li>
                                     <a href="../Employee/Employee_list">员工信息管理</a>
                                 </li>
                             }
-                            <li>
-                                <a href="../Employee/Employee_information?id=@id">个人信息</a>
-                            </li>
                         </ul>
                     </li>
                     @if (permissions != "3")
@@ -320,10 +311,10 @@
                             </a>
                             <ul class="side-nav-second-level" aria-expanded="false">
                                 <li>
-                                    <a href="../Material/InCome_list">材料入库信息管理</a>
+                                    <a href="../OutCome/OutCome_list">材料出库信息管理</a>
                                 </li>
                                 <li>
-                                    <a href="../OutCome/OutCome_list">材料出库信息管理</a>
+                                    <a href="../Material/InCome_list">材料入库信息管理</a>
                                 </li>
                             </ul>
                         </li>

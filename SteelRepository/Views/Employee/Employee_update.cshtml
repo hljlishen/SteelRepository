@@ -1,11 +1,7 @@
 ﻿@{
     Layout = null;
 }
-@{
-    List<Models.Department> departments = (List<Models.Department>)ViewData["department"];
-}
 <!DOCTYPE html>
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -87,8 +83,8 @@
 </head>
 <body>
     @{
-        Models.Employee employee = (Models.Employee)ViewData["Employee"];
-        string depname = (string)ViewData["depname"];
+        Models.EmployeeDepartView employee = (Models.EmployeeDepartView)ViewData["Employee"];
+        List<Models.Department> departments = (List<Models.Department>)ViewData["dep"];
     }
     <section class="signin popup-in">
         <div class="container">
@@ -109,8 +105,8 @@
                                         <label for="signin_form">所属部门：</label>
                                         <label for="signin_form" class="label">（请选择3级部门）</label>
                                         <div class="input-group">
-                                            @Html.TextBox("departmentId", employee.departmentId, new { @class = "form-control", type = "text", placeholder = "请选择部门", id = "departmentId", style = "display:none" })
-                                            <input class="form-control" placeholder="请选择部门" type="text" id="departmentName" readonly value="@depname">
+                                            @Html.TextBox("departmentId", employee.departmentId, new { @class = "form-control", type = "text", id = "departmentId", style = "display:none" })
+                                            <input class="form-control" placeholder="请选择部门" type="text" id="departmentName" readonly value="@employee.dep1-@employee.dep2-@employee.dep3">
                                             <div class="input-group-append">
                                                 <button class="btn btn-dark" id="btn" type="button" onclick="ChooseDepartment()">选择</button>
                                             </div>
@@ -130,7 +126,7 @@
                                                             {
                                                                 <li class="side-nav-item col-md-12">
                                                                     <a href="javascript: void(0);" class="side-nav-link" style="text-align:left">
-                                                                        <i class="mdi mdi-alpha-m-box"></i>
+                                                                        <i class="dripicons-scale"></i>
                                                                         <span>@department.departmentName</span>
                                                                         <span class="menu-arrow"></span>
                                                                     </a>
@@ -141,7 +137,7 @@
                                                                             {
                                                                                 <li class="side-nav-item form-row">
                                                                                     <a href="javascript: void(0);" class="col-md-2" style="text-align:left">
-                                                                                        <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="mdi mdi-alpha-d-box"></i>@depart.departmentName</span>
+                                                                                        <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="dripicons-scale"></i>@depart.departmentName</span>
                                                                                         <span class="menu-arrow"></span>
                                                                                     </a>
                                                                                     <ul class="side-nav-second-level" aria-expanded="false">
@@ -151,7 +147,7 @@
                                                                                             {
                                                                                                 <li class="form-row">
                                                                                                     <a href="javascript:DepartmentSelect(@dep.id,'@department.departmentName','@depart.departmentName','@dep.departmentName')">
-                                                                                                        <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="mdi mdi-alpha-g-box"></i>@dep.departmentName</span>
+                                                                                                        <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="dripicons-scale"></i>@dep.departmentName</span>
                                                                                                     </a>
                                                                                                 </li>
                                                                                             }

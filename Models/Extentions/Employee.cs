@@ -20,6 +20,23 @@ namespace Models
                 return helper.Select<Employee>(p => p.state != 4);
             }
         }
+
+        public static EmployeeDepartView FindIdEmployeeDepartViews(int id)
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return helper.Select<EmployeeDepartView>(p => p.state != 4 && p.emploId == id)[0];
+            }
+        }
+
+        public static List<EmployeeDepartView> SelectAllEmployeeDepartViews()
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                return helper.Select<EmployeeDepartView>(p => p.state != 4);
+            }
+        }
+
         public static List<EmployeeDepartView> SelectAllDesc()
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))

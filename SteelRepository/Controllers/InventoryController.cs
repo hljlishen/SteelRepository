@@ -70,8 +70,6 @@ namespace SteelRepository.Controllers
         [HttpPost]
         public JsonResult OutCome_add(Inventory inventory, FormCollection collection)
         {
-            Employee employee = new Employee();
-            Project project = new Project();
             bool b = DateTime.TryParse(collection["date"], out DateTime begin);
             var number = double.Parse(collection["number"]);
             var Employeeid = int.Parse(collection["employeeId"]);
@@ -79,10 +77,17 @@ namespace SteelRepository.Controllers
             var ins = collection["instructions"].Trim();
             var unit = inventory.unit;
             if (b) {
-                //try {
                 var newOutcome = OutCome.NewOutCome(begin, invenId, number, unit, Employeeid, Projectid, ins);
-                //}
-
+                List<InventoryView> inventories = Inventory.SelectRemaining();
+                List<InComeView> inComes = InCome.SelectRemind();
+                if (inventories != null)
+                    Session["RemindCount"] = inventories.Count();
+                else
+                    Session["RemindCount"] = 0;
+                if (inComes != null)
+                    Session["inComes"] = inComes.Count();
+                else
+                    Session["inComes"] = 0;
                 return Json(1);
             }else 
             return Json(0);

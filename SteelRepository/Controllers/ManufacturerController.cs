@@ -40,12 +40,6 @@ namespace SteelRepository.Controllers
             return Json(Manufacturer.Update(manufacturer));
         }
 
-        //public ActionResult Manufacturer_select(int id)
-        //{
-        //    ViewData["Manufacturer"] = Manufacturer.GetManufacturer(id);
-        //    return View();
-        //}
-
         public JsonResult Manufacturer_delete(int id)
         {
             return Json(Manufacturer.Delete(id));

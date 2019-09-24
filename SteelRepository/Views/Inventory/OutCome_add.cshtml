@@ -109,7 +109,7 @@
                                                         <option value="">直接选择或搜索选择</option>
                                                         @foreach (var emp in employee)
                                                         {
-                                                            <option value=@emp.emploId>姓名：@emp.name-工号：@emp.number-部门：@emp.departmentName</option>
+                                                            <option value=@emp.emploId>姓名：@emp.name-工号：@emp.number-部门：@emp.dep1-@emp.dep2-@emp.dep3</option>
                                                         }
                                                     </select>
                                                 </div>
@@ -246,7 +246,7 @@
         function ProjectAdd() {
             var url = "OutComeProject_add";
             var width = "100%";
-            var height = "700px";
+            var height = "500px";
             parent.closeWin2();
             parent.OpenWin(url, width, height);
         }
@@ -257,26 +257,6 @@
             parent.closeWin2();
             parent.OpenWin(url, width, height);
         }
-        //$(function () {
-        //    var num = $("#num").val().trim();
-        //    alert("blur");
-        //    $("#num").blur(function () {
-        //        if (num != "") {
-        //            $.post("/Inventory/NumberExist", { "number": num }, function (data) {
-        //                if (data.userExsit) {
-        //                    isNum = true;
-        //                    document.getElementById("num2").style.display = "none";
-        //                } else {
-        //                    isNum = false;
-        //                    document.getElementById("s_usernamedepar").style.color = "red";
-        //                    document.getElementById("s_usernamedepar").innerHTML = data.msg;
-        //                    document.getElementById("num2").style.display = "";
-        //                }
-        //            }, "json");
-        //        }
-        //    });
-        //});
-
     </script>
 </body>
 </html>

@@ -12,7 +12,7 @@ namespace SteelRepository.Controllers
         {
             ViewData["permissions"] = Session["permissions"];
             Employee.NoJudge();
-            return View(Employee.SelectAll());
+            return View(Employee.SelectAllEmployeeDepartViews());
         }
 
         public ActionResult Employee_add()
@@ -75,14 +75,11 @@ namespace SteelRepository.Controllers
 
         public ActionResult Employee_update(int id)
         {
-            ViewData["Employee"] = Employee.FindId(id);
-            ViewData["department"] = Department.SelectAll();
-            Department department = Department.GetDepartment((int)Employee.FindId(id).departmentId);
-            if (department!= null)
-            {
-                ViewData["depname"] = department.departmentName;
-            }
-            em = Employee.FindId(id);
+            Employee employee = Employee.FindId(id);
+            ViewData["dep"] = Department.SelectAll();
+            EmployeeDepartView employeeDepartView = Employee.FindIdEmployeeDepartViews(id);
+            ViewData["Employee"] = employeeDepartView;
+            em = employee;
             return View();
         }
 
@@ -115,9 +112,10 @@ namespace SteelRepository.Controllers
 
         public ActionResult Employee_information(int id)
         {
-            Employee.NoJudge();
+
             Employee employee = Employee.FindId(id);
-            ViewData["Employee"] = employee;
+            EmployeeDepartView employeeDepartView = Employee.FindIdEmployeeDepartViews(id);
+            ViewData["Employee"] = employeeDepartView;
             ViewData["Dictionary"] = Employee.StatisticPrice(id);
             em = employee;
             return View();
