@@ -26,14 +26,28 @@ namespace SteelRepository.Controllers
             ViewData["manufacturer"] = Manufacturer.SelectAll();
             ViewData["department"] = Department.SelectAll();
             ViewData["Income"] = InCome.GetInComes();
+            a = 1;
+            ViewData["a"] = a;
+            List<InventoryView> inventories = Inventory.SelectRemaining();
+            List<InComeView> inComes = InCome.SelectRemind();
+            if (inventories != null)
+                Session["RemindCount"] = inventories.Count();
+            else
+                Session["RemindCount"] = 0;
+            if (inComes != null)
+                Session["inComes"] = inComes.Count();
+            else
+                Session["inComes"] = 0;
             return View();
         }
+
         public ActionResult OutCome_More(int id)
         {
             ViewData["outcome"] = null;
             ViewData["outcome"] = OutCome.GetOutCome(id);
             return View();
         }
+
         [HttpPost]
         public ActionResult OutCome_list(FormCollection collection)
         {
@@ -53,11 +67,13 @@ namespace SteelRepository.Controllers
             ViewData["outcome"] = OutCome.MulSelectCheckOutCome(begin, end, materialCodeid, employeeid, manufacturerid, departmentid);
             return View();
         }
+
         [HttpPost]
-        public JsonResult OutCome_revocation(FormCollection collection,string batch)
+        public JsonResult OutCome_revocation(string batch)
         {
             return Json(OutCome.OutComeRevocation(batch));
         }
+
         public ActionResult OutCome_revocationlist()
         {
             ViewData["permissions"] = Session["permissions"];

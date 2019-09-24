@@ -70,16 +70,25 @@ namespace SteelRepository.Controllers
         [HttpPost]
         public JsonResult OutCome_add(Inventory inventory, FormCollection collection)
         {
-            Employee employee = new Employee();
-            Project project = new Project();
+
             DateTime begin = DateTime.Parse(collection["date"]);
             var number = double.Parse(collection["number"]);
             var Employeeid = int.Parse(collection["employeeId"]);
             var Projectid = int.Parse(collection["project"]);
             var ins = collection["instructions"].Trim();
             var unit = inventory.unit;
+            List<InventoryView> inventories = Inventory.SelectRemaining();
+            List<InComeView> inComes = InCome.SelectRemind();
+            if (inventories != null)
+                Session["RemindCount"] = inventories.Count();
+            else
+                Session["RemindCount"] = 0;
+            if (inComes != null)
+                Session["inComes"] = inComes.Count();
+            else
+                Session["inComes"] = 0;
+
             return Json(OutCome.NewOutCome(begin, invenId, number, unit, Employeeid, Projectid, ins));
-           
         }
         public ActionResult OutComeEmployee_new()
         {

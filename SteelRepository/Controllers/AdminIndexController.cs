@@ -21,12 +21,12 @@ namespace SteelRepository.Controllers
 
         public ActionResult AllowanceRemind()
         {
-            return View(IndexController.Remind());
+            return View(Inventory.SelectRemaining());
         }
 
         public ActionResult RecheckRemind()
         {
-            return View(IndexController.Recheck());
+            return View(InCome.SelectRemind());
         }
     }
 }

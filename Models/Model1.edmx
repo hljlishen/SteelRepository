@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="SteelRepositoryDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="SteelRepositoryDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="BrandCode">
           <Key>
             <PropertyRef Name="id" />
@@ -185,15 +185,23 @@
 警告 6002: 表/视图“SteelRepositoryDB.dbo.EmployeeDepartView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="EmployeeDepartView">
           <Key>
-            <PropertyRef Name="departmentName" />
+            <PropertyRef Name="dep3" />
             <PropertyRef Name="emploId" />
             <PropertyRef Name="name" />
+            <PropertyRef Name="dep2" />
+            <PropertyRef Name="permissions" />
+            <PropertyRef Name="dep1" />
           </Key>
-          <Property Name="departmentName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="dep3" Type="nvarchar(max)" Nullable="false" />
           <Property Name="emploId" Type="int" Nullable="false" />
           <Property Name="name" Type="nvarchar(max)" Nullable="false" />
           <Property Name="number" Type="nvarchar(max)" />
           <Property Name="departmentId" Type="int" />
+          <Property Name="dep2" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="password" Type="nvarchar(max)" />
+          <Property Name="permissions" Type="int" Nullable="false" />
+          <Property Name="state" Type="int" />
+          <Property Name="dep1" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“SteelRepositoryDB.dbo.InComeView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -367,11 +375,16 @@
           </EntitySet>
           <EntitySet Name="EmployeeDepartView" EntityType="Self.EmployeeDepartView" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [EmployeeDepartView].[departmentName] AS [departmentName], 
+    [EmployeeDepartView].[dep3] AS [dep3], 
     [EmployeeDepartView].[emploId] AS [emploId], 
     [EmployeeDepartView].[name] AS [name], 
     [EmployeeDepartView].[number] AS [number], 
-    [EmployeeDepartView].[departmentId] AS [departmentId]
+    [EmployeeDepartView].[departmentId] AS [departmentId], 
+    [EmployeeDepartView].[dep2] AS [dep2], 
+    [EmployeeDepartView].[password] AS [password], 
+    [EmployeeDepartView].[permissions] AS [permissions], 
+    [EmployeeDepartView].[state] AS [state], 
+    [EmployeeDepartView].[dep1] AS [dep1]
     FROM [dbo].[EmployeeDepartView] AS [EmployeeDepartView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="InComeView" EntityType="Self.InComeView" store:Type="Views" store:Schema="dbo">
@@ -639,15 +652,23 @@
         </EntityType>
         <EntityType Name="EmployeeDepartView">
           <Key>
-            <PropertyRef Name="departmentName" />
+            <PropertyRef Name="dep3" />
             <PropertyRef Name="emploId" />
             <PropertyRef Name="name" />
+            <PropertyRef Name="dep2" />
+            <PropertyRef Name="permissions" />
+            <PropertyRef Name="dep1" />
           </Key>
-          <Property Name="departmentName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="dep3" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="emploId" Type="Int32" Nullable="false" />
           <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="number" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="departmentId" Type="Int32" />
+          <Property Name="dep2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="permissions" Type="Int32" Nullable="false" />
+          <Property Name="state" Type="Int32" />
+          <Property Name="dep1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <EntityType Name="InComeView">
           <Key>
@@ -786,7 +807,7 @@
           <Property Name="recheckOrderNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="id" Type="Int32" Nullable="false" />
         </EntityType>
-        <EntityContainer Name="SteelRepositoryDBEntities25" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="SteelRepositoryDBEntities26" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="BrandCode" EntityType="Self.BrandCode" />
           <EntitySet Name="Category" EntityType="Self.Category" />
           <EntitySet Name="Department" EntityType="Self.Department" />
@@ -816,7 +837,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="SteelRepositoryDBModelStoreContainer" CdmEntityContainer="SteelRepositoryDBEntities25">
+        <EntityContainerMapping StorageEntityContainer="SteelRepositoryDBModelStoreContainer" CdmEntityContainer="SteelRepositoryDBEntities26">
           <EntitySetMapping Name="BrandCode">
             <EntityTypeMapping TypeName="SteelRepositoryDBModel.BrandCode">
               <MappingFragment StoreEntitySet="BrandCode">
@@ -1011,11 +1032,16 @@
           <EntitySetMapping Name="EmployeeDepartView">
             <EntityTypeMapping TypeName="SteelRepositoryDBModel.EmployeeDepartView">
               <MappingFragment StoreEntitySet="EmployeeDepartView">
-                <ScalarProperty Name="departmentName" ColumnName="departmentName" />
+                <ScalarProperty Name="dep3" ColumnName="dep3" />
                 <ScalarProperty Name="emploId" ColumnName="emploId" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="number" ColumnName="number" />
                 <ScalarProperty Name="departmentId" ColumnName="departmentId" />
+                <ScalarProperty Name="dep2" ColumnName="dep2" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="permissions" ColumnName="permissions" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="dep1" ColumnName="dep1" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

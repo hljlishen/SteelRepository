@@ -185,7 +185,7 @@
                         </div>
 
                         <div class="table-responsive">
-                            <table class="table table-centered table-striped dt-responsive nowrap w-100" id="products-datatable13">
+                            <table class="table table-centered table-striped dt-responsive nowrap w-100" id="products-datatable14">
                                 <thead>
                                     <tr>
                                         <th style="width: 10px;">
@@ -195,13 +195,13 @@
                                             </div>
                                         </th>
                                         <th>编号</th>
-                                        <th>名称</th>
-                                        <th>规格</th>
-                                        <th>类别</th>
-                                        <th>编号</th>
-                                        <th>牌号</th>
-                                        <th>批号</th>
-                                        <th>厂商</th>
+                                        <th>材料名称</th>
+                                        <th>材料规格</th>
+                                        <th>材料类别</th>
+                                        <th>材料编号</th>
+                                        <th>材料牌号</th>
+                                        <th>材料批号</th>
+                                        <th>生产厂商</th>
                                         <th>入库时间</th>
                                         @if (permissions == 1)
                                         {
@@ -214,6 +214,7 @@
                                             <th style="width: 1px;"></th>
                                         }
                                         <th>操作人</th>
+                                        <th>总价(元)</th>
                                         @if (permissions == 1)
                                         {
                                             <th style="width: 75px;">操作</th>
@@ -261,6 +262,22 @@
                                             <td></td>
                                         }
                                         <td>@income.name</td>
+                                        @if (income.unit == "g" && income.priceMeasure.Trim() == "g")
+                                        {
+                                            <td>@(income.amount/income.unitPrice)</td>
+                                        }
+                                        @if (income.unit == "kg" && income.priceMeasure.Trim() == "g")
+                                        {
+                                            <td>@((income.amount*1000)/income.unitPrice)</td>
+                                        }
+                                        @if (income.unit == "g" && income.priceMeasure.Trim() == "kg")
+                                        {
+                                            <td>@((income.amount/1000)/income.unitPrice)</td>
+                                        }
+                                        @if (income.unit == "kg" && income.priceMeasure.Trim() == "kg")
+                                        {
+                                            <td>@(income.amount/income.unitPrice)</td>
+                                        }
                                         @if (permissions == 1)
                                         {
                                             <td>

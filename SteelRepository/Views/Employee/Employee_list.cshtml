@@ -1,4 +1,4 @@
-﻿@model List<Models.Employee>
+﻿@model List<Models.EmployeeDepartView>
 @{
     Layout = "~/Views/AdminIndex/AdminIndex.cshtml";
 }
@@ -159,9 +159,8 @@
                                 </thead>
                                 <tbody>
                                     @{int count = 1; }
-                                    @foreach (var employee in Model)
+                                    @foreach (var em in Model)
                                     {
-                                        Models.Department dep = Models.Department.GetDepartment(employee.departmentId.Value);
                                         <tr>
                                             <td>
                                                 <div class="custom-control custom-checkbox">
@@ -170,22 +169,22 @@
                                                 </div>
                                             </td>
                                             <td class="table-user">@count</td>
-                                            <td>@employee.name</td>
-                                            <td>@employee.number</td>
-                                            @if (dep != null)
+                                            <td>@em.name</td>
+                                            <td>@em.number</td>
+                                            @if (em.dep1 != null)
                                             {
-                                                <td>@dep.departmentName</td>
+                                                <td>@em.dep1-@em.dep2-@em.dep3</td>
                                             }
                                             else
                                             {
                                                 <td>未选择部门</td>
                                             }
 
-                                            @if (employee.permissions.ToString() == "1")
+                                            @if (em.permissions.ToString() == "1")
                                             {
                                                 <td>一级管理员</td>
                                             }
-                                            else if (employee.permissions.ToString() == "2")
+                                            else if (em.permissions.ToString() == "2")
                                             {
                                                 <td>二级管理员</td>
                                             }
@@ -193,11 +192,11 @@
                                             {
                                                 <td>三级管理员</td>
                                             }
-                                            @if (employee.state.ToString() == "1")
+                                            @if (em.state.ToString() == "1")
                                             {
                                                 <td>在职</td>
                                             }
-                                            else if (employee.state.ToString() == "2")
+                                            else if (em.state.ToString() == "2")
                                             {
                                                 <td>离职</td>
                                             }
@@ -207,16 +206,16 @@
                                             }
                                             @if (permissions == 1)
                                             {
-                                                if (employee.state.ToString() == "1" || employee.state.ToString() == "2")
+                                                if (em.state.ToString() == "1" || em.state.ToString() == "2")
                                                 {
                                                     <td>
-                                                        @if (employee.permissions.ToString() != "1")
+                                                        @if (em.permissions.ToString() != "1")
                                                         {
-                                                            <a href="javascript:EmployeeDelete(@employee.id)" class="action-icon"> <i class="dripicons-trash"></i></a>
+                                                            <a href="javascript:EmployeeDelete(@em.emploId)" class="action-icon"> <i class="dripicons-trash"></i></a>
                                                         }
-                                                        @if (employee.number != "admin")
+                                                        @if (em.number != "admin")
                                                         {
-                                                            <a href="javascript:EmployeeUpdate(@employee.id)" class="action-icon"> <i class="dripicons-pencil"></i></a>
+                                                            <a href="javascript:EmployeeUpdate(@em.emploId)" class="action-icon"> <i class="dripicons-pencil"></i></a>
                                                         }
                                                         @*<a hsref="javascript:EmployeeSelect(@employee.id)" class="action-icon"> <i class="mdi mdi-calendar-text-outline"></i></a>*@
                                                     </td>
@@ -224,7 +223,7 @@
                                                 else
                                                 {
                                                     <td>
-                                                        <a href="javascript:EmployeeThrough(@employee.id)" class="btn  btn-primary"><i class="mdi mdi-plus-circle mr-2"></i>通过</a>
+                                                        <a href="javascript:EmployeeThrough(@em.emploId)" class="btn  btn-primary"><i class="mdi mdi-plus-circle mr-2"></i>通过</a>
                                                     </td>
                                                 }
                                             }

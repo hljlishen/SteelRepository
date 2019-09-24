@@ -97,16 +97,6 @@ namespace SteelRepository.Controllers
             return adminname;
         }
 
-        public static List<InventoryView> Remind()
-        {
-            return inventories;
-        }
-
-        public static List<InComeView> Recheck()
-        {
-            return inComes;
-        }
-
         [HttpPost]
         //获取图标数据
         public JsonResult GetWebClickData()

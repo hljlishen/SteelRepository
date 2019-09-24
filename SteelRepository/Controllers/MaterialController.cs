@@ -1,6 +1,7 @@
 ﻿using Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace SteelRepository.Controllers
@@ -17,6 +18,16 @@ namespace SteelRepository.Controllers
             ViewData["MaterialCode"] = MaterialCode.GetMaterialCodeList();
             ViewData["manufacturer"] = Manufacturer.SelectAll();
             ViewData["permissions"] = Session["permissions"];
+            List<InventoryView> inventories = Inventory.SelectRemaining();
+            List<InComeView> inComes = InCome.SelectRemind();
+            if (inventories != null)
+                Session["RemindCount"] = inventories.Count();
+            else
+                Session["RemindCount"] = 0;
+            if (inComes != null)
+                Session["inComes"] = inComes.Count();
+            else
+                Session["inComes"] = 0;
             return View(InCome.GetInComeViewDesc());
         }
 
@@ -57,7 +68,6 @@ namespace SteelRepository.Controllers
             inCome.unitPrice = double.Parse(collection["unitPrice"]);
             inCome.amount = double.Parse(collection["amount"]);
             inCome.storageTime = DateTime.Parse(collection["InComeTime"]);
-            var a = collection["RecheckCycle"];
             inCome.reviewCycle = double.Parse(collection["RecheckCycle"]);
             InCome.NewInCome(inCome, int.Parse(collection["position"]), collection["materialCode"], collection["name1"], collection["model"], collection["RecheckBasis"],collection["RecheckOrderNo"],DateTime.Parse(collection["RecheckTime"]), qualityCertification(collection), recheckReport(collection));
             return Json(true);
@@ -128,7 +138,7 @@ namespace SteelRepository.Controllers
             ViewData["id2"] = id2;
             ViewData["InComeView"] = InCome.SeleteInComeView(id);
             ViewData["InventoryAmount"]= InCome.GetInventoryAmount(id);
-            return View();
+            return View(RecheckReportImg.GetRecheckReportImgViews(id));
         }
 
         [HttpPost]
@@ -403,6 +413,12 @@ namespace SteelRepository.Controllers
         private List<SelectListItem> GetOperatorList()
         {
             List<SelectListItem> itemList = new List<SelectListItem>();
+            SelectListItem item1 = new SelectListItem()
+            {
+                Value = Session["name"].ToString(),
+                Text = Session["name"].ToString()
+            };
+            itemList.Add(item1);
             foreach (var em in Employee.SelectAll())
             {
                 SelectListItem item0 = new SelectListItem()
@@ -494,9 +510,5 @@ namespace SteelRepository.Controllers
         {
             return Json(RecheckReport.NoIncomeIdRecheckOrderNo(recheckOrderNo,incomeId));
         }
-        //public ActionResult NumberExist(string number,string unit)
-        //{
-        //    return Json(InCome.numberExist(number,unit,In.id));
-        //}
     }
 }
