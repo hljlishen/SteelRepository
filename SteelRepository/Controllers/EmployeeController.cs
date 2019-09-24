@@ -12,7 +12,7 @@ namespace SteelRepository.Controllers
         {
             ViewData["permissions"] = Session["permissions"];
             Employee.NoJudge();
-            return View(Employee.GetEmployeeAsc());
+            return View(Employee.SelectAllEmployeeDepartViews());
         }
 
         public ActionResult Employee_add()

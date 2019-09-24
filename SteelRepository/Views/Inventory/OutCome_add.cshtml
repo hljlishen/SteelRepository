@@ -25,6 +25,7 @@
                 document.getElementById("num1").style.display = "";
                 isNum = false;
             } else {
+                isNum = true;
                 $.post("/Inventory/NumberExist", { "number": num, "unit": unit }, function (data) {
                     if (data.userExsit) {
                         isNum = true;
