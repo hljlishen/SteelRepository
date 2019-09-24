@@ -381,5 +381,22 @@ namespace Models
             }
             return pairs;
         }
+        public static Dictionary<string, object> numberExist(string number,string unit,int invenId) {
+            Dictionary<string, object> pairs = new Dictionary<string, object>();
+            var num = double.Parse(number);
+            double Num= WeightConverter.Convert(unit, num, "kg");
+            double Num2 = WeightConverter.Convert(GetInventory(invenId).unit, GetInventory(invenId).amount, "kg");
+            if (Num > Num2)
+            {
+                pairs.Add("userExsit", false);
+                pairs.Add("msg", "出库量大于库存量，请重新键入！");
+            }
+            else
+            {
+                pairs.Add("userExsit", true);
+                pairs.Add("msg", "");
+            }
+            return pairs;
+        }
     }
 }

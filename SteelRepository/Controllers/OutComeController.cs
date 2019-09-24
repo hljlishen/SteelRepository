@@ -15,6 +15,7 @@ namespace SteelRepository.Controllers
     public class OutComeController : Controller
     {
         // GET: OutCome
+        public static int a;
         public ActionResult OutCome_list()
         {
             ViewData["permissions"] = Session["permissions"];
