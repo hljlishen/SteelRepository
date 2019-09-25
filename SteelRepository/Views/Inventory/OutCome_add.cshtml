@@ -13,102 +13,6 @@
     <link href="~/Content/AdminIndex/css/icons.min.css" rel="stylesheet" />
     <script src="~/Content/AdminIndex/js/app.min.js"></script>
     <link href="~/Content/layui/css/layui.css" rel="stylesheet" media="all" />
-    <script type="text/javascript">
-        var isNum;
-        var isName;
-        var isNameem;
-        function check() {
-            var num = $("#num").val().trim();
-            var unit = $("#example-select").val().trim();
-           //var n = /^[1-9][0-9]{0,2}(?:,?[0-9]{3})*(?:\.[0-9]{1,2})?$/;
-            if (/*!n.test(num) ||*/ num == "") {
-                document.getElementById("num1").style.display = "";
-                isNum = false;
-            } else {
-                isNum = true;
-                $.post("/Inventory/NumberExist", { "number": num, "unit": unit }, function (data) {
-                    if (data.userExsit) {
-                        isNum = true;
-                    } else {
-                        isNum = false;
-                        alert(data.msg);
-                        //document.getElementById("num2").style.display = "";
-                    }
-                }, "json");
-
-                document.getElementById("num1").style.display = "none";
-
-            }
-            var project = $("#project").val().trim();
-            if (project == "") {
-                document.getElementById("Project").style.display = "";
-                isName = false;
-            } else {
-                document.getElementById("Project").style.display = "none";
-                isName = true;
-            }
-            var employee = $("#employeeId").val().trim();
-            if (employee == "") {
-                document.getElementById("People").style.display = "";
-                isNameem = false;
-            } else {
-                document.getElementById("People").style.display = "none";
-                isNameem = true;
-            }
-            if (isNum && isName && isNameem) {
-                isNum = true;
-            } else {
-                isNum = false;
-            }
-        }
-
-        function clearNoNum(obj) {
-            obj.value = obj.value.replace(/[^\d.]/g, ""); //清除"数字"和"."以外的字符
-            obj.value = obj.value.replace(/^\./g, ""); //验证第一个字符是数字而不是
-            obj.value = obj.value.replace(/\.{2,}/g, "."); //只保留第一个. 清除多余的
-            obj.value = obj.value.replace(".", "$#$").replace(/\./g, "").replace("$#$", ".");
-        }
-
-        function add() {
-            check();
-            if (isNum) {
-                $.ajax({
-                    url: "@Url.Action("OutCome_add")",
-                    type: "post",
-                    data: $("form").serialize(),
-                    dataType: "json",
-                    success: function (data) {
-                        data = eval("(" + data + ")");
-                        if (data) {
-                            alert("出库成功");
-                            parent.closeWin2();
-                            parent.openFrame("Inventory_list");
-                        } else {
-                            alert("出库失败");
-                            //parent.closeWin2();
-                            //parent.openFrame("Inventory_list");
-                        }
-                    }
-                });
-            } else {
-
-            }
-        }
-        function ProjectAdd() {
-            var url = "OutComeProject_add";
-            var width = "100%";
-            var height = "700px";
-            parent.closeWin2();
-            parent.OpenWin(url, width, height);
-        }
-        function EmployeeAdd() {
-            var url = "OutComeEmployee_new";
-            var width = "100%";
-            var height = "700px";
-            parent.closeWin2();
-            parent.OpenWin(url, width, height);
-        }
-    </script>
 </head>
 <body>
     @{
@@ -266,20 +170,11 @@
         function check() {
             var num = $("#num").val().trim();
             var unit = $("#example-select").val().trim();
-           //var n = /^[1-9][0-9]{0,2}(?:,?[0-9]{3})*(?:\.[0-9]{1,2})?$/;
             if (/*!n.test(num) ||*/ num == "") {
                 document.getElementById("num1").style.display = "";
                 isNum = false;
             } else {
-                $.post("/Inventory/NumberExist", { "number": num, "unit": unit}, function (data) {
-                    if (data.userExsit) {
-                        isNum = true;
-                    } else {
-                        isNum = false;
-                        alert(data.msg);
-                    }
-                }, "json");
-
+                isNum = true;
                 document.getElementById("num1").style.display = "none";
 
             }
@@ -315,29 +210,33 @@
 
         function add() {
             check();
-            if (isNum) {
-                $.ajax({
-                    url: "@Url.Action("OutCome_add")",
-                    type: "post",
-                    data: $("form").serialize(),
-                    dataType: "json",
-                    success: function (data) {
-                        data = eval("(" + data + ")");
-                        if (data) {
-                            alert("出库成功");
-                            parent.closeWin2();
-                            parent.openFrame("Inventory_list");
-                        } else {
-                            alert("出库失败");
-                            parent.closeWin2();
-                            parent.openFrame("Inventory_list");
-                        }
-                    }
-                });
-            } else {
-
-            }
+            var num = $("#num").val().trim();
+            var unit = $("#example-select").val().trim();
+            $.post("/Inventory/NumberExist", { "number": num, "unit": unit }, function (data) {
+                if (data.userExsit) {
+                    if (isNum) {
+                        $.ajax({
+                            url: "@Url.Action("OutCome_add")",
+                            type: "post",
+                            data: $("form").serialize(),
+                            dataType: "json",
+                            success: function (data) {
+                                data = eval("(" + data + ")");
+                                if (data) {
+                                    alert("出库成功");
+                                    parent.closeWin2();
+                                    parent.openFrame("Inventory_list");
+                                } else {
+                                    alert("出库失败");
+                                }
+                            }
+                        });
+                    };
+                } else
+                    document.getElementById("num2").style.display = "";
+            }, "json");
         }
+
         function ProjectAdd() {
             var url = "OutComeProject_add";
             var width = "100%";
@@ -353,6 +252,6 @@
             parent.OpenWin(url, width, height);
         }
     </script>
-   
+
 </body>
 </html>
