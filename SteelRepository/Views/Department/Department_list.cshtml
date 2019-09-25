@@ -152,7 +152,9 @@
                 <div class="wrapper">
                     <div class="card col-md-7">
                         <div class="leftbar-user" style="text-align:left">
-                            <a href="javascript:CompanyAdd()" class="btn btn-primary"><i class="mdi mdi-plus-circle mr-2"></i>添加公司</a>
+                            @if (permissions == 1) { 
+                                <a href="javascript:CompanyAdd()" class="btn btn-primary"><i class="mdi mdi-plus-circle mr-2"></i>添加公司</a>
+                             }
                         </div>
                         <ul class="metismenu side-nav form-row">
                             @foreach (var department in Model)
