@@ -37,6 +37,21 @@ namespace Models
             }
         }
 
+        public static List<Employee> GetEmployeeAsc()
+        {
+            using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
+            {
+                List<Employee> list = new List<Employee>();
+                foreach (var emplo in helper.SqlQuery<Employee>("select Employee.* from Employee " +
+                    "where Employee.state != 4 " +
+                    "order by Employee.permissions asc"))
+                {
+                    list.Add(emplo);
+                }
+                return list;
+            }
+        }
+
         public static List<EmployeeDepartView> SelectAllDesc()
         {
             using (IDbInterface helper = new DbHelper(new SteelRepositoryDbEntities()))
