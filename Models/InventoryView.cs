@@ -31,5 +31,7 @@ namespace Models
         public string name { get; set; }
         public string brandCodeName { get; set; }
         public int incomeId { get; set; }
+        public string priceMeasure { get; set; }
+        public Nullable<double> unitPrice { get; set; }
     }
 }

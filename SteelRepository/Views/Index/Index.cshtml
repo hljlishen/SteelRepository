@@ -233,6 +233,7 @@
                                             <th>材料仓位</th>
                                             <th>生产厂商</th>
                                             <th>入库操作人</th>
+                                            <th>总价(元)</th>
                                             <th>货品入库时间</th>
                                         </tr>
                                     </thead>
@@ -242,27 +243,43 @@
                                         {
                                             if (inventory.amount > 0)
                                             {
-                                                <tr>
-                                                    <td>
-                                                        <div class="custom-control custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                                            <label class="custom-control-label" for="customCheck2">&nbsp;</label>
-                                                        </div>
-                                                    </td>
-                                                    <td class="table-user">@count</td>
-                                                    <th>@inventory.batch</th>
-                                                    <th>@inventory.brandCodeName</th>
-                                                    <td>@inventory.code</td>
-                                                    <td>@inventory.categoryName</td>
-                                                    <td>@inventory.materialName</td>
-                                                    <td>@inventory.modelName</td>
-                                                    <td>@inventory.amount</td>
-                                                    <td>@inventory.unit</td>
-                                                    <td>@inventory.positionName</td>
-                                                    <td>@inventory.manufacturersName</td>
-                                                    <td>@inventory.name</td>
-                                                    <td>@inventory.storageTime.ToString("yyyy-MM-dd")</td>
-                                                </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" id="customCheck2">
+                                                    <label class="custom-control-label" for="customCheck2">&nbsp;</label>
+                                                </div>
+                                            </td>
+                                            <td class="table-user">@count</td>
+                                            <th>@inventory.batch</th>
+                                            <th>@inventory.brandCodeName</th>
+                                            <td>@inventory.code</td>
+                                            <td>@inventory.categoryName</td>
+                                            <td>@inventory.materialName</td>
+                                            <td>@inventory.modelName</td>
+                                            <td>@inventory.amount</td>
+                                            <td>@inventory.unit</td>
+                                            <td>@inventory.positionName</td>
+                                            <td>@inventory.manufacturersName</td>
+                                            <td>@inventory.name</td>
+                                            @if (inventory.unit == "g" && inventory.priceMeasure.Trim() == "g")
+                                            {
+                                                <td>@(inventory.amount / inventory.unitPrice)</td>
+                                            }
+                                            @if (inventory.unit == "kg" && inventory.priceMeasure.Trim() == "g")
+                                            {
+                                                <td>@((inventory.amount * 1000) / inventory.unitPrice)</td>
+                                            }
+                                            @if (inventory.unit == "g" && inventory.priceMeasure.Trim() == "kg")
+                                            {
+                                                <td>@((inventory.amount / 1000) / inventory.unitPrice)</td>
+                                            }
+                                            @if (inventory.unit == "kg" && inventory.priceMeasure.Trim() == "kg")
+                                            {
+                                                <td>@(inventory.amount / inventory.unitPrice)</td>
+                                            }
+                                            <td>@inventory.storageTime.ToString("yyyy-MM-dd")</td>
+                                        </tr>
                                                 count++;
                                             }
                                         }
