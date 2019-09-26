@@ -279,6 +279,8 @@
           <Property Name="name" Type="nvarchar(max)" Nullable="false" />
           <Property Name="brandCodeName" Type="nvarchar(max)" Nullable="false" />
           <Property Name="incomeId" Type="int" Nullable="false" />
+          <Property Name="priceMeasure" Type="nchar" MaxLength="10" />
+          <Property Name="unitPrice" Type="float" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“SteelRepositoryDB.dbo.OutcomeQueryView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -427,7 +429,9 @@
     [InventoryView].[posiId] AS [posiId], 
     [InventoryView].[name] AS [name], 
     [InventoryView].[brandCodeName] AS [brandCodeName], 
-    [InventoryView].[incomeId] AS [incomeId]
+    [InventoryView].[incomeId] AS [incomeId], 
+    [InventoryView].[priceMeasure] AS [priceMeasure], 
+    [InventoryView].[unitPrice] AS [unitPrice]
     FROM [dbo].[InventoryView] AS [InventoryView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="OutcomeQueryView" EntityType="Self.OutcomeQueryView" store:Type="Views" store:Schema="dbo">
@@ -742,6 +746,8 @@
           <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="brandCodeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="incomeId" Type="Int32" Nullable="false" />
+          <Property Name="priceMeasure" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="unitPrice" Type="Double" />
         </EntityType>
         <EntityType Name="OutcomeQueryView">
           <Key>
@@ -807,7 +813,7 @@
           <Property Name="recheckOrderNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="id" Type="Int32" Nullable="false" />
         </EntityType>
-        <EntityContainer Name="SteelRepositoryDBEntities26" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="SteelRepositoryDBEntities27" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="BrandCode" EntityType="Self.BrandCode" />
           <EntitySet Name="Category" EntityType="Self.Category" />
           <EntitySet Name="Department" EntityType="Self.Department" />
@@ -837,7 +843,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="SteelRepositoryDBModelStoreContainer" CdmEntityContainer="SteelRepositoryDBEntities26">
+        <EntityContainerMapping StorageEntityContainer="SteelRepositoryDBModelStoreContainer" CdmEntityContainer="SteelRepositoryDBEntities27">
           <EntitySetMapping Name="BrandCode">
             <EntityTypeMapping TypeName="SteelRepositoryDBModel.BrandCode">
               <MappingFragment StoreEntitySet="BrandCode">
@@ -1089,6 +1095,8 @@
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="brandCodeName" ColumnName="brandCodeName" />
                 <ScalarProperty Name="incomeId" ColumnName="incomeId" />
+                <ScalarProperty Name="priceMeasure" ColumnName="priceMeasure" />
+                <ScalarProperty Name="unitPrice" ColumnName="unitPrice" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
