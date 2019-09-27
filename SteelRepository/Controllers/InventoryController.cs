@@ -18,6 +18,16 @@ namespace SteelRepository.Controllers
             ViewData["manufacturer"] = Manufacturer.SelectAll();
             ViewData["position"] = Position.SelectAll();
             ViewData["permissions"] = Session["permissions"];
+            List<InventoryView> inventories = Inventory.SelectRemaining();
+            List<InComeView> inComes = InCome.SelectRemind();
+            if (inventories != null)
+                Session["RemindCount"] = inventories.Count();
+            else
+                Session["RemindCount"] = 0;
+            if (inComes != null)
+                Session["inComes"] = inComes.Count();
+            else
+                Session["inComes"] = 0;
             return View();
         }
         [HttpPost]
@@ -77,17 +87,6 @@ namespace SteelRepository.Controllers
             var Projectid = int.Parse(collection["project"]);
             var ins = collection["instructions"].Trim();
             var unit = inventory.unit;
-            List<InventoryView> inventories = Inventory.SelectRemaining();
-            List<InComeView> inComes = InCome.SelectRemind();
-            if (inventories != null)
-                Session["RemindCount"] = inventories.Count();
-            else
-                Session["RemindCount"] = 0;
-            if (inComes != null)
-                Session["inComes"] = inComes.Count();
-            else
-                Session["inComes"] = 0;
-
             return Json(OutCome.NewOutCome(begin, invenId, number, unit, Employeeid, Projectid, ins));
         }
         public ActionResult OutComeEmployee_new()
