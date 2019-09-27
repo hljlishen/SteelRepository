@@ -264,19 +264,19 @@
                                         <td>@income.name</td>
                                         @if (income.unit == "g" && income.priceMeasure.Trim() == "g")
                                         {
-                                            <td>@(income.amount/income.unitPrice)</td>
+                                            <td>@(income.amount*income.unitPrice)</td>
                                         }
                                         @if (income.unit == "kg" && income.priceMeasure.Trim() == "g")
                                         {
-                                            <td>@((income.amount*1000)/income.unitPrice)</td>
+                                            <td>@((income.amount*1000)*income.unitPrice)</td>
                                         }
                                         @if (income.unit == "g" && income.priceMeasure.Trim() == "kg")
                                         {
-                                            <td>@((income.amount/1000)/income.unitPrice)</td>
+                                            <td>@((income.amount/1000)*income.unitPrice)</td>
                                         }
                                         @if (income.unit == "kg" && income.priceMeasure.Trim() == "kg")
                                         {
-                                            <td>@(income.amount/income.unitPrice)</td>
+                                            <td>@(income.amount*income.unitPrice)</td>
                                         }
                                         @if (permissions == 1)
                                         {

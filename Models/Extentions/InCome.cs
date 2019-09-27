@@ -413,10 +413,10 @@ namespace Models
                 return Dbhelper.Select(exp);
             }
         }
-        public static double GetInventoryAmount(int InComeId) {
+        public static InventoryView GetInventoryAmount(int InComeId) {
             using (IDbInterface Dbhelper = new DbHelper(new SteelRepositoryDbEntities()))
             {
-                return Dbhelper.FindFirst<Inventory, int>("incomeId", InComeId).amount;
+                return Dbhelper.FindFirst<InventoryView, int>("incomeId", InComeId);
             }
         }
     }
