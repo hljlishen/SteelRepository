@@ -18,7 +18,8 @@
     @{
         Models.InComeView inCome = (Models.InComeView)ViewData["InComeView"];
     int id2 = (int)ViewData["id2"];
-        double Amount = (double)ViewData["InventoryAmount"];
+        Models.InventoryView inventory = (Models.InventoryView)ViewData["InventoryAmount"];
+        //double Amount = (double)ViewData["InventoryAmount"];
     }
     <script type="text/javascript">
 
@@ -95,7 +96,7 @@
                                     }else {
                                     <div class="form-group col-md-6">
                                         <label for="signin_form">数量：</label>
-                                        <input class="form-control" name="amount" type="text" value="@Amount" disabled="disabled" />
+                                        <input class="form-control" name="amount" type="text" value="@inCome.amount" disabled="disabled" />
                                     </div>
                                     }
                                     <div class="form-group col-md-6">
@@ -127,6 +128,47 @@
                                     <div class="form-group col-md-6">
                                         <label for="signin_form">操作人：</label>
                                         <input class="form-control" name="operator" type="text" value="@inCome.name" disabled="disabled" />
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="signin_form">总价（元）：</label>
+                                        @if (id2 == 1)
+                                        {
+                                            if (inCome.unit == "g" && inCome.priceMeasure.Trim() == "g")
+                                            {
+                                                <input class="form-control" name="operator" type="text" value="@(inCome.amount * inCome.unitPrice)" disabled="disabled" />
+                                            }
+                                            if (inCome.unit == "kg" && inCome.priceMeasure.Trim() == "g")
+                                            {
+                                                <input class="form-control" name="operator" type="text" value="@((inCome.amount * 1000) * inCome.unitPrice)" disabled="disabled" />
+                                            }
+                                            if (inCome.unit == "g" && inCome.priceMeasure.Trim() == "kg")
+                                            {
+                                                <input class="form-control" name="operator" type="text" value="@((inCome.amount / 1000.0) * inCome.unitPrice)" disabled="disabled" />
+                                            }
+                                            if (inCome.unit == "kg" && inCome.priceMeasure.Trim() == "kg")
+                                            {
+                                                <input class="form-control" name="operator" type="text" value="@(inCome.amount * inCome.unitPrice)" disabled="disabled" />
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (inventory.unit == "g" && inventory.priceMeasure.Trim() == "g")
+                                            {
+                                                <input class="form-control" name="operator" type="text" value="@(inventory.amount * inventory.unitPrice)" disabled="disabled" />
+                                            }
+                                            if (inventory.unit == "kg" && inventory.priceMeasure.Trim() == "g")
+                                            {
+                                                <input class="form-control" name="operator" type="text" value="@((inventory.amount * 1000) * inventory.unitPrice)" disabled="disabled" />
+                                            }
+                                            if (inventory.unit == "g" && inventory.priceMeasure.Trim() == "kg")
+                                            {
+                                                <input class="form-control" name="operator" type="text" value="@((inventory.amount / 1000.0) * inventory.unitPrice)" disabled="disabled" />
+                                            }
+                                            if (inventory.unit == "kg" && inventory.priceMeasure.Trim() == "kg")
+                                            {
+                                                <input class="form-control" name="operator" type="text" value="@(inventory.amount * inventory.unitPrice)" disabled="disabled" />
+                                            }
+                                        }
                                     </div>
                                 </div>
                                 <div class="form-group col-md-12">

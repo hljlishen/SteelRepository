@@ -212,7 +212,7 @@
                                 </div>
                             </div>
                             <div class="table-responsive">
-                                <table class="table table-centered table-striped dt-responsive nowrap w-100" id="products-datatable13" style="width:auto;height:auto">
+                                <table class="table table-centered table-striped dt-responsive nowrap w-100" id="products-datatable14" style="width:auto;height:auto">
                                     <thead>
                                         <tr>
                                             <th style="width: 20px;">
@@ -264,19 +264,19 @@
                                             <td>@inventory.name</td>
                                             @if (inventory.unit == "g" && inventory.priceMeasure.Trim() == "g")
                                             {
-                                                <td>@(inventory.amount / inventory.unitPrice)</td>
+                                                <td>@(inventory.amount * inventory.unitPrice)</td>
                                             }
                                             @if (inventory.unit == "kg" && inventory.priceMeasure.Trim() == "g")
                                             {
-                                                <td>@((inventory.amount * 1000) / inventory.unitPrice)</td>
+                                                <td>@((inventory.amount * 1000) * inventory.unitPrice)</td>
                                             }
                                             @if (inventory.unit == "g" && inventory.priceMeasure.Trim() == "kg")
                                             {
-                                                <td>@((inventory.amount / 1000) / inventory.unitPrice)</td>
+                                                <td>@((inventory.amount / 1000) * inventory.unitPrice)</td>
                                             }
                                             @if (inventory.unit == "kg" && inventory.priceMeasure.Trim() == "kg")
                                             {
-                                                <td>@(inventory.amount / inventory.unitPrice)</td>
+                                                <td>@(inventory.amount * inventory.unitPrice)</td>
                                             }
                                             <td>@inventory.storageTime.ToString("yyyy-MM-dd")</td>
                                         </tr>
