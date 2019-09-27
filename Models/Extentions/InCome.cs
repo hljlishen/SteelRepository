@@ -231,8 +231,8 @@ namespace Models
                 }
                 catch (Exception e)
                 {
-                    return -2;
-                    //throw e;
+                    //return -2;
+                    throw e;
                 }
                 inCome.codeId = mCode.id;
                 double? kgPrice = 0;
@@ -241,8 +241,8 @@ namespace Models
                     var inventory = Inventory.Update(inCome.id, inCome.amount, inCome.unit, positionId, helper);
                 }
                 catch (Exception ex) {
-                    return -3;
-                    //throw ex;
+                    //return -3;
+                    throw ex;
                 }
                 //修改出库总价
                 foreach (var outcome in OutCome.InComeIdSelect(inCome.id, helper))

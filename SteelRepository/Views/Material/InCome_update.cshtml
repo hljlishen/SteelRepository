@@ -259,26 +259,26 @@
                         data: $("form").serialize(),
                         dataType: "json",
                         success: function (data) {
-                            data = eval("(" + data + ")");
-                            switch (data) {
-                                case 0: alert("修改失败！");
-                                    break;
-                                case -2: alert("材料信息更改有误，请重新键入！");
-                                    break;
-                                case -3: alert("更改入库数量小于出库量，请重新键入！");
-                                    break;
-                                default: alert("修改成功！");
-                                    parent.closeWin2();
-                                    parent.openFrame("InCome_list");
-                                    break;
-                            }
-                            //if (data) {
-                            //    alert("修改成功");
-                            //    parent.closeWin2();
-                            //    parent.openFrame("InCome_list");
-                            //} else {
-                            //    alert("修改失败！");
+                            //data = eval("(" + data + ")");
+                            //switch (data) {
+                            //    case 0: alert("修改失败！");
+                            //        break;
+                            //    case -2: alert("材料信息更改有误，请重新键入！");
+                            //        break;
+                            //    case -3: alert("更改入库数量小于出库量，请重新键入！");
+                            //        break;
+                            //    default: alert("修改成功！");
+                            //        parent.closeWin2();
+                            //        parent.openFrame("InCome_list");
+                            //        break;
                             //}
+                            if (data == "1") {
+                                alert("修改成功");
+                                parent.closeWin2();
+                                parent.openFrame("InCome_list");
+                            } else {
+                                alert("修改失败！");
+                            }
                         }
                     });
             } else {

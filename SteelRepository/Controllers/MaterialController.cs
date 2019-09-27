@@ -162,7 +162,13 @@ namespace SteelRepository.Controllers
             UpIncome.storageTime = DateTime.Parse(collection["IncomeText"]);
             UpIncome.reviewCycle = double.Parse(collection["reviewCycle"]);
             //ViewData["OutQty"] = InCome.OutQty(UpIncome.id,UpIncome.unit);
-            return Json(InCome.Update(UpIncome, name, model, code, int.Parse(collection["position"])));
+            try
+            {
+                return Json(InCome.Update(UpIncome, name, model, code, int.Parse(collection["position"])));
+            }
+            catch (Exception ex){
+                return Json(ex.Message);
+            }
         }
 
         public ActionResult QualityReport(int id)
@@ -415,7 +421,7 @@ namespace SteelRepository.Controllers
             List<SelectListItem> itemList = new List<SelectListItem>();
             SelectListItem item1 = new SelectListItem()
             {
-                Value = Session["name"].ToString(),
+                Value = Session["id"].ToString(),
                 Text = Session["name"].ToString()
             };
             itemList.Add(item1);
